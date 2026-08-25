@@ -1,0 +1,27 @@
+<!--
+  PLACEHOLDER FIXTURE.
+
+  Hand-built stand-in for a real BBB business-profile page, shaped to match
+  the placeholder schema assumed in bbb_scraper/parsing/business_parser.py
+  (a `window.__PRELOADED_STATE__ = {...};` assignment containing a
+  `business` object).
+
+  Deliberately includes braces and an escaped quote inside string values
+  (see "description") to exercise the balanced-brace scanner in
+  parsing/json_extract.py -- a naive regex would truncate at the first `}`
+  it saw, which would be inside this string.
+
+  Replace this file with an actual captured BBB profile page once you've
+  inspected the real markup, and update business_parser.py's
+  PRELOADED_STATE_VAR / _map_business_state to match.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Acme Plumbing Co | BBB Business Profile</title></head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.__PRELOADED_STATE__ = {"business": {"id": "0865-90012345", "name": "Acme Plumbing Co", "website": "https://acmeplumbing.example.com", "rating": "A+", "accredited": true, "accreditationStatus": "Accredited since 2015", "yearsInBusiness": "11", "fileOpenedDate": "2015-03-01", "businessStartedDate": "2014-11-15", "principalContact": "Jane Doe, Owner", "categories": ["Plumbers", "Water Heaters"], "description": "We fix {leaky} pipes and say \"quality first\" on every job.", "contact": {"phone": "(512) 555-0134", "address": {"line1": "123 Main St", "city": "Austin", "state": "TX", "postalCode": "78701"}}, "hours": {"mon": "8:00-17:00", "tue": "8:00-17:00"}}, "meta": {"requestId": "abc-123"}};
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bbb-scraper"
+version = "0.1.0"
+description = "BBB scraper + ETL pipeline framework"
+requires-python = ">=3.10"
+readme = "README.md"
+dependencies = [
+    "requests>=2.31",
+    "tenacity>=8.2",
+    "pydantic>=2.4",
+    "pydantic-settings>=2.0",
+    "python-dotenv>=1.0",
+    "beautifulsoup4>=4.12",
+    "lxml>=4.9",
+]
+
+[project.optional-dependencies]
+excel = ["pandas>=2.0", "openpyxl>=3.1"]
+sql = ["sqlalchemy>=2.0"]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "black>=23.0",
+    "ruff>=0.1",
+]
+
+[tool.setuptools.packages.find]
+include = ["bbb_scraper*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+
+[tool.black]
+line-length = 100
