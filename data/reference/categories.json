@@ -1,0 +1,12 @@
+[
+  { "id": "plumbers", "name": "Plumbers", "slug": "plumbers" },
+  { "id": "electricians", "name": "Electricians", "slug": "electricians" },
+  { "id": "roofing-contractors", "name": "Roofing Contractors", "slug": "roofing-contractors" },
+  { "id": "hvac-contractors", "name": "Heating and Air Conditioning", "slug": "hvac-contractors" },
+  { "id": "auto-repair", "name": "Auto Repair & Service", "slug": "auto-repair" },
+  { "id": "general-contractors", "name": "General Contractors", "slug": "general-contractors" },
+  { "id": "landscaping", "name": "Landscape Contractors", "slug": "landscaping" },
+  { "id": "dentists", "name": "Dentists", "slug": "dentists" },
+  { "id": "attorneys", "name": "Attorneys & Lawyers", "slug": "attorneys" },
+  { "id": "real-estate", "name": "Real Estate", "slug": "real-estate" }
+]

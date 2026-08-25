@@ -21,6 +21,7 @@ from typing import Any
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.json_extract import extract_json_scripts
 from bbb_scraper.parsing.models import BusinessSummary
+from bbb_scraper.reference.models import Category, Location
 from bbb_scraper.utils.stats import RunStats, PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED
 
 logger = get_logger(__name__)
@@ -32,8 +33,8 @@ SCRIPT_TYPE = "application/json"
 def parse_search_results(
     html: str,
     *,
-    query: str | None = None,
-    location: str | None = None,
+    category: Category | None = None,
+    location: Location | None = None,
     page: int | None = None,
     stats: RunStats | None = None,
 ) -> list[BusinessSummary]:
@@ -44,7 +45,7 @@ def parse_search_results(
         for item in _iter_listing_items(blob):
             try:
                 summary = _map_listing_item(
-                    item, query=query, location=location, page=page
+                    item, category=category, location=location, page=page
                 )
                 records.append(summary)
                 stats.incr(RECORDS_EXTRACTED)
@@ -75,8 +76,8 @@ def _iter_listing_items(blob: dict[str, Any]):
 def _map_listing_item(
     item: dict[str, Any],
     *,
-    query: str | None,
-    location: str | None,
+    category: Category | None,
+    location: Location | None,
     page: int | None,
 ) -> BusinessSummary:
     """Map one raw listing-item dict to BusinessSummary.
@@ -100,8 +101,9 @@ def _map_listing_item(
         rating=item.get("rating"),
         accredited=item.get("accredited"),
         categories=item.get("categories") or [],
-        search_query=query,
-        search_location=location,
+        search_category_id=category.id if category else None,
+        search_category_name=category.name if category else None,
+        search_location=location.display if location else None,
         source_page=page,
         raw_extra={k: v for k, v in item.items() if k not in known_keys},
     )

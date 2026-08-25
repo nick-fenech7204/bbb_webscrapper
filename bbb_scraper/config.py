@@ -48,6 +48,11 @@ class Settings(BaseSettings):
     raw_data_dir: Path = Field(default=Path("data/raw"), alias="RAW_DATA_DIR")
     processed_data_dir: Path = Field(default=Path("data/processed"), alias="PROCESSED_DATA_DIR")
 
+    # --- Reference data -----------------------------------------------------
+    categories_file: Path = Field(
+        default=Path("data/reference/categories.json"), alias="CATEGORIES_FILE"
+    )
+
     # --- Logging ---------------------------------------------------------------
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     log_dir: Path = Field(default=Path("logs"), alias="LOG_DIR")

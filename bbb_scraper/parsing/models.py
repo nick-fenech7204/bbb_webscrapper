@@ -31,7 +31,8 @@ class BusinessSummary(BaseModel):
     accredited: bool | None = None
     categories: list[str] = Field(default_factory=list)
 
-    search_query: str | None = None
+    search_category_id: str | None = None
+    search_category_name: str | None = None
     search_location: str | None = None
     source_page: int | None = None
     scraped_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

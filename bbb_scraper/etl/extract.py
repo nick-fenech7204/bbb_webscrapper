@@ -13,6 +13,7 @@ from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.business_parser import parse_business_page
 from bbb_scraper.parsing.models import BusinessDetail, BusinessSummary
 from bbb_scraper.parsing.search_parser import parse_search_results
+from bbb_scraper.reference.models import Category, Location
 from bbb_scraper.scraping.business import BBBBusinessClient
 from bbb_scraper.scraping.capture import RawCapture
 from bbb_scraper.scraping.client import HttpClient
@@ -31,17 +32,17 @@ class Extractor:
         self.business_client = BBBBusinessClient(self.http, capture=self.capture)
 
     def extract_search(
-        self, query: str, location: str | None = None, max_pages: int = 1
+        self, category: Category, location: Location, max_pages: int = 1
     ) -> list[BusinessSummary]:
         all_summaries: list[BusinessSummary] = []
         for page in range(1, max_pages + 1):
-            result = self.search_client.search(query, location=location, page=page)
+            result = self.search_client.search(category, location, page=page)
             summaries = parse_search_results(
-                result.html, query=query, location=location, page=page, stats=self.stats
+                result.html, category=category, location=location, page=page, stats=self.stats
             )
             logger.info(
-                "Parsed %d listing record(s) from page %d for query=%r location=%r",
-                len(summaries), page, query, location,
+                "Parsed %d listing record(s) from page %d for category=%r location=%r",
+                len(summaries), page, category.name, location.display,
             )
             all_summaries.extend(summaries)
             if not summaries:

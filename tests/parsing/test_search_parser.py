@@ -1,11 +1,14 @@
 from bbb_scraper.parsing.models import BusinessSummary
 from bbb_scraper.parsing.search_parser import parse_search_results
+from bbb_scraper.reference.models import Category, parse_location
 
 
 def test_parse_search_results_against_fixture(load_fixture):
     html = load_fixture("search_listing_sample.html")
+    category = Category(id="plumbers", name="Plumbers", slug="plumbers")
+    location = parse_location("Austin, TX")
 
-    records = parse_search_results(html, query="plumbers", location="Austin, TX", page=1)
+    records = parse_search_results(html, category=category, location=location, page=1)
 
     assert len(records) == 2
     assert all(isinstance(r, BusinessSummary) for r in records)
@@ -19,7 +22,8 @@ def test_parse_search_results_against_fixture(load_fixture):
     assert first.rating == "A+"
     assert first.accredited is True
     assert "Plumbers" in first.categories
-    assert first.search_query == "plumbers"
+    assert first.search_category_id == "plumbers"
+    assert first.search_category_name == "Plumbers"
     assert first.search_location == "Austin, TX"
     assert first.source_page == 1
     # Unmapped fields should survive in raw_extra rather than being dropped.

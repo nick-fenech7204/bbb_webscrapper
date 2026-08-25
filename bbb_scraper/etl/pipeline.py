@@ -16,6 +16,7 @@ from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.pipeline.base import Sink
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
+from bbb_scraper.reference.models import Category, Location
 from bbb_scraper.utils.stats import RunStats, RECORDS_LOADED
 
 logger = get_logger(__name__)
@@ -28,16 +29,17 @@ class ETLPipeline:
 
     def run_search(
         self,
-        query: str,
-        location: str | None = None,
+        category: Category,
+        location: Location,
         max_pages: int = 1,
         fetch_details: bool = False,
     ) -> dict[str, Any]:
-        """Search BBB, optionally follow through to each business's profile
-        page, transform, dedupe, and load into every configured sink.
+        """Search BBB by category + location, optionally follow through to
+        each business's profile page, transform, dedupe, and load into every
+        configured sink.
         """
         with Extractor(stats=self.stats) as extractor:
-            summaries = extractor.extract_search(query, location=location, max_pages=max_pages)
+            summaries = extractor.extract_search(category, location, max_pages=max_pages)
 
             records: list[dict[str, Any]] = [transform_summary(s) for s in summaries]
 

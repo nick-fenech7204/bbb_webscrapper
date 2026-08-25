@@ -29,11 +29,14 @@ bbb_scraper/
   config.py            # all settings, sourced from env vars / .env
   logging_setup.py      # console + rotating file logging
   exceptions.py
+  reference/
+    models.py              # Category, Location (+ parse_location)
+    categories.py            # CategoryDirectory: load/search data/reference/categories.json
   scraping/
     client.py           # HttpClient: proxy + retry + rate limit + logging
     proxies.py           # IPRoyal proxy URL construction
     capture.py            # save every raw response to data/raw/ + manifest.jsonl
-    search.py              # BBB search/listing requests
+    search.py              # BBB search/listing requests, filtered by Category + Location
     business.py             # BBB business-profile page requests
   parsing/
     json_extract.py       # generic: <script type=application/json>, window.X = {...}
@@ -53,15 +56,42 @@ bbb_scraper/
   utils/
     rate_limit.py, hashing.py, stats.py
 
+data/
+  reference/categories.json  # BBB industry/category taxonomy (placeholder starter list)
+
 tests/
   fixtures/                 # saved HTML used by parser unit tests
   parsing/                    # parser tests (no network)
   etl/                          # transform/dedupe tests (no network)
+  reference/                     # Category/Location tests
+  scraping/                        # search URL-building tests
 
 scripts/
-  run_search.py             # CLI: search -> ETL -> configured sinks
+  run_search.py             # CLI: pick category + location -> ETL -> configured sinks
   run_business.py             # CLI: fetch + parse one profile page
+  fetch_categories.py           # CLI stub: scrape BBB's category taxonomy into data/reference/
 ```
+
+## Searching by category + location
+
+Search is driven by a `Category` (from BBB's own industry taxonomy, not free
+text) and a `Location` (ZIP code or city/state) -- see
+`bbb_scraper/reference/`. This maps directly onto BBB's own filters instead
+of hoping a text search lands on the right vertical.
+
+```bash
+# interactive: prompts for category (with keyword search + disambiguation) and location
+python scripts/run_search.py
+
+# non-interactive
+python scripts/run_search.py --category plumbers --location "Austin, TX" --pages 2
+
+# discovery: see what's available
+python scripts/run_search.py --list-categories plumb
+```
+
+`--category` accepts an id, slug, exact name, or partial name; ambiguous
+partial matches print the candidates and exit rather than guessing.
 
 ## Setup
 
@@ -93,12 +123,18 @@ BBB's actual JSON/state schema hasn't been inspected yet, so three things
 are explicitly marked `TODO(you)` and built against a synthetic fixture
 rather than real captured HTML:
 
-1. **`scraping/search.py` `build_search_url`** -- best-guess query params.
+1. **`scraping/search.py` `build_search_url`** -- best-guess query params
+   (`find_category`, `find_text`, `find_loc`).
 2. **`parsing/search_parser.py`** -- assumes listing JSON looks like
    `{"results": [...]}`. Adjust `_iter_listing_items` / `_map_listing_item`.
 3. **`parsing/business_parser.py`** -- assumes a `window.__PRELOADED_STATE__`
    assignment containing `{"business": {...}}`. Adjust `PRELOADED_STATE_VAR`
    / `_map_business_state`.
+4. **`data/reference/categories.json`** -- a 10-entry placeholder taxonomy
+   with made-up-but-plausible ids/slugs. Replace via `scripts/fetch_categories.py`
+   once you know where BBB exposes the full category list (see
+   `data/reference/README.md`), and confirm the `id` values match what BBB's
+   search actually expects in its category filter.
 
 Workflow for nailing these down:
 
