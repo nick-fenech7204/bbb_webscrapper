@@ -1,8 +1,6 @@
 """
 Normalized output shapes.
 
-These are intentionally permissive (almost everything Optional) because the
-exact fields available from BBB's embedded JSON aren't nailed down yet.
 `raw_extra` on both models is a catch-all for whatever the field-mapping
 functions in search_parser.py / business_parser.py don't explicitly map yet
 -- that way iterating on the mapping doesn't lose data, it just leaves it
@@ -17,19 +15,44 @@ from pydantic import BaseModel, Field
 
 
 class BusinessSummary(BaseModel):
-    """One row from a BBB search/listing page."""
+    """One row from BBB's `/api/search` response.
+
+    Field set confirmed 2026-08-31 against a real captured response (see
+    tests/fixtures/search_listing_sample.json) -- this is no longer a guess.
+    """
 
     bbb_id: str | None = None
+    """Stable id: "{bbbId}-{businessId}" from the response. Not BBB's raw
+    `id` field -- that one includes a third, search-context-specific segment
+    that isn't guaranteed stable across different searches for the same
+    business (kept in raw_extra as "search_result_id")."""
     name: str
     profile_url: str | None = None
     phone: str | None = None
+    """First number from BBB's `phone` list. Full list kept in raw_extra
+    (~20% of listings carry more than one)."""
     address: str | None = None
     city: str | None = None
     state: str | None = None
     postal_code: str | None = None
+    lat: float | None = None
+    lon: float | None = None
     rating: str | None = None
+    rating_score: float | None = None
     accredited: bool | None = None
+    """From BBB's `bbbMember` flag. Semantically this reads as "BBB
+    Accredited Business" and was true for every result in the response this
+    was modeled on (a search already scoped to accredited businesses) -- if
+    you see it False somewhere, that's the first real confirmation of what
+    it means when accreditation *isn't* present."""
     categories: list[str] = Field(default_factory=list)
+    """Category names only (e.g. "CPA"). Each category's own BBB id is kept
+    in raw_extra's "categories" (full [{id, name}, ...]) since Category.id
+    in reference/ is an unrelated internal key, not this one."""
+    bbb_office_id: str | None = None
+    """Which local/regional BBB office serves this business (e.g. "0292"),
+    distinct from the business's own id."""
+    bbb_office_name: str | None = None
 
     search_category_id: str | None = None
     search_category_name: str | None = None
@@ -41,7 +64,11 @@ class BusinessSummary(BaseModel):
 
 
 class BusinessDetail(BaseModel):
-    """Full record from a BBB individual business-profile page."""
+    """Full record from a BBB individual business-profile page.
+
+    Unlike BusinessSummary above, this field set is still a placeholder --
+    we haven't captured a real profile page yet. See business_parser.py.
+    """
 
     bbb_id: str | None = None
     name: str

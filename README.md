@@ -35,14 +35,15 @@ bbb_scraper/
   scraping/
     client.py           # HttpClient: proxy + retry + rate limit + logging
     proxies.py           # provider-agnostic proxy URL construction (Decodo, IPRoyal, ...)
-    capture.py            # save every raw response to data/raw/ + manifest.jsonl
-    search.py              # BBB search/listing requests, filtered by Category + Location
-    business.py             # BBB business-profile page requests
+    session.py            # loads BBB session cookies/headers from data/secrets/
+    capture.py              # save every raw response to data/raw/ + manifest.jsonl
+    search.py                # BBB /api/search JSON requests, by Category + Location
+    business.py                # BBB business-profile page (HTML) requests
   parsing/
     json_extract.py       # generic: <script type=application/json>, window.X = {...}
     models.py              # BusinessSummary, BusinessDetail (pydantic)
-    search_parser.py        # listing HTML -> list[BusinessSummary]  (BBB-specific mapping)
-    business_parser.py       # profile HTML -> BusinessDetail        (BBB-specific mapping)
+    search_parser.py        # /api/search JSON -> list[BusinessSummary] (BBB-specific mapping)
+    business_parser.py       # profile HTML -> BusinessDetail          (BBB-specific mapping)
   etl/
     identifiers.py         # stable internal business id
     transform.py            # pure functions: model -> flat dict
@@ -58,13 +59,14 @@ bbb_scraper/
 
 data/
   reference/categories.json  # BBB industry/category taxonomy (placeholder starter list)
+  secrets/                     # gitignored -- bbb_session.json (real cookies/headers)
 
 tests/
-  fixtures/                 # saved HTML used by parser unit tests
+  fixtures/                 # saved HTML/JSON used by parser unit tests
   parsing/                    # parser tests (no network)
   etl/                          # transform/dedupe tests (no network)
   reference/                     # Category/Location tests
-  scraping/                        # search URL-building tests
+  scraping/                        # search param-building + proxy tests
 
 scripts/
   run_search.py             # CLI: pick category + location -> ETL -> configured sinks
@@ -135,37 +137,65 @@ should never require hitting BBB.
 
 ## What's a placeholder vs. what's real
 
-BBB's actual JSON/state schema hasn't been inspected yet, so three things
-are explicitly marked `TODO(you)` and built against a synthetic fixture
-rather than real captured HTML:
+**Confirmed real, end to end, against a live request (2026-08-31):** search
+is a JSON API, not an HTML page -- `GET https://www.bbb.org/api/search` with
+`find_country`, `find_text` (the category phrase itself, e.g. "accredited
+cpa" -- there's no separate opaque category id in the request), `find_type=
+Category` (always this exact value), `find_latlng` or `find_loc`, and `page`.
+It requires cookies that satisfy Cloudflare bot management (see "Session
+cookies" below). The response shape is confirmed too -- `scraping/search.py`,
+`parsing/search_parser.py`'s field mapping, `etl/extract.py`'s pagination
+loop (which reads the response's own `page`/`pageSize`/`totalPages`/
+`totalResults` rather than guessing), and `tests/fixtures/search_listing_sample.json`
+(a real trimmed response, not synthetic) are all built directly against a
+live capture, not a guess. `data/reference/categories.json` also holds 10
+real `(id, name)` pairs pulled from that response's category filters, though
+just that one narrow finance-related slice, not the full taxonomy.
 
-1. **`scraping/search.py` `build_search_url`** -- best-guess query params
-   (`find_category`, `find_text`, `find_loc`).
-2. **`parsing/search_parser.py`** -- assumes listing JSON looks like
-   `{"results": [...]}`. Adjust `_iter_listing_items` / `_map_listing_item`.
-3. **`parsing/business_parser.py`** -- assumes a `window.__PRELOADED_STATE__`
-   assignment containing `{"business": {...}}`. Adjust `PRELOADED_STATE_VAR`
-   / `_map_business_state`.
-4. **`data/reference/categories.json`** -- a 10-entry placeholder taxonomy
-   with made-up-but-plausible ids/slugs. Replace via `scripts/fetch_categories.py`
-   once you know where BBB exposes the full category list (see
-   `data/reference/README.md`), and confirm the `id` values match what BBB's
-   search actually expects in its category filter.
+**Still placeholder:**
 
-Workflow for nailing these down:
+1. **`parsing/business_parser.py`** -- assumes a `window.__PRELOADED_STATE__`
+   assignment containing `{"business": {...}}` on the individual profile
+   page (still HTML -- only search turned out to be a JSON API). Adjust
+   `PRELOADED_STATE_VAR` / `_map_business_state` once you've captured one.
+2. **`data/reference/categories.json`** -- real but narrow (10
+   finance/accounting categories, a side effect of which query happened to
+   get captured first). Needs the rest of BBB's industries. See
+   `data/reference/README.md` for how to grow it incrementally from every
+   real search response, or fill in `scripts/fetch_categories.py` for a
+   proper full-taxonomy source once you find one.
 
-1. Capture one real search-results page and one real business-profile page
-   (`curl` or a browser save, or just let `scraping/capture.py` write them to
-   `data/raw/` on a live run).
-2. Replace `tests/fixtures/search_listing_sample.html` and
-   `tests/fixtures/business_page_sample.html` with the real captures.
-3. Update the two parser modules above to match the real shape.
+Workflow for the business-profile page (same pattern that got search done):
+
+1. Capture one real business-profile HTML page (`scraping/capture.py`
+   writes every response to `data/raw/` automatically on a live run).
+2. Replace `tests/fixtures/business_page_sample.html` with the real capture.
+3. Update `business_parser.py` to match the real shape.
 4. `pytest` will fail until the mapping is right -- that's the feedback loop.
 
-The generic extraction helpers (`parsing/json_extract.py` -- pulling
+The generic HTML-extraction helpers (`parsing/json_extract.py` -- pulling
 `<script type="application/json">` blocks, or a `window.X = {...}` state
-blob with proper brace-matching for nested JSON) don't need to change; they
-already work off the real markup regardless of what's inside.
+blob with proper brace-matching for nested JSON) are only needed for the
+business-profile page now; search doesn't go through HTML at all.
+
+## Session cookies
+
+`bbb.org` sits behind Cloudflare bot management -- plain requests get
+challenged. `bbb_scraper/scraping/session.py` loads cookies/headers captured
+from a real browser session out of `data/secrets/bbb_session.json`
+(gitignored, never committed -- copy `data/secrets/bbb_session.example.json`
+and fill in real values) and merges them into every request.
+
+This is fragile by nature, not a bug to fix once: the captured
+`CF_Authorization` is a JWT with a real expiry (~24h in the session this was
+built against), and `cf_clearance` is typically bound to the IP that earned
+it -- so a session captured from your own browser may simply not validate
+once routed through a proxy IP. There's no code fix for that here; it's a
+real constraint for whatever comes next (refreshing per proxy session,
+solving the challenge through the proxy itself, etc.). If cookie/header
+replay alone stops being enough even from a matching IP, plain
+`requests`/urllib3's TLS handshake fingerprint not matching real Chrome is
+the next thing to suspect.
 
 ## Adding a new output destination
 

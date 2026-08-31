@@ -10,6 +10,9 @@ venv/
 env/
 
 .env
+data/secrets/*
+!data/secrets/.gitkeep
+!data/secrets/*.example.json
 
 data/raw/
 data/processed/

@@ -23,6 +23,7 @@ from bbb_scraper.config import Settings, settings as default_settings
 from bbb_scraper.exceptions import BlockedError, RateLimitedError, ScrapeError
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.scraping.proxies import get_proxies
+from bbb_scraper.scraping.session import load_bbb_session
 from bbb_scraper.utils.rate_limit import RateLimiter
 from bbb_scraper.utils.stats import RunStats, REQUESTS_SENT, REQUESTS_FAILED, REQUESTS_RETRIED
 
@@ -55,6 +56,16 @@ class HttpClient:
                 "Accept-Language": "en-US,en;q=0.9",
             }
         )
+        # Overlay real captured browser headers/cookies on top of the generic
+        # defaults above -- these are what actually get bbb.org's Cloudflare
+        # bot management to let a request through. See scraping/session.py
+        # for the file this comes from and its expiry/IP-binding caveats.
+        bbb_session = load_bbb_session(self.cfg.bbb_session_file)
+        if bbb_session["headers"]:
+            self.session.headers.update(bbb_session["headers"])
+        if bbb_session["cookies"]:
+            self.session.cookies.update(bbb_session["cookies"])
+
         proxies = get_proxies(self.cfg, session_id=session_id)
         if proxies:
             self.session.proxies.update(proxies)

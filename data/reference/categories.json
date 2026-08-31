@@ -1,12 +1,12 @@
 [
-  { "id": "plumbers", "name": "Plumbers", "slug": "plumbers" },
-  { "id": "electricians", "name": "Electricians", "slug": "electricians" },
-  { "id": "roofing-contractors", "name": "Roofing Contractors", "slug": "roofing-contractors" },
-  { "id": "hvac-contractors", "name": "Heating and Air Conditioning", "slug": "hvac-contractors" },
-  { "id": "auto-repair", "name": "Auto Repair & Service", "slug": "auto-repair" },
-  { "id": "general-contractors", "name": "General Contractors", "slug": "general-contractors" },
-  { "id": "landscaping", "name": "Landscape Contractors", "slug": "landscaping" },
-  { "id": "dentists", "name": "Dentists", "slug": "dentists" },
-  { "id": "attorneys", "name": "Attorneys & Lawyers", "slug": "attorneys" },
-  { "id": "real-estate", "name": "Real Estate", "slug": "real-estate" }
+  { "id": "20012-000", "name": "Financial Planning Consultants", "slug": "financial-planning-consultants" },
+  { "id": "60004-000", "name": "CPA", "slug": "cpa" },
+  { "id": "60857-000", "name": "Tax Return Preparation", "slug": "tax-return-preparation" },
+  { "id": "60005-000", "name": "Accountant", "slug": "accountant" },
+  { "id": "60858-000", "name": "Tax Consultant", "slug": "tax-consultant" },
+  { "id": "60005-101", "name": "Accounting", "slug": "accounting" },
+  { "id": "60155-000", "name": "Bookkeeping Services", "slug": "bookkeeping-services" },
+  { "id": "60647-000", "name": "Payroll Services", "slug": "payroll-services" },
+  { "id": "60349-000", "name": "Estate Planning and Management", "slug": "estate-planning-and-management" },
+  { "id": "20085-000", "name": "Financial Services", "slug": "financial-services" }
 ]

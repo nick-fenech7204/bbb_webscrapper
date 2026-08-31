@@ -1,0 +1,166 @@
+{
+  "_fixture_note": "REAL response (trimmed to 3 of 15 results), captured 2026-08-31 from GET https://www.bbb.org/api/search?find_country=USA&find_text=accredited+cpa&find_type=Category&find_latlng=31.0822,-81.5498&page=1. Not a placeholder -- this is what search_parser.py's mapping is built against.",
+  "page": 1,
+  "pageSize": 15,
+  "totalPages": 15,
+  "totalResults": 728,
+  "results": [
+    {
+      "id": "0292_10142_2238",
+      "businessName": "Munninghoff, Lange & Company",
+      "address": "231 Scott Street Suite 3",
+      "city": "Covington",
+      "state": "KY",
+      "postalcode": "41011-1573",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/ky/covington/profile/cpa/munninghoff-lange-company-0292-10142",
+      "phone": [
+        "(859) 655-2300"
+      ],
+      "location": "39.07,-84.53",
+      "businessId": "10142",
+      "ratingScore": 100.0,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0292",
+      "bbbName": "BBB Cincinnati",
+      "distance": null,
+      "requestAQuoteUrl": "/cincinnati/quote/request-munninghoff-lange-company-10142",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/ky/covington/profile/cpa/munninghoff-lange-company-0292-10142/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Covington, KY"
+      ],
+      "businessLoginUrl": "/cincinnati/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0673_90048562_89699",
+      "businessName": "Copper Advisors, LLC",
+      "address": "1109 W Poinsett St Ste C",
+      "city": "Greer",
+      "state": "SC",
+      "postalcode": "29650-1318",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/sc/greenville/profile/cpa/copper-advisors-llc-0673-90048562",
+      "phone": [
+        "(864) 877-9691"
+      ],
+      "location": "34.94174575805664,-82.24696350097656",
+      "businessId": "90048562",
+      "ratingScore": 100.0,
+      "score": null,
+      "logoUri": "https://m.bbb.org/prod/ProfileImages/2025/1540d403-848f-4583-90f0-27daead74641.jpg",
+      "tobId": "60004-000",
+      "bbbId": "0673",
+      "bbbName": "BBB of Upstate South Carolina",
+      "distance": null,
+      "requestAQuoteUrl": "/upstatesc/quote/request-copper-advisors-llc-90048562",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": "/us/sc/greer/profile/cpa/copper-advisors-llc-0673-90048562/addressId/89699",
+      "leaveReviewUrl": "/us/sc/greenville/profile/cpa/copper-advisors-llc-0673-90048562/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "SC"
+      ],
+      "businessLoginUrl": "/upstatesc/public/login/businesslogin.aspx",
+      "accreditationStatus": null
+    },
+    {
+      "id": "1216_1425332_237272",
+      "businessName": "Simpler Tax Relief, LLC",
+      "address": "",
+      "city": "Ben Lomond",
+      "state": "CA",
+      "postalcode": "95005-9314",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/ca/ben-lomond/profile/cpa/simpler-tax-relief-llc-1216-1425332",
+      "phone": [
+        "(831) 709-0132"
+      ],
+      "location": "37.08431243896485,-122.0934829711914",
+      "businessId": "1425332",
+      "ratingScore": 100.0,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "1216",
+      "bbbName": "BBB of Los Angeles & Silicon Valley",
+      "distance": null,
+      "requestAQuoteUrl": "/losangelessiliconvalley/quote/request-simpler-tax-relief-llc-1425332",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/ca/ben-lomond/profile/cpa/simpler-tax-relief-llc-1216-1425332/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Scotts Valley, CA"
+      ],
+      "businessLoginUrl": "/losangelessiliconvalley/login",
+      "accreditationStatus": null
+    }
+  ],
+  "heading": {
+    "searchInputText": "accredited cpa",
+    "searchLocationText": "USA"
+  }
+}

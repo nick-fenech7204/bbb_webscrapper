@@ -31,12 +31,16 @@ class ETLPipeline:
         self,
         category: Category,
         location: Location,
-        max_pages: int = 1,
+        max_pages: int | None = None,
         fetch_details: bool = False,
     ) -> dict[str, Any]:
         """Search BBB by category + location, optionally follow through to
         each business's profile page, transform, dedupe, and load into every
         configured sink.
+
+        `max_pages=None` (the default) pages through up to BBB's own cap
+        (`cfg.bbb_max_search_pages`, currently 15 / ~300 results) -- pass a
+        smaller number while testing to avoid burning through pages.
         """
         with Extractor(stats=self.stats) as extractor:
             summaries = extractor.extract_search(category, location, max_pages=max_pages)

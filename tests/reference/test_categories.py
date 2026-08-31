@@ -6,9 +6,11 @@ from bbb_scraper.reference.categories import CategoryDirectory
 def test_load_from_real_categories_file():
     directory = CategoryDirectory.load(Path("data/reference/categories.json"))
     assert len(directory.all()) >= 1
-    plumbers = directory.get("plumbers")
-    assert plumbers is not None
-    assert plumbers.name == "Plumbers"
+    # "60004-000" is BBB's real category id for CPA (confirmed 2026-08-31 --
+    # see data/reference/README.md), not a placeholder.
+    cpa = directory.get("60004-000")
+    assert cpa is not None
+    assert cpa.name == "CPA"
 
 
 def test_load_missing_file_returns_empty_directory(tmp_path):

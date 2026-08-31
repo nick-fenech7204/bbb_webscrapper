@@ -1,74 +1,129 @@
 """
-BBB search/listing requests, filtered by industry/category + location.
+BBB search -- real JSON API, not HTML.
 
-TODO(you): confirm the exact search URL/query params from a real browser or
-curl capture. `build_search_url` currently sends both `find_category`
-(assumed to take Category.id) and `find_text` (category name, as a
-belt-and-suspenders text fallback in case BBB's search wants free text even
-when filtering by category) plus `find_loc`. Adjust the param names/values
-to match what BBB's search actually accepts once you've inspected a real
-request -- everything downstream (capture, parsing) doesn't care what the
-URL looks like, so this is the only function you should need to touch.
+Confirmed 2026-08-31 against a captured working request: BBB's search
+results are served directly as JSON from `/api/search`, so there's no
+HTML/embedded-JSON unwrapping needed for search at all (unlike the
+individual business profile page, which does still appear to embed its data
+in a preloaded-state script -- see business.py / business_parser.py).
+
+Params confirmed working end-to-end via live requests (2026-08-31):
+    find_country = "USA"
+    find_latlng  = "<lat>,<lon>"          confirmed working
+    find_loc     = "<City, ST>"           also confirmed working, on its own,
+                                           without find_latlng present at all
+    find_text    = "<category phrase>"    e.g. "accredited cpa" or "CPA" --
+                                           this IS the category; there's no
+                                           separate opaque category id in the
+                                           request itself
+    find_type    = "Category"             static, always this exact value
+    page         = 1..totalPages          response reports its own totalPages
+                                           (capped at 15) -- see etl/extract.py
+
+`find_latlng` is preferred when a Location carries lat/lon (more precise),
+falling back to `find_loc` otherwise -- both paths are live-confirmed, not a
+guess in either direction.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from urllib.parse import urlencode
 
+from bbb_scraper.config import Settings, settings as default_settings
+from bbb_scraper.exceptions import ParsingError
 from bbb_scraper.reference.models import Category, Location
 from bbb_scraper.scraping.capture import CaptureResult, RawCapture
 from bbb_scraper.scraping.client import HttpClient
 from bbb_scraper.utils.hashing import sha256_hex
 
-BASE_SEARCH_URL = "https://www.bbb.org/search"
 
-
-def build_search_url(category: Category, location: Location, page: int = 1) -> str:
-    params = {
-        "find_category": category.id,
+def build_search_params(
+    category: Category, location: Location, page: int = 1, cfg: Settings | None = None
+) -> dict[str, str | int]:
+    cfg = cfg or default_settings
+    params: dict[str, str | int] = {
+        "find_country": cfg.bbb_find_country,
         "find_text": category.name,
-        "find_loc": location.display,
+        "find_type": "Category",
         "page": page,
     }
-    return f"{BASE_SEARCH_URL}?{urlencode(params)}"
+    if location.lat is not None and location.lon is not None:
+        params["find_latlng"] = f"{location.lat},{location.lon}"
+    else:
+        params["find_loc"] = location.display
+    return params
+
+
+def build_referer(category: Category, location: Location, page: int = 1) -> str:
+    """Best-effort referer mirroring the search HTML page a real browser
+    would have been on when this XHR fired -- matches how real traffic
+    looks, not required for the request to succeed.
+    """
+    params = {
+        "find_country": "USA",
+        "find_text": category.name,
+        "find_loc": location.display,
+        "find_type": "Category",
+        "page": page,
+    }
+    return f"https://www.bbb.org/search?{urlencode(params)}"
 
 
 @dataclass
 class SearchPageResult:
-    url: str
     category: Category
     location: Location
     page: int
     status_code: int
-    html: str
+    data: dict
     capture: CaptureResult
 
 
 class BBBSearchClient:
-    def __init__(self, http_client: HttpClient, capture: RawCapture | None = None):
+    def __init__(
+        self,
+        http_client: HttpClient,
+        capture: RawCapture | None = None,
+        cfg: Settings | None = None,
+    ):
         self.http = http_client
         self.capture = capture or RawCapture()
+        self.cfg = cfg or default_settings
 
     def search(self, category: Category, location: Location, page: int = 1) -> SearchPageResult:
-        url = build_search_url(category, location, page=page)
-        response = self.http.get(url)
+        params = build_search_params(category, location, page=page, cfg=self.cfg)
+        referer = build_referer(category, location, page=page)
 
-        identifier = f"{category.id}_{location.display}_p{page}_{sha256_hex(url, 8)}"
+        response = self.http.get(
+            self.cfg.bbb_search_url, params=params, headers={"referer": referer}
+        )
+
+        try:
+            data = response.json()
+        except ValueError as exc:
+            raise ParsingError(
+                f"Expected JSON from {self.cfg.bbb_search_url}, got something else "
+                f"(status={response.status_code}, "
+                f"content-type={response.headers.get('content-type')}). Usually means "
+                "the session cookies expired or the proxy IP got Cloudflare-challenged "
+                "-- see bbb_scraper/scraping/session.py."
+            ) from exc
+
+        identifier = f"{category.name}_{location.display}_p{page}_{sha256_hex(response.url, 8)}"
         captured = self.capture.save(
             kind="search",
             identifier=identifier,
             content=response.text,
-            ext="html",
-            url=url,
+            ext="json",
+            url=response.url,
             status_code=response.status_code,
         )
 
         return SearchPageResult(
-            url=url,
             category=category,
             location=location,
             page=page,
             status_code=response.status_code,
-            html=response.text,
+            data=data,
             capture=captured,
         )

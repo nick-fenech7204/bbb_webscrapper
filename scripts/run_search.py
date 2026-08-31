@@ -93,7 +93,10 @@ def main() -> int:
         "--category", default=None, help="Category id/slug/name, e.g. 'plumbers'"
     )
     parser.add_argument("--location", default=None, help="'City, ST' or ZIP code")
-    parser.add_argument("--pages", type=int, default=1, help="Max listing pages to fetch")
+    parser.add_argument(
+        "--pages", type=int, default=1,
+        help="Max listing pages to fetch (BBB caps at 15 pages / ~300 results per search)",
+    )
     parser.add_argument(
         "--details", action="store_true", help="Also fetch each business's profile page"
     )

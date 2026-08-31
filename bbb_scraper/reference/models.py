@@ -15,11 +15,14 @@ from pydantic import BaseModel
 class Category(BaseModel):
     """One entry from BBB's industry/category taxonomy.
 
-    `id` is whatever BBB uses to filter by category in the search request
-    (a numeric id, a slug, whatever their `find_category`-equivalent param
-    expects -- confirm against a real captured search request). `slug` is
-    optional and only useful if BBB's URLs/params use a human-readable slug
-    instead of / in addition to the id.
+    Confirmed 2026-08-31 against a real captured search request: BBB doesn't
+    take a separate opaque category id in the search API -- `name` (e.g.
+    "accredited cpa") is sent directly as the `find_text` param, alongside a
+    static `find_type=Category`. So `id` here is purely an *internal* stable
+    key (what CategoryDirectory.get()/search() match against, what shows up
+    in data/reference/categories.json) -- it never goes in the request
+    itself. `slug` is unused by the request too; kept in case it's useful
+    for URLs later.
     """
 
     id: str
@@ -32,12 +35,19 @@ class Location(BaseModel):
 
     Keeps `raw` around unconditionally so callers/URL builders always have
     something to fall back to even if parsing didn't recognize the shape.
+
+    `lat`/`lon` are optional and not populated by `parse_location` (there's
+    no geocoding step yet). `search.py` prefers `find_latlng` when they're
+    present (more precise) and falls back to plain `find_loc` text
+    otherwise -- both are live-confirmed working, so either is fine.
     """
 
     raw: str
     zip_code: str | None = None
     city: str | None = None
     state: str | None = None
+    lat: float | None = None
+    lon: float | None = None
 
     @property
     def display(self) -> str:

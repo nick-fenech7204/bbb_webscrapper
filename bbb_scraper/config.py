@@ -60,6 +60,21 @@ class Settings(BaseSettings):
         default=Path("data/reference/categories.json"), alias="CATEGORIES_FILE"
     )
 
+    # --- BBB request settings -------------------------------------------------
+    # Session cookies/headers captured from a real browser (gitignored, never
+    # committed) -- see bbb_scraper/scraping/session.py.
+    bbb_session_file: Path = Field(
+        default=Path("data/secrets/bbb_session.json"), alias="BBB_SESSION_FILE"
+    )
+    bbb_search_url: str = Field(
+        default="https://www.bbb.org/api/search", alias="BBB_SEARCH_URL"
+    )
+    bbb_find_country: str = Field(default="USA", alias="BBB_FIND_COUNTRY")
+    # BBB caps search results at 300 (15 pages x 20) per (query, location).
+    # Getting more than that for a broad query is a later problem: overlap
+    # multiple narrower searches and dedupe -- not handled here yet.
+    bbb_max_search_pages: int = Field(default=15, alias="BBB_MAX_SEARCH_PAGES")
+
     # --- Logging ---------------------------------------------------------------
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     log_dir: Path = Field(default=Path("logs"), alias="LOG_DIR")

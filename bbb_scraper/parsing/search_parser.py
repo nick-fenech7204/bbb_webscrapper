@@ -1,37 +1,47 @@
 """
-Parse a BBB search/listing page into BusinessSummary records.
+Parse a BBB `/api/search` JSON response into BusinessSummary records.
 
-TODO(you): `_iter_listing_items` and `_map_listing_item` encode a *placeholder*
-schema (see tests/fixtures/search_listing_sample.html) since we haven't
-inspected real BBB listing JSON yet. Once you've captured a real page:
-  1. Save it to tests/fixtures/search_listing_sample.html (replacing the
-     placeholder).
-  2. Adjust SCRIPT_TYPE / _iter_listing_items to find the right script
-     tag(s) and array of items.
-  3. Adjust _map_listing_item's field paths.
-  4. tests/parsing/test_search_parser.py will tell you when it's right.
+Confirmed 2026-08-31 against a real captured response (see
+tests/fixtures/search_listing_sample.json) -- this mapping is no longer a
+guess. The response's top-level shape:
 
-Everything else (the public `parse_search_results` signature, capture,
-ETL wiring) does not need to change.
+    {
+      "page": 1, "pageSize": 15, "totalPages": 15, "totalResults": 728,
+      "results": [ {...one business...}, ... ],
+      "filters": {...category/state filter options...},
+      "relatedCategories": [...], "mostPopularCategories": [...],
+      ...
+    }
+
+`totalPages`/`totalResults`/`pageSize` are read by etl/extract.py to decide
+when to stop paging -- not needed here, this module only maps `results`.
 """
 from __future__ import annotations
 
 from typing import Any
 
 from bbb_scraper.logging_setup import get_logger
-from bbb_scraper.parsing.json_extract import extract_json_scripts
 from bbb_scraper.parsing.models import BusinessSummary
 from bbb_scraper.reference.models import Category, Location
 from bbb_scraper.utils.stats import RunStats, PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED
 
 logger = get_logger(__name__)
 
-# Placeholder: adjust once real markup is inspected.
-SCRIPT_TYPE = "application/json"
+BBB_BASE_URL = "https://www.bbb.org"
+
+# Keys explicitly mapped below -- everything else on a result item lands in
+# raw_extra automatically, so nothing gets silently dropped as BBB's schema
+# is explored further (e.g. serviceArea*, requestAQuoteUrl*, tobText/tobId,
+# charitySeal/isCharity/accreditedCharity, businessLoginUrl, logoUri, ...).
+_MAPPED_KEYS = {
+    "id", "businessId", "businessName", "reportUrl", "phone", "address",
+    "city", "state", "postalcode", "location", "rating", "ratingScore",
+    "bbbMember", "categories", "bbbId", "bbbName",
+}
 
 
 def parse_search_results(
-    html: str,
+    data: dict[str, Any],
     *,
     category: Category | None = None,
     location: Location | None = None,
@@ -41,36 +51,41 @@ def parse_search_results(
     stats = stats or RunStats()
     records: list[BusinessSummary] = []
 
-    for blob in extract_json_scripts(html, content_type=SCRIPT_TYPE):
-        for item in _iter_listing_items(blob):
-            try:
-                summary = _map_listing_item(
-                    item, category=category, location=location, page=page
-                )
-                records.append(summary)
-                stats.incr(RECORDS_EXTRACTED)
-            except Exception:
-                stats.incr(PARSE_FAILURES)
-                logger.exception("Failed to map a listing item, skipping it")
+    for item in _iter_listing_items(data):
+        try:
+            summary = _map_listing_item(item, category=category, location=location, page=page)
+            records.append(summary)
+            stats.incr(RECORDS_EXTRACTED)
+        except Exception:
+            stats.incr(PARSE_FAILURES)
+            logger.exception("Failed to map a listing item, skipping it")
 
     stats.incr(PAGES_PARSED)
     if not records:
         logger.warning(
-            "No listing records extracted -- BBB markup may have changed "
-            "(check SCRIPT_TYPE / _iter_listing_items in search_parser.py)"
+            "No listing records extracted for category=%r location=%r page=%s -- "
+            "genuinely no results, or BBB changed its response shape (check "
+            "_iter_listing_items in search_parser.py)",
+            category.name if category else None, location.display if location else None, page,
         )
     return records
 
 
-def _iter_listing_items(blob: dict[str, Any]):
-    """Yield each individual business's raw dict from a parsed JSON blob.
-
-    Placeholder assumption: `{"results": [ {...}, {...} ]}`. Adjust to match
-    the real shape once inspected.
-    """
-    results = blob.get("results")
+def _iter_listing_items(data: dict[str, Any]):
+    results = data.get("results")
     if isinstance(results, list):
         yield from results
+
+
+def _parse_latlon(location_str: str | None) -> tuple[float | None, float | None]:
+    """BBB's per-result `location` field is a plain "lat,lon" string."""
+    if not location_str or "," not in location_str:
+        return None, None
+    try:
+        lat_str, lon_str = location_str.split(",", 1)
+        return float(lat_str), float(lon_str)
+    except ValueError:
+        return None, None
 
 
 def _map_listing_item(
@@ -80,31 +95,47 @@ def _map_listing_item(
     location: Location | None,
     page: int | None,
 ) -> BusinessSummary:
-    """Map one raw listing-item dict to BusinessSummary.
+    bbb_office_id = item.get("bbbId")
+    business_id = item.get("businessId")
+    bbb_id = f"{bbb_office_id}-{business_id}" if bbb_office_id and business_id else None
 
-    Placeholder field paths -- adjust to match real BBB listing JSON.
-    """
-    known_keys = {
-        "id", "businessName", "phone", "address", "city", "state",
-        "postalCode", "url", "rating", "accredited", "categories",
-    }
+    report_url = item.get("reportUrl")
+    profile_url = f"{BBB_BASE_URL}{report_url}" if report_url else None
 
-    summary = BusinessSummary(
-        bbb_id=item.get("id"),
-        name=item.get("businessName") or item.get("name") or "UNKNOWN",
-        profile_url=item.get("url"),
-        phone=item.get("phone"),
+    phones = item.get("phone") or []
+    phone = phones[0] if phones else None
+
+    lat, lon = _parse_latlon(item.get("location"))
+
+    categories = [c["name"] for c in (item.get("categories") or []) if c.get("name")]
+
+    raw_extra = {k: v for k, v in item.items() if k not in _MAPPED_KEYS}
+    raw_extra["search_result_id"] = item.get("id")  # composite, context-specific -- see bbb_id docstring
+    if len(phones) > 1:
+        raw_extra["phones"] = phones
+    if item.get("categories"):
+        raw_extra["categories_full"] = item["categories"]  # [{id, name}, ...]
+
+    return BusinessSummary(
+        bbb_id=bbb_id,
+        name=item.get("businessName") or "UNKNOWN",
+        profile_url=profile_url,
+        phone=phone,
         address=item.get("address"),
         city=item.get("city"),
         state=item.get("state"),
-        postal_code=item.get("postalCode"),
+        postal_code=item.get("postalcode"),
+        lat=lat,
+        lon=lon,
         rating=item.get("rating"),
-        accredited=item.get("accredited"),
-        categories=item.get("categories") or [],
+        rating_score=item.get("ratingScore"),
+        accredited=item.get("bbbMember"),
+        categories=categories,
+        bbb_office_id=bbb_office_id,
+        bbb_office_name=item.get("bbbName"),
         search_category_id=category.id if category else None,
         search_category_name=category.name if category else None,
         search_location=location.display if location else None,
         source_page=page,
-        raw_extra={k: v for k, v in item.items() if k not in known_keys},
+        raw_extra=raw_extra,
     )
-    return summary
