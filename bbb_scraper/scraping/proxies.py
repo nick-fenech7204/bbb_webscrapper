@@ -1,17 +1,25 @@
 """
 Proxy wiring -- provider-agnostic.
 
-Built against Decodo (gate.decodo.com), but works with any provider that
-hands out plain `username:password@host:port` credentials -- just fill in
+Built against Decodo, but works with any provider that hands out plain
+`username:password@host:port` credentials -- just fill in
 PROXY_HOST/PROXY_PORT/PROXY_USERNAME/PROXY_PASSWORD in .env, no code changes
 needed. Nothing here is Decodo-specific.
 
-Sticky sessions / country targeting: some rotating-residential providers
-(IPRoyal, Decodo, others) let you control routing by embedding options into
-the proxy *username*, e.g. `user-session-abc123-country-us`. That's opt-in
-here (only applied if you pass a session_id or set PROXY_COUNTRY) since it's
-not part of the plain auth flow and the exact syntax varies by provider --
-confirm against your provider's docs before relying on it.
+Country targeting: confirmed against Decodo (2026-08-31) that this is done
+via HOSTNAME, not a username suffix -- e.g. `us.decodo.com` routes through a
+US exit node, `gate.decodo.com` is undirected/random-country. So for Decodo,
+just set PROXY_HOST to the country-specific hostname; no code here needs to
+change.
+
+Sticky sessions / country targeting via username: some rotating-residential
+providers *additionally* let you control routing by embedding options into
+the proxy username, e.g. `user-session-abc123-country-us`. That path is kept
+here as opt-in (only applied if you pass a session_id or set PROXY_COUNTRY)
+but is unverified for Decodo specifically -- confirm against your provider's
+docs before relying on it, and prefer the hostname approach above if your
+provider supports it (it does not require username/password auth, which
+matters if you're relying on IP whitelisting instead of credentials).
 """
 from __future__ import annotations
 

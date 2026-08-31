@@ -102,11 +102,19 @@ pip install -e ".[dev,excel,sql]"
 copy .env.example .env
 ```
 
-Fill in `.env` with your proxy credentials (`PROXY_HOST`, `PROXY_PORT`,
-`PROXY_USERNAME`, `PROXY_PASSWORD`) -- the config is provider-agnostic, so
-this works with Decodo, IPRoyal, or anything else that hands out plain
-`user:pass@host:port` credentials; no code changes needed to switch
-providers. Then check it's actually working:
+Fill in `.env` with your proxy details (`PROXY_HOST`, `PROXY_PORT`, and
+`PROXY_USERNAME`/`PROXY_PASSWORD` if your provider needs them -- leave those
+two blank if you're using IP whitelisting instead). The config is
+provider-agnostic: works with Decodo, IPRoyal, or anything else that hands
+out plain `user:pass@host:port`, no code changes needed to switch providers.
+
+For Decodo specifically: country targeting is done via **hostname**, e.g.
+`PROXY_HOST=us.decodo.com` for a US exit node vs. `gate.decodo.com` for
+undirected/random-country (confirmed 2026-08-31 -- see
+`bbb_scraper/scraping/proxies.py`).
+
+Then check it's actually working -- this hits an IP-check endpoint through
+the configured proxy and prints where it thinks you're coming from:
 
 ```bash
 python scripts/check_proxy.py
