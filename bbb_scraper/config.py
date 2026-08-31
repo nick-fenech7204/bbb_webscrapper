@@ -20,15 +20,22 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    # --- Proxy (IPRoyal) -------------------------------------------------
+    # --- Proxy ---------------------------------------------------------------
+    # Provider-agnostic: works with Decodo, IPRoyal, or anything else that
+    # hands out a plain host/port + username/password. Point these at
+    # whichever provider you're using -- no code changes needed to switch.
     proxy_enabled: bool = Field(default=True, alias="PROXY_ENABLED")
-    iproyal_host: str = Field(default="", alias="IPROYAL_HOST")
-    iproyal_port: int = Field(default=0, alias="IPROYAL_PORT")
-    iproyal_username: str = Field(default="", alias="IPROYAL_USERNAME")
-    iproyal_password: str = Field(default="", alias="IPROYAL_PASSWORD")
-    iproyal_protocol: str = Field(default="http", alias="IPROYAL_PROTOCOL")
-    iproyal_country: str | None = Field(default=None, alias="IPROYAL_COUNTRY")
-    iproyal_session_prefix: str = Field(default="bbb", alias="IPROYAL_SESSION_PREFIX")
+    proxy_host: str = Field(default="", alias="PROXY_HOST")
+    proxy_port: int = Field(default=0, alias="PROXY_PORT")
+    proxy_username: str = Field(default="", alias="PROXY_USERNAME")
+    proxy_password: str = Field(default="", alias="PROXY_PASSWORD")
+    proxy_protocol: str = Field(default="http", alias="PROXY_PROTOCOL")
+    # Optional: some rotating-residential providers (IPRoyal, Decodo, others)
+    # support embedding sticky-session / country targeting into the
+    # username, e.g. "user-session-abc123-country-us". Leave unset unless
+    # you've confirmed your provider uses this convention.
+    proxy_country: str | None = Field(default=None, alias="PROXY_COUNTRY")
+    proxy_session_prefix: str = Field(default="bbb", alias="PROXY_SESSION_PREFIX")
 
     # --- HTTP client -------------------------------------------------------
     http_user_agent: str = Field(

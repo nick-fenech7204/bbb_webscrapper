@@ -34,7 +34,7 @@ bbb_scraper/
     categories.py            # CategoryDirectory: load/search data/reference/categories.json
   scraping/
     client.py           # HttpClient: proxy + retry + rate limit + logging
-    proxies.py           # IPRoyal proxy URL construction
+    proxies.py           # provider-agnostic proxy URL construction (Decodo, IPRoyal, ...)
     capture.py            # save every raw response to data/raw/ + manifest.jsonl
     search.py              # BBB search/listing requests, filtered by Category + Location
     business.py             # BBB business-profile page requests
@@ -102,10 +102,18 @@ pip install -e ".[dev,excel,sql]"
 copy .env.example .env
 ```
 
-Fill in `.env` with your IPRoyal credentials (`IPROYAL_HOST`, `IPROYAL_PORT`,
-`IPROYAL_USERNAME`, `IPROYAL_PASSWORD`). Nothing secret lives in the repo --
-`config.py` reads everything from environment variables / `.env`, and `.env`
-is gitignored.
+Fill in `.env` with your proxy credentials (`PROXY_HOST`, `PROXY_PORT`,
+`PROXY_USERNAME`, `PROXY_PASSWORD`) -- the config is provider-agnostic, so
+this works with Decodo, IPRoyal, or anything else that hands out plain
+`user:pass@host:port` credentials; no code changes needed to switch
+providers. Then check it's actually working:
+
+```bash
+python scripts/check_proxy.py
+```
+
+Nothing secret lives in the repo -- `config.py` reads everything from
+environment variables / `.env`, and `.env` is gitignored.
 
 ## Running tests
 
@@ -172,8 +180,8 @@ traced back to the exact HTML that caused it.
 ## Not yet wired up (by design)
 
 - Proxy session rotation on block/challenge (`BlockedError` is raised and
-  surfaced, but doesn't yet trigger an automatic new IPRoyal session --
-  add that in `etl/extract.py` once you see how BBB actually responds to
+  surfaced, but doesn't yet trigger an automatic new proxy session -- add
+  that in `etl/extract.py` once you see how BBB actually responds to
   blocks).
 - Real BBB search URL params / listing+state JSON schema (see above).
 - Upsert-on-conflict for `SQLSink` (currently append-only).
