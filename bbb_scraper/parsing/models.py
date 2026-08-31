@@ -22,10 +22,21 @@ class BusinessSummary(BaseModel):
     """
 
     bbb_id: str | None = None
-    """Stable id: "{bbbId}-{businessId}" from the response. Not BBB's raw
-    `id` field -- that one includes a third, search-context-specific segment
-    that isn't guaranteed stable across different searches for the same
-    business (kept in raw_extra as "search_result_id")."""
+    """BBB's raw `id` field (e.g. "0292_3089_178405"), used as-is. This is
+    per-LISTING (one physical address), not per-company: a business with
+    several branches shows up as several results sharing `business_id` +
+    `bbb_office_id` but a different `bbb_id` per address -- confirmed
+    2026-08-31 (see tests/fixtures/search_listing_sample.json, "Barnes,
+    Dennig & Company" appears 3x, one per branch). An earlier version of
+    this mapping used "{bbbId}-{businessId}" instead, on the wrong
+    assumption that the third segment of the raw id was ephemeral/
+    search-context-specific -- that collapsed distinct branches together at
+    dedupe time. If you ever want company-level grouping instead of
+    per-branch, group by `business_id` + `bbb_office_id`, not by `bbb_id`."""
+    business_id: str | None = None
+    """BBB's raw `businessId` -- identifies the company, shared across all
+    of its branch listings. Combine with `bbb_office_id` for a company-level
+    grouping key (not globally unique alone -- see bbb_id's docstring)."""
     name: str
     profile_url: str | None = None
     phone: str | None = None

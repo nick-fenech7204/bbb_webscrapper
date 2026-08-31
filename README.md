@@ -147,10 +147,22 @@ cookies" below). The response shape is confirmed too -- `scraping/search.py`,
 `parsing/search_parser.py`'s field mapping, `etl/extract.py`'s pagination
 loop (which reads the response's own `page`/`pageSize`/`totalPages`/
 `totalResults` rather than guessing), and `tests/fixtures/search_listing_sample.json`
-(a real trimmed response, not synthetic) are all built directly against a
-live capture, not a guess. `data/reference/categories.json` also holds 10
-real `(id, name)` pairs pulled from that response's category filters, though
-just that one narrow finance-related slice, not the full taxonomy.
+(a real, full, untrimmed response, not synthetic) are all built directly
+against two independent live captures, not a guess.
+
+**One non-obvious thing worth knowing:** a search result row is per-*listing*
+(one physical address), not per-*company*. A business with several branches
+shows up as several rows sharing `business_id` + `bbb_office_id` but a
+different `bbb_id` per address -- confirmed via a business that appeared 3x
+on one page, once per branch (see `BusinessSummary.bbb_id`'s docstring and
+`tests/parsing/test_search_parser.py::test_multi_branch_business_keeps_each_listing_distinct`).
+Deduping on the wrong key here silently merges distinct branches into one
+record -- an early version of this mapping did exactly that before a second
+real capture caught it.
+
+`data/reference/categories.json` also holds 10 real `(id, name)` pairs
+pulled from that response's category filters -- just that one narrow
+finance-related slice though, not the full taxonomy.
 
 **Still placeholder:**
 

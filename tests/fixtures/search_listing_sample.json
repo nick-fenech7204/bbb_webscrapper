@@ -1,61 +1,36 @@
 {
-  "_fixture_note": "REAL response (trimmed to 3 of 15 results), captured 2026-08-31 from GET https://www.bbb.org/api/search?find_country=USA&find_text=accredited+cpa&find_type=Category&find_latlng=31.0822,-81.5498&page=1. Not a placeholder -- this is what search_parser.py's mapping is built against.",
+  "_fixture_note": "REAL, full page-1 response (15 of 728 results), captured 2026-08-31 from GET https://www.bbb.org/api/search?find_country=USA&find_text=accredited+cpa&find_type=Category&find_loc=Saint+Johns%2C+FL&page=1. Not trimmed/synthetic. Deliberately kept full-size because it contains real edge cases search_parser.py is tested against: a business with multiple branch listings sharing bbbId+businessId but different id/address (Barnes, Dennig -- 3x; Copper Advisors -- 2x; Curae -- 2x; CMMS -- 2x), a business with 6 phone numbers, an empty-string address, and null serviceAreasSummary/hasServiceArea=false.",
   "page": 1,
   "pageSize": 15,
   "totalPages": 15,
-  "totalResults": 728,
-  "results": [
+  "sortTypes": [
     {
-      "id": "0292_10142_2238",
-      "businessName": "Munninghoff, Lange & Company",
-      "address": "231 Scott Street Suite 3",
-      "city": "Covington",
-      "state": "KY",
-      "postalcode": "41011-1573",
-      "tobText": "CPA",
-      "rating": "A+",
-      "bbbMember": true,
-      "charitySeal": false,
-      "isCharity": 0,
-      "accreditedCharity": true,
-      "reportUrl": "/us/ky/covington/profile/cpa/munninghoff-lange-company-0292-10142",
-      "phone": [
-        "(859) 655-2300"
-      ],
-      "location": "39.07,-84.53",
-      "businessId": "10142",
-      "ratingScore": 100.0,
-      "score": null,
-      "logoUri": null,
-      "tobId": "60004-000",
-      "bbbId": "0292",
-      "bbbName": "BBB Cincinnati",
-      "distance": null,
-      "requestAQuoteUrl": "/cincinnati/quote/request-munninghoff-lange-company-10142",
-      "requestAQuoteUrlId": 739,
-      "localReportUrl": null,
-      "leaveReviewUrl": "/us/ky/covington/profile/cpa/munninghoff-lange-company-0292-10142/leave-a-review",
-      "raqEnabled": true,
-      "outOfBusinessStatus": null,
-      "categories": [
-        {
-          "id": "60004-000",
-          "name": "CPA"
-        },
-        {
-          "id": "20012-000",
-          "name": "Financial Planning Consultants"
-        }
-      ],
-      "serviceAreaDescription": null,
-      "hasServiceArea": true,
-      "serviceArea": null,
-      "serviceAreasSummary": [
-        "Covington, KY"
-      ],
-      "businessLoginUrl": "/cincinnati/login",
-      "accreditationStatus": null
+      "label": "Best Match",
+      "value": "Relevance",
+      "isActive": true
     },
+    {
+      "label": "Distance",
+      "value": "Distance",
+      "isActive": false
+    },
+    {
+      "label": "Rating",
+      "value": "Rating",
+      "isActive": false
+    },
+    {
+      "label": "A-Z",
+      "value": "AToZ",
+      "isActive": false
+    },
+    {
+      "label": "Z-A",
+      "value": "ZToA",
+      "isActive": false
+    }
+  ],
+  "results": [
     {
       "id": "0673_90048562_89699",
       "businessName": "Copper Advisors, LLC",
@@ -75,7 +50,7 @@
       ],
       "location": "34.94174575805664,-82.24696350097656",
       "businessId": "90048562",
-      "ratingScore": 100.0,
+      "ratingScore": 100,
       "score": null,
       "logoUri": "https://m.bbb.org/prod/ProfileImages/2025/1540d403-848f-4583-90f0-27daead74641.jpg",
       "tobId": "60004-000",
@@ -126,7 +101,7 @@
       ],
       "location": "37.08431243896485,-122.0934829711914",
       "businessId": "1425332",
-      "ratingScore": 100.0,
+      "ratingScore": 100,
       "score": null,
       "logoUri": null,
       "tobId": "60004-000",
@@ -157,10 +132,1356 @@
       ],
       "businessLoginUrl": "/losangelessiliconvalley/login",
       "accreditationStatus": null
+    },
+    {
+      "id": "0673_90048562_89697",
+      "businessName": "Copper Advisors, LLC",
+      "address": "777 Lowndes Hill Road Building 2 Suite 102",
+      "city": "Greenville",
+      "state": "SC",
+      "postalcode": "29607",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/sc/greenville/profile/cpa/copper-advisors-llc-0673-90048562",
+      "phone": [
+        "(864) 407-4200"
+      ],
+      "location": "34.85634994506836,-82.35795593261719",
+      "businessId": "90048562",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": "https://m.bbb.org/prod/ProfileImages/2025/1540d403-848f-4583-90f0-27daead74641.jpg",
+      "tobId": "60004-000",
+      "bbbId": "0673",
+      "bbbName": "BBB of Upstate South Carolina",
+      "distance": null,
+      "requestAQuoteUrl": "/upstatesc/quote/request-copper-advisors-llc-90048562",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/sc/greenville/profile/cpa/copper-advisors-llc-0673-90048562/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "SC"
+      ],
+      "businessLoginUrl": "/upstatesc/public/login/businesslogin.aspx",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0292_10142_2238",
+      "businessName": "Munninghoff, Lange & Company",
+      "address": "231 Scott Street Suite 3",
+      "city": "Covington",
+      "state": "KY",
+      "postalcode": "41011-1573",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/ky/covington/profile/cpa/munninghoff-lange-company-0292-10142",
+      "phone": [
+        "(859) 655-2300"
+      ],
+      "location": "39.07,-84.53",
+      "businessId": "10142",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0292",
+      "bbbName": "BBB Cincinnati",
+      "distance": null,
+      "requestAQuoteUrl": "/cincinnati/quote/request-munninghoff-lange-company-10142",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/ky/covington/profile/cpa/munninghoff-lange-company-0292-10142/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Covington, KY"
+      ],
+      "businessLoginUrl": "/cincinnati/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0292_3089_1134",
+      "businessName": "Barnes, Dennig & Company, LTD.",
+      "address": "150 E 4th St Ste 300",
+      "city": "Cincinnati",
+      "state": "OH",
+      "postalcode": "45202-4186",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089",
+      "phone": [
+        "(513) 241-8313"
+      ],
+      "location": "39.10039,-84.51029",
+      "businessId": "3089",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0292",
+      "bbbName": "BBB Cincinnati",
+      "distance": null,
+      "requestAQuoteUrl": "/cincinnati/quote/request-barnes-dennig-company-ltd-3089",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60349-000",
+          "name": "Estate Planning and Management"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": "Ohio | Kentucky | Indiana",
+      "serviceAreasSummary": [
+        "KY",
+        "OH"
+      ],
+      "businessLoginUrl": "/cincinnati/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0292_3089_178405",
+      "businessName": "Barnes, Dennig & Company, LTD.",
+      "address": "2617 Legends Way",
+      "city": "Crestview Hills",
+      "state": "KY",
+      "postalcode": "41017-2363",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089",
+      "phone": [
+        "(859) 344-6400"
+      ],
+      "location": "39.01697,-84.56579",
+      "businessId": "3089",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0292",
+      "bbbName": "BBB Cincinnati",
+      "distance": null,
+      "requestAQuoteUrl": "/cincinnati/quote/request-barnes-dennig-company-ltd-3089",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": "/us/ky/crestview-hills/profile/cpa/barnes-dennig-company-ltd-0292-3089/addressId/178405",
+      "leaveReviewUrl": "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60349-000",
+          "name": "Estate Planning and Management"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": "Ohio | Kentucky | Indiana",
+      "serviceAreasSummary": [
+        "KY",
+        "OH"
+      ],
+      "businessLoginUrl": "/cincinnati/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0292_3089_LR_3843998",
+      "businessName": "Barnes, Dennig & Company, LTD",
+      "address": "40 N Main St Ste 2000",
+      "city": "Dayton",
+      "state": "OH",
+      "postalcode": "45423",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089",
+      "phone": [
+        "(937) 223-7272"
+      ],
+      "location": "39.76013,-84.19187",
+      "businessId": "3089",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0292",
+      "bbbName": "BBB Cincinnati",
+      "distance": null,
+      "requestAQuoteUrl": "/cincinnati/quote/request-barnes-dennig-company-ltd-3089",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": "/us/oh/dayton/profile/cpa/barnes-dennig-company-ltd-0322-25000393/addressId/53569",
+      "leaveReviewUrl": "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60349-000",
+          "name": "Estate Planning and Management"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": "Ohio | Kentucky | Indiana",
+      "serviceAreasSummary": [
+        "KY",
+        "OH"
+      ],
+      "businessLoginUrl": "/cincinnati/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0603_63414194_78559",
+      "businessName": "Curae-Personal Business Management",
+      "address": "1806 Summit Ave Ste 300",
+      "city": "Richmond",
+      "state": "VA",
+      "postalcode": "23230-4339",
+      "tobText": "Financial Consultants",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/va/richmond/profile/financial-consultants/curae-personal-business-management-0603-63414194",
+      "phone": [
+        "(804) 500-0922"
+      ],
+      "location": "37.57033157348633,-77.46793365478516",
+      "businessId": "63414194",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "55683-000",
+      "bbbId": "0603",
+      "bbbName": "BBB Serving Central Virginia",
+      "distance": null,
+      "requestAQuoteUrl": "/richmond/quote/request-curae-personal-business-management-63414194",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/va/richmond/profile/financial-consultants/curae-personal-business-management-0603-63414194/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "55683-000",
+          "name": "Financial Consultants"
+        },
+        {
+          "id": "60172-000",
+          "name": "Business Consultants"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": "<p>Richmond &amp; Surrounding Areas</p>\n<p>USA</p>",
+      "serviceAreasSummary": [
+        "Amelia Court House, VA",
+        "Amelia, VA",
+        "Ampthill, VA",
+        "Ashaiiu, VA",
+        "Ashland, VA",
+        "Barhamsville, VA",
+        "Beach, VA",
+        "Beaumont, VA",
+        "Bon Air, VA",
+        "Capitol, VA",
+        "Charles City, VA",
+        "Chester, VA",
+        "Chesterfield, VA",
+        "Colonial Heights, VA",
+        "Crozier, VA",
+        "Dabneys, VA",
+        "Dinwiddie, VA",
+        "Doswell, VA",
+        "Fife, VA",
+        "Forest Hill, VA",
+        "Glen Allen, VA",
+        "Goochland, VA",
+        "Gum Spring, VA",
+        "Hadensville, VA",
+        "Hanover, VA",
+        "Henrico, VA",
+        "Highland Springs, VA",
+        "Hopewell, VA",
+        "Jetersville, VA",
+        "Louisa, VA",
+        "Macon, VA",
+        "Maidens, VA",
+        "Manakin Sabot, VA",
+        "Manakin, VA",
+        "Mangohick, VA",
+        "Mannboro, VA",
+        "Matoaca, VA",
+        "Mechanicsville, VA",
+        "Midlothian, VA",
+        "Millers, VA",
+        "Mineral, VA",
+        "Montpelier, VA",
+        "Montrose Heights, VA",
+        "Montrose, VA",
+        "Moseley, VA",
+        "New Kent, VA",
+        "North Chesterfield, VA",
+        "North Dinwiddie, VA",
+        "North Prince George, VA",
+        "Nottoway, VA",
+        "Oilville, VA",
+        "Petersburg, VA",
+        "Powhatan, VA",
+        "Providence Forge, VA",
+        "Quinton, VA",
+        "Regency, VA",
+        "Richmond Main, VA",
+        "Richmond, VA",
+        "Ridge, VA",
+        "Rockville, VA",
+        "Ruthville, VA",
+        "Sabot, VA",
+        "Sandston, VA",
+        "Sandy Hook, VA",
+        "Saunders, VA",
+        "South Chesterfield, VA",
+        "Staples Mill, VA",
+        "State Farm, VA",
+        "Stewart, VA",
+        "Studley, VA",
+        "Sycamore Square, VA",
+        "Trevilians, VA",
+        "Troy, VA",
+        "Tuckahoe, VA",
+        "Varina, VA",
+        "Virginia State University, VA",
+        "Westbury, VA"
+      ],
+      "businessLoginUrl": "/richmond/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0603_63414194_78558",
+      "businessName": "Curae-Personal Business Management",
+      "address": "1801 Brook Rd # 26209",
+      "city": "Richmond",
+      "state": "VA",
+      "postalcode": "23260-1856",
+      "tobText": "Financial Consultants",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/va/richmond/profile/financial-consultants/curae-personal-business-management-0603-63414194",
+      "phone": [
+        "(804) 500-0922"
+      ],
+      "location": "37.54907,-77.4581",
+      "businessId": "63414194",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "55683-000",
+      "bbbId": "0603",
+      "bbbName": "BBB Serving Central Virginia",
+      "distance": null,
+      "requestAQuoteUrl": "/richmond/quote/request-curae-personal-business-management-63414194",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": "/us/va/richmond/profile/financial-consultants/curae-personal-business-management-0603-63414194/addressId/78558",
+      "leaveReviewUrl": "/us/va/richmond/profile/financial-consultants/curae-personal-business-management-0603-63414194/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "55683-000",
+          "name": "Financial Consultants"
+        },
+        {
+          "id": "60172-000",
+          "name": "Business Consultants"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": "<p>Richmond &amp; Surrounding Areas</p>\n<p>USA</p>",
+      "serviceAreasSummary": [
+        "Amelia Court House, VA",
+        "Amelia, VA",
+        "Ampthill, VA",
+        "Ashaiiu, VA",
+        "Ashland, VA",
+        "Barhamsville, VA",
+        "Beach, VA",
+        "Beaumont, VA",
+        "Bon Air, VA",
+        "Capitol, VA",
+        "Charles City, VA",
+        "Chester, VA",
+        "Chesterfield, VA",
+        "Colonial Heights, VA",
+        "Crozier, VA",
+        "Dabneys, VA",
+        "Dinwiddie, VA",
+        "Doswell, VA",
+        "Fife, VA",
+        "Forest Hill, VA",
+        "Glen Allen, VA",
+        "Goochland, VA",
+        "Gum Spring, VA",
+        "Hadensville, VA",
+        "Hanover, VA",
+        "Henrico, VA",
+        "Highland Springs, VA",
+        "Hopewell, VA",
+        "Jetersville, VA",
+        "Louisa, VA",
+        "Macon, VA",
+        "Maidens, VA",
+        "Manakin Sabot, VA",
+        "Manakin, VA",
+        "Mangohick, VA",
+        "Mannboro, VA",
+        "Matoaca, VA",
+        "Mechanicsville, VA",
+        "Midlothian, VA",
+        "Millers, VA",
+        "Mineral, VA",
+        "Montpelier, VA",
+        "Montrose Heights, VA",
+        "Montrose, VA",
+        "Moseley, VA",
+        "New Kent, VA",
+        "North Chesterfield, VA",
+        "North Dinwiddie, VA",
+        "North Prince George, VA",
+        "Nottoway, VA",
+        "Oilville, VA",
+        "Petersburg, VA",
+        "Powhatan, VA",
+        "Providence Forge, VA",
+        "Quinton, VA",
+        "Regency, VA",
+        "Richmond Main, VA",
+        "Richmond, VA",
+        "Ridge, VA",
+        "Rockville, VA",
+        "Ruthville, VA",
+        "Sabot, VA",
+        "Sandston, VA",
+        "Sandy Hook, VA",
+        "Saunders, VA",
+        "South Chesterfield, VA",
+        "Staples Mill, VA",
+        "State Farm, VA",
+        "Stewart, VA",
+        "Studley, VA",
+        "Sycamore Square, VA",
+        "Trevilians, VA",
+        "Troy, VA",
+        "Tuckahoe, VA",
+        "Varina, VA",
+        "Virginia State University, VA",
+        "Westbury, VA"
+      ],
+      "businessLoginUrl": "/richmond/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0533_90013677_10464",
+      "businessName": "Harold C. Ward, Jr., CPA, PC",
+      "address": "4504 Central Avenue Pike",
+      "city": "Knoxville",
+      "state": "TN",
+      "postalcode": "37912-4004",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/tn/knoxville/profile/cpa/harold-c-ward-jr-cpa-pc-0533-90013677",
+      "phone": [
+        "(865) 584-1500"
+      ],
+      "location": "36.0068793,-83.9844207",
+      "businessId": "90013677",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": "https://m.bbb.org/prod/ProfileImages/ae347a11-37fe-4e86-859e-429d1d3de905.jpeg",
+      "tobId": "60004-000",
+      "bbbId": "0533",
+      "bbbName": "BBB, Knoxville & East TN",
+      "distance": null,
+      "requestAQuoteUrl": "/knoxville/quote/request-harold-c-ward-jr-cpa-pc-90013677",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/tn/knoxville/profile/cpa/harold-c-ward-jr-cpa-pc-0533-90013677/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60005-000",
+          "name": "Accountant"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Knoxville, TN"
+      ],
+      "businessLoginUrl": "/knoxville/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0312_92015227_84048",
+      "businessName": "D'Amore Tatman Group, LLC ",
+      "address": "3659 Green Rd Ste 124",
+      "city": "Beachwood",
+      "state": "OH",
+      "postalcode": "44122-5715",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/oh/beachwood/profile/cpa/damore-tatman-group-llc--0312-92015227",
+      "phone": [
+        "(216) 378-1550"
+      ],
+      "location": "41.46044921875,-81.51699829101562",
+      "businessId": "92015227",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": "https://m.bbb.org/prod/ProfileImages/2022/739cec94-5777-4181-b7a3-e1d8d4cb2bfc.png",
+      "tobId": "60004-000",
+      "bbbId": "0312",
+      "bbbName": "BBB Serving Greater Cleveland",
+      "distance": null,
+      "requestAQuoteUrl": "/cleveland/quote/request-damore-tatman-group-llc-92015227",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/oh/beachwood/profile/cpa/damore-tatman-group-llc--0312-92015227/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60005-000",
+          "name": "Accountant"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Beachwood, OH"
+      ],
+      "businessLoginUrl": "/cleveland/login?not=1",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0875_10816_2885",
+      "businessName": "McMahon Vinson Hubbard & Armstrong, LLP",
+      "address": "7822 Orlando Ave",
+      "city": "Lubbock",
+      "state": "TX",
+      "postalcode": "79423-1942",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/tx/lubbock/profile/cpa/mcmahon-vinson-hubbard-armstrong-llp-0875-10816",
+      "phone": [
+        "(806) 795-0470"
+      ],
+      "location": "33.4399761,-101.8554627",
+      "businessId": "10816",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0875",
+      "bbbName": "BBB serving North Central Texas",
+      "distance": null,
+      "requestAQuoteUrl": "/north-central-texas/quote/request-mcmahon-vinson-hubbard-armstrong-llp-10816",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/tx/lubbock/profile/cpa/mcmahon-vinson-hubbard-armstrong-llp-0875-10816/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "60858-000",
+          "name": "Tax Consultant"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60045-000",
+          "name": "Appraiser"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Lubbock, TX"
+      ],
+      "businessLoginUrl": "/north-central-texas/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0523_6001239_111846",
+      "businessName": "GranthamPoole PLLC",
+      "address": "1200 Jefferson Ave Ste 206",
+      "city": "Oxford",
+      "state": "MS",
+      "postalcode": "38655-3725",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/ms/ridgeland/profile/cpa/granthampoole-pllc-0523-6001239",
+      "phone": [
+        "(601) 499-2400",
+        "(601) 499-2401",
+        "(662) 234-8892",
+        "(601) 271-8921",
+        "(662) 234-8130",
+        "(601) 271-8860"
+      ],
+      "location": "34.367942810058594,-89.517578125",
+      "businessId": "6001239",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0523",
+      "bbbName": "BBB Serving Mississippi",
+      "distance": null,
+      "requestAQuoteUrl": "/mississippi/quote/request-granthampoole-pllc-6001239",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": "/us/ms/oxford/profile/cpa/granthampoole-pllc-0523-6001239/addressId/111846",
+      "leaveReviewUrl": "/us/ms/ridgeland/profile/cpa/granthampoole-pllc-0523-6001239/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        },
+        {
+          "id": "60005-000",
+          "name": "Accountant"
+        },
+        {
+          "id": "55683-000",
+          "name": "Financial Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "MS"
+      ],
+      "businessLoginUrl": "/mississippi/public/Login/BusinessLogin.aspx",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0815_96040028_2232",
+      "businessName": "CMMS CPAs & Advisors, PLLC",
+      "address": "801 S Fillmore St Ste 600",
+      "city": "Amarillo",
+      "state": "TX",
+      "postalcode": "79101-3522",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/tx/amarillo/profile/cpa/cmms-cpas-advisors-pllc-0815-96040028",
+      "phone": [
+        "(806) 373-6661"
+      ],
+      "location": "35.20522,-101.83481999999998",
+      "businessId": "96040028",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0815",
+      "bbbName": "BBB of Amarillo",
+      "distance": null,
+      "requestAQuoteUrl": "/amarillo/quote/request-cmms-cpas-advisors-pllc-96040028",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/tx/amarillo/profile/cpa/cmms-cpas-advisors-pllc-0815-96040028/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "60857-000",
+          "name": "Tax Return Preparation"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": false,
+      "serviceArea": null,
+      "serviceAreasSummary": null,
+      "businessLoginUrl": "/amarillo/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0815_96040028_LR_1505590",
+      "businessName": "CMMS CPAS & Advisors PLLC",
+      "address": "313 W. 7th, St",
+      "city": "Plainview",
+      "state": "TX",
+      "postalcode": "79072",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/tx/amarillo/profile/cpa/cmms-cpas-advisors-pllc-0815-96040028",
+      "phone": [
+        "(806) 373-6661",
+        "(806) 372-1237"
+      ],
+      "location": "34.18687,-101.70619000000002",
+      "businessId": "96040028",
+      "ratingScore": 100,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0815",
+      "bbbName": "BBB of Amarillo",
+      "distance": null,
+      "requestAQuoteUrl": "/amarillo/quote/request-cmms-cpas-advisors-pllc-96040028",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": "/us/tx/plainview/profile/cpa/cmms-cpas-advisors-pllc-0875-91350656/addressId/176926",
+      "leaveReviewUrl": "/us/tx/amarillo/profile/cpa/cmms-cpas-advisors-pllc-0815-96040028/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "60857-000",
+          "name": "Tax Return Preparation"
+        },
+        {
+          "id": "20012-000",
+          "name": "Financial Planning Consultants"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": false,
+      "serviceArea": null,
+      "serviceAreasSummary": null,
+      "businessLoginUrl": "/amarillo/login",
+      "accreditationStatus": null
+    }
+  ],
+  "totalResults": 728,
+  "filters": {
+    "allIds": [
+      "filter_category",
+      "filter_state"
+    ],
+    "byId": {
+      "filter_category": {
+        "id": "filter_category",
+        "filterOptions": [
+          {
+            "value": "20012-000",
+            "label": "Financial Planning Consultants"
+          },
+          {
+            "value": "60004-000",
+            "label": "CPA"
+          },
+          {
+            "value": "60857-000",
+            "label": "Tax Return Preparation"
+          },
+          {
+            "value": "60005-000",
+            "label": "Accountant"
+          },
+          {
+            "value": "60858-000",
+            "label": "Tax Consultant"
+          },
+          {
+            "value": "60005-101",
+            "label": "Accounting"
+          },
+          {
+            "value": "60155-000",
+            "label": "Bookkeeping Services"
+          },
+          {
+            "value": "60647-000",
+            "label": "Payroll Services"
+          },
+          {
+            "value": "60349-000",
+            "label": "Estate Planning and Management"
+          },
+          {
+            "value": "20085-000",
+            "label": "Financial Services"
+          }
+        ]
+      },
+      "filter_state": {
+        "id": "filter_state",
+        "filterOptions": [
+          {
+            "value": "AB",
+            "label": "AB"
+          },
+          {
+            "value": "AK",
+            "label": "AK"
+          },
+          {
+            "value": "AL",
+            "label": "AL"
+          },
+          {
+            "value": "AR",
+            "label": "AR"
+          },
+          {
+            "value": "AZ",
+            "label": "AZ"
+          },
+          {
+            "value": "BC",
+            "label": "BC"
+          },
+          {
+            "value": "CA",
+            "label": "CA"
+          },
+          {
+            "value": "CO",
+            "label": "CO"
+          },
+          {
+            "value": "CT",
+            "label": "CT"
+          },
+          {
+            "value": "FL",
+            "label": "FL"
+          },
+          {
+            "value": "GA",
+            "label": "GA"
+          },
+          {
+            "value": "HI",
+            "label": "HI"
+          },
+          {
+            "value": "IA",
+            "label": "IA"
+          },
+          {
+            "value": "ID",
+            "label": "ID"
+          },
+          {
+            "value": "IL",
+            "label": "IL"
+          },
+          {
+            "value": "IN",
+            "label": "IN"
+          },
+          {
+            "value": "KS",
+            "label": "KS"
+          },
+          {
+            "value": "KY",
+            "label": "KY"
+          },
+          {
+            "value": "LA",
+            "label": "LA"
+          },
+          {
+            "value": "MA",
+            "label": "MA"
+          },
+          {
+            "value": "MD",
+            "label": "MD"
+          },
+          {
+            "value": "MI",
+            "label": "MI"
+          },
+          {
+            "value": "MO",
+            "label": "MO"
+          },
+          {
+            "value": "MS",
+            "label": "MS"
+          },
+          {
+            "value": "MT",
+            "label": "MT"
+          },
+          {
+            "value": "NC",
+            "label": "NC"
+          },
+          {
+            "value": "NE",
+            "label": "NE"
+          },
+          {
+            "value": "NH",
+            "label": "NH"
+          },
+          {
+            "value": "NJ",
+            "label": "NJ"
+          },
+          {
+            "value": "NM",
+            "label": "NM"
+          },
+          {
+            "value": "NT",
+            "label": "NT"
+          },
+          {
+            "value": "NV",
+            "label": "NV"
+          },
+          {
+            "value": "NY",
+            "label": "NY"
+          },
+          {
+            "value": "OH",
+            "label": "OH"
+          },
+          {
+            "value": "OK",
+            "label": "OK"
+          },
+          {
+            "value": "ON",
+            "label": "ON"
+          },
+          {
+            "value": "OR",
+            "label": "OR"
+          },
+          {
+            "value": "PA",
+            "label": "PA"
+          },
+          {
+            "value": "SC",
+            "label": "SC"
+          },
+          {
+            "value": "SD",
+            "label": "SD"
+          },
+          {
+            "value": "TN",
+            "label": "TN"
+          },
+          {
+            "value": "TX",
+            "label": "TX"
+          },
+          {
+            "value": "UT",
+            "label": "UT"
+          },
+          {
+            "value": "VA",
+            "label": "VA"
+          },
+          {
+            "value": "WA",
+            "label": "WA"
+          },
+          {
+            "value": "WI",
+            "label": "WI"
+          },
+          {
+            "value": "WV",
+            "label": "WV"
+          }
+        ]
+      }
+    }
+  },
+  "location": null,
+  "errorMessage": null,
+  "relatedCategories": [
+    {
+      "title": "Financial Planning Consultants",
+      "url": "/us/category/financial-planning-consultants",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "CPA",
+      "url": "/us/category/cpa",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Tax Return Preparation",
+      "url": "/us/category/tax-return-preparation",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Accountant",
+      "url": "/us/category/accountant",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Tax Consultant",
+      "url": "/us/category/tax-consultant",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Accounting",
+      "url": "/us/category/accounting",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Bookkeeping Services",
+      "url": "/us/category/bookkeeping-services",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Payroll Services",
+      "url": "/us/category/payroll-services",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Estate Planning and Management",
+      "url": "/us/category/estate-planning-and-management",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Financial Services",
+      "url": "/us/category/financial-services",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    }
+  ],
+  "googleAdData": {
+    "adParams": {
+      "cleanSearchText": "accreditedcpa",
+      "countyState": "saint johns-fl",
+      "orgType": "",
+      "culture": "en-us",
+      "state": "fl",
+      "cityState": "saint johns-fl",
+      "country": "usa",
+      "postalCode": "32259",
+      "channel": [
+        "0403"
+      ],
+      "tobs": [
+        "60004-000"
+      ],
+      "refUrl": null,
+      "articleHeadline": null
+    },
+    "adSlots": {
+      "googleAdSquareTile1": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 1,
+        "type": "square-tile"
+      },
+      "googleAdSquareTile2": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 2,
+        "type": "square-tile"
+      },
+      "googleAdHorizontalBar1": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 1,
+        "type": "horizontal-banner"
+      },
+      "googleELP1": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 1,
+        "type": "elp"
+      },
+      "googleELP2": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 2,
+        "type": "elp"
+      },
+      "googleELP3": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 3,
+        "type": "elp"
+      },
+      "googleELP4": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 4,
+        "type": "elp"
+      },
+      "googleELP5": {
+        "path": "/21848388897/Production/Unified-Search",
+        "position": 5,
+        "type": "elp"
+      }
+    }
+  },
+  "mostPopularCategories": [
+    {
+      "title": "General Contractor",
+      "url": "/near-me/general-contractor",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Real Estate",
+      "url": "/near-me/real-estate",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Auto Transportation",
+      "url": "/near-me/auto-transportation",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Apartments",
+      "url": "/near-me/apartments",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Used Car Dealers",
+      "url": "/near-me/used-car-dealers",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Hotels",
+      "url": "/near-me/hotels",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Auto Repairs",
+      "url": "/near-me/auto-repair",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Home Builders",
+      "url": "/near-me/home-builders",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Roofing Contractors",
+      "url": "/near-me/roofing-contractors",
+      "entityType": null,
+      "entityId": null,
+      "id": null
+    },
+    {
+      "title": "Construction Services",
+      "url": "/near-me/construction-services",
+      "entityType": null,
+      "entityId": null,
+      "id": null
     }
   ],
   "heading": {
     "searchInputText": "accredited cpa",
     "searchLocationText": "USA"
-  }
+  },
+  "raqFilterOptions": [
+    "0",
+    "739",
+    "742",
+    "745",
+    "default"
+  ],
+  "showRaqFilter": true,
+  "view": "Searching",
+  "showServiceAreaFilter": true,
+  "showDocTypeFilter": false
 }

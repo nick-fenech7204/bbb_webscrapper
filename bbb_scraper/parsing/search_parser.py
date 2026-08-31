@@ -95,10 +95,13 @@ def _map_listing_item(
     location: Location | None,
     page: int | None,
 ) -> BusinessSummary:
-    bbb_office_id = item.get("bbbId")
-    business_id = item.get("businessId")
-    bbb_id = f"{bbb_office_id}-{business_id}" if bbb_office_id and business_id else None
-
+    # `id` (e.g. "0292_3089_178405") is per-LISTING, not per-company -- a
+    # business with several branch addresses shows up as several results
+    # sharing the same bbbId+businessId but a different `id` per address
+    # (confirmed 2026-08-31: e.g. "Barnes, Dennig & Company" appeared 3x on
+    # one page, one per branch). Using bbbId+businessId as the stable id
+    # would silently collapse distinct branches together at dedupe time --
+    # `id` is the one that's actually unique per row.
     report_url = item.get("reportUrl")
     profile_url = f"{BBB_BASE_URL}{report_url}" if report_url else None
 
@@ -110,14 +113,14 @@ def _map_listing_item(
     categories = [c["name"] for c in (item.get("categories") or []) if c.get("name")]
 
     raw_extra = {k: v for k, v in item.items() if k not in _MAPPED_KEYS}
-    raw_extra["search_result_id"] = item.get("id")  # composite, context-specific -- see bbb_id docstring
     if len(phones) > 1:
         raw_extra["phones"] = phones
     if item.get("categories"):
         raw_extra["categories_full"] = item["categories"]  # [{id, name}, ...]
 
     return BusinessSummary(
-        bbb_id=bbb_id,
+        bbb_id=item.get("id"),
+        business_id=item.get("businessId"),
         name=item.get("businessName") or "UNKNOWN",
         profile_url=profile_url,
         phone=phone,
@@ -131,7 +134,7 @@ def _map_listing_item(
         rating_score=item.get("ratingScore"),
         accredited=item.get("bbbMember"),
         categories=categories,
-        bbb_office_id=bbb_office_id,
+        bbb_office_id=item.get("bbbId"),
         bbb_office_name=item.get("bbbName"),
         search_category_id=category.id if category else None,
         search_category_name=category.name if category else None,

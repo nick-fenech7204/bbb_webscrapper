@@ -45,6 +45,7 @@ def transform_summary(summary: BusinessSummary) -> dict[str, Any]:
             phone=summary.phone,
         ),
         "bbb_id": summary.bbb_id,
+        "business_id": summary.business_id,
         "name": normalize_whitespace(summary.name),
         "profile_url": summary.profile_url,
         "phone": normalize_phone(summary.phone),

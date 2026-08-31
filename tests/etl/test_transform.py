@@ -31,3 +31,23 @@ def test_transform_summary_generates_deterministic_id_without_bbb_id():
     a = BusinessSummary(name="Acme Plumbing Co", address="123 Main St", phone="512-555-0134")
     b = BusinessSummary(name="Acme Plumbing Co", address="123 Main St", phone="512-555-0134")
     assert transform_summary(a)["id"] == transform_summary(b)["id"]
+
+
+def test_transform_summary_keeps_different_branches_of_same_company_distinct():
+    """Same company, same business_id/bbb_office_id, different branch
+    address -> must produce different dedupe keys. This is the actual
+    end-to-end check for the bug described in BusinessSummary.bbb_id's
+    docstring: two branches must never collapse to one record downstream.
+    """
+    branch_a = BusinessSummary(
+        bbb_id="0292_3089_1134", business_id="3089", bbb_office_id="0292",
+        name="Barnes, Dennig & Company, LTD.", address="150 E 4th St Ste 300", city="Cincinnati",
+    )
+    branch_b = BusinessSummary(
+        bbb_id="0292_3089_178405", business_id="3089", bbb_office_id="0292",
+        name="Barnes, Dennig & Company, LTD.", address="2617 Legends Way", city="Crestview Hills",
+    )
+    record_a = transform_summary(branch_a)
+    record_b = transform_summary(branch_b)
+    assert record_a["id"] != record_b["id"]
+    assert record_a["business_id"] == record_b["business_id"] == "3089"
