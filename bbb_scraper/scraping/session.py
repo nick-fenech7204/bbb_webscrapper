@@ -19,21 +19,20 @@ Known fragility -- read before assuming a stale session "should" work:
     proxy IP -- there's no code fix for that here, it's a real constraint to
     design around (e.g. capturing/refreshing a session per sticky proxy
     session, or solving the challenge through the proxy in the first place).
-  - Plain `requests`/urllib3 has a TLS handshake fingerprint that doesn't
-    match real Chrome even when headers claim to be Chrome. If cookie/header
-    replay alone stops being enough, that fingerprint mismatch is the next
-    thing to suspect.
-  - CONFIRMED 2026-09-01: individual business-profile pages
-    (scraping/business.py) get Cloudflare-challenged (403, a "Just a
-    moment..." page) noticeably more readily than /api/search does, even
-    replaying a real, unexpired, completely unmodified captured session with
-    no proxy involved -- verified by re-running the exact original captured
-    request script standalone. Search staying reliable while individual
-    profile pages don't suggests BBB applies stricter bot protection
-    specifically to profile pages (the more scrape-valuable, contact-info-
-    bearing content) -- not a bug here to fix, a real constraint to design
-    around: expect profile-page fetches to need a *fresher* session than
-    search does, and to fail more often even with one.
+  - RESOLVED 2026-09-02, but the story is worth keeping: individual
+    business-profile pages (scraping/business.py) were getting
+    Cloudflare-challenged (403, "Just a moment...") noticeably more readily
+    than /api/search, even replaying a real, unexpired, completely
+    unmodified captured session with no proxy involved. The actual cause
+    turned out to be exactly the TLS-fingerprint mismatch flagged above --
+    plain `requests`/urllib3's handshake doesn't match a real browser's no
+    matter what headers or cookies say, and BBB fingerprints that more
+    aggressively on profile pages than on the search API. Fixed by
+    switching HttpClient's transport to `curl_cffi` (see client.py's module
+    docstring) -- same cookies, same everything else, 403 became 200
+    immediately. `cf_clearance`'s IP-binding and `CF_Authorization`'s expiry
+    above are still real and still apply; this only fixed the fingerprint
+    layer.
 """
 from __future__ import annotations
 

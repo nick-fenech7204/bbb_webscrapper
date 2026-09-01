@@ -9,7 +9,8 @@ description = "BBB scraper + ETL pipeline framework"
 requires-python = ">=3.10"
 readme = "README.md"
 dependencies = [
-    "requests>=2.31",
+    "curl_cffi>=0.7", # scraping/client.py -- browser TLS/HTTP2 impersonation, gets past BBB's Cloudflare bot management
+    "requests>=2.31", # plain HTTP for non-BBB traffic (pipeline/sinks/http_sink.py's webhook POSTs)
     "tenacity>=8.2",
     "pydantic>=2.4",
     "pydantic-settings>=2.0",

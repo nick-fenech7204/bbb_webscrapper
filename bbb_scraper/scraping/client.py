@@ -1,15 +1,30 @@
 """
-HTTP client wrapper: proxying, retries, rate limiting, and consistent
-logging/stats for every outbound request.
+HTTP client wrapper: proxying, retries, rate limiting, browser TLS/HTTP2
+impersonation, and consistent logging/stats for every outbound request.
 
-This is the one place that talks to `requests` directly. Search/business
+This is the one place that talks to `curl_cffi` directly. Search/business
 fetchers (search.py / business.py) should go through `HttpClient.get`
-instead of using `requests` themselves, so retry/proxy/rate-limit behavior
-stays uniform.
+instead of using an HTTP library themselves, so retry/proxy/rate-limit
+behavior stays uniform.
+
+Why curl_cffi instead of `requests`: confirmed 2026-09-02 that plain
+`requests`/urllib3 gets Cloudflare-403'd on BBB business-profile pages even
+with a completely valid, unexpired, correctly-cookied session -- the
+`requests` library's TLS ClientHello doesn't match a real browser's no
+matter what headers claim, and BBB's bot management fingerprints that.
+`curl_cffi` wraps a curl build patched to replicate real browsers' TLS +
+HTTP/2 fingerprints (the same technique as the curl-impersonate project);
+swapping to it, same cookies, same everything else, immediately turned a
+403 into a 200 on the exact URL that was blocked. Its `requests`-shaped API
+(Session, .headers/.cookies/.proxies, .get/.post, Response.status_code/
+.text/.json()/.raise_for_status()) is close enough to the stdlib `requests`
+library that this file is the only one that needed to change.
 """
 from __future__ import annotations
 
-import requests
+import logging
+
+from curl_cffi import requests as curl_requests
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -17,7 +32,6 @@ from tenacity import (
     wait_exponential,
     before_sleep_log,
 )
-import logging
 
 from bbb_scraper.config import Settings, settings as default_settings
 from bbb_scraper.exceptions import BlockedError, RateLimitedError, ScrapeError
@@ -48,7 +62,7 @@ class HttpClient:
         self.rate_limiter = RateLimiter(
             self.cfg.http_min_delay_seconds, self.cfg.http_max_delay_seconds
         )
-        self.session = requests.Session()
+        self.session = curl_requests.Session(impersonate=self.cfg.http_impersonate or None)
         self.session.headers.update(
             {
                 "User-Agent": self.cfg.http_user_agent,
@@ -70,23 +84,25 @@ class HttpClient:
         if proxies:
             self.session.proxies.update(proxies)
 
-    def get(self, url: str, **kwargs) -> requests.Response:
+    def get(self, url: str, **kwargs) -> curl_requests.Response:
         return self._request_with_retry("GET", url, **kwargs)
 
-    def post(self, url: str, **kwargs) -> requests.Response:
+    def post(self, url: str, **kwargs) -> curl_requests.Response:
         return self._request_with_retry("POST", url, **kwargs)
 
-    def _request_with_retry(self, method: str, url: str, **kwargs) -> requests.Response:
+    def _request_with_retry(self, method: str, url: str, **kwargs) -> curl_requests.Response:
         cfg = self.cfg
 
         @retry(
             reraise=True,
             stop=stop_after_attempt(cfg.http_max_retries),
             wait=wait_exponential(multiplier=cfg.http_backoff_factor, min=1, max=30),
-            retry=retry_if_exception_type((requests.RequestException, RateLimitedError)),
+            retry=retry_if_exception_type(
+                (curl_requests.exceptions.RequestException, RateLimitedError)
+            ),
             before_sleep=before_sleep_log(logger, logging.WARNING),
         )
-        def _do_request() -> requests.Response:
+        def _do_request() -> curl_requests.Response:
             self.rate_limiter.wait()
             self.stats.incr(REQUESTS_SENT)
             logger.info("%s %s", method, url)
@@ -110,7 +126,7 @@ class HttpClient:
             return _do_request()
         except BlockedError:
             raise
-        except requests.RequestException as exc:
+        except curl_requests.exceptions.RequestException as exc:
             self.stats.incr(REQUESTS_FAILED)
             raise ScrapeError(f"Request to {url} failed after retries: {exc}") from exc
         except RateLimitedError as exc:

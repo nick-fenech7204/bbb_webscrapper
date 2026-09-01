@@ -50,6 +50,13 @@ class Settings(BaseSettings):
     http_backoff_factor: float = Field(default=1.5, alias="HTTP_BACKOFF_FACTOR")
     http_min_delay_seconds: float = Field(default=1.0, alias="HTTP_MIN_DELAY_SECONDS")
     http_max_delay_seconds: float = Field(default=3.0, alias="HTTP_MAX_DELAY_SECONDS")
+    # Browser TLS/HTTP2 fingerprint to impersonate via curl_cffi (see
+    # scraping/client.py) -- confirmed 2026-09-02 this is what actually gets
+    # past Cloudflare on BBB business-profile pages, where cookie/header
+    # replay alone wasn't enough. Empty string disables impersonation
+    # (falls back to curl_cffi's default handshake, not a real requests/
+    # urllib3 one -- there's currently no path back to plain `requests`).
+    http_impersonate: str = Field(default="chrome150", alias="HTTP_IMPERSONATE")
 
     # --- Storage -------------------------------------------------------------
     raw_data_dir: Path = Field(default=Path("data/raw"), alias="RAW_DATA_DIR")

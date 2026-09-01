@@ -46,7 +46,8 @@ class ETLPipeline:
         with Extractor(stats=self.stats) as extractor:
             summaries = extractor.extract_search(category, location, max_pages=max_pages)
 
-            records: list[dict[str, Any]] = [transform_summary(s) for s in summaries]
+            summary_records = [transform_summary(s) for s in summaries]
+            detail_records: list[dict[str, Any]] = []
 
             if fetch_details:
                 for summary in summaries:
@@ -57,11 +58,18 @@ class ETLPipeline:
                         # -- what a real user's click-through would send.
                         referer = build_referer(category, location, page=summary.source_page or 1)
                         detail = extractor.extract_business(summary.profile_url, referer=referer)
-                        records.append(transform_detail(detail))
+                        detail_records.append(transform_detail(detail))
                     except Exception:
                         logger.exception("Failed to extract business detail for %s", summary.profile_url)
 
-        records = dedupe_records(records, stats=self.stats)
+        # Details first: dedupe_records keeps the FIRST occurrence of a given
+        # id. A business's detail record can legitimately compute the same
+        # id as its own summary record (confirmed 2026-09-02: happens
+        # whenever the profile was reached via an /addressId/N-suffixed URL,
+        # since that N is also embedded in the search result's own raw id) --
+        # when that happens we want the richer detail record to win, not the
+        # sparser summary that happened to get transformed first.
+        records = dedupe_records(detail_records + summary_records, stats=self.stats)
         self._load(records)
 
         logger.info("ETL run complete: %s", self.stats.summary_line())
