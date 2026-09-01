@@ -2,12 +2,12 @@
 imported lazily so the core package doesn't require pandas/openpyxl."""
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.pipeline.base import Sink
+from bbb_scraper.utils.flatten import flatten_record
 
 logger = get_logger(__name__)
 
@@ -34,14 +34,7 @@ class ExcelSink(Sink):
         # JSON-encode list/dict values (categories, contacts, socials,
         # reviews_complaints, ...) -- Excel cells can't hold structured data,
         # and pandas' default str() repr for them isn't valid JSON.
-        flat_records = [
-            {
-                k: json.dumps(v, default=str) if isinstance(v, (list, dict)) else v
-                for k, v in record.items()
-            }
-            for record in records
-        ]
-        new_df = pd.DataFrame(flat_records)
+        new_df = pd.DataFrame([flatten_record(r) for r in records])
         if self.path.exists():
             existing_df = pd.read_excel(self.path, sheet_name=self.sheet_name)
             combined = pd.concat([existing_df, new_df], ignore_index=True)

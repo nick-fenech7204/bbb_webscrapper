@@ -71,7 +71,11 @@ tests/
 scripts/
   run_search.py             # CLI: pick category + location -> ETL -> configured sinks
   run_business.py             # CLI: fetch + parse one profile page
+  fetch_details.py            # CLI: enrich an existing CSV's profile_urls, no re-search needed
   fetch_categories.py           # CLI stub: scrape BBB's category taxonomy into data/reference/
+  check_proxy.py                 # CLI: verify the configured proxy actually works
+
+streamlit_app.py           # UI: form-based control panel over the same ETL pipeline
 ```
 
 ## Searching by category + location
@@ -95,12 +99,44 @@ python scripts/run_search.py --list-categories plumb
 `--category` accepts an id, slug, exact name, or partial name; ambiguous
 partial matches print the candidates and exit rather than guessing.
 
+## UI
+
+A [Streamlit](https://streamlit.io) control panel (`streamlit_app.py`) for
+the same category + location search, if you'd rather use a form than the
+CLI -- pick a category (or type a custom one), enter one or more locations,
+optionally fetch full details, and get a sortable table plus a CSV download
+in the browser. It's a thin presentation layer over the exact same
+`Extractor`/`transform`/`dedupe`/sinks everything else uses -- no separate
+scraping or parsing logic lives in it.
+
+```bash
+streamlit run streamlit_app.py
+```
+
+**Deploying it:** push to GitHub (already set up), connect the repo at
+[share.streamlit.io](https://share.streamlit.io) pointed at
+`streamlit_app.py` -- free hosting, and that's the default filename their
+auto-deploy looks for. You'll need to set `PROXY_*`/`HTTP_IMPERSONATE`/etc.
+via Streamlit's own Secrets manager there instead of a committed `.env`
+(same values, different mechanism -- `.env` never gets deployed, it's
+gitignored).
+
+**Before deploying it somewhere public, read this:** this page *is* a live
+backend, not a static site -- clicking "Run search" makes real requests
+through your real proxy using your real BBB session. It's a different thing
+from the "cheap static public insight site" discussed separately (that one
+reads pre-generated data files with no live scraping involved). A publicly
+reachable "run scraper" button tied to your proxy account with no auth in
+front of it is a real cost/abuse risk -- there's none built into this app.
+Keep it private, or put real authentication in front of it, before treating
+"deployed" as "public."
+
 ## Setup
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
-pip install -e ".[dev,excel,sql]"
+pip install -e ".[dev,excel,sql,ui]"
 copy .env.example .env
 ```
 
@@ -267,12 +303,13 @@ The ETL pipeline (`etl/pipeline.py`) doesn't need to change.
 `transform.py` deliberately keeps these as real Python lists/dicts, not
 pre-flattened strings (see its module docstring) -- a destination that
 handles structure natively (JSONSink) gets it as-is. A destination that
-can't (CSVSink, SQLSink, ExcelSink -- flat cells/columns only) JSON-encodes
-them itself, right before writing, so a cell holds real parseable JSON
-(`["Plumbers", "HVAC"]`) rather than Python's `str()` repr
-(`"['Plumbers', 'HVAC']"`, which looks similar but isn't valid JSON). If you
-add a new flat-shaped sink, do the same -- see `csv_sink.py`'s
-`_flatten_row` for the pattern.
+can't (CSVSink, SQLSink, ExcelSink -- flat cells/columns only, and the
+Streamlit UI's table/download) JSON-encodes them itself, right before
+writing, so a cell holds real parseable JSON (`["Plumbers", "HVAC"]`)
+rather than Python's `str()` repr (`"['Plumbers', 'HVAC']"`, which looks
+similar but isn't valid JSON). If you add a new flat-shaped destination,
+reuse `bbb_scraper/utils/flatten.py`'s `flatten_record()` rather than
+reimplementing this.
 
 ## Observability
 

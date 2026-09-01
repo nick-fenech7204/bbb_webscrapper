@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import csv
-import json
 from pathlib import Path
 from typing import Any
 
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.pipeline.base import Sink
+from bbb_scraper.utils.flatten import flatten_record
 
 logger = get_logger(__name__)
 
@@ -24,7 +24,7 @@ class CSVSink(Sink):
             return 0
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        rows = [_flatten_row(r) for r in records]
+        rows = [flatten_record(r) for r in records]
         batch_fieldnames = sorted({key for row in rows for key in row.keys()})
 
         existing_fieldnames = self._read_header()
@@ -77,16 +77,3 @@ class CSVSink(Sink):
             reader = csv.reader(f)
             header = next(reader, None)
         return header
-
-
-def _flatten_row(record: dict[str, Any]) -> dict[str, Any]:
-    """CSV cells can't hold structured data -- list/dict values (categories,
-    contacts, socials, reviews_complaints, ...) get JSON-encoded so the cell
-    holds real, parseable JSON. Without this, csv.writer falls back to
-    Python's str() repr for non-string values (single-quoted, True/None
-    instead of true/null) -- looks similar to JSON, isn't valid JSON.
-    """
-    return {
-        key: json.dumps(value, default=str) if isinstance(value, (list, dict)) else value
-        for key, value in record.items()
-    }
