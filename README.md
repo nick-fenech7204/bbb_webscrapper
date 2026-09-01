@@ -200,46 +200,59 @@ fingerprints that more aggressively on profile pages than on search.
 same technique as the curl-impersonate project) instead of `requests` --
 same cookies, same everything else, immediately fixed. Verified live
 end-to-end: a 15-business `--details` run that previously got 15/15 profile
-fetches blocked now gets 15/15 through cleanly. See `scraping/session.py`'s
-docstring and `scraping/client.py`'s module docstring for the full story.
+fetches blocked now gets 15/15 through cleanly. Follow-up finding: the
+cookies turned out not to be necessary at all -- see "Session cookies"
+below for the fuller story and `scraping/session.py`'s / `scraping/client.py`'s
+module docstrings for the details.
 
 The generic HTML-extraction helpers (`parsing/json_extract.py` -- pulling
 `<script type="application/json">` blocks, or a `window.X = {...}` state
 blob with proper brace-matching for nested JSON) are only needed for the
 business-profile page now; search doesn't go through HTML at all.
 
-## Session cookies
+## Session cookies (optional, not required)
 
-`bbb.org` sits behind Cloudflare bot management -- plain requests get
-challenged. `bbb_scraper/scraping/session.py` loads cookies/headers captured
-from a real browser session out of `data/secrets/bbb_session.json`
-(gitignored, never committed -- copy `data/secrets/bbb_session.example.json`
-and fill in real values) and merges them into every request.
+`bbb.org` sits behind Cloudflare bot management. The original assumption
+was that a captured `cf_clearance` + `CF_Authorization` + site cookies were
+what got requests through -- `bbb_scraper/scraping/session.py` loads them
+from `data/secrets/bbb_session.json` (gitignored, never committed -- copy
+`data/secrets/bbb_session.example.json` and fill in real values) and merges
+them into every request, if the file exists.
 
-This is fragile by nature, not a bug to fix once: the captured
-`CF_Authorization` is a JWT with a real expiry (~24h in the session this was
-built against), and `cf_clearance` is typically bound to the IP that earned
-it -- so a session captured from your own browser may simply not validate
-once routed through a proxy IP. There's no code fix for that here; it's a
-real, ongoing constraint -- refresh `data/secrets/bbb_session.json` from a
-new browser session when requests start getting challenged again (there's
-no automation for this yet, see "Not yet wired up" below).
+**That assumption turned out to be wrong, in a good way.** The real story:
 
-**Resolved 2026-09-02: profile pages needed more than cookies could give
-them.** `/api/search` was reliable while every business-profile-page fetch
-got 403'd on the same run, same cookies, same proxy -- even replaying the
-exact captured request completely standalone (no proxy) got the same
-challenge. Turned out to be the TLS-fingerprint issue mentioned above, just
-worse on profile pages than on search: plain `requests`/urllib3's TLS
-handshake doesn't match a real browser's, regardless of headers or cookies.
-Fixed by switching `HttpClient`'s transport to `curl_cffi` -- browser
-TLS/HTTP2 impersonation, same technique as the
-[curl-impersonate](https://github.com/lwthiker/curl-impersonate) project,
-but installable as a plain Python package (no Docker/container needed).
-Configured via `HTTP_IMPERSONATE` in `.env` (default `chrome150`). Verified
-live: the exact same captured session that got 15/15 profile fetches
-blocked before got 15/15 through cleanly after, no other changes. See
-`scraping/client.py`'s module docstring.
+1. Every business-profile-page fetch was getting 403'd (Cloudflare's "Just a
+   moment..." challenge) while `/api/search` stayed reliable, on the same
+   run, same cookies, same proxy -- and replaying the exact captured
+   request completely standalone (no proxy) got the same challenge. The
+   cause was a TLS-fingerprint mismatch: plain `requests`/urllib3's
+   handshake doesn't match a real browser's, regardless of what headers or
+   cookies claim. Fixed by switching `HttpClient`'s transport to
+   `curl_cffi` -- browser TLS/HTTP2 impersonation, same technique as the
+   [curl-impersonate](https://github.com/lwthiker/curl-impersonate)
+   project, but a plain Python package (no Docker/container needed).
+   Configured via `HTTP_IMPERSONATE` in `.env` (default `chrome150`).
+2. That raised the obvious follow-up: if the fingerprint was the real
+   problem, were the cookies ever actually necessary? Tested directly --
+   the exact same requests (both `/api/search` and a business-profile page
+   that had never been fetched before, ruling out a cached response via
+   `cf-cache-status: DYNAMIC` on both) succeeded with **zero cookies**,
+   `curl_cffi` impersonation alone. Location personalization doesn't depend
+   on cookies either -- it comes from the `find_loc`/`find_latlng` request
+   params.
+
+So: `data/secrets/bbb_session.json` is now optional. `HttpClient` runs fine
+without it (missing file logs an info line, not a warning). It's kept
+available since real cookies can't hurt and might matter for something not
+yet identified, or if BBB's protection posture tightens later -- but it's
+not a prerequisite, and specifically not something that needs periodic
+refreshing just to keep scraping working. What's still real if you do rely
+on it: `CF_Authorization`'s ~24h JWT expiry, and `cf_clearance` typically
+being bound to the IP that earned it. See `scraping/session.py`'s and
+`scraping/client.py`'s module docstrings for the full account, including
+the honest caveat that this is verified over one session's testing window,
+not a permanent guarantee -- if profile pages start getting blocked again,
+a fresh captured session is the first thing to try bringing back.
 
 ## Adding a new output destination
 
@@ -262,14 +275,14 @@ traced back to the exact HTML that caused it.
 ## Not yet wired up (by design)
 
 - Proxy session rotation on block/challenge (`BlockedError` is raised and
-  surfaced, but doesn't yet trigger an automatic new proxy session). Less
-  urgent now that TLS fingerprinting (the actual cause of the profile-page
-  blocks) is fixed -- `cf_clearance`'s IP-binding is still a real,
-  independent constraint worth building this for eventually.
-- Any kind of session-refresh automation (see "Session cookies" above) --
-  currently 100% manual (re-capture from a browser, overwrite
-  data/secrets/bbb_session.json). `curl_cffi` fixed the fingerprint problem,
-  not the "cookies eventually expire" one.
+  surfaced, but doesn't yet trigger an automatic new proxy session). Now
+  low-priority: TLS fingerprinting was the actual cause of the profile-page
+  blocks, cookies turned out to be unnecessary entirely (see "Session
+  cookies" above) -- there's no known scenario left where a new proxy
+  session would currently help.
+- Session-refresh automation for `data/secrets/bbb_session.json` -- moot for
+  now given the above, but if BBB's protection posture changes and cookies
+  become load-bearing again, refreshing them is still 100% manual.
 - Upsert-on-conflict for `SQLSink` (currently append-only).
 - `CSVSink` writes its header from whichever batch of records hits it
   first; a later batch with different/more fields (e.g. summaries then

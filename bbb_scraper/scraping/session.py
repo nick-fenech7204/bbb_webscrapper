@@ -2,37 +2,37 @@
 BBB session secrets: cookies + headers captured from a real browser session,
 loaded from a local gitignored JSON file (never committed, never hardcoded).
 
-Why this exists: bbb.org sits behind Cloudflare bot management. Plain
-requests (no cookies at all) get challenged. A captured `cf_clearance` +
-`CF_Authorization` + the site's own session cookies (see
-data/secrets/bbb_session.example.json for the shape) let us look like a
-continuation of a real browser session instead.
+Status as of 2026-09-02: this file is now OPTIONAL, not required. It was
+originally built on the assumption that a captured `cf_clearance` +
+`CF_Authorization` were what let requests through Cloudflare. Once
+scraping/client.py switched to `curl_cffi` (browser TLS/HTTP2
+impersonation) to fix the profile-page 403s (see client.py's module
+docstring), a direct test confirmed neither is actually load-bearing for
+that: the exact same requests, with cookies removed entirely, still
+returned clean 200s -- against both /api/search and a business-profile page
+that had never been fetched before (ruled out response caching via
+`cf-cache-status: DYNAMIC` on both). Location personalization doesn't
+depend on cookies either -- the search response's `location` field, null in
+earlier cookie'd captures, comes back fully populated once `find_loc`/
+`find_latlng` are passed as request params regardless of cookies.
 
-Known fragility -- read before assuming a stale session "should" work:
+Practical upshot: there's no evidence a fresh HttpClient needs this file at
+all anymore. It's kept as an available option (real cookies can't hurt, and
+might matter for something not yet identified, or if BBB tightens its
+Cloudflare posture later -- e.g. to an interactive JS challenge, which
+curl_cffi's fingerprint impersonation alone could not solve, unlike a real
+browser) -- just not a prerequisite the way it once looked.
+
+What's still real, independent of any of the above:
   - `CF_Authorization` is a JWT with a real expiry (~24h in the sample this
-    was modeled on). Once it expires, requests will start failing/getting
-    challenged again and the file needs refreshing from a new browser
-    session.
+    was modeled on) if you do rely on a captured session for something.
   - `cf_clearance` is typically issued for, and checked against, the IP (and
-    sometimes TLS fingerprint) that earned it. A session captured from your
-    own machine may simply not validate once requests are routed through a
-    proxy IP -- there's no code fix for that here, it's a real constraint to
-    design around (e.g. capturing/refreshing a session per sticky proxy
-    session, or solving the challenge through the proxy in the first place).
-  - RESOLVED 2026-09-02, but the story is worth keeping: individual
-    business-profile pages (scraping/business.py) were getting
-    Cloudflare-challenged (403, "Just a moment...") noticeably more readily
-    than /api/search, even replaying a real, unexpired, completely
-    unmodified captured session with no proxy involved. The actual cause
-    turned out to be exactly the TLS-fingerprint mismatch flagged above --
-    plain `requests`/urllib3's handshake doesn't match a real browser's no
-    matter what headers or cookies say, and BBB fingerprints that more
-    aggressively on profile pages than on the search API. Fixed by
-    switching HttpClient's transport to `curl_cffi` (see client.py's module
-    docstring) -- same cookies, same everything else, 403 became 200
-    immediately. `cf_clearance`'s IP-binding and `CF_Authorization`'s expiry
-    above are still real and still apply; this only fixed the fingerprint
-    layer.
+    sometimes TLS fingerprint) that earned it -- same caveat if used.
+  - This has only been verified over one session's testing window, not
+    "this will always be true" -- Cloudflare configs change, and BBB's own
+    protection posture could tighten. If profile pages start getting
+    blocked again even with curl_cffi, this file (refreshed) is the first
+    thing to try bringing back into the mix.
 """
 from __future__ import annotations
 
@@ -48,16 +48,16 @@ logger = get_logger(__name__)
 
 def load_bbb_session(path: Path | str | None = None) -> dict[str, Any]:
     """Return {"cookies": {...}, "headers": {...}}, or both empty if no
-    session file is configured/found. Missing file is a warning, not an
-    error -- request-building/pagination logic should still be testable
-    without real secrets on disk (e.g. in CI).
+    session file is configured/found. Missing file is expected/fine, not an
+    error -- see this module's docstring; curl_cffi's browser impersonation
+    has been sufficient on its own in testing.
     """
     path = Path(path) if path else settings.bbb_session_file
     if not path.exists():
-        logger.warning(
-            "No BBB session file at %s -- requests will go out with no "
-            "site cookies and will likely get Cloudflare-challenged. See "
-            "data/secrets/bbb_session.example.json.",
+        logger.info(
+            "No BBB session file at %s -- proceeding without one (curl_cffi's "
+            "browser impersonation has been sufficient on its own in testing; "
+            "see this module's docstring). Optional: data/secrets/bbb_session.example.json.",
             path,
         )
         return {"cookies": {}, "headers": {}}
