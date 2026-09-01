@@ -23,6 +23,17 @@ Known fragility -- read before assuming a stale session "should" work:
     match real Chrome even when headers claim to be Chrome. If cookie/header
     replay alone stops being enough, that fingerprint mismatch is the next
     thing to suspect.
+  - CONFIRMED 2026-09-01: individual business-profile pages
+    (scraping/business.py) get Cloudflare-challenged (403, a "Just a
+    moment..." page) noticeably more readily than /api/search does, even
+    replaying a real, unexpired, completely unmodified captured session with
+    no proxy involved -- verified by re-running the exact original captured
+    request script standalone. Search staying reliable while individual
+    profile pages don't suggests BBB applies stricter bot protection
+    specifically to profile pages (the more scrape-valuable, contact-info-
+    bearing content) -- not a bug here to fix, a real constraint to design
+    around: expect profile-page fetches to need a *fresher* session than
+    search does, and to fail more often even with one.
 """
 from __future__ import annotations
 

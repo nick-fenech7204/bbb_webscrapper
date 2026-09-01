@@ -21,8 +21,11 @@ def test_parse_search_results_against_real_fixture(load_json_fixture):
     assert first.bbb_id == "0673_90048562_89699"
     assert first.business_id == "90048562"
     assert first.name == "Copper Advisors, LLC"
+    # This row is a non-canonical branch (Greer) -- profile_url must come from
+    # localReportUrl (which carries /addressId/89699), not the shared reportUrl
+    # (which points at the canonical Greenville address instead).
     assert first.profile_url == (
-        "https://www.bbb.org/us/sc/greenville/profile/cpa/copper-advisors-llc-0673-90048562"
+        "https://www.bbb.org/us/sc/greer/profile/cpa/copper-advisors-llc-0673-90048562/addressId/89699"
     )
     assert first.phone == "(864) 877-9691"
     assert first.address == "1109 W Poinsett St Ste C"
@@ -73,6 +76,17 @@ def test_multi_branch_business_keeps_each_listing_distinct(load_json_fixture):
 
     cities = {r.city for r in barnes}
     assert cities == {"Cincinnati", "Crestview Hills", "Dayton"}
+
+    # Same trap, different field: reportUrl is identical across every branch
+    # (points at the canonical one) -- profile_url must come from
+    # localReportUrl when present, or fetching a non-canonical branch's
+    # profile_url would silently return a different branch's page.
+    by_city = {r.city: r for r in barnes}
+    assert by_city["Cincinnati"].profile_url.endswith(
+        "/us/oh/cincinnati/profile/cpa/barnes-dennig-company-ltd-0292-3089"
+    )  # canonical branch: reportUrl has no addressId suffix, and that's correct here
+    assert "/addressId/178405" in by_city["Crestview Hills"].profile_url
+    assert "/addressId/53569" in by_city["Dayton"].profile_url
 
 
 def test_multi_phone_business_keeps_first_phone_and_full_list_in_raw_extra(load_json_fixture):

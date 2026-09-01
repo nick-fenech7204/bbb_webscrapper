@@ -93,10 +93,16 @@ class BBBSearchClient:
     def search(self, category: Category, location: Location, page: int = 1) -> SearchPageResult:
         params = build_search_params(category, location, page=page, cfg=self.cfg)
         referer = build_referer(category, location, page=page)
+        # XHR-style headers, deliberately different from business.py's
+        # document-navigation ones -- see business.py's module docstring.
+        headers = {
+            "accept": "*/*",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "referer": referer,
+        }
 
-        response = self.http.get(
-            self.cfg.bbb_search_url, params=params, headers={"referer": referer}
-        )
+        response = self.http.get(self.cfg.bbb_search_url, params=params, headers=headers)
 
         try:
             data = response.json()

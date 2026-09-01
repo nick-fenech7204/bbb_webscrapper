@@ -34,8 +34,8 @@ BBB_BASE_URL = "https://www.bbb.org"
 # is explored further (e.g. serviceArea*, requestAQuoteUrl*, tobText/tobId,
 # charitySeal/isCharity/accreditedCharity, businessLoginUrl, logoUri, ...).
 _MAPPED_KEYS = {
-    "id", "businessId", "businessName", "reportUrl", "phone", "address",
-    "city", "state", "postalcode", "location", "rating", "ratingScore",
+    "id", "businessId", "businessName", "reportUrl", "localReportUrl", "phone",
+    "address", "city", "state", "postalcode", "location", "rating", "ratingScore",
     "bbbMember", "categories", "bbbId", "bbbName",
 }
 
@@ -102,7 +102,16 @@ def _map_listing_item(
     # one page, one per branch). Using bbbId+businessId as the stable id
     # would silently collapse distinct branches together at dedupe time --
     # `id` is the one that's actually unique per row.
-    report_url = item.get("reportUrl")
+    #
+    # Same trap, different field: `reportUrl` points to the business's
+    # CANONICAL address and is identical across every branch's row (so
+    # fetching it for a non-canonical branch silently returns a different
+    # branch's page). `localReportUrl` carries the branch-specific
+    # /addressId/N suffix and is only non-null for non-canonical branches --
+    # confirmed 2026-09-01 (Copper Advisors LLC's Greer row has a distinct
+    # localReportUrl while its Greenville/canonical row has none; both rows
+    # share the same reportUrl). Prefer it when present.
+    report_url = item.get("localReportUrl") or item.get("reportUrl")
     profile_url = f"{BBB_BASE_URL}{report_url}" if report_url else None
 
     phones = item.get("phone") or []

@@ -160,30 +160,44 @@ Deduping on the wrong key here silently merges distinct branches into one
 record -- an early version of this mapping did exactly that before a second
 real capture caught it.
 
+Same trap, different field, caught by a second real capture: `reportUrl` is
+identical across every branch of a multi-location business (it points at
+the canonical address only) -- `localReportUrl` is the one that actually
+carries the branch-specific `/addressId/N` suffix. `profile_url` now
+prefers it when present; using `reportUrl` alone would silently fetch the
+wrong branch's page for every non-canonical address.
+
 `data/reference/categories.json` also holds 10 real `(id, name)` pairs
 pulled from that response's category filters -- just that one narrow
 finance-related slice though, not the full taxonomy.
 
-**Still placeholder:**
+**Also confirmed real (2026-09-01):** the individual business-profile page
+-- same `window.__PRELOADED_STATE__` mechanism as guessed, confirmed real
+this time, with the actual data at `businessProfile` (not `business`).
+`parsing/business_parser.py`'s field mapping and
+`tests/fixtures/business_page_sample.html` (a real captured page, not
+synthetic) are built directly against it. Also confirmed: BBB obfuscates
+emails in the page JSON (`"!~xK_bL!user__at__domain__dot__tld!~xK_bL!"`,
+decoded client-side by BBB's own frontend before display) -- `email` comes
+back already decoded; see `_deobfuscate_email`'s docstring.
 
-1. **`parsing/business_parser.py`** -- assumes a `window.__PRELOADED_STATE__`
-   assignment containing `{"business": {...}}` on the individual profile
-   page (still HTML -- only search turned out to be a JSON API). Adjust
-   `PRELOADED_STATE_VAR` / `_map_business_state` once you've captured one.
-2. **`data/reference/categories.json`** -- real but narrow (10
-   finance/accounting categories, a side effect of which query happened to
-   get captured first). Needs the rest of BBB's industries. See
-   `data/reference/README.md` for how to grow it incrementally from every
-   real search response, or fill in `scripts/fetch_categories.py` for a
-   proper full-taxonomy source once you find one.
+**Still placeholder:** `data/reference/categories.json` -- real but narrow
+(10 finance/accounting categories, a side effect of which query happened to
+get captured first). Needs the rest of BBB's industries. See
+`data/reference/README.md` for how to grow it incrementally from every real
+search response, or fill in `scripts/fetch_categories.py` for a proper
+full-taxonomy source once you find one.
 
-Workflow for the business-profile page (same pattern that got search done):
-
-1. Capture one real business-profile HTML page (`scraping/capture.py`
-   writes every response to `data/raw/` automatically on a live run).
-2. Replace `tests/fixtures/business_page_sample.html` with the real capture.
-3. Update `business_parser.py` to match the real shape.
-4. `pytest` will fail until the mapping is right -- that's the feedback loop.
+**Known live-reliability gap, not a parsing problem:** fetching individual
+profile pages is currently unreliable even with a valid, unexpired,
+completely unmodified captured session -- confirmed by replaying the exact
+original captured request script standalone (no proxy, no code of ours
+involved) and still getting Cloudflare's "Just a moment..." challenge page,
+in the same run where `/api/search` succeeded normally. BBB appears to
+apply stricter bot protection to profile pages specifically. The parsing
+logic itself is solid (tested against a real captured page above) -- what's
+unsolved is reliably *getting* a fresh-enough session to fetch one live.
+See "Session cookies" below and `scraping/session.py`'s docstring.
 
 The generic HTML-extraction helpers (`parsing/json_extract.py` -- pulling
 `<script type="application/json">` blocks, or a `window.X = {...}` state
@@ -209,6 +223,24 @@ replay alone stops being enough even from a matching IP, plain
 `requests`/urllib3's TLS handshake fingerprint not matching real Chrome is
 the next thing to suspect.
 
+**Confirmed 2026-09-01: profile pages need a fresher session than search
+does.** In one live run, `/api/search` succeeded on a session that then got
+403'd on every single business-profile-page fetch immediately after, on the
+same run, same cookies, same proxy -- and replaying that exact captured
+request completely standalone (no proxy) got the same 403 "Just a
+moment..." challenge page. Search staying reliable while profile pages
+don't strongly suggests BBB protects profile pages (the more scrape-valuable
+content) more aggressively. `headers` in the session file is deliberately
+trimmed to what's stable across request types now -- `scraping/search.py`
+and `scraping/business.py` each set their own realistic Accept/sec-fetch-*/
+referer per call -- but that only fixes header *shape*, not this. Practical
+options worth considering next, not yet built: capture/refresh the session
+right before a profile-page-heavy run rather than reusing an older one,
+slow the request cadence down further specifically for profile pages, or
+mint the session via an actual browser (e.g. Playwright) that lets
+Cloudflare's own JS challenge resolve normally rather than replaying a
+captured cookie jar at all.
+
 ## Adding a new output destination
 
 1. Subclass `Sink` in `pipeline/sinks/your_sink.py`, implement `load()`.
@@ -230,8 +262,16 @@ traced back to the exact HTML that caused it.
 ## Not yet wired up (by design)
 
 - Proxy session rotation on block/challenge (`BlockedError` is raised and
-  surfaced, but doesn't yet trigger an automatic new proxy session -- add
-  that in `etl/extract.py` once you see how BBB actually responds to
-  blocks).
-- Real BBB search URL params / listing+state JSON schema (see above).
+  surfaced, but doesn't yet trigger an automatic new proxy session). Given
+  what's confirmed above -- profile pages get challenged even from the
+  *original* capturing IP with no proxy involved -- a new proxy session
+  alone probably isn't the fix; a fresher BBB session likely matters more.
+- Any kind of session-refresh automation (see "Session cookies" above) --
+  currently 100% manual (re-capture from a browser, overwrite
+  data/secrets/bbb_session.json).
 - Upsert-on-conflict for `SQLSink` (currently append-only).
+- `CSVSink` writes its header from whichever batch of records hits it
+  first; a later batch with different/more fields (e.g. summaries then
+  details, or a schema change) gets silently truncated to that original
+  header on append rather than growing to fit. Fine for a single run, worth
+  fixing before relying on it across many runs with evolving fields.

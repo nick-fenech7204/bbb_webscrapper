@@ -96,8 +96,8 @@ class Extractor:
 
         return all_summaries
 
-    def extract_business(self, profile_url: str) -> BusinessDetail:
-        result = self.business_client.fetch(profile_url)
+    def extract_business(self, profile_url: str, *, referer: str | None = None) -> BusinessDetail:
+        result = self.business_client.fetch(profile_url, referer=referer)
         return parse_business_page(result.html, profile_url=profile_url, stats=self.stats)
 
     def close(self) -> None:

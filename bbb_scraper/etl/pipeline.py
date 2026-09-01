@@ -17,6 +17,7 @@ from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.pipeline.base import Sink
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.reference.models import Category, Location
+from bbb_scraper.scraping.search import build_referer
 from bbb_scraper.utils.stats import RunStats, RECORDS_LOADED
 
 logger = get_logger(__name__)
@@ -52,7 +53,10 @@ class ETLPipeline:
                     if not summary.profile_url:
                         continue
                     try:
-                        detail = extractor.extract_business(summary.profile_url)
+                        # Referer matching the search that surfaced this business
+                        # -- what a real user's click-through would send.
+                        referer = build_referer(category, location, page=summary.source_page or 1)
+                        detail = extractor.extract_business(summary.profile_url, referer=referer)
                         records.append(transform_detail(detail))
                     except Exception:
                         logger.exception("Failed to extract business detail for %s", summary.profile_url)

@@ -77,28 +77,68 @@ class BusinessSummary(BaseModel):
 class BusinessDetail(BaseModel):
     """Full record from a BBB individual business-profile page.
 
-    Unlike BusinessSummary above, this field set is still a placeholder --
-    we haven't captured a real profile page yet. See business_parser.py.
+    Field set confirmed 2026-09-01 against a real captured page (see
+    tests/fixtures/business_page_sample.html) -- no longer a placeholder.
+    The page embeds a much richer object than the search API returns
+    (`window.__PRELOADED_STATE__.businessProfile`); this is a curated
+    subset, everything else lands in raw_extra (notably: license/regulatory
+    details under orgDetails.license, full contact list beyond the
+    principal, review/complaint counts, related articles/news).
     """
 
     bbb_id: str | None = None
+    """Self-derived as "{bbbId}_{businessId}_{addressId}" (addressId parsed
+    from the page's own urls.localProfile) -- mirrors BusinessSummary.bbb_id's
+    per-listing (not per-company) granularity, so records from both parsers
+    dedupe/join consistently. See BusinessSummary.bbb_id's docstring."""
+    business_id: str | None = None
+    bbb_office_id: str | None = None
+    bbb_office_name: str | None = None
+    is_multi_location: bool | None = None
+    """BBB's own flag confirming a business can have multiple addresses --
+    the same fact BusinessSummary.bbb_id's docstring found the hard way."""
+
     name: str
     profile_url: str | None = None
     phone: str | None = None
+    email: str | None = None
+    """BBB obfuscates emails in the page's JSON (e.g.
+    "!~xK_bL!info__at__example__dot__com!~xK_bL!", decoded client-side by
+    their own frontend JS before display -- not an access control, just
+    scraper-unfriendly encoding of an already-public contact address).
+    Decoded here the same way their JS would; raw value kept in raw_extra
+    as "email_raw" in case the obfuscation scheme changes and this needs
+    revisiting."""
     website: str | None = None
     address: str | None = None
     city: str | None = None
     state: str | None = None
     postal_code: str | None = None
+    lat: float | None = None
+    lon: float | None = None
 
     rating: str | None = None
+    """BBB's letter rating, e.g. "A+" -- or "NR" (Not Rated), which is a
+    real, valid value (confirmed on the page this was modeled on), not a
+    missing-data signal. Independent of `accredited`."""
     accredited: bool | None = None
     accreditation_status: str | None = None
-    years_in_business: str | None = None
+    years_in_business: int | None = None
     bbb_file_opened: str | None = None
+    """ISO datetime string, kept as-is rather than parsed -- several sibling
+    date fields (accreditationRevoked, newOwnerDate, ...) are legitimately
+    null, so this stays a plain optional string rather than risking a parse
+    step that has to special-case absence anyway."""
     business_started: str | None = None
     principal_contact: str | None = None
+    """"{first} {last}, {title}" for the first contact flagged `isPrincipal`
+    in the page data. None if no contact is marked principal."""
     categories: list[str] = Field(default_factory=list)
+    primary_category_name: str | None = None
+    primary_category_id: str | None = None
+    organization_description: str | None = None
+    entity_type: str | None = None
+    """e.g. "Corporation", "LLC" -- from orgDetails.typeOfEntity.name."""
 
     scraped_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
