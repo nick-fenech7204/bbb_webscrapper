@@ -8,5 +8,6 @@
   { "id": "60155-000", "name": "Bookkeeping Services", "slug": "bookkeeping-services" },
   { "id": "60647-000", "name": "Payroll Services", "slug": "payroll-services" },
   { "id": "60349-000", "name": "Estate Planning and Management", "slug": "estate-planning-and-management" },
-  { "id": "20085-000", "name": "Financial Services", "slug": "financial-services" }
+  { "id": "20085-000", "name": "Financial Services", "slug": "financial-services" },
+  { "id": "hvac", "name": "Heating and Air Conditioning", "slug": "hvac" }
 ]

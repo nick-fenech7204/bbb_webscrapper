@@ -17,6 +17,16 @@ particular query). Because the seed query was "accredited cpa", all 10 are
 finance/accounting-related -- this is a real but narrow slice, not the full
 taxonomy across every industry BBB covers.
 
+One entry (`hvac`) is different: a best-guess `name` ("Heating and Air
+Conditioning") added to unblock a pilot in a new vertical, not yet confirmed
+against a real response the way the other 10 are -- flagged by using a
+plain word as its `id` instead of a real harvested `NNNNN-NNN`-style BBB id,
+so it's visually obvious which entries are confirmed vs. guessed. The first
+real search against it will confirm quickly whether the phrasing returns
+good matches; if BBB's `filters.filter_category.filterOptions` on that
+response has a better/more precise name, swap it in and give it the real
+harvested id at the same time.
+
 The `id` values (e.g. `"60004-000"` for CPA) are BBB's own category ids --
 they show up as `tobId` on every search result and as `categories[].id` too
 (see `tests/fixtures/search_listing_sample.json`). They're not sent in the
