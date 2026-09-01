@@ -1,5 +1,5 @@
-from bbb_scraper.etl.transform import normalize_phone, normalize_whitespace, transform_summary
-from bbb_scraper.parsing.models import BusinessSummary
+from bbb_scraper.etl.transform import normalize_phone, normalize_whitespace, transform_detail, transform_summary
+from bbb_scraper.parsing.models import BusinessDetail, BusinessSummary
 
 
 def test_normalize_phone_formats_10_digit_us_number():
@@ -51,3 +51,25 @@ def test_transform_summary_keeps_different_branches_of_same_company_distinct():
     record_b = transform_summary(branch_b)
     assert record_a["id"] != record_b["id"]
     assert record_a["business_id"] == record_b["business_id"] == "3089"
+
+
+def test_transform_detail_keeps_nested_fields_native_not_prestringified():
+    """transform.py's job is one-dict-per-record, not all-scalar-values --
+    contacts/socials/reviews_complaints stay as real list/dict objects here.
+    Serializing them for a flat destination (CSV/SQL cell) is each sink's
+    own job, done right before writing -- see pipeline/sinks/csv_sink.py.
+    """
+    detail = BusinessDetail(
+        name="Acme Plumbing Co",
+        contacts=[{"name": "Jane Doe", "title": "Owner", "is_principal": True}],
+        socials=[{"platform": "facebook", "url": "https://facebook.com/acme"}],
+        reviews_complaints={"reviews_total": 3, "complaints_total": 1},
+        categories=["Plumbers"],
+    )
+    record = transform_detail(detail)
+
+    assert record["contacts"] == [{"name": "Jane Doe", "title": "Owner", "is_principal": True}]
+    assert isinstance(record["contacts"], list)
+    assert record["socials"] == [{"platform": "facebook", "url": "https://facebook.com/acme"}]
+    assert record["reviews_complaints"] == {"reviews_total": 3, "complaints_total": 1}
+    assert isinstance(record["reviews_complaints"], dict)

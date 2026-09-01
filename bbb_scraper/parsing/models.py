@@ -82,8 +82,7 @@ class BusinessDetail(BaseModel):
     The page embeds a much richer object than the search API returns
     (`window.__PRELOADED_STATE__.businessProfile`); this is a curated
     subset, everything else lands in raw_extra (notably: license/regulatory
-    details under orgDetails.license, full contact list beyond the
-    principal, review/complaint counts, related articles/news).
+    details under orgDetails.license, and related articles/news).
     """
 
     bbb_id: str | None = None
@@ -132,7 +131,21 @@ class BusinessDetail(BaseModel):
     business_started: str | None = None
     principal_contact: str | None = None
     """"{first} {last}, {title}" for the first contact flagged `isPrincipal`
-    in the page data. None if no contact is marked principal."""
+    in the page data. None if no contact is marked principal. Quick-glance
+    convenience -- see `contacts` for the full list (owners/managers aren't
+    always flagged principal, and some businesses list several)."""
+    contacts: list[dict[str, Any]] = Field(default_factory=list)
+    """Every listed contact (owner, management, etc.), not just the
+    principal: [{"name": "Gerald Baum", "title": "President",
+    "is_principal": true, "is_management": true, "is_primary": true}, ...].
+    Empty list if the page lists none."""
+    socials: list[dict[str, Any]] = Field(default_factory=list)
+    """[{"platform": "facebook", "url": "https://..."}, ...] from the
+    page's social media links. Empty list if none listed."""
+    reviews_complaints: dict[str, Any] = Field(default_factory=dict)
+    """Counts only, not the review/complaint text itself (not yet captured
+    anywhere): reviews_total, average_rating, complaints_total,
+    complaints_closed_past_3yr, complaints_closed_past_12mo."""
     categories: list[str] = Field(default_factory=list)
     primary_category_name: str | None = None
     primary_category_id: str | None = None

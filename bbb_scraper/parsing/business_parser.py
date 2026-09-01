@@ -13,7 +13,9 @@ field mapping below are no longer a guess. The page embeds:
         "accreditationInformation": {...}, "names": {...},
         "orgDetails": {...}, "rating": {...}, "dates": {...},
         "categories": {...}, "urls": {...}, "localBbbData": {...},
-        ... (display/media/reviews/etc, not all promoted -- see raw_extra)
+        "reviewsComplaintsSummary": {...},
+        "display": {"socialMediaList": [...], ...},
+        ... (media/license/related-articles/etc, not all promoted -- see raw_extra)
       }
     }
 
@@ -96,17 +98,68 @@ def _deobfuscate_email(raw: str | None) -> str | None:
     return text or None
 
 
+def _full_name(name: dict[str, Any] | None) -> str:
+    name = name or {}
+    return " ".join(p for p in (name.get("first"), name.get("last")) if p)
+
+
 def _principal_contact(contacts: list[dict[str, Any]] | None) -> str | None:
     for contact in contacts or []:
         if not contact.get("isPrincipal"):
             continue
-        name = contact.get("name") or {}
-        full_name = " ".join(p for p in (name.get("first"), name.get("last")) if p)
+        full_name = _full_name(contact.get("name"))
         title = contact.get("title")
         if full_name and title:
             return f"{full_name}, {title}"
         return full_name or title or None
     return None
+
+
+def _map_contacts(contacts: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    """Every listed contact, not just whichever one (if any) is flagged
+    principal -- some businesses list several (owner + office manager,
+    etc.), and "principal" isn't always set even when a name+title is.
+    """
+    mapped = []
+    for contact in contacts or []:
+        full_name = _full_name(contact.get("name"))
+        title = contact.get("title")
+        if not full_name and not title:
+            continue
+        mapped.append(
+            {
+                "name": full_name or None,
+                "title": title,
+                "is_principal": bool(contact.get("isPrincipal")),
+                "is_management": bool(contact.get("isManagement")),
+                "is_primary": bool(contact.get("isPrimary")),
+            }
+        )
+    return mapped
+
+
+def _map_socials(social_media_list: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    return [
+        {"platform": item.get("type"), "url": item.get("url")}
+        for item in (social_media_list or [])
+        if item.get("url")
+    ]
+
+
+def _map_reviews_complaints(summary: dict[str, Any] | None) -> dict[str, Any]:
+    """Counts only -- BBB doesn't expose individual review/complaint text
+    anywhere we've found yet, just these aggregate numbers. Drops the
+    UI-display-control flags (suppressReviews, displayReviewStarRating, ...)
+    that live alongside the actual counts in the raw block.
+    """
+    summary = summary or {}
+    return {
+        "reviews_total": summary.get("reviewsTotal"),
+        "average_rating": summary.get("averageOfReviewStarRatings"),
+        "complaints_total": summary.get("complaintsTotal"),
+        "complaints_closed_past_3yr": summary.get("totalClosedComplaintsPastThreeYears"),
+        "complaints_closed_past_12mo": summary.get("totalClosedComplaintsPastTwelveMonths"),
+    }
 
 
 def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> BusinessDetail:
@@ -141,6 +194,7 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
     ) or None
 
     categories = [c["title"] for c in (categories_block.get("links") or []) if c.get("title")]
+    display = bp.get("display") or {}
 
     raw_extra = {
         "id": bp.get("id"),
@@ -149,8 +203,9 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
         "breadcrumbs": bp.get("breadcrumbs"),
         "dialogLocations": bp.get("dialogLocations"),
         "media": bp.get("media"),
-        "display": bp.get("display"),
-        "reviewsComplaintsSummary": bp.get("reviewsComplaintsSummary"),
+        # socialMediaList promoted to `socials` -- omit it here so it's not
+        # duplicated between raw_extra and the first-class field.
+        "display": _omit(display, "socialMediaList"),
         "complaintQualificationQuestions": bp.get("complaintQualificationQuestions"),
         "requestAQuoteUrlId": bp.get("requestAQuoteUrlId"),
         "latestReviews": bp.get("latestReviews"),
@@ -165,7 +220,7 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
         "categories_meta": _omit(categories_block, "links", "primaryCategoryName", "primaryTobId"),
         "urls": _omit(urls, "primary"),
         "contactInformation": {
-            **_omit(contact_info, "phoneNumber", "emailAddress"),
+            **_omit(contact_info, "phoneNumber", "emailAddress", "contacts"),
             "email_raw": contact_info.get("emailAddress"),
         },
     }
@@ -194,6 +249,9 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
         bbb_file_opened=dates.get("bbbFileOpened"),
         business_started=dates.get("businessStart"),
         principal_contact=_principal_contact(contact_info.get("contacts")),
+        contacts=_map_contacts(contact_info.get("contacts")),
+        socials=_map_socials(display.get("socialMediaList")),
+        reviews_complaints=_map_reviews_complaints(bp.get("reviewsComplaintsSummary")),
         categories=categories,
         primary_category_name=categories_block.get("primaryCategoryName"),
         primary_category_id=categories_block.get("primaryTobId"),

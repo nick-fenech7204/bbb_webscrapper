@@ -1,4 +1,5 @@
 import csv
+import json
 
 from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
 
@@ -58,14 +59,38 @@ def test_csv_sink_grows_header_when_batch_has_new_fields(tmp_path):
     ]
 
 
-def test_csv_sink_ignores_extra_keys_not_in_union(tmp_path):
+def test_csv_sink_json_encodes_list_and_dict_values(tmp_path):
+    """A cell holding a list/dict must be real, parseable JSON -- not
+    Python's str() repr (single-quoted, True/None instead of true/null),
+    which looks similar enough to pass a glance but silently isn't JSON.
+    """
     sink = CSVSink(tmp_path / "out.csv")
-    sink.load([{"id": "1", "name": "Acme", "raw_extra": {"nested": "dropped is fine here"}}])
-    # raw_extra is a dict -- csv can't represent it cleanly, but the sink
-    # shouldn't blow up on it; it's just another column value (stringified
-    # by csv.writer, not our concern to validate the string shape here).
+    sink.load([{
+        "id": "1",
+        "name": "Acme",
+        "categories": ["Plumbers", "HVAC"],
+        "contacts": [{"name": "Jane Doe", "title": "Owner", "is_principal": True}],
+        "reviews_complaints": {"reviews_total": 3, "complaints_total": None},
+    }])
+
     rows = _read_rows(tmp_path / "out.csv")
-    assert rows[0]["id"] == "1"
+    row = rows[0]
+
+    assert json.loads(row["categories"]) == ["Plumbers", "HVAC"]
+    assert json.loads(row["contacts"]) == [
+        {"name": "Jane Doe", "title": "Owner", "is_principal": True}
+    ]
+    assert json.loads(row["reviews_complaints"]) == {"reviews_total": 3, "complaints_total": None}
+
+
+def test_csv_sink_handles_nested_values_without_crashing_on_append(tmp_path):
+    sink = CSVSink(tmp_path / "out.csv")
+    sink.load([{"id": "1", "name": "Acme", "categories": ["Plumbers"]}])
+    sink.load([{"id": "2", "name": "Beta", "categories": ["HVAC", "Roofing"]}])
+
+    rows = _read_rows(tmp_path / "out.csv")
+    assert json.loads(rows[0]["categories"]) == ["Plumbers"]
+    assert json.loads(rows[1]["categories"]) == ["HVAC", "Roofing"]
 
 
 def test_csv_sink_returns_zero_for_empty_batch(tmp_path):

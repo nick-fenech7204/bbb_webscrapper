@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
 from typing import Any
 
@@ -23,7 +24,8 @@ class CSVSink(Sink):
             return 0
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        batch_fieldnames = sorted({key for record in records for key in record.keys()})
+        rows = [_flatten_row(r) for r in records]
+        batch_fieldnames = sorted({key for row in rows for key in row.keys()})
 
         existing_fieldnames = self._read_header()
 
@@ -32,7 +34,7 @@ class CSVSink(Sink):
             with self.path.open("w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=batch_fieldnames, extrasaction="ignore")
                 writer.writeheader()
-                writer.writerows(records)
+                writer.writerows(rows)
 
         elif set(batch_fieldnames) <= set(existing_fieldnames):
             # This batch's columns are already covered by the file's header
@@ -41,7 +43,7 @@ class CSVSink(Sink):
             # with '' via its default restval). Safe to append as-is.
             with self.path.open("a", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=existing_fieldnames, extrasaction="ignore")
-                writer.writerows(records)
+                writer.writerows(rows)
 
         else:
             # This batch has columns the file doesn't -- appending with a
@@ -62,8 +64,8 @@ class CSVSink(Sink):
             with self.path.open("w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=union_fieldnames, extrasaction="ignore")
                 writer.writeheader()
-                writer.writerows(existing_rows)
-                writer.writerows(records)
+                writer.writerows(existing_rows)  # already flat strings, read back off disk
+                writer.writerows(rows)
 
         logger.info("CSVSink wrote %d record(s) to %s", len(records), self.path)
         return len(records)
@@ -75,3 +77,16 @@ class CSVSink(Sink):
             reader = csv.reader(f)
             header = next(reader, None)
         return header
+
+
+def _flatten_row(record: dict[str, Any]) -> dict[str, Any]:
+    """CSV cells can't hold structured data -- list/dict values (categories,
+    contacts, socials, reviews_complaints, ...) get JSON-encoded so the cell
+    holds real, parseable JSON. Without this, csv.writer falls back to
+    Python's str() repr for non-string values (single-quoted, True/None
+    instead of true/null) -- looks similar to JSON, isn't valid JSON.
+    """
+    return {
+        key: json.dumps(value, default=str) if isinstance(value, (list, dict)) else value
+        for key, value in record.items()
+    }

@@ -54,6 +54,27 @@ def test_parse_business_page_against_real_fixture(load_fixture):
     assert detail.entity_type == "Corporation"
     assert "retirement planning" in detail.organization_description.lower()
 
+    # Full contact list (not just the collapsed principal_contact string).
+    assert detail.contacts == [
+        {"name": "Gerald Baum", "title": "President",
+         "is_principal": True, "is_management": True, "is_primary": True},
+    ]
+
+    # Social media links.
+    assert detail.socials == [
+        {"platform": "facebook", "url": "https://www.facebook.com/baumfinancialservices/?fref=ts"},
+        {"platform": "pinterest", "url": "https://www.pinterest.com/BaumFinancial/_created/"},
+    ]
+
+    # Review/complaint counts (this business has none of either).
+    assert detail.reviews_complaints == {
+        "reviews_total": 0,
+        "average_rating": 0,
+        "complaints_total": 0,
+        "complaints_closed_past_3yr": 0,
+        "complaints_closed_past_12mo": 0,
+    }
+
 
 def test_parse_business_page_preserves_unmapped_fields_in_raw_extra(load_fixture):
     html = load_fixture("business_page_sample.html")
@@ -62,14 +83,53 @@ def test_parse_business_page_preserves_unmapped_fields_in_raw_extra(load_fixture
     # Raw (still-obfuscated) email kept alongside the decoded one, in case
     # the obfuscation scheme changes and decoding needs revisiting.
     assert detail.raw_extra["contactInformation"]["email_raw"].startswith("!~xK_bL!")
+    # Promoted to `contacts` -- shouldn't also linger, duplicated, in raw_extra.
+    assert "contacts" not in detail.raw_extra["contactInformation"]
 
     # Regulatory/license detail isn't promoted to a first-class field, but
     # must not be silently dropped.
     license_info = detail.raw_extra["orgDetails"]["license"]
     assert license_info["details"][0]["licenseNumber"] == "L059365"
 
-    assert detail.raw_extra["reviewsComplaintsSummary"]["reviewsTotal"] == 0
+    # Promoted to `socials` -- shouldn't also linger, duplicated, in raw_extra.
+    assert "socialMediaList" not in detail.raw_extra["display"]
+
+    # reviewsComplaintsSummary is fully promoted to `reviews_complaints` now,
+    # not left in raw_extra at all.
+    assert "reviewsComplaintsSummary" not in detail.raw_extra
+
     assert detail.raw_extra["id"] == "0_38205"  # BBB's own composite id for this listing
+
+
+def test_map_contacts_skips_entries_with_neither_name_nor_title():
+    from bbb_scraper.parsing.business_parser import _map_contacts
+
+    contacts = [
+        {"name": {"first": "Jane", "last": "Doe"}, "title": "Owner", "isPrincipal": True},
+        {"name": {}, "title": None},  # neither -- should be dropped
+    ]
+    mapped = _map_contacts(contacts)
+    assert len(mapped) == 1
+    assert mapped[0]["name"] == "Jane Doe"
+    assert mapped[0]["is_principal"] is True
+    assert mapped[0]["is_management"] is False  # not flagged -> False, not None
+
+
+def test_map_contacts_handles_empty_and_none():
+    from bbb_scraper.parsing.business_parser import _map_contacts
+
+    assert _map_contacts(None) == []
+    assert _map_contacts([]) == []
+
+
+def test_map_socials_skips_entries_without_a_url():
+    from bbb_scraper.parsing.business_parser import _map_socials
+
+    socials = [
+        {"type": "facebook", "url": "https://facebook.com/x"},
+        {"type": "twitter", "url": None},
+    ]
+    assert _map_socials(socials) == [{"platform": "facebook", "url": "https://facebook.com/x"}]
 
 
 def test_parse_business_page_raises_when_state_missing():

@@ -2,6 +2,15 @@
 Transform: pure, unit-testable functions that turn a parsed BusinessSummary /
 BusinessDetail into a flat dict ready for loading into a sink.
 
+"Flat" means one dict per record, not that every value is a scalar --
+`categories`/`contacts`/`socials`/`reviews_complaints` stay as native
+list/dict values here rather than being pre-serialized to strings. That's
+deliberate: it keeps the record fully structured for consumers that want it
+that way (JSONSink writes it out natively), and pushes the "how do I
+represent nested data in a flat destination" question to whichever sink
+actually has that problem -- CSVSink and SQLSink JSON-encode these fields
+themselves, right before writing, rather than everyone paying for it upstream.
+
 Kept deliberately free of I/O (no network, no disk, no logging side effects
 beyond what's passed in) so each function can be tested in isolation without
 fixtures or mocks -- just construct a model instance and assert on the dict.
@@ -102,6 +111,9 @@ def transform_detail(detail: BusinessDetail) -> dict[str, Any]:
         "bbb_file_opened": detail.bbb_file_opened,
         "business_started": detail.business_started,
         "principal_contact": detail.principal_contact,
+        "contacts": detail.contacts,
+        "socials": detail.socials,
+        "reviews_complaints": detail.reviews_complaints,
         "categories": detail.categories,
         "primary_category_name": detail.primary_category_name,
         "primary_category_id": detail.primary_category_id,

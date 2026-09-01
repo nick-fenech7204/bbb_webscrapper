@@ -263,6 +263,17 @@ a fresh captured session is the first thing to try bringing back.
 
 The ETL pipeline (`etl/pipeline.py`) doesn't need to change.
 
+**Nested fields (categories, contacts, socials, reviews_complaints, ...):**
+`transform.py` deliberately keeps these as real Python lists/dicts, not
+pre-flattened strings (see its module docstring) -- a destination that
+handles structure natively (JSONSink) gets it as-is. A destination that
+can't (CSVSink, SQLSink, ExcelSink -- flat cells/columns only) JSON-encodes
+them itself, right before writing, so a cell holds real parseable JSON
+(`["Plumbers", "HVAC"]`) rather than Python's `str()` repr
+(`"['Plumbers', 'HVAC']"`, which looks similar but isn't valid JSON). If you
+add a new flat-shaped sink, do the same -- see `csv_sink.py`'s
+`_flatten_row` for the pattern.
+
 ## Observability
 
 `RunStats` (`utils/stats.py`) counts requests sent/failed/retried, pages

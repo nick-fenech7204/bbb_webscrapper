@@ -8,6 +8,7 @@ care about updating existing rows rather than just appending.
 """
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from bbb_scraper.logging_setup import get_logger
@@ -45,11 +46,16 @@ class SQLSink(Sink):
             ) from exc
 
         df = pd.DataFrame(records)
-        # Stringify list/dict columns (e.g. `categories`) -- most SQL dialects
-        # don't have a native list type via plain to_sql.
+        # JSON-encode list/dict values (categories, contacts, socials,
+        # reviews_complaints, ...) -- most SQL dialects don't have a native
+        # list/object type via plain to_sql. Per-value, not per-column: a
+        # column being flagged doesn't mean every value in it is a list/dict,
+        # and json.dumps()-ing an already-scalar value would wrongly add
+        # quotes around it.
         for col in df.columns:
-            if df[col].apply(lambda v: isinstance(v, (list, dict))).any():
-                df[col] = df[col].apply(lambda v: str(v) if v is not None else None)
+            df[col] = df[col].apply(
+                lambda v: json.dumps(v, default=str) if isinstance(v, (list, dict)) else v
+            )
 
         df.to_sql(self.table_name, self.engine, if_exists="append", index=False)
         logger.info("SQLSink wrote %d record(s) to table %s", len(records), self.table_name)
