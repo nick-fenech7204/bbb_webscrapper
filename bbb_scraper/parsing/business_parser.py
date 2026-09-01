@@ -115,6 +115,20 @@ def _principal_contact(contacts: list[dict[str, Any]] | None) -> str | None:
     return None
 
 
+def _accreditation_status(accreditation: dict[str, Any]) -> str | None:
+    """accreditationInformation.text is a list of dicts with a `customText`
+    field (confirmed 2026-09-02 against a real business with non-empty
+    text -- "Rescue Rooter", see business_page_sample_accredited.html) --
+    NOT a plain list of strings. The one fixture this mapping was first
+    built against happened to have it as an empty list, which silently hid
+    the real shape until a larger batch surfaced a TypeError on `" ".join()`
+    against actual dicts.
+    """
+    texts = accreditation.get("text") or []
+    parts = [t.get("customText") for t in texts if isinstance(t, dict) and t.get("customText")]
+    return " ".join(parts) or None
+
+
 def _map_contacts(contacts: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
     """Every listed contact, not just whichever one (if any) is flagged
     principal -- some businesses list several (owner + office manager,
@@ -244,7 +258,7 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
         lon=location.get("longitude"),
         rating=rating.get("bbbRating"),
         accredited=accreditation.get("isAccredited"),
-        accreditation_status=" ".join(accreditation.get("text") or []) or None,
+        accreditation_status=_accreditation_status(accreditation),
         years_in_business=org.get("yearsInBusiness"),
         bbb_file_opened=dates.get("bbbFileOpened"),
         business_started=dates.get("businessStart"),

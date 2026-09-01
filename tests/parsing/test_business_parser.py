@@ -7,6 +7,11 @@ PROFILE_URL = (
     "baum-financial-services-inc-0733-90122435/addressId/38205"
 )
 
+ACCREDITED_PROFILE_URL = (
+    "https://www.bbb.org/us/wa/renton/profile/heating-and-air-conditioning/"
+    "rescue-rooter-1296-500666/addressId/892874"
+)
+
 
 def test_parse_business_page_against_real_fixture(load_fixture):
     """Fixture is a real captured BBB business-profile page -- this is
@@ -130,6 +135,44 @@ def test_map_socials_skips_entries_without_a_url():
         {"type": "twitter", "url": None},
     ]
     assert _map_socials(socials) == [{"platform": "facebook", "url": "https://facebook.com/x"}]
+
+
+def test_accreditation_status_extracts_customtext_from_dicts():
+    from bbb_scraper.parsing.business_parser import _accreditation_status
+
+    accreditation = {"text": [{"customText": "First block."}, {"customText": "Second block."}]}
+    assert _accreditation_status(accreditation) == "First block. Second block."
+
+
+def test_accreditation_status_handles_empty_and_missing_text():
+    from bbb_scraper.parsing.business_parser import _accreditation_status
+
+    assert _accreditation_status({"text": []}) is None
+    assert _accreditation_status({}) is None
+
+
+def test_accreditation_status_skips_items_missing_customtext():
+    from bbb_scraper.parsing.business_parser import _accreditation_status
+
+    accreditation = {"text": [{"customText": "Real one."}, {"position": None}]}
+    assert _accreditation_status(accreditation) == "Real one."
+
+
+def test_parse_business_page_handles_accreditation_text_as_dicts_not_strings(load_fixture):
+    """Regression test: accreditationInformation.text is a list of dicts
+    with a customText field, not a list of plain strings. The fixture used
+    everywhere else in this file happens to have it as an empty list, which
+    silently hid the real shape -- this fixture (confirmed 2026-09-02,
+    caught mid a 233-business real batch: 3 failures, all this exact
+    TypeError) has real non-empty text and must not raise.
+    """
+    html = load_fixture("business_page_sample_accredited.html")
+    detail = parse_business_page(html, profile_url=ACCREDITED_PROFILE_URL)
+
+    assert detail.name == "Rescue Rooter"
+    assert detail.accredited is True
+    assert detail.accreditation_status is not None
+    assert "BBB Accredited Business" in detail.accreditation_status
 
 
 def test_parse_business_page_raises_when_state_missing():
