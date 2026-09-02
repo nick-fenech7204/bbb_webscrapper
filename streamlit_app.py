@@ -82,8 +82,37 @@ with st.sidebar:
         max_pages = st.number_input(
             "Max pages per location", min_value=1, max_value=settings.bbb_max_search_pages,
             value=settings.bbb_max_search_pages,
-            help="BBB caps results at 15 pages regardless of how high this is set.",
+            help="BBB caps results at 15 pages regardless of how high this is set. "
+                 "Ignored when coverage mode (below) is on.",
         )
+
+        coverage_mode = st.checkbox(
+            "Coverage mode -- sweep multiple points instead of one search per location",
+            value=False,
+            help="BBB's location search doesn't actually scope to a local radius -- "
+                 "confirmed empirically, see README. This works around it by searching "
+                 "several points around each location instead of just one.",
+        )
+        # Always rendered and always enabled (not gated on coverage_mode) on purpose:
+        # st.form only re-evaluates on submit, so anything conditioned on the checkbox
+        # -- visibility, disabled=, a caption -- would render using its state *before*
+        # the click that changed it, one submit behind. Same lag the category field
+        # used to have before it was made always-rendered too; the fix here is the
+        # same one. These three are simply unused when coverage_mode is off.
+        st.caption("Coverage settings (used only when coverage mode above is checked):")
+        cov_col1, cov_col2, cov_col3 = st.columns(3)
+        radius_miles = cov_col1.number_input("Radius (mi)", min_value=1.0, value=25.0, step=5.0)
+        num_points = cov_col2.number_input(
+            "Search points", min_value=2, max_value=64, value=16, step=2,
+        )
+        max_pages_per_point = cov_col3.number_input(
+            "Pages/point", min_value=1, max_value=settings.bbb_max_search_pages, value=2,
+        )
+        st.caption(
+            "Coverage mode multiplies request count roughly by points × pages/point, "
+            "per location line -- keep both modest rather than maxing them out."
+        )
+
         fetch_details = st.checkbox(
             "Fetch full details (contacts, socials, reviews)",
             value=False,
@@ -121,8 +150,18 @@ if submitted:
 
     with Extractor(stats=stats) as extractor:
         for i, location in enumerate(locations):
-            status.write(f"Searching **{category.name}** in **{location.display}**…")
-            summaries = extractor.extract_search(category, location, max_pages=int(max_pages))
+            if coverage_mode:
+                status.write(
+                    f"Sweeping **{category.name}** around **{location.display}** "
+                    f"({int(num_points)} points, {radius_miles:g}mi)…"
+                )
+                summaries = extractor.extract_search_coverage(
+                    category, location, radius_miles=radius_miles,
+                    num_points=int(num_points), max_pages_per_point=int(max_pages_per_point),
+                )
+            else:
+                status.write(f"Searching **{category.name}** in **{location.display}**…")
+                summaries = extractor.extract_search(category, location, max_pages=int(max_pages))
             all_records.extend(transform_summary(s) for s in summaries)
 
             if fetch_details:
