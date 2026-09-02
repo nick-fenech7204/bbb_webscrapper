@@ -33,7 +33,6 @@ from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import configure_logging
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
-from bbb_scraper.reference.categories import CategoryDirectory
 from bbb_scraper.reference.models import Category, parse_location
 from bbb_scraper.utils.flatten import flatten_record
 from bbb_scraper.utils.stats import RunStats
@@ -41,30 +40,24 @@ from bbb_scraper.utils.stats import RunStats
 configure_logging()
 st.set_page_config(page_title="BBB Scraper", page_icon="\U0001F4CB", layout="wide")
 
-
-@st.cache_resource
-def _load_category_directory() -> CategoryDirectory:
-    return CategoryDirectory.load()
+# No dropdown/directory lookup here on purpose: BBB's search takes the
+# industry phrase directly as `find_text` (confirmed 2026-09-01 -- see
+# reference/models.py's Category docstring) and accepts a wide range of
+# phrasing, so data/reference/categories.json's curated 11-entry list isn't
+# a gate on what you can search -- it's still used by the CLI's --category
+# resolution and by scripts/fetch_categories.py, just not by this form.
 
 
 def _slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.strip().lower()).strip("-") or "custom"
 
 
-def _resolve_category(directory: CategoryDirectory, choice: str, custom_text: str) -> Category | None:
-    if choice != "Custom…":
-        return directory.get(choice) or Category(id=_slugify(choice), name=choice)
-    custom_text = custom_text.strip()
-    if not custom_text:
+def _build_category(text: str) -> Category | None:
+    text = text.strip()
+    if not text:
         return None
-    # Custom text always builds an ad-hoc Category directly rather than
-    # fuzzy-matching against the directory -- unambiguous by construction,
-    # since this path is only reached when the user deliberately typed
-    # something instead of picking a known entry.
-    return Category(id=_slugify(custom_text), name=custom_text)
+    return Category(id=_slugify(text), name=text)
 
-
-directory = _load_category_directory()
 
 st.title("BBB Scraper")
 st.caption(
@@ -75,21 +68,11 @@ st.caption(
 with st.sidebar:
     st.header("Search")
     with st.form("search_form"):
-        category_options = ["Custom…"] + [c.name for c in directory.all()]
-        category_choice = st.selectbox("Category", options=category_options)
-        # Always rendered, not conditionally on category_choice -- widgets
-        # inside st.form only re-evaluate on submit, not on each selection
-        # change, so a conditional field here would visibly lag a step
-        # behind the dropdown. Simpler and correct to just always show it
-        # and say clearly when it's used.
-        custom_category = st.text_input(
-            "Category phrase (only used when Category is “Custom…”)",
-            placeholder="e.g. Roofing Contractors",
+        industry_text = st.text_input(
+            "Industry / category",
+            placeholder="e.g. Roofing Contractors, Plumbers, Heating and Air Conditioning, CPA",
         )
-        st.caption(
-            "Sent as-is to BBB's search -- doesn't need to already be in "
-            "data/reference/categories.json."
-        )
+        st.caption("Sent as-is to BBB's search -- most industry phrasing works.")
 
         locations_text = st.text_area(
             "Locations, one per line",
@@ -119,10 +102,9 @@ with st.sidebar:
         st.write(f"**Impersonation:** `{settings.http_impersonate}`")
         st.write(f"**BBB session file:** "
                   f"{'found' if settings.bbb_session_file.exists() else 'not found (optional)'}")
-        st.write(f"**Categories loaded:** {len(directory.all())}")
 
 if submitted:
-    category = _resolve_category(directory, category_choice, custom_category)
+    category = _build_category(industry_text)
     locations = [parse_location(line.strip()) for line in locations_text.splitlines() if line.strip()]
 
     if category is None:

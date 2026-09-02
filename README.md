@@ -103,7 +103,9 @@ partial matches print the candidates and exit rather than guessing.
 
 A [Streamlit](https://streamlit.io) control panel (`streamlit_app.py`) for
 the same category + location search, if you'd rather use a form than the
-CLI -- pick a category (or type a custom one), enter one or more locations,
+CLI -- type an industry/category phrase (free text, not tied to
+`data/reference/categories.json` -- BBB's search takes `find_text` directly
+and accepts a wide range of phrasing), enter one or more locations,
 optionally fetch full details, and get a sortable table plus a CSV download
 in the browser. It's a thin presentation layer over the exact same
 `Extractor`/`transform`/`dedupe`/sinks everything else uses -- no separate
