@@ -34,6 +34,11 @@ class ETLPipeline:
         location: Location,
         max_pages: int | None = None,
         fetch_details: bool = False,
+        *,
+        coverage: bool = False,
+        radius_miles: float = 25.0,
+        num_points: int = 16,
+        max_pages_per_point: int = 2,
     ) -> dict[str, Any]:
         """Search BBB by category + location, optionally follow through to
         each business's profile page, transform, dedupe, and load into every
@@ -42,9 +47,22 @@ class ETLPipeline:
         `max_pages=None` (the default) pages through up to BBB's own cap
         (`cfg.bbb_max_search_pages`, currently 15 / ~300 results) -- pass a
         smaller number while testing to avoid burning through pages.
+
+        `coverage=True` switches to `Extractor.extract_search_coverage`
+        instead of a single search -- sweeps `num_points` anchors within
+        `radius_miles` of `location` (each to `max_pages_per_point`, not the
+        usual full depth -- see that method's docstring for why) to work
+        around BBB's location search not actually scoping to a local
+        radius. `max_pages` is ignored in this mode.
         """
         with Extractor(stats=self.stats) as extractor:
-            summaries = extractor.extract_search(category, location, max_pages=max_pages)
+            if coverage:
+                summaries = extractor.extract_search_coverage(
+                    category, location, radius_miles=radius_miles,
+                    num_points=num_points, max_pages_per_point=max_pages_per_point,
+                )
+            else:
+                summaries = extractor.extract_search(category, location, max_pages=max_pages)
 
             summary_records = [transform_summary(s) for s in summaries]
             detail_records: list[dict[str, Any]] = []

@@ -42,6 +42,22 @@ def test_build_search_params_uses_zip_display_when_zip():
     assert params["find_loc"] == "78701"
 
 
+def test_build_search_params_omits_sort_by_default():
+    category = Category(id="plumbers", name="Plumbers")
+    location = parse_location("Austin, TX")
+
+    params = build_search_params(category, location, cfg=_cfg())
+    assert "sort" not in params
+
+
+def test_build_search_params_includes_sort_when_given():
+    category = Category(id="plumbers", name="Plumbers")
+    location = parse_location("Austin, TX")
+
+    params = build_search_params(category, location, cfg=_cfg(), sort="Distance")
+    assert params["sort"] == "Distance"
+
+
 def test_build_referer_is_a_bbb_search_url():
     category = Category(id="plumbers", name="Plumbers")
     location = parse_location("Austin, TX")

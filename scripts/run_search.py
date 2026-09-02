@@ -11,6 +11,15 @@ interactive prompt:
     python scripts/run_search.py --category plumbers --location 78701 --pages 2 --details
     python scripts/run_search.py                      # interactive prompts
     python scripts/run_search.py --list-categories plumb   # discovery only
+
+Pass --coverage to sweep multiple nearby search anchors instead of a single
+search -- works around BBB's location search not actually scoping to a local
+radius (see ETLPipeline.run_search's docstring). `--location` should be a
+city/state or ZIP, not raw lat/lon, since the sweep needs BBB to resolve a
+center point for it first:
+
+    python scripts/run_search.py --category "Heating and Air Conditioning" \
+        --location "Miami, FL" --coverage --radius 25 --num-points 12
 """
 from __future__ import annotations
 
@@ -106,6 +115,26 @@ def main() -> int:
         default=None,
         help="Print categories matching KEYWORD (or all, if omitted) and exit",
     )
+    parser.add_argument(
+        "--coverage", action="store_true",
+        help="Sweep multiple nearby search anchors instead of a single search "
+        "(see ETLPipeline.run_search docstring). --location should be a "
+        "city/state or ZIP, not lat/lon. --pages is ignored in this mode "
+        "-- use --max-pages-per-point instead.",
+    )
+    parser.add_argument(
+        "--radius", type=float, default=25.0,
+        help="Coverage mode: sweep radius in miles around --location (default: 25)",
+    )
+    parser.add_argument(
+        "--num-points", type=int, default=16,
+        help="Coverage mode: number of search anchors within --radius (default: 16)",
+    )
+    parser.add_argument(
+        "--max-pages-per-point", type=int, default=2,
+        help="Coverage mode: max listing pages to fetch per anchor (default: 2 -- "
+        "kept low since anchors overlap; see extract_search_coverage docstring)",
+    )
     args = parser.parse_args()
 
     configure_logging()
@@ -120,11 +149,21 @@ def main() -> int:
     category = resolve_category(directory, args.category) if args.category else prompt_category(directory)
     location = parse_location(args.location) if args.location else prompt_location()
 
-    logger.info("Searching category=%r location=%r", category.name, location.display)
+    if args.coverage:
+        logger.info(
+            "Coverage search: category=%r location=%r radius=%gmi num_points=%d "
+            "max_pages_per_point=%d",
+            category.name, location.display, args.radius, args.num_points,
+            args.max_pages_per_point,
+        )
+    else:
+        logger.info("Searching category=%r location=%r", category.name, location.display)
 
     pipeline = ETLPipeline()
     result = pipeline.run_search(
-        category, location, max_pages=args.pages, fetch_details=args.details
+        category, location, max_pages=args.pages, fetch_details=args.details,
+        coverage=args.coverage, radius_miles=args.radius, num_points=args.num_points,
+        max_pages_per_point=args.max_pages_per_point,
     )
     print(json.dumps(result, indent=2))
     return 0

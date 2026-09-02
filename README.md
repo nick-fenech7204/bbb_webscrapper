@@ -99,6 +99,57 @@ python scripts/run_search.py --list-categories plumb
 `--category` accepts an id, slug, exact name, or partial name; ambiguous
 partial matches print the candidates and exit rather than guessing.
 
+## Coverage search (multiple locations within a radius)
+
+BBB's location search does **not** actually scope results to the area
+around `find_loc`/`find_latlng` -- confirmed empirically (2026-09-02): the
+same city/category search from four different Seattle-metro cities (Seattle,
+Tacoma, Bellevue, Federal Way) all returned nearly the same statewide pool of
+~230 businesses spanning 91 WA cities, some 140+ miles apart. A single search
+against "Miami, FL" is really a search of Florida (or wider), not a 25-mile
+radius around Miami.
+
+`--coverage` works around this by sweeping several search anchors -- not
+just one -- around the requested location:
+
+```bash
+python scripts/run_search.py --category cpa --location "Miami, FL" \
+    --coverage --radius 25 --num-points 16 --max-pages-per-point 2
+```
+
+How it works, concretely:
+
+1. The first search against `--location` also reads BBB's own resolved
+   center coordinates back out of the response (`location.latLng` --
+   populated for any name-based `find_loc` search). No geocoding library or
+   API call needed; BBB already did that lookup to serve the first request.
+2. `bbb_scraper/reference/geo.py` scatters `--num-points` anchor points in
+   rings around that center, out to `--radius` miles, using plain great-circle
+   math (no dependency).
+3. Each anchor is searched with `sort=Distance` (confirmed working
+   2026-09-02), so its first page or two -- `--max-pages-per-point`,
+   deliberately low by default -- surfaces businesses actually near *that*
+   anchor rather than BBB's usual best-match ordering.
+4. All anchors' results are pooled and deduped exactly like a normal search
+   (`etl/dedupe.py`) -- the same business turning up under several nearby
+   anchors is expected, not a bug.
+
+`--pages` is ignored in coverage mode; use `--max-pages-per-point` instead.
+`--location` should be a city/state or ZIP (something BBB can geocode by
+name), not raw lat/lon -- coverage mode needs that first response's resolved
+center. The same options are available programmatically via
+`ETLPipeline.run_search(..., coverage=True, radius_miles=..., num_points=...,
+max_pages_per_point=...)`, and at a lower level via
+`Extractor.extract_search_coverage()` if you want the raw, undeduped
+summaries. Not yet wired into the Streamlit UI below -- CLI/pipeline only for
+now.
+
+Coverage mode multiplies request count by roughly `num_points *
+max_pages_per_point` -- keep both modest (the defaults above: 16 points x 2
+pages = up to 32 requests) rather than maxing them out; see
+[Session cookies](#session-cookies-optional-not-required) below for the
+general spirit of not hammering BBB harder than a real user would.
+
 ## UI
 
 A [Streamlit](https://streamlit.io) control panel (`streamlit_app.py`) for

@@ -1,0 +1,312 @@
+{
+  "_fixture_note": "REAL response (trimmed), captured 2026-09-02 from GET https://www.bbb.org/api/search?find_country=USA&find_text=CPA&find_type=Category&find_loc=Miami%2C+FL&page=1&sort=Distance. Purpose: has a populated location.latLng (only happens for name-based find_loc searches, per parsing/search_parser.py parse_response_center) and an active Distance sort -- the earlier search_listing_sample.json fixture used find_latlng and default sort, so has neither.",
+  "page": 1,
+  "pageSize": 15,
+  "totalPages": 15,
+  "totalResults": 646,
+  "sortTypes": [
+    {
+      "label": "Best Match",
+      "value": "Relevance",
+      "isActive": false
+    },
+    {
+      "label": "Distance",
+      "value": "Distance",
+      "isActive": true
+    },
+    {
+      "label": "Rating",
+      "value": "Rating",
+      "isActive": false
+    },
+    {
+      "label": "A-Z",
+      "value": "AToZ",
+      "isActive": false
+    },
+    {
+      "label": "Z-A",
+      "value": "ZToA",
+      "isActive": false
+    }
+  ],
+  "results": [
+    {
+      "id": "0633_90563389_112284",
+      "businessName": "Travieso & Alvarez Tax And Financial Services, Inc.",
+      "address": "175 SW 7th St STE 1716",
+      "city": "Miami",
+      "state": "FL",
+      "postalcode": "33130-2958",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": false,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": false,
+      "reportUrl": "/us/fl/miami/profile/cpa/travieso-alvarez-tax-and-financial-services-inc-0633-90563389",
+      "phone": [
+        "(786) 220-7635"
+      ],
+      "location": "25.7685241,-80.2033594",
+      "businessId": "90563389",
+      "ratingScore": 100.0,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60004-000",
+      "bbbId": "0633",
+      "bbbName": "BBB Serving Southeast Florida & the Caribbean",
+      "distance": null,
+      "requestAQuoteUrl": null,
+      "requestAQuoteUrlId": 0,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/fl/miami/profile/cpa/travieso-alvarez-tax-and-financial-services-inc-0633-90563389/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": false,
+      "serviceArea": null,
+      "serviceAreasSummary": null,
+      "businessLoginUrl": "/south-east-florida/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0633_92007067_139508",
+      "businessName": "Cummings-Grayson & Co., Inc.",
+      "address": "915 NW 1st Ave Ste 3A",
+      "city": "Miami",
+      "state": "FL",
+      "postalcode": "33136-3536",
+      "tobText": "CPA",
+      "rating": "A+",
+      "bbbMember": true,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/fl/miami/profile/cpa/cummings-grayson-co-inc-0633-92007067",
+      "phone": [
+        "(305) 377-1952"
+      ],
+      "location": "25.7830753326416,-80.19564056396484",
+      "businessId": "92007067",
+      "ratingScore": 100.0,
+      "score": null,
+      "logoUri": "https://m.bbb.org/prod/ProfileImages/2024/791fd8e5-11be-4366-831d-b00930e26093.jpg",
+      "tobId": "60004-000",
+      "bbbId": "0633",
+      "bbbName": "BBB Serving Southeast Florida & the Caribbean",
+      "distance": null,
+      "requestAQuoteUrl": "/south-east-florida/quote/request-cummings-grayson-co-inc-92007067",
+      "requestAQuoteUrlId": 739,
+      "localReportUrl": null,
+      "leaveReviewUrl": "/us/fl/miami/profile/cpa/cummings-grayson-co-inc-0633-92007067/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60004-000",
+          "name": "CPA"
+        },
+        {
+          "id": "60857-000",
+          "name": "Tax Return Preparation"
+        },
+        {
+          "id": "60858-000",
+          "name": "Tax Consultant"
+        },
+        {
+          "id": "60005-000",
+          "name": "Accountant"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "Miami-Dade County,  FL"
+      ],
+      "businessLoginUrl": "/south-east-florida/login",
+      "accreditationStatus": null
+    },
+    {
+      "id": "0654_27003727_LR_779080",
+      "businessName": "Hyatt Hotels Corp.",
+      "address": "400 SE 2nd Ave",
+      "city": "Miami",
+      "state": "FL",
+      "postalcode": "33131",
+      "tobText": "Hotels",
+      "rating": "A+",
+      "bbbMember": false,
+      "charitySeal": false,
+      "isCharity": 0,
+      "accreditedCharity": true,
+      "reportUrl": "/us/il/chicago/profile/hotels/hyatt-hotels-corp-0654-27003727",
+      "phone": [
+        "(312) 955-0950",
+        "(312) 755-1601",
+        "(847) 597-4506",
+        "(630) 852-1260",
+        "(630) 836-2961",
+        "(630) 932-6502",
+        "(847) 706-9040",
+        "(312) 239-4575",
+        "(630) 990-5829",
+        "(312) 528-4089",
+        "(312) 780-5284",
+        "(312) 780-5287",
+        "(402) 593-5150",
+        "(312) 755-1600",
+        "(847) 518-1234",
+        "(800) 233-1234",
+        "(312) 236-1234",
+        "(312) 787-1234",
+        "(847) 945-3400",
+        "(630) 852-1234",
+        "(402) 593-8800",
+        "(630) 836-2960",
+        "(630) 932-6501",
+        "(847) 706-9007",
+        "(800) 527-1133",
+        "(630) 836-9800",
+        "(312) 565-1234",
+        "(866) 427-8382",
+        "(847) 605-1234",
+        "(312) 337-1234",
+        "(847) 696-1234",
+        "(630) 990-5800",
+        "(630) 684-0412",
+        "(312) 567-1234",
+        "(773) 752-5300",
+        "(708) 574-2601",
+        "(847) 839-1800",
+        "(630) 875-1400",
+        "(708) 594-1400",
+        "(407) 352-5660"
+      ],
+      "location": "25.77127,-80.19021",
+      "businessId": "27003727",
+      "ratingScore": 100.0,
+      "score": null,
+      "logoUri": null,
+      "tobId": "60447-000",
+      "bbbId": "0654",
+      "bbbName": "BBB of Chicago & Northern Illinois",
+      "distance": null,
+      "requestAQuoteUrl": null,
+      "requestAQuoteUrlId": 0,
+      "localReportUrl": "/us/fl/miami/profile/hotels/hyatt-hotels-corp-0633-90582628/addressId/121715",
+      "leaveReviewUrl": "/us/il/chicago/profile/hotels/hyatt-hotels-corp-0654-27003727/leave-a-review",
+      "raqEnabled": true,
+      "outOfBusinessStatus": null,
+      "categories": [
+        {
+          "id": "60447-000",
+          "name": "Hotels"
+        },
+        {
+          "id": "50544-000",
+          "name": "Restaurants"
+        },
+        {
+          "id": "60430-100",
+          "name": "Fitness Center"
+        },
+        {
+          "id": "65134-000",
+          "name": "Spa"
+        }
+      ],
+      "serviceAreaDescription": null,
+      "hasServiceArea": true,
+      "serviceArea": null,
+      "serviceAreasSummary": [
+        "USA"
+      ],
+      "businessLoginUrl": "/chicago/login",
+      "accreditationStatus": null
+    }
+  ],
+  "location": {
+    "locationType": 1,
+    "countryCode": 2,
+    "bbbInfo": {
+      "id": "0633",
+      "bbbId": "0633",
+      "bbbName": "BBB Serving Southeast Florida & the Caribbean",
+      "primaryLanguage": "EN",
+      "primaryCountry": "USA",
+      "additionalResources": [],
+      "eventsPageLayout": "agenda",
+      "socialMedia": [
+        {
+          "id": "facebook",
+          "name": "BBB Serving Southeast Florida & the Caribbean - Facebook",
+          "url": "https://www.facebook.com/bbbsefl.org/"
+        },
+        {
+          "id": "instagram",
+          "name": "BBB Serving Southeast Florida & the Caribbean - Instagram",
+          "url": "https://www.instagram.com/bbbsefl/"
+        },
+        {
+          "id": "linkedin",
+          "name": "BBB Serving Southeast Florida & the Caribbean - LinkedIn",
+          "url": "https://www.linkedin.com/company/bbbsefl"
+        },
+        {
+          "id": "youtube",
+          "name": "BBB Serving Southeast Florida & the Caribbean - YouTube",
+          "url": "https://youtube.com/@bbbsefl"
+        },
+        {
+          "id": "tiktok",
+          "name": "BBB Serving Southeast Florida & the Caribbean - TikTok",
+          "url": "https://www.tiktok.com/@bbbsefl"
+        }
+      ],
+      "urls": {
+        "bbbUrl": "/local-bbb/bbb-serving-southeast-florida-and-the-caribbean",
+        "branchesUrl": "/bbb-directory/us/fl",
+        "bbbEventsUrl": "/local-bbb/bbb-serving-southeast-florida-and-the-caribbean/events",
+        "bbbSupportersUrl": "/local-bbb/bbb-serving-southeast-florida-and-the-caribbean/supporters",
+        "informationPageImageUrl": "/corecmsimages/2023/1681b7cc-b363-4bef-a54f-f80ce764ed3e.jpg",
+        "employmentOpportunitiesUrl": "/all/employment",
+        "businessLoginUrl": "/south-east-florida/login",
+        "consumerLoginUrl": ""
+      },
+      "getListedRealTimeEmails": "[]",
+      "isOpenToPublic": true
+    },
+    "threeLetterIsoCountryCode": "USA",
+    "country": "US",
+    "cultureInfoName": "en-us",
+    "locationString": null,
+    "id": "Miami_FL_USA",
+    "city": "Miami",
+    "state": "FL",
+    "stateFull": "Florida",
+    "postalCode": "33242",
+    "postalCodes": [],
+    "counties": [
+      "Miami-Dade"
+    ],
+    "latLng": "25.77084,-80.215542",
+    "displayText": "Miami, FL",
+    "businessCount": 36434,
+    "bbbIds": [
+      "0633"
+    ],
+    "citySeo": "miami",
+    "cities": null,
+    "populationCount": null
+  }
+}

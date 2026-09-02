@@ -77,6 +77,28 @@ def _iter_listing_items(data: dict[str, Any]):
         yield from results
 
 
+def parse_response_center(data: dict[str, Any]) -> tuple[float, float] | None:
+    """The resolved center lat/lon BBB's own geocoding attached to this
+    response's `location` block. Confirmed 2026-09-02: only populated when
+    the search used a place-name `find_loc` -- a `find_latlng`-based search
+    has no named place to resolve, so `location` stays null there. This is
+    what `Extractor.extract_search_coverage` uses instead of a separate
+    geocoding step/library: the first search against a named location
+    already tells us where BBB thinks its center is.
+    """
+    location = data.get("location")
+    if not isinstance(location, dict):
+        return None
+    lat_lng = location.get("latLng")
+    if not lat_lng or "," not in lat_lng:
+        return None
+    try:
+        lat_str, lon_str = lat_lng.split(",", 1)
+        return float(lat_str), float(lon_str)
+    except ValueError:
+        return None
+
+
 def _parse_latlon(location_str: str | None) -> tuple[float | None, float | None]:
     """BBB's per-result `location` field is a plain "lat,lon" string."""
     if not location_str or "," not in location_str:

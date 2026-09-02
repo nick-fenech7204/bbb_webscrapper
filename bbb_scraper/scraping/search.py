@@ -23,6 +23,12 @@ Params confirmed working end-to-end via live requests (2026-08-31):
 `find_latlng` is preferred when a Location carries lat/lon (more precise),
 falling back to `find_loc` otherwise -- both paths are live-confirmed, not a
 guess in either direction.
+
+`sort` is optional and confirmed working (2026-09-02) -- passing
+`sort=Distance` flips the response's own `sortTypes[].isActive` from "Best
+Match"/Relevance to "Distance". Used by
+`etl/extract.py`'s `extract_search_coverage` to make each anchor point in a
+multi-point sweep prioritize businesses actually near *that* point.
 """
 from __future__ import annotations
 
@@ -38,7 +44,11 @@ from bbb_scraper.utils.hashing import sha256_hex
 
 
 def build_search_params(
-    category: Category, location: Location, page: int = 1, cfg: Settings | None = None
+    category: Category,
+    location: Location,
+    page: int = 1,
+    cfg: Settings | None = None,
+    sort: str | None = None,
 ) -> dict[str, str | int]:
     cfg = cfg or default_settings
     params: dict[str, str | int] = {
@@ -51,6 +61,8 @@ def build_search_params(
         params["find_latlng"] = f"{location.lat},{location.lon}"
     else:
         params["find_loc"] = location.display
+    if sort:
+        params["sort"] = sort
     return params
 
 
@@ -90,8 +102,10 @@ class BBBSearchClient:
         self.capture = capture or RawCapture()
         self.cfg = cfg or default_settings
 
-    def search(self, category: Category, location: Location, page: int = 1) -> SearchPageResult:
-        params = build_search_params(category, location, page=page, cfg=self.cfg)
+    def search(
+        self, category: Category, location: Location, page: int = 1, sort: str | None = None
+    ) -> SearchPageResult:
+        params = build_search_params(category, location, page=page, cfg=self.cfg, sort=sort)
         referer = build_referer(category, location, page=page)
         # XHR-style headers, deliberately different from business.py's
         # document-navigation ones -- see business.py's module docstring.
