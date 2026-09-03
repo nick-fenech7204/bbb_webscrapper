@@ -52,4 +52,5 @@ you're driving this through Claude Code's browser preview.
 
 ## Deploying
 
-Not yet set up -- see the main README for the plan (S3 + CloudFront).
+See [DEPLOY.md](DEPLOY.md) -- a step-by-step AWS console walkthrough
+(S3 + CloudFront), written to explain the pieces, not just click through.

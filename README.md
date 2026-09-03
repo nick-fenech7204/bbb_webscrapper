@@ -273,9 +273,11 @@ python -m http.server 8502 --directory site   # then open localhost:8502
 ```
 
 See [site/README.md](site/README.md) for the full structure and how
-publishing works. Deployment target is AWS S3 (static hosting) + CloudFront
-(CDN/HTTPS) -- cheap (near-$0/month at low traffic) and the standard pattern
-for exactly this kind of site; not yet deployed as of 2026-09-02.
+publishing works, and [site/DEPLOY.md](site/DEPLOY.md) for a step-by-step
+AWS console walkthrough (S3 static hosting behind CloudFront -- cheap,
+near-$0/month at low traffic, the standard pattern for exactly this kind of
+site). Not yet actually deployed as of 2026-09-02 -- DEPLOY.md is written,
+running through it is next.
 
 ## Setup
 
