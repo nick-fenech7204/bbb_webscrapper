@@ -77,10 +77,53 @@ def _extract_address_id(urls: dict[str, Any]) -> str | None:
     """The page's own urls.localProfile carries /addressId/N when this page
     is a non-canonical branch -- same field BBB's real URLs use (confirmed
     against the captured request, which fetched exactly such a URL).
+
+    Returns None for the common case of a canonical/no-suffix URL (most
+    single-location businesses, and even some multi-location ones) --
+    callers should fall back to `_extract_address_id_from_profile_id`
+    rather than treat None here as "this business has no address id".
+
+    KNOWN REMAINING GAP (2026-09-02, not fixed by that fallback either):
+    large national/chain businesses (e.g. "Wells Fargo") can carry a
+    different {bbbId}_{businessId} pair on their SEARCH result than on
+    their own detail PAGE -- search apparently points at some national/
+    aggregate BBB record while the detail page renders under a regional
+    BBB office's own numbering for that specific branch. Confirmed in a
+    real 200-business Miami run: 3 Wells Fargo branches' summary bbb_id
+    ("1116_11547_<addressId>_<extra>", 4 segments -- not even this
+    module's usual 3) never matched their detail bbb_id
+    ("0633_<regional businessId>_<addressId>"), so dedupe correctly kept
+    both as "different" records for the same real branch. Rare in
+    practice (0 non-chain businesses hit this in that run) but a real
+    gap -- if it matters for your data, matching on (address_id, address)
+    instead of the full bbb_id would likely reconcile these.
     """
     local_profile = urls.get("localProfile") or ""
     match = _ADDRESS_ID_RE.search(local_profile)
     return match.group(1) if match else None
+
+
+def _extract_address_id_from_profile_id(bp: dict[str, Any]) -> str | None:
+    """Fallback source for the address id when `_extract_address_id` finds
+    nothing (confirmed 2026-09-02: the common case, not an edge case -- 179
+    of 200 real businesses in a Miami car-dealer run had no /addressId/N in
+    their page's own urls.localProfile at all). `businessProfile.id` itself
+    is "{something}_{addressId}" (e.g. "0_164490") -- confirmed against two
+    real captures where this segment exactly matched the addressId the
+    search API's own raw `id` carried for the same business (search:
+    "0633_92026452_164490" vs this page's businessProfile.id "0_164490").
+
+    Without this fallback, BusinessDetail.bbb_id silently dropped the
+    address segment for the majority of businesses, producing a *different*
+    id than the matching BusinessSummary got and breaking dedupe between
+    them -- both survived as if they were different businesses.
+    """
+    profile_id = bp.get("id") or ""
+    if "_" in profile_id:
+        candidate = profile_id.rsplit("_", 1)[-1]
+        if candidate.isdigit():
+            return candidate
+    return None
 
 
 def _deobfuscate_email(raw: str | None) -> str | None:
@@ -195,7 +238,7 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
 
     bbb_office_id = bp.get("bbbId")
     business_id = bp.get("businessId")
-    address_id = _extract_address_id(urls)
+    address_id = _extract_address_id(urls) or _extract_address_id_from_profile_id(bp)
     bbb_id = None
     if bbb_office_id and business_id:
         bbb_id = (

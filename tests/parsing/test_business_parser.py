@@ -175,6 +175,33 @@ def test_parse_business_page_handles_accreditation_text_as_dicts_not_strings(loa
     assert "BBB Accredited Business" in detail.accreditation_status
 
 
+NO_ADDRESS_SUFFIX_PROFILE_URL = (
+    "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/jcb-auto-sales-0633-92026452"
+)
+
+
+def test_parse_business_page_derives_address_id_without_url_suffix(load_fixture):
+    """Real captured page (2026-09-02, Miami car-dealer run) reached via its
+    canonical URL -- no /addressId/N suffix anywhere, the common case for a
+    single-location business, confirmed to be ~90% of a real 200-business
+    batch. Regression test for a real bug: bbb_id used to silently drop the
+    address segment here, producing "0633_92026452" instead of matching the
+    search API's own raw id for this exact business
+    ("0633_92026452_164490") -- which broke dedupe between a business's
+    summary and detail records, since they no longer shared an id. Confirmed
+    against businessProfile.id ("0_164490") in the raw capture that this is
+    the same address id search finds a different way.
+    """
+    html = load_fixture("business_page_sample_no_address_suffix.html")
+
+    detail = parse_business_page(html, profile_url=NO_ADDRESS_SUFFIX_PROFILE_URL)
+
+    assert detail.name == "JC&B Auto Sales"
+    assert detail.bbb_id == "0633_92026452_164490"
+    assert detail.business_id == "92026452"
+    assert detail.bbb_office_id == "0633"
+
+
 def test_parse_business_page_raises_when_state_missing():
     with pytest.raises(ValueError):
         parse_business_page("<html><body>no preloaded state</body></html>")
