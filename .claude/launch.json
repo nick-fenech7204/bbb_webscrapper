@@ -6,6 +6,12 @@
       "runtimeExecutable": ".venv/Scripts/streamlit.exe",
       "runtimeArgs": ["run", "streamlit_app.py", "--server.headless", "true"],
       "port": 8501
+    },
+    {
+      "name": "site",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "http.server", "8502", "--directory", "site"],
+      "port": 8502
     }
   ]
 }

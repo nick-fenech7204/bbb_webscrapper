@@ -254,6 +254,29 @@ front of it is a real cost/abuse risk -- there's none built into this app.
 Keep it private, or put real authentication in front of it, before treating
 "deployed" as "public."
 
+## Static site
+
+The "cheap static public insight site" referenced above -- a genuinely
+different thing from the Streamlit control panel, on purpose (decided
+2026-09-02). Plain HTML/CSS/JS in `site/`, no build step, no backend: it
+only ever reads pre-published data files, never scrapes live. That's the
+whole safety story -- there's no publicly reachable path to your proxy or
+BBB session, so there's nothing to lock down or rate-limit.
+
+```bash
+# publish a dataset (after a pipeline run produces a CSV)
+python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \
+    --industry "Car Dealers" --metro "Miami, FL"
+
+# preview locally
+python -m http.server 8502 --directory site   # then open localhost:8502
+```
+
+See [site/README.md](site/README.md) for the full structure and how
+publishing works. Deployment target is AWS S3 (static hosting) + CloudFront
+(CDN/HTTPS) -- cheap (near-$0/month at low traffic) and the standard pattern
+for exactly this kind of site; not yet deployed as of 2026-09-02.
+
 ## Setup
 
 ```bash

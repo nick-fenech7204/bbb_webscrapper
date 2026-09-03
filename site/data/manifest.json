@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-09-03T02:23:25.156272+00:00",
+  "datasets": [
+    {
+      "id": "car-dealers--miami-fl",
+      "industry": "Car Dealers",
+      "metro": "Miami, FL",
+      "record_count": 200,
+      "file": "car-dealers--miami-fl.json"
+    }
+  ]
+}

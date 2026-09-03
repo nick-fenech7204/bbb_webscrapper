@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BBB Business Intelligence</title>
+  <meta name="description" content="Browse and export BBB-listed businesses by industry and metro area.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>BBB Business Intelligence</h1>
+      <p class="tagline">Real BBB-listed business data, browsable and exportable by industry and metro.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="controls" aria-label="Filters">
+      <div class="field">
+        <label for="metro-select">Metro area</label>
+        <select id="metro-select" disabled>
+          <option value="">Loading…</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="industry-select">Industry</label>
+        <select id="industry-select" disabled>
+          <option value="">Select a metro first</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="search-box">Filter results</label>
+        <input id="search-box" type="text" placeholder="Search name, city, category…" disabled>
+      </div>
+      <div class="field field-action">
+        <button id="export-btn" type="button" disabled>Export CSV</button>
+      </div>
+    </section>
+
+    <p id="status" class="status" role="status">Loading available data…</p>
+
+    <div class="table-wrap">
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th data-key="name">Business</th>
+            <th data-key="city">City</th>
+            <th data-key="rating">Rating</th>
+            <th data-key="accredited">Accredited</th>
+            <th data-key="phone">Phone</th>
+            <th data-key="website">Website</th>
+            <th data-key="principal_contact">Contact</th>
+            <th data-key="years_in_business">Years</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </div>
+
+    <p id="empty-state" class="empty-state" hidden>No results match your filter.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        Data sourced from <a href="https://www.bbb.org" target="_blank" rel="noopener">bbb.org</a>,
+        already public business listing information. Each record links back to its real BBB profile.
+        Data is a point-in-time snapshot, not live -- see the freshness note above the results.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
