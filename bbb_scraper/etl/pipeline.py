@@ -16,7 +16,7 @@ from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.pipeline.base import Sink
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
-from bbb_scraper.reference.models import Category, Location
+from bbb_scraper.reference.models import Category, Location, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
 from bbb_scraper.utils.stats import RunStats, RECORDS_LOADED
 
@@ -31,7 +31,7 @@ class ETLPipeline:
     def run_search(
         self,
         category: Category,
-        location: Location,
+        location: Location | None = None,
         max_pages: int | None = None,
         fetch_details: bool = False,
         *,
@@ -39,29 +39,59 @@ class ETLPipeline:
         radius_miles: float = 25.0,
         num_points: int = 16,
         max_pages_per_point: int = 2,
+        metro: Metro | None = None,
+        metro_radius_miles: float = 40.0,
+        metro_min_population: int = 25_000,
+        metro_max_pages_per_place: int = 15,
     ) -> dict[str, Any]:
         """Search BBB by category + location, optionally follow through to
         each business's profile page, transform, dedupe, and load into every
-        configured sink.
+        configured sink. Three mutually exclusive modes -- pick one:
 
+        Plain search (default): `location` required, one search.
         `max_pages=None` (the default) pages through up to BBB's own cap
         (`cfg.bbb_max_search_pages`, currently 15 / ~300 results) -- pass a
         smaller number while testing to avoid burning through pages.
 
-        `coverage=True` switches to `Extractor.extract_search_coverage`
-        instead of a single search -- sweeps `num_points` anchors within
-        `radius_miles` of `location` (each to `max_pages_per_point`, not the
-        usual full depth -- see that method's docstring for why) to work
-        around BBB's location search not actually scoping to a local
-        radius. `max_pages` is ignored in this mode.
+        `coverage=True`: `location` required. Switches to
+        `Extractor.extract_search_coverage` -- sweeps `num_points` lat/lon
+        anchors within `radius_miles` of `location` (each to
+        `max_pages_per_point`, not the usual full depth -- see that
+        method's docstring for why) to work around BBB's location search
+        not actually scoping to a local radius. `max_pages` is ignored.
+
+        `metro=<a Metro>`: `location` not needed (ignored if given).
+        Switches to `Extractor.extract_search_metro_coverage` -- sweeps
+        every real, substantial (`metro_min_population`+) named city/CDP
+        within `metro_radius_miles` of the metro's own resolved center,
+        each to `metro_max_pages_per_place`. Confirmed 2026-09-02 this
+        reaches real local results `coverage=True` cannot -- BBB's "local"
+        pool is tied to the specific named place searched, not just
+        proximity to a point. `max_pages`/`coverage` are ignored.
+
+        (If this parameter list keeps growing, it's probably time to
+        collapse coverage/metro into a small "search mode" options object
+        instead of three more kwargs each -- not done here since three
+        already-working modes isn't quite there yet.)
         """
         with Extractor(stats=self.stats) as extractor:
-            if coverage:
+            if metro is not None:
+                location = parse_location(metro.seed_location)
+                summaries = extractor.extract_search_metro_coverage(
+                    category, metro, radius_miles=metro_radius_miles,
+                    min_population=metro_min_population,
+                    max_pages_per_place=metro_max_pages_per_place,
+                )
+            elif coverage:
+                if location is None:
+                    raise ValueError("coverage=True requires a location")
                 summaries = extractor.extract_search_coverage(
                     category, location, radius_miles=radius_miles,
                     num_points=num_points, max_pages_per_point=max_pages_per_point,
                 )
             else:
+                if location is None:
+                    raise ValueError("location is required unless metro is given")
                 summaries = extractor.extract_search(category, location, max_pages=max_pages)
 
             summary_records = [transform_summary(s) for s in summaries]

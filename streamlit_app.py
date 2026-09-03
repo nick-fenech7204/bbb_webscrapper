@@ -33,6 +33,7 @@ from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import configure_logging
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
+from bbb_scraper.reference.metros import MetroDirectory
 from bbb_scraper.reference.models import Category, parse_location
 from bbb_scraper.utils.flatten import flatten_record
 from bbb_scraper.utils.stats import RunStats
@@ -74,32 +75,41 @@ with st.sidebar:
         )
         st.caption("Sent as-is to BBB's search -- most industry phrasing works.")
 
+        search_mode = st.radio(
+            "Search mode",
+            [
+                "Single location(s)",
+                "Coverage sweep (points around a location)",
+                "Metro sweep (real nearby cities)",
+            ],
+            help="Coverage sweep scatters lat/lon points around each location below. "
+                 "Metro sweep instead searches real, substantial nearby cities/CDPs by "
+                 "name -- confirmed 2026-09-02 this reaches real local results a lat/lon "
+                 "sweep can't (BBB's \"local\" pool is tied to the specific named place "
+                 "searched, not just proximity to a point). See README.",
+        )
+        # Every field below is always rendered and enabled regardless of search_mode
+        # -- st.form only re-evaluates on submit, so anything gated on the radio's
+        # live value would render using its state from *before* the click that
+        # changed it, one submit behind. Same fix already applied to the free-text
+        # category field and the old coverage checkbox. Unused fields for whichever
+        # mode isn't selected are simply ignored below.
         locations_text = st.text_area(
             "Locations, one per line",
             placeholder="Seattle, WA\nTacoma, WA\nBellevue, WA",
             height=100,
+            help="Used by \"Single location(s)\" and \"Coverage sweep\" -- ignored "
+                 "for \"Metro sweep\" (pick a metro below instead).",
         )
         max_pages = st.number_input(
             "Max pages per location", min_value=1, max_value=settings.bbb_max_search_pages,
             value=settings.bbb_max_search_pages,
             help="BBB caps results at 15 pages regardless of how high this is set. "
-                 "Ignored when coverage mode (below) is on.",
+                 "\"Single location(s)\" mode only -- coverage/metro sweeps use their "
+                 "own pages-per-place settings below.",
         )
 
-        coverage_mode = st.checkbox(
-            "Coverage mode -- sweep multiple points instead of one search per location",
-            value=False,
-            help="BBB's location search doesn't actually scope to a local radius -- "
-                 "confirmed empirically, see README. This works around it by searching "
-                 "several points around each location instead of just one.",
-        )
-        # Always rendered and always enabled (not gated on coverage_mode) on purpose:
-        # st.form only re-evaluates on submit, so anything conditioned on the checkbox
-        # -- visibility, disabled=, a caption -- would render using its state *before*
-        # the click that changed it, one submit behind. Same lag the category field
-        # used to have before it was made always-rendered too; the fix here is the
-        # same one. These three are simply unused when coverage_mode is off.
-        st.caption("Coverage settings (used only when coverage mode above is checked):")
+        st.caption("Coverage sweep settings (used only in that mode):")
         cov_col1, cov_col2, cov_col3 = st.columns(3)
         radius_miles = cov_col1.number_input("Radius (mi)", min_value=1.0, value=25.0, step=5.0)
         num_points = cov_col2.number_input(
@@ -109,8 +119,41 @@ with st.sidebar:
             "Pages/point", min_value=1, max_value=settings.bbb_max_search_pages, value=2,
         )
         st.caption(
-            "Coverage mode multiplies request count roughly by points × pages/point, "
+            "Coverage sweep multiplies request count roughly by points × pages/point, "
             "per location line -- keep both modest rather than maxing them out."
+        )
+
+        st.caption("Metro sweep settings (used only in that mode):")
+        metro_directory = MetroDirectory.load()
+        metro_options = {m.id: m.name for m in metro_directory.all()}
+        selected_metro_id = (
+            st.selectbox(
+                "Metro", options=list(metro_options.keys()),
+                format_func=lambda mid: metro_options[mid],
+            )
+            if metro_options
+            else None
+        )
+        if not metro_options:
+            st.caption(
+                "No metros available -- data/reference/metros.json missing or empty."
+            )
+        metro_col1, metro_col2, metro_col3 = st.columns(3)
+        metro_radius = metro_col1.number_input(
+            "Radius (mi)", min_value=1.0, value=40.0, step=5.0, key="metro_radius"
+        )
+        metro_min_population = metro_col2.number_input(
+            "Min population", min_value=0, value=25_000, step=5_000,
+        )
+        metro_max_pages = metro_col3.number_input(
+            "Pages/place", min_value=1, max_value=settings.bbb_max_search_pages, value=15,
+            key="metro_max_pages",
+        )
+        st.caption(
+            "Metro sweep searches every real city/CDP at or above the population "
+            "floor within the radius -- a big metro at a low floor can mean dozens "
+            "of places × pages/place in requests. Keep the floor reasonably high "
+            "(25,000+) for a first run."
         )
 
         fetch_details = st.checkbox(
@@ -134,51 +177,75 @@ with st.sidebar:
 
 if submitted:
     category = _build_category(industry_text)
-    locations = [parse_location(line.strip()) for line in locations_text.splitlines() if line.strip()]
-
     if category is None:
         st.error("Enter a category phrase.")
         st.stop()
-    if not locations:
-        st.error("Enter at least one location.")
-        st.stop()
+
+    is_metro_mode = search_mode.startswith("Metro")
+    is_coverage_mode = search_mode.startswith("Coverage")
+
+    metro = None
+    locations = []
+    if is_metro_mode:
+        metro = metro_directory.get(selected_metro_id) if selected_metro_id else None
+        if metro is None:
+            st.error("Select a metro (or run scripts/build_us_cities.py if none are listed).")
+            st.stop()
+    else:
+        locations = [parse_location(line.strip()) for line in locations_text.splitlines() if line.strip()]
+        if not locations:
+            st.error("Enter at least one location.")
+            st.stop()
 
     stats = RunStats()
     all_records = []
     progress = st.progress(0.0)
     status = st.empty()
 
+    def _fetch_details(extractor: Extractor, summaries, label: str) -> list[dict]:
+        records = []
+        for j, summary in enumerate(summaries):
+            if not summary.profile_url:
+                continue
+            status.write(f"Fetching details for **{label}**: {j + 1}/{len(summaries)}…")
+            try:
+                detail = extractor.extract_business(summary.profile_url)
+                records.append(transform_detail(detail))
+            except Exception as exc:
+                st.warning(f"Failed to fetch detail for {summary.profile_url}: {exc}")
+        return records
+
     with Extractor(stats=stats) as extractor:
-        for i, location in enumerate(locations):
-            if coverage_mode:
-                status.write(
-                    f"Sweeping **{category.name}** around **{location.display}** "
-                    f"({int(num_points)} points, {radius_miles:g}mi)…"
-                )
-                summaries = extractor.extract_search_coverage(
-                    category, location, radius_miles=radius_miles,
-                    num_points=int(num_points), max_pages_per_point=int(max_pages_per_point),
-                )
-            else:
-                status.write(f"Searching **{category.name}** in **{location.display}**…")
-                summaries = extractor.extract_search(category, location, max_pages=int(max_pages))
+        if is_metro_mode:
+            status.write(f"Sweeping **{category.name}** across the **{metro.name}** metro area…")
+            summaries = extractor.extract_search_metro_coverage(
+                category, metro, radius_miles=metro_radius,
+                min_population=int(metro_min_population), max_pages_per_place=int(metro_max_pages),
+            )
             all_records.extend(transform_summary(s) for s in summaries)
-
             if fetch_details:
-                for j, summary in enumerate(summaries):
-                    if not summary.profile_url:
-                        continue
+                all_records.extend(_fetch_details(extractor, summaries, metro.name))
+            progress.progress(1.0)
+        else:
+            for i, location in enumerate(locations):
+                if is_coverage_mode:
                     status.write(
-                        f"Fetching details for **{location.display}**: "
-                        f"{j + 1}/{len(summaries)}…"
+                        f"Sweeping **{category.name}** around **{location.display}** "
+                        f"({int(num_points)} points, {radius_miles:g}mi)…"
                     )
-                    try:
-                        detail = extractor.extract_business(summary.profile_url)
-                        all_records.append(transform_detail(detail))
-                    except Exception as exc:
-                        st.warning(f"Failed to fetch detail for {summary.profile_url}: {exc}")
+                    summaries = extractor.extract_search_coverage(
+                        category, location, radius_miles=radius_miles,
+                        num_points=int(num_points), max_pages_per_point=int(max_pages_per_point),
+                    )
+                else:
+                    status.write(f"Searching **{category.name}** in **{location.display}**…")
+                    summaries = extractor.extract_search(category, location, max_pages=int(max_pages))
+                all_records.extend(transform_summary(s) for s in summaries)
 
-            progress.progress((i + 1) / len(locations))
+                if fetch_details:
+                    all_records.extend(_fetch_details(extractor, summaries, location.display))
+
+                progress.progress((i + 1) / len(locations))
 
     all_records = dedupe_records(all_records, stats=stats)
     status.empty()

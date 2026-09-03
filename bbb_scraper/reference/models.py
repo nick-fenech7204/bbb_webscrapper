@@ -58,6 +58,48 @@ class Location(BaseModel):
         return self.raw
 
 
+class City(BaseModel):
+    """One real place (incorporated city or census-designated place) from
+    data/reference/us_cities.csv -- see scripts/build_us_cities.py for how
+    that file is built and cities.py for how it's queried.
+    """
+
+    name: str
+    state: str
+    lat: float
+    lon: float
+    population: int
+    geoid: str
+
+    @property
+    def display(self) -> str:
+        return f"{self.name}, {self.state}"
+
+    def to_location(self) -> "Location":
+        """As a name-based Location for a find_loc search -- confirmed
+        2026-09-02 this is what actually reaches a different local result
+        pool, unlike a raw lat/lon Location (find_latlng) -- see
+        etl/extract.py's extract_search_metro_coverage.
+        """
+        return Location(raw=self.display, city=self.name, state=self.state)
+
+
+class Metro(BaseModel):
+    """One entry in the curated metro-coverage dropdown list
+    (data/reference/metros.json) -- deliberately a small, hand-picked set of
+    major metros, not every place in us_cities.csv. `seed_location` is fed
+    through `parse_location` and searched first to resolve the metro's
+    center point (BBB's own geocoding, same free mechanism
+    extract_search_coverage already relies on) -- it should be a real,
+    unambiguous "City, ST" BBB can resolve, not necessarily the metro's
+    official/full name.
+    """
+
+    id: str
+    name: str
+    seed_location: str
+
+
 _ZIP_RE = re.compile(r"^\d{5}(-\d{4})?$")
 _CITY_STATE_RE = re.compile(r"^\s*([A-Za-z .'\-]+),\s*([A-Za-z]{2})\s*$")
 

@@ -66,6 +66,15 @@ class Settings(BaseSettings):
     categories_file: Path = Field(
         default=Path("data/reference/categories.json"), alias="CATEGORIES_FILE"
     )
+    us_cities_file: Path = Field(
+        default=Path("data/reference/us_cities.csv"), alias="US_CITIES_FILE"
+    )
+    metros_file: Path = Field(
+        default=Path("data/reference/metros.json"), alias="METROS_FILE"
+    )
+    # Only used by scripts/build_us_cities.py (a one-time reference-data build,
+    # not the running app) -- free signup: https://api.census.gov/data/key_signup.html
+    census_api_key: str = Field(default="", alias="CENSUS_API_KEY")
 
     # --- BBB request settings -------------------------------------------------
     # Session cookies/headers captured from a real browser (gitignored, never

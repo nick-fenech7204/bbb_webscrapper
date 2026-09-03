@@ -66,3 +66,54 @@ even before `fetch_categories.py` exists.
 - `name` -- required. Sent as `find_text` in the search request, so this
   needs to be a phrase BBB actually recognizes -- not just a display label.
 - `slug` -- optional, informational only (not used in the request).
+
+# us_cities.csv
+
+Every US incorporated place *and* census-designated place (CDP), with real
+lat/lon and 2020 Census population. Powers metro coverage search (see
+`bbb_scraper/reference/cities.py` and the README's "Metro coverage search"
+section) -- finding real named nearby cities to sweep, not just
+mathematical points.
+
+Built by `python scripts/build_us_cities.py` (needs a free `CENSUS_API_KEY`
+in `.env` -- see that script's module docstring for the full reasoning, in
+short: neither Census's own annual population estimates nor SimpleMaps'
+free cities database cover CDPs at all, only the one-time 2020 Decennial
+count does). Not auto-regenerated -- re-run by hand occasionally (Census
+updates its source data roughly yearly).
+
+## Schema
+
+```csv
+name,state,lat,lon,population,geoid
+Kendall,FL,25.669538,-80.354741,80241,1236100
+```
+
+- `name` -- place name with its Census LSAD suffix stripped (`"Kendall CDP"`
+  -> `"Kendall"`) so it's ready to use as-is in a `find_loc`-style search.
+- `state` -- two-letter USPS code.
+- `lat`/`lon` -- decimal degrees (Census Gazetteer's internal point).
+- `population` -- 2020 Decennial Census total population (not an estimate).
+- `geoid` -- Census's own 7-digit place identifier (2-digit state FIPS +
+  5-digit place FIPS), kept for traceability back to the source data.
+
+# metros.json
+
+A small, hand-picked list of major US metros for the metro-coverage
+dropdown (CLI's `--metro`, Streamlit's "Metro sweep" mode) -- not every
+place in `us_cities.csv`, just the ones worth offering as a "sweep this
+whole metro" starting point. Extend it by adding more entries in the same
+shape; no code changes needed.
+
+## Schema
+
+```json
+{ "id": "miami-fl", "name": "Miami, FL", "seed_location": "Miami, FL" }
+```
+
+- `id` -- required, stable key (what `--metro` matches against).
+- `name` -- required, display label (dropdown text).
+- `seed_location` -- required. Fed through `parse_location` and searched
+  first to resolve BBB's own center point for the metro -- must be a real
+  "City, ST" BBB can resolve via `find_loc`, not necessarily the metro's
+  official/full statistical-area name.

@@ -20,6 +20,21 @@ import math
 EARTH_RADIUS_MILES = 3958.8
 
 
+def distance_miles(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Great-circle (haversine) distance between two points, in miles.
+
+    Added 2026-09-02 -- promoted from a one-off calc hand-written twice
+    while diagnosing a Miami coverage-sweep run (filtering results to a
+    genuine local radius, then filtering the reference city list for the
+    metro-coverage feature). Same accuracy tradeoffs as `destination_point`.
+    """
+    lat1_r, lon1_r, lat2_r, lon2_r = (math.radians(v) for v in (lat1, lon1, lat2, lon2))
+    dlat = lat2_r - lat1_r
+    dlon = lon2_r - lon1_r
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1_r) * math.cos(lat2_r) * math.sin(dlon / 2) ** 2
+    return 2 * EARTH_RADIUS_MILES * math.asin(math.sqrt(a))
+
+
 def destination_point(
     lat: float, lon: float, distance_miles: float, bearing_degrees: float
 ) -> tuple[float, float]:

@@ -20,6 +20,15 @@ center point for it first:
 
     python scripts/run_search.py --category "Heating and Air Conditioning" \
         --location "Miami, FL" --coverage --radius 25 --num-points 12
+
+Pass --metro to sweep every real, substantial city/CDP near a curated major
+metro instead -- reaches real local coverage --coverage's lat/lon anchors
+can't (confirmed 2026-09-02, see ETLPipeline.run_search's docstring).
+--location is ignored/not needed in this mode:
+
+    python scripts/run_search.py --category "Car Dealers" --metro miami-fl \
+        --metro-radius 40 --metro-min-population 25000
+    python scripts/run_search.py --list-metros   # see available --metro ids
 """
 from __future__ import annotations
 
@@ -30,6 +39,7 @@ import sys
 from bbb_scraper.etl.pipeline import ETLPipeline
 from bbb_scraper.logging_setup import configure_logging, get_logger
 from bbb_scraper.reference.categories import CategoryDirectory
+from bbb_scraper.reference.metros import MetroDirectory
 from bbb_scraper.reference.models import Category, Location, parse_location
 
 logger = get_logger(__name__)
@@ -135,10 +145,39 @@ def main() -> int:
         help="Coverage mode: max listing pages to fetch per anchor (default: 2 -- "
         "kept low since anchors overlap; see extract_search_coverage docstring)",
     )
+    parser.add_argument(
+        "--metro", default=None, metavar="ID",
+        help="Sweep every real, substantial city/CDP near this curated metro "
+        "(id from data/reference/metros.json, e.g. 'miami-fl') instead of a "
+        "single --location search. See --list-metros.",
+    )
+    parser.add_argument(
+        "--metro-radius", type=float, default=40.0,
+        help="Metro mode: sweep radius in miles around the metro's center (default: 40)",
+    )
+    parser.add_argument(
+        "--metro-min-population", type=int, default=25_000,
+        help="Metro mode: only sweep nearby places with at least this population "
+        "(default: 25000 -- keeps a big metro's sweep to real substantial cities)",
+    )
+    parser.add_argument(
+        "--metro-max-pages-per-place", type=int, default=15,
+        help="Metro mode: max listing pages to fetch per swept place (default: 15, "
+        "full depth -- unlike coverage mode's anchors, each place here is a real "
+        "named search in its own right, not an arbitrary nearby point)",
+    )
+    parser.add_argument(
+        "--list-metros", action="store_true", help="Print available --metro ids and exit"
+    )
     args = parser.parse_args()
 
     configure_logging()
     directory = CategoryDirectory.load()
+
+    if args.list_metros:
+        for m in MetroDirectory.load().all():
+            print(f"{m.id}\t{m.name}")
+        return 0
 
     if args.list_categories is not None:
         matches = directory.search(args.list_categories) if args.list_categories else directory.all()
@@ -147,9 +186,25 @@ def main() -> int:
         return 0
 
     category = resolve_category(directory, args.category) if args.category else prompt_category(directory)
-    location = parse_location(args.location) if args.location else prompt_location()
 
-    if args.coverage:
+    metro = None
+    if args.metro:
+        metro = MetroDirectory.load().get(args.metro)
+        if metro is None:
+            print(f"No metro matched '{args.metro}'. Try --list-metros to see available ids.")
+            return 1
+        location = None
+    else:
+        location = parse_location(args.location) if args.location else prompt_location()
+
+    if metro:
+        logger.info(
+            "Metro search: category=%r metro=%r radius=%gmi min_population=%d "
+            "max_pages_per_place=%d",
+            category.name, metro.name, args.metro_radius, args.metro_min_population,
+            args.metro_max_pages_per_place,
+        )
+    elif args.coverage:
         logger.info(
             "Coverage search: category=%r location=%r radius=%gmi num_points=%d "
             "max_pages_per_point=%d",
@@ -164,6 +219,9 @@ def main() -> int:
         category, location, max_pages=args.pages, fetch_details=args.details,
         coverage=args.coverage, radius_miles=args.radius, num_points=args.num_points,
         max_pages_per_point=args.max_pages_per_point,
+        metro=metro, metro_radius_miles=args.metro_radius,
+        metro_min_population=args.metro_min_population,
+        metro_max_pages_per_place=args.metro_max_pages_per_place,
     )
     print(json.dumps(result, indent=2))
     return 0

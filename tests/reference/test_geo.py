@@ -1,6 +1,29 @@
 import math
 
-from bbb_scraper.reference.geo import destination_point, generate_coverage_points
+from bbb_scraper.reference.geo import destination_point, distance_miles, generate_coverage_points
+
+
+def test_distance_miles_zero_for_same_point():
+    assert distance_miles(25.77, -80.22, 25.77, -80.22) == 0.0
+
+
+def test_distance_miles_one_degree_latitude_is_about_69_miles():
+    assert math.isclose(distance_miles(0.0, 0.0, 1.0, 0.0), 69.0, abs_tol=0.5)
+
+
+def test_distance_miles_is_symmetric():
+    a = distance_miles(25.77, -80.22, 30.27, -97.74)
+    b = distance_miles(30.27, -97.74, 25.77, -80.22)
+    assert math.isclose(a, b, abs_tol=1e-9)
+
+
+def test_distance_miles_agrees_with_destination_point():
+    # A point generated 30 miles out via destination_point should measure
+    # back as ~30 miles via distance_miles -- the two are meant to be
+    # consistent with each other (same great-circle model).
+    center_lat, center_lon = 25.77, -80.22
+    dest_lat, dest_lon = destination_point(center_lat, center_lon, 30.0, bearing_degrees=45.0)
+    assert math.isclose(distance_miles(center_lat, center_lon, dest_lat, dest_lon), 30.0, abs_tol=0.01)
 
 
 def test_destination_point_due_north_from_equator():

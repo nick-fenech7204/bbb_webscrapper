@@ -141,8 +141,7 @@ center. The same options are available programmatically via
 `ETLPipeline.run_search(..., coverage=True, radius_miles=..., num_points=...,
 max_pages_per_point=...)`, and at a lower level via
 `Extractor.extract_search_coverage()` if you want the raw, undeduped
-summaries. Not yet wired into the Streamlit UI below -- CLI/pipeline only for
-now.
+summaries. Also available in the Streamlit UI below as "Coverage sweep".
 
 Coverage mode multiplies request count by roughly `num_points *
 max_pages_per_point` -- keep both modest (the defaults above: 16 points x 2
@@ -150,17 +149,88 @@ pages = up to 32 requests) rather than maxing them out; see
 [Session cookies](#session-cookies-optional-not-required) below for the
 general spirit of not hammering BBB harder than a real user would.
 
+**Important limitation, confirmed 2026-09-02:** coverage mode's lat/lon
+anchors don't actually reach full metro coverage the way they might sound
+like they would. A real test swept 20 points up to 15 miles from downtown
+Miami for "Car Dealers" -- every genuinely local result still clustered
+within 6.75 miles of the *center*, regardless of how far out an anchor sat;
+the next-nearest result after that jumped straight to 186 miles away. Then,
+searching the real named place "Kendall, FL" directly (a real Miami-Dade
+suburb about 13 miles from downtown) surfaced 15 completely different real
+local businesses a lat/lon point at that same distance never found. BBB's
+"local" result pool is apparently tied to the specific *named place*
+searched (`find_loc`), not just proximity to a point (`find_latlng`) --
+coordinates and place names draw from meaningfully different pools, not
+just different sort orders of the same one. **For genuine full-metro
+coverage, use metro coverage search (below) instead** -- coverage mode above
+still has its place for a quick sweep around a single unnamed point.
+
+## Metro coverage search (sweeping real cities across a whole metro)
+
+Works around the limitation above by searching real, named nearby
+cities/CDPs instead of mathematical points -- confirmed to reach local
+results plain coverage search cannot.
+
+```bash
+python scripts/run_search.py --category "Car Dealers" --metro miami-fl \
+    --metro-radius 40 --metro-min-population 25000
+python scripts/run_search.py --list-metros   # see available --metro ids
+```
+
+How it works:
+
+1. The metro's `seed_location` (from `data/reference/metros.json`, e.g.
+   `"Miami, FL"`) is searched first, both for its own results and to
+   resolve BBB's own center coordinates for it (`location.latLng`, same
+   free mechanism coverage search uses).
+2. `data/reference/us_cities.csv` -- every incorporated place *and*
+   census-designated place (CDP) in the US, with real lat/lon and 2020
+   Census population, built by `scripts/build_us_cities.py` -- is filtered
+   to real places within `--metro-radius` miles of that center, at or above
+   `--metro-min-population` residents (default 25,000; without a floor, a
+   40-mile radius around a big metro can catch 100+ tiny places, multiplying
+   request count far past what's useful).
+3. Each matching place is searched by name (`find_loc`) in full, same as
+   the metro's own seed place -- not the shallow, capped depth coverage
+   search's anchors use, since each is a real named search in its own
+   right, not an arbitrary nearby point.
+4. All results are pooled and deduped exactly like any other search.
+
+Also available via `ETLPipeline.run_search(..., metro=<a Metro>,
+metro_radius_miles=..., metro_min_population=..., metro_max_pages_per_place=...)`,
+at a lower level via `Extractor.extract_search_metro_coverage()`, and in the
+Streamlit UI below as "Metro sweep".
+
+**Regenerating `us_cities.csv`:** only needed occasionally (Census updates
+its data roughly yearly) -- `python scripts/build_us_cities.py` needs a free
+Census API key (`CENSUS_API_KEY` in `.env`,
+[sign up here](https://api.census.gov/data/key_signup.html), no cost). Why
+not a simpler population source: Census's own annual estimates (SUB-EST)
+and SimpleMaps' free cities database were both checked and both exclude
+CDPs/unincorporated places entirely -- exactly the kind of place (Kendall,
+Olympia Heights) this feature most needs. Only the 2020 Decennial Census
+count covers every place the Gazetteer geography file does.
+
+Metro sweep's request count is roughly `(nearby places found) *
+metro_max_pages_per_place` -- easily 200-300+ for a big metro at the default
+floor, so the same politeness-delay guidance in
+[Session cookies](#session-cookies-optional-not-required) applies here even
+more than to plain coverage search.
+
 ## UI
 
 A [Streamlit](https://streamlit.io) control panel (`streamlit_app.py`) for
-the same category + location search, if you'd rather use a form than the
-CLI -- type an industry/category phrase (free text, not tied to
+the same searches, if you'd rather use a form than the CLI -- type an
+industry/category phrase (free text, not tied to
 `data/reference/categories.json` -- BBB's search takes `find_text` directly
-and accepts a wide range of phrasing), enter one or more locations,
-optionally fetch full details, and get a sortable table plus a CSV download
-in the browser. It's a thin presentation layer over the exact same
-`Extractor`/`transform`/`dedupe`/sinks everything else uses -- no separate
-scraping or parsing logic lives in it.
+and accepts a wide range of phrasing), pick a search mode (single
+location(s), coverage sweep, or metro sweep -- a dropdown of curated metros
+from `data/reference/metros.json`, deliberately locked to real options
+rather than free text since this mode has to match something in the city
+reference data), optionally fetch full details, and get a sortable table
+plus a CSV download in the browser. It's a thin presentation layer over the
+exact same `Extractor`/`transform`/`dedupe`/sinks everything else uses -- no
+separate scraping or parsing logic lives in it.
 
 ```bash
 streamlit run streamlit_app.py
