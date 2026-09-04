@@ -80,6 +80,43 @@ def load_manifest() -> dict:
     return {"generated_at": None, "datasets": []}
 
 
+def publish_dataset(csv_path: Path, industry: str, metro: str) -> dict:
+    """Publish one CSV as one industry+metro dataset -- the reusable core
+    this module's CLI wraps, also imported directly by
+    scripts/batch_scrape_metros.py so a batch run can publish each metro
+    the moment it finishes, without shelling out to this file as a
+    subprocess per metro.
+
+    Returns the manifest entry that was written (id/industry/metro/
+    record_count/file), so a caller can report on what just happened
+    without re-reading the manifest itself.
+    """
+    records = load_records(csv_path)
+    dataset_id = f"{slugify(industry)}--{slugify(metro)}"
+    filename = f"{dataset_id}.json"
+
+    SITE_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    (SITE_DATA_DIR / filename).write_text(
+        json.dumps(records, indent=2, default=str), encoding="utf-8"
+    )
+
+    manifest = load_manifest()
+    manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
+    manifest["datasets"] = [d for d in manifest["datasets"] if d["id"] != dataset_id]
+    entry = {
+        "id": dataset_id,
+        "industry": industry,
+        "metro": metro,
+        "record_count": len(records),
+        "file": filename,
+    }
+    manifest["datasets"].append(entry)
+    manifest["datasets"].sort(key=lambda d: (d["metro"], d["industry"]))
+    MANIFEST_PATH.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+    return entry
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csv_path", type=Path, help="A CSV produced by the pipeline (e.g. from a metro sweep)")
@@ -91,31 +128,9 @@ def main() -> int:
         print(f"No such file: {args.csv_path}")
         return 1
 
-    records = load_records(args.csv_path)
-    dataset_id = f"{slugify(args.industry)}--{slugify(args.metro)}"
-    filename = f"{dataset_id}.json"
-
-    SITE_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    (SITE_DATA_DIR / filename).write_text(
-        json.dumps(records, indent=2, default=str), encoding="utf-8"
-    )
-
+    entry = publish_dataset(args.csv_path, args.industry, args.metro)
     manifest = load_manifest()
-    manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
-    manifest["datasets"] = [d for d in manifest["datasets"] if d["id"] != dataset_id]
-    manifest["datasets"].append(
-        {
-            "id": dataset_id,
-            "industry": args.industry,
-            "metro": args.metro,
-            "record_count": len(records),
-            "file": filename,
-        }
-    )
-    manifest["datasets"].sort(key=lambda d: (d["metro"], d["industry"]))
-    MANIFEST_PATH.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-
-    print(f"Published {len(records)} record(s) to site/data/{filename}")
+    print(f"Published {entry['record_count']} record(s) to site/data/{entry['file']}")
     print(f"Manifest now has {len(manifest['datasets'])} dataset(s)")
     return 0
 

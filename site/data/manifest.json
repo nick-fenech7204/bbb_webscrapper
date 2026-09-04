@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T02:23:25.156272+00:00",
+  "generated_at": "2026-09-04T18:23:09.110695+00:00",
   "datasets": [
     {
       "id": "car-dealers--miami-fl",
@@ -7,6 +7,13 @@
       "metro": "Miami, FL",
       "record_count": 200,
       "file": "car-dealers--miami-fl.json"
+    },
+    {
+      "id": "car-dealers--providence-ri",
+      "industry": "Car Dealers",
+      "metro": "Providence, RI",
+      "record_count": 2002,
+      "file": "car-dealers--providence-ri.json"
     }
   ]
 }
