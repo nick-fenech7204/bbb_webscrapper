@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-05T14:18:00.327190+00:00",
+  "generated_at": "2026-09-05T14:57:49.020123+00:00",
   "datasets": [
     {
       "id": "car-dealers--miami-fl",
@@ -21,6 +21,13 @@
       "metro": "Providence, RI",
       "record_count": 2002,
       "file": "car-dealers--providence-ri.json"
+    },
+    {
+      "id": "heating-and-air-conditioning--seattle-tacoma-wa",
+      "industry": "Heating and Air Conditioning",
+      "metro": "Seattle-Tacoma, WA",
+      "record_count": 233,
+      "file": "heating-and-air-conditioning--seattle-tacoma-wa.json"
     }
   ]
 }
