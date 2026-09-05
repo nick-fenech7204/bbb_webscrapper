@@ -9,6 +9,8 @@ module involved either. This is where the two meet.
 """
 from __future__ import annotations
 
+from typing import Callable
+
 from bbb_scraper.config import Settings, settings as default_settings
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.business_parser import parse_business_page
@@ -188,6 +190,123 @@ class Extractor:
 
         return all_summaries
 
+    def extract_search_area_coverage(
+        self,
+        category: Category,
+        location: Location,
+        *,
+        radius_miles: float = 40.0,
+        min_population: int = 25_000,
+        max_pages_per_place: int = 15,
+        sort_by_distance: bool = True,
+        city_directory: CityDirectory | None = None,
+        on_place_done: Callable[[str, int, int, int], None] | None = None,
+    ) -> list[BusinessSummary]:
+        """Sweep every real, substantial city/CDP within `radius_miles` of
+        `location` -- not lat/lon ring points like `extract_search_coverage`
+        -- because BBB's "local" result pool is tied to the specific NAMED
+        place searched (`find_loc`), not just proximity to a point:
+        confirmed 2026-09-02, a lat/lon point ~13 miles from Miami's own
+        resolved center (`find_latlng`) found a completely different,
+        non-overlapping set of real local car dealerships than a plain
+        "Kendall, FL" search did, even though Kendall is itself about that
+        far from downtown Miami. Sweeping real named places, not
+        coordinates, is what actually reaches full local coverage -- see
+        `reference/cities.py`'s module docstring.
+
+        Works for any resolvable place, not just a curated metro -- a small
+        town (e.g. "Palm Coast, FL") that isn't in data/reference/metros.json
+        still gets this treatment: it's searched itself either way, and
+        picks up whatever real substantial places (if any) are genuinely
+        within range of it too. A place with nothing nearby meeting
+        `min_population` just degrades gracefully to "search that one town"
+        -- there's no special-casing needed for "this isn't a big metro."
+        (`extract_search_metro_coverage` below is a thin wrapper over this
+        for the curated-metro-list use case -- CLI `--metro`, the batch
+        scraper -- where a fixed, known-good list of named metros matters;
+        this is the general version, used directly by the main Streamlit
+        search UI so any typed-in place gets the same smart behavior.)
+
+        `min_population` filters `reference/cities.py`'s full US place list
+        (every incorporated place + CDP in the country, from
+        data/reference/us_cities.csv) down to substantial cities only --
+        without it a 40-mile radius around a big metro can include 100+
+        tiny places, multiplying request count far past what's useful (see
+        scripts/build_us_cities.py's module docstring).
+
+        `max_pages_per_place` defaults to full depth (15, not a shallow
+        couple of pages like `extract_search_coverage`'s anchors use) since
+        each place here is a real named search in its own right, not an
+        arbitrary nearby point -- there's no "heavily overlapping anchors"
+        concern the way there is with lat/lon ring points.
+
+        `on_place_done`, if given, is called after every place finishes
+        (the seed place included) as `on_place_done(place_display_name,
+        done_count, total_count, running_summary_count)` -- lets a caller
+        (e.g. a UI) show real per-place progress instead of one big blocking
+        call with no feedback until it's entirely done.
+        """
+        sort = "Distance" if sort_by_distance else None
+        directory = city_directory or CityDirectory.load()
+
+        all_summaries: list[BusinessSummary] = []
+        center: tuple[float, float] | None = None
+
+        # Seed place fetched by hand (not via extract_search) so we can also
+        # pull BBB's resolved center coordinates out of its raw response.
+        for page in range(1, max_pages_per_place + 1):
+            result = self.search_client.search(category, location, page=page, sort=sort)
+            if page == 1:
+                center = parse_response_center(result.data)
+            summaries = parse_search_results(
+                result.data, category=category, location=location, page=page, stats=self.stats
+            )
+            all_summaries.extend(summaries)
+            if not summaries:
+                break
+
+        if center is None:
+            logger.warning(
+                "Could not resolve a center point for %r -- BBB's response had no "
+                "location.latLng. Returning just the seed place's own search; no "
+                "area sweep possible without a center.",
+                location.display,
+            )
+            if on_place_done:
+                on_place_done(location.display, 1, 1, len(all_summaries))
+            return all_summaries
+
+        center_lat, center_lon = center
+        nearby_cities = directory.within_radius(
+            center_lat, center_lon, radius_miles, min_population=min_population
+        )
+        # Drop the seed place itself if the directory also contains it --
+        # otherwise it gets searched twice (once above by name, once again
+        # here) for no benefit.
+        seed_key = ((location.city or "").lower(), (location.state or "").upper())
+        nearby_cities = [c for c in nearby_cities if (c.name.lower(), c.state.upper()) != seed_key]
+
+        logger.info(
+            "%r resolved to (%.5f, %.5f) -- sweeping %d nearby place(s) "
+            "(population >= %d) within %g mile(s)",
+            location.display, center_lat, center_lon, len(nearby_cities), min_population, radius_miles,
+        )
+
+        total_places = 1 + len(nearby_cities)
+        if on_place_done:
+            on_place_done(location.display, 1, total_places, len(all_summaries))
+
+        for i, city in enumerate(nearby_cities, start=2):
+            all_summaries.extend(
+                self.extract_search(
+                    category, city.to_location(), max_pages=max_pages_per_place, sort=sort
+                )
+            )
+            if on_place_done:
+                on_place_done(city.display, i, total_places, len(all_summaries))
+
+        return all_summaries
+
     def extract_search_metro_coverage(
         self,
         category: Category,
@@ -198,85 +317,19 @@ class Extractor:
         max_pages_per_place: int = 15,
         sort_by_distance: bool = True,
         city_directory: CityDirectory | None = None,
+        on_place_done: Callable[[str, int, int, int], None] | None = None,
     ) -> list[BusinessSummary]:
-        """Sweep every real, substantial city/CDP within `radius_miles` of
-        `metro`'s seed place -- not lat/lon ring points like
-        `extract_search_coverage` -- because BBB's "local" result pool is
-        tied to the specific NAMED place searched (`find_loc`), not just
-        proximity to a point: confirmed 2026-09-02, a lat/lon point ~13
-        miles from Miami's own resolved center (`find_latlng`) found a
-        completely different, non-overlapping set of real local car
-        dealerships than a plain "Kendall, FL" search did, even though
-        Kendall is itself about that far from downtown Miami. Sweeping real
-        named places, not coordinates, is what actually reaches full metro
-        coverage -- see `reference/cities.py`'s module docstring.
-
-        `min_population` filters `reference/cities.py`'s full US place list
-        (every incorporated place + CDP in the country, from
-        data/reference/us_cities.csv) down to substantial cities only --
-        without it a 40-mile radius around a big metro can include 100+
-        tiny places, multiplying request count far past what's useful (see
-        scripts/build_us_cities.py's module docstring).
-
-        Like `extract_search_coverage`, `max_pages_per_place` defaults to
-        the usual full depth here (15, not a shallow 2) since each place is
-        a real named search in its own right, not an arbitrary nearby
-        point -- there's no "heavily overlapping anchors" concern the way
-        there is with lat/lon ring points.
+        """Curated-metro-list wrapper over `extract_search_area_coverage` --
+        for the CLI's `--metro` flag and the batch scraper, where sweeping a
+        fixed, known-good list of named metros (data/reference/metros.json)
+        is exactly the point. See that method for the real logic/docs.
         """
-        sort = "Distance" if sort_by_distance else None
-        seed_location = parse_location(metro.seed_location)
-        directory = city_directory or CityDirectory.load()
-
-        all_summaries: list[BusinessSummary] = []
-        center: tuple[float, float] | None = None
-
-        # Seed place fetched by hand (not via extract_search) so we can also
-        # pull BBB's resolved center coordinates out of its raw response.
-        for page in range(1, max_pages_per_place + 1):
-            result = self.search_client.search(category, seed_location, page=page, sort=sort)
-            if page == 1:
-                center = parse_response_center(result.data)
-            summaries = parse_search_results(
-                result.data, category=category, location=seed_location, page=page, stats=self.stats
-            )
-            all_summaries.extend(summaries)
-            if not summaries:
-                break
-
-        if center is None:
-            logger.warning(
-                "Could not resolve a center point for metro %r (seed %r) -- BBB's "
-                "response had no location.latLng. Returning just the seed place's "
-                "own search; no metro sweep possible without a center.",
-                metro.name, metro.seed_location,
-            )
-            return all_summaries
-
-        center_lat, center_lon = center
-        nearby_cities = directory.within_radius(
-            center_lat, center_lon, radius_miles, min_population=min_population
+        return self.extract_search_area_coverage(
+            category, parse_location(metro.seed_location),
+            radius_miles=radius_miles, min_population=min_population,
+            max_pages_per_place=max_pages_per_place, sort_by_distance=sort_by_distance,
+            city_directory=city_directory, on_place_done=on_place_done,
         )
-        # Drop the seed place itself if the directory also contains it --
-        # otherwise it gets searched twice (once above by name, once again
-        # here) for no benefit.
-        seed_key = ((seed_location.city or "").lower(), (seed_location.state or "").upper())
-        nearby_cities = [c for c in nearby_cities if (c.name.lower(), c.state.upper()) != seed_key]
-
-        logger.info(
-            "Metro %r resolved to (%.5f, %.5f) -- sweeping %d nearby place(s) "
-            "(population >= %d) within %g mile(s)",
-            metro.name, center_lat, center_lon, len(nearby_cities), min_population, radius_miles,
-        )
-
-        for city in nearby_cities:
-            all_summaries.extend(
-                self.extract_search(
-                    category, city.to_location(), max_pages=max_pages_per_place, sort=sort
-                )
-            )
-
-        return all_summaries
 
     def extract_business(self, profile_url: str, *, referer: str | None = None) -> BusinessDetail:
         result = self.business_client.fetch(profile_url, referer=referer)

@@ -141,7 +141,8 @@ center. The same options are available programmatically via
 `ETLPipeline.run_search(..., coverage=True, radius_miles=..., num_points=...,
 max_pages_per_point=...)`, and at a lower level via
 `Extractor.extract_search_coverage()` if you want the raw, undeduped
-summaries. Also available in the Streamlit UI below as "Coverage sweep".
+summaries. CLI-only now -- the main Streamlit search page uses metro-style
+sweeping (below) for every place automatically instead.
 
 Coverage mode multiplies request count by roughly `num_points *
 max_pages_per_point` -- keep both modest (the defaults above: 16 points x 2
@@ -165,11 +166,13 @@ just different sort orders of the same one. **For genuine full-metro
 coverage, use metro coverage search (below) instead** -- coverage mode above
 still has its place for a quick sweep around a single unnamed point.
 
-## Metro coverage search (sweeping real cities across a whole metro)
+## Area/metro coverage search (sweeping real cities around any place)
 
 Works around the limitation above by searching real, named nearby
 cities/CDPs instead of mathematical points -- confirmed to reach local
-results plain coverage search cannot.
+results plain coverage search cannot. This is what the main Streamlit
+search page uses for every place automatically (see UI section below) --
+the CLI form below is the same thing, explicit and scriptable.
 
 ```bash
 python scripts/run_search.py --category "Car Dealers" --metro miami-fl \
@@ -179,27 +182,36 @@ python scripts/run_search.py --list-metros   # see available --metro ids
 
 How it works:
 
-1. The metro's `seed_location` (from `data/reference/metros.json`, e.g.
-   `"Miami, FL"`) is searched first, both for its own results and to
+1. The seed place is searched first, both for its own results and to
    resolve BBB's own center coordinates for it (`location.latLng`, same
    free mechanism coverage search uses).
 2. `data/reference/us_cities.csv` -- every incorporated place *and*
    census-designated place (CDP) in the US, with real lat/lon and 2020
    Census population, built by `scripts/build_us_cities.py` -- is filtered
-   to real places within `--metro-radius` miles of that center, at or above
-   `--metro-min-population` residents (default 25,000; without a floor, a
-   40-mile radius around a big metro can catch 100+ tiny places, multiplying
-   request count far past what's useful).
+   to real places within the radius of that center, at or above the
+   population floor (25,000 by default; without a floor, a 40-mile radius
+   around a big metro can catch 100+ tiny places, multiplying request
+   count far past what's useful).
 3. Each matching place is searched by name (`find_loc`) in full, same as
-   the metro's own seed place -- not the shallow, capped depth coverage
-   search's anchors use, since each is a real named search in its own
-   right, not an arbitrary nearby point.
+   the seed place -- not the shallow, capped depth coverage search's
+   anchors use, since each is a real named search in its own right, not an
+   arbitrary nearby point.
 4. All results are pooled and deduped exactly like any other search.
 
-Also available via `ETLPipeline.run_search(..., metro=<a Metro>,
-metro_radius_miles=..., metro_min_population=..., metro_max_pages_per_place=...)`,
-at a lower level via `Extractor.extract_search_metro_coverage()`, and in the
-Streamlit UI below as "Metro sweep".
+Two entry points, same underlying logic (confirmed 2026-09-04 this
+generalizes fine -- a small town like "Palm Coast, FL" gets exactly the
+same treatment, just naturally sweeps fewer or zero extra places if
+nothing substantial is genuinely nearby):
+
+- **`Extractor.extract_search_area_coverage(category, location, ...)`** --
+  the general version, takes any `Location` (typed free text, resolved by
+  BBB). This is what the main Streamlit page and `ETLPipeline.run_search`
+  use.
+- **`Extractor.extract_search_metro_coverage(category, metro, ...)`** -- a
+  thin wrapper over the above for the curated `data/reference/metros.json`
+  list specifically (the CLI's `--metro` flag above, and the Batch
+  Scraper's multi-metro picker) -- useful when you want a fixed, known-good
+  list of major metros to iterate rather than typing places freely.
 
 **Regenerating `us_cities.csv`:** only needed occasionally (Census updates
 its data roughly yearly) -- `python scripts/build_us_cities.py` needs a free
@@ -220,17 +232,28 @@ more than to plain coverage search.
 ## UI
 
 A [Streamlit](https://streamlit.io) control panel (`streamlit_app.py`) for
-the same searches, if you'd rather use a form than the CLI -- type an
-industry/category phrase (free text, not tied to
-`data/reference/categories.json` -- BBB's search takes `find_text` directly
-and accepts a wide range of phrasing), pick a search mode (single
-location(s), coverage sweep, or metro sweep -- a dropdown of curated metros
-from `data/reference/metros.json`, deliberately locked to real options
-rather than free text since this mode has to match something in the city
-reference data), optionally fetch full details, and get a sortable table
-plus a CSV download in the browser. It's a thin presentation layer over the
-exact same `Extractor`/`transform`/`dedupe`/sinks everything else uses -- no
-separate scraping or parsing logic lives in it.
+the same searches, if you'd rather use a form than the CLI. Revamped
+2026-09-04 to one simple flow, no mode picker: type an industry/category
+phrase (free text -- BBB's search takes `find_text` directly and accepts a
+wide range of phrasing) and one or more places, one per line -- *any*
+resolvable place, a major metro or a small town alike (e.g. "Palm Coast,
+FL"), not limited to a curated list. Every place gets
+`Extractor.extract_search_area_coverage` automatically: swept together with
+real nearby towns at fixed, proven settings (40mi radius, 25,000+
+population, full page depth -- no longer exposed as knobs, see that
+method's docstring for why these particular numbers), so a big metro
+sweeps wide and a small town with nothing substantial nearby just searches
+itself -- no separate decision needed either way. A live progress line
+shows exactly which place is being searched and a running result count,
+not just a single bar that jumps at the very end. Optionally fetch full
+details, then get a sortable table plus a CSV download in the browser.
+It's a thin presentation layer over the exact same
+`Extractor`/`transform`/`dedupe`/sinks everything else uses -- no separate
+scraping or parsing logic lives in it. (The lat/lon ring sweep and the
+curated-metro-list mode described above are still available -- CLI only
+now, and the curated metro list still drives the separate Batch Scraper
+page's multi-metro picker, see below -- just not exposed on this page
+anymore.)
 
 ```bash
 streamlit run streamlit_app.py
