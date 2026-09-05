@@ -54,7 +54,7 @@
     metroSelect.disabled = false;
     industrySelect.disabled = false;
     searchBox.disabled = false;
-    statusEl.textContent = `${manifest.datasets.length} dataset(s) available. Pick a metro and industry.`;
+    statusEl.textContent = `${manifest.datasets.length} dataset(s) available. Pick a location and industry.`;
 
     metroSelect.addEventListener("change", onMetroChange);
     industrySelect.addEventListener("change", onIndustryChange);
@@ -72,7 +72,7 @@
   function populateMetros() {
     const metros = uniqueSorted(manifest.datasets.map((d) => d.metro));
     metroSelect.innerHTML =
-      '<option value="">Choose a metro…</option>' +
+      '<option value="">Choose a location…</option>' +
       metros.map((m) => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join("");
   }
 
@@ -80,8 +80,8 @@
     const metro = metroSelect.value;
     const industries = manifest.datasets.filter((d) => d.metro === metro);
     if (!metro) {
-      industrySelect.innerHTML = '<option value="">Select a metro first</option>';
-      clearResults("Pick a metro and industry to see results.");
+      industrySelect.innerHTML = '<option value="">Select a location first</option>';
+      clearResults("Pick a location and industry to see results.");
       return;
     }
     industrySelect.innerHTML =
