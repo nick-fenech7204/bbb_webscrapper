@@ -299,8 +299,12 @@ See [site/README.md](site/README.md) for the full structure and how
 publishing works, and [site/DEPLOY.md](site/DEPLOY.md) for a step-by-step
 AWS console walkthrough (S3 static hosting behind CloudFront -- cheap,
 near-$0/month at low traffic, the standard pattern for exactly this kind of
-site). Not yet actually deployed as of 2026-09-02 -- DEPLOY.md is written,
-running through it is next.
+site). **Live as of 2026-09-02** (Nick deployed it himself via the console,
+per DEPLOY.md). Publishing an update after that first deploy is
+`python scripts/deploy_site.py` (or double-click `deploy_site.bat`) --
+syncs `site/` to S3 and invalidates CloudFront in one step; see
+DEPLOY.md's "Automating updates" section for the one-time AWS CLI setup
+it needs.
 
 ## Setup
 

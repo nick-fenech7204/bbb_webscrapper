@@ -76,6 +76,14 @@ class Settings(BaseSettings):
     # not the running app) -- free signup: https://api.census.gov/data/key_signup.html
     census_api_key: str = Field(default="", alias="CENSUS_API_KEY")
 
+    # --- Static site deployment (scripts/deploy_site.py only) -----------------
+    # Not used by the running app itself -- only by the deploy script, which
+    # shells out to the AWS CLI (never handles credentials directly; the CLI
+    # reads its own local `aws configure` setup). See site/DEPLOY.md's
+    # "Automating updates" section.
+    aws_s3_bucket: str = Field(default="", alias="AWS_S3_BUCKET")
+    aws_cloudfront_distribution_id: str = Field(default="", alias="AWS_CLOUDFRONT_DISTRIBUTION_ID")
+
     # --- BBB request settings -------------------------------------------------
     # Session cookies/headers captured from a real browser (gitignored, never
     # committed) -- see bbb_scraper/scraping/session.py.

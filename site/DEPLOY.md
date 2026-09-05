@@ -140,6 +140,89 @@ create-invalidation --distribution-id YOUR_ID --paths "/*"` -- worth
 switching to once you're comfortable with what those commands are actually
 doing under the hood.)
 
+## Automating updates
+
+`scripts/deploy_site.py` runs those same two commands for you --
+`python scripts/deploy_site.py`, or double-click `deploy_site.bat` in the
+repo root. It never handles AWS credentials itself; it only shells out to
+the AWS CLI, which reads its own local config. Two things needed first:
+
+### 1. Create a scoped IAM user (recommended over reusing broader access)
+
+This limits what this specific automation can touch -- even if this
+machine's local AWS config were ever compromised, the damage is capped to
+this one bucket and this one distribution, nothing else on your account.
+
+1. **IAM console -> Users -> Create user.** Name it something clear, e.g.
+   `bbb-site-deployer`. Do **not** check "Provide user access to the AWS
+   Management Console" -- this user only ever needs programmatic
+   (CLI) access, never a console login.
+2. **IAM console -> Policies -> Create policy -> JSON tab**, paste:
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "SiteBucketList",
+         "Effect": "Allow",
+         "Action": ["s3:ListBucket"],
+         "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME"
+       },
+       {
+         "Sid": "SiteObjectAccess",
+         "Effect": "Allow",
+         "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+         "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+       },
+       {
+         "Sid": "SiteCacheInvalidation",
+         "Effect": "Allow",
+         "Action": ["cloudfront:CreateInvalidation"],
+         "Resource": "arn:aws:cloudfront::YOUR-ACCOUNT-ID:distribution/YOUR-DISTRIBUTION-ID"
+       }
+     ]
+   }
+   ```
+   Replace `YOUR-BUCKET-NAME`, `YOUR-ACCOUNT-ID`, and `YOUR-DISTRIBUTION-ID`
+   with your real values (same ones from Parts 1/3/4 above -- the account
+   ID is the 12-digit number in your CloudFront distribution's ARN, visible
+   on its General tab). Name the policy something like
+   `bbb-site-deploy-policy`, **Create policy**.
+3. Back on the user (IAM -> Users -> your new user) -> **Permissions** tab
+   -> **Add permissions** -> **Attach policies directly** -> find and check
+   `bbb-site-deploy-policy` -> **Add permissions**.
+4. **Security credentials** tab (still on the user) -> **Access keys** ->
+   **Create access key** -> choose **Command Line Interface (CLI)** as the
+   use case -> **Create access key**. Copy both the **Access key ID** and
+   **Secret access key** shown -- this is the only time the secret is
+   ever displayed.
+
+### 2. Configure the AWS CLI with those keys
+
+Install the AWS CLI if you haven't: https://aws.amazon.com/cli/ -- then in
+your own terminal:
+
+```bash
+aws configure
+```
+
+Paste in the Access key ID and Secret access key from step 4 above when
+prompted, `us-east-2` for the default region (matching your bucket), and
+`json` for the default output format (or leave blank). These are stored in
+a local config file (`~/.aws/credentials` on Mac/Linux, `%UserProfile%\.aws\credentials`
+on Windows) that only the AWS CLI reads -- nothing in this repo ever sees
+or stores them.
+
+### 3. Set the two identifiers in `.env`
+
+Already done if you're reading this after Nick's setup -- `AWS_S3_BUCKET`
+and `AWS_CLOUDFRONT_DISTRIBUTION_ID` in `.env` (not secrets, just which
+bucket/distribution to target -- see `.env.example`).
+
+From here on, publishing a change is just `python scripts/deploy_site.py`
+(or the `deploy_site.bat` shortcut) instead of the manual console steps
+above.
+
 ## Optional: a custom domain
 
 Not required -- the `*.cloudfront.net` URL works fine and is a normal HTTPS
