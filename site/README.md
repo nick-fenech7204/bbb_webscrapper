@@ -23,21 +23,42 @@ site/
 
 ## Publishing a new dataset
 
-After a pipeline run produces a CSV (e.g. from `scripts/run_search.py
---metro ...`), publish it:
+Three ways data actually gets here, all funneling through the same
+underlying logic in `scripts/publish_site_data.py`:
 
-```bash
-python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \
-    --industry "Car Dealers" --metro "Miami, FL"
-```
+1. **From a CSV on disk** -- after a pipeline run produces one (e.g. from
+   `scripts/run_search.py --metro ...`), publish it by hand:
+   ```bash
+   python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \
+       --industry "Car Dealers" --metro "Miami, FL"
+   ```
+   (`publish_dataset()` -- reads the CSV, JSON-decodes the flattened
+   `categories`/`contacts`/`socials`/`reviews_complaints` columns back into
+   real lists/dicts.)
+2. **Straight from a running search, no CSV round-trip** -- the main
+   Streamlit page's "Also publish to the static site" checkbox (on by
+   default) calls `publish_records()` directly on the just-scraped,
+   already-in-memory records, one dataset per place searched. Bonus of
+   skipping the CSV round-trip: real types are preserved (`accredited:
+   true`, not the string `"True"`) -- `js/app.js`'s `isTrue()` handles both
+   shapes either way, so this isn't something you need to worry about.
+3. **Automatically, per metro, from a batch run** -- `scripts/
+   batch_scrape_metros.py` (and the Batch Scraper Streamlit page) calls
+   `publish_dataset()` on each metro's checkpoint CSV the moment it
+   finishes, unless run with `--no-publish`.
 
-This writes/overwrites `site/data/<industry>--<metro>.json` and updates
+All three write/overwrite `site/data/<industry>--<metro>.json` and update
 `site/data/manifest.json` (only that one entry -- other published datasets
-are untouched). Re-run it any time to refresh a dataset with newer data.
+are untouched). Re-run any of them any time to refresh a dataset with newer
+data.
 
-Field selection (what's public vs. dropped) is `_PUBLIC_FIELDS` in that
-script -- edit it there to add/remove a column everywhere at once (site
-table, CSV export, and the underlying JSON).
+Field selection (what's public vs. dropped) is `_PUBLIC_FIELDS` in
+`publish_site_data.py` -- edit it there to add/remove a column everywhere
+at once (site table, CSV export, and the underlying JSON), regardless of
+which of the three paths above produced the data.
+
+**Publishing here only updates local files** -- see "Deploying" below to
+actually push a change onto the live site.
 
 ## Previewing locally
 

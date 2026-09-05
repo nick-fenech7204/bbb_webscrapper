@@ -30,12 +30,18 @@ bbb_scraper/
   logging_setup.py      # console + rotating file logging
   exceptions.py
   reference/
-    models.py              # Category, Location (+ parse_location)
+    models.py              # Category, Location, City, Metro (+ parse_location)
     categories.py            # CategoryDirectory: load/search data/reference/categories.json
+    cities.py                  # CityDirectory: load/query data/reference/us_cities.csv
+                                #   (every US place + CDP, real population -- powers area/metro sweep)
+    metros.py                    # MetroDirectory: load/query data/reference/metros.json
+                                    #   (curated ~50-metro list for --metro / Batch Scraper)
+    geo.py                          # dependency-free great-circle math (destination_point,
+                                     #   distance_miles, generate_coverage_points)
   scraping/
     client.py           # HttpClient: curl_cffi (browser TLS impersonation) + proxy + retry + rate limit
     proxies.py           # provider-agnostic proxy URL construction (Decodo, IPRoyal, ...)
-    session.py            # loads BBB session cookies/headers from data/secrets/
+    session.py            # loads BBB session cookies/headers from data/secrets/ (optional, not required)
     capture.py              # save every raw response to data/raw/ + manifest.jsonl
     search.py                # BBB /api/search JSON requests, by Category + Location
     business.py                # BBB business-profile page (HTML) requests
@@ -48,34 +54,59 @@ bbb_scraper/
     identifiers.py         # stable internal business id
     transform.py            # pure functions: model -> flat dict
     dedupe.py                 # dedupe by id
-    extract.py                 # Extractor: scraping + parsing combined
-    pipeline.py                 # ETLPipeline: orchestrates the whole run
+    extract.py                 # Extractor: extract_search, extract_search_coverage (lat/lon
+                                #   ring sweep), extract_search_area_coverage (real-nearby-city
+                                #   sweep, any place), extract_search_metro_coverage (thin wrapper
+                                #   over the above for the curated metros.json list), extract_business
+    pipeline.py                 # ETLPipeline.run_search: plain / coverage=True / metro=<Metro> modes
   pipeline/
     base.py                # Sink ABC
     registry.py              # OUTPUT_SINKS env var -> list[Sink]
     sinks/                     # csv, excel, sql, json, http, null
   utils/
-    rate_limit.py, hashing.py, stats.py
+    rate_limit.py, hashing.py, stats.py, flatten.py
 
 data/
-  reference/categories.json  # BBB industry/category taxonomy (placeholder starter list)
-  secrets/                     # gitignored -- bbb_session.json (real cookies/headers)
+  reference/
+    categories.json        # BBB industry/category taxonomy (11 entries, mostly real -- see its README)
+    us_cities.csv             # every US incorporated place + CDP, real lat/lon + 2020 Census
+                               #   population (scripts/build_us_cities.py builds this)
+    metros.json                  # curated major-metro list for --metro / the Batch Scraper page
+  secrets/                        # gitignored -- bbb_session.json (optional, not required)
+  processed/                        # gitignored -- businesses.csv is the one cumulative sink every
+                                     #   run appends to; batch/ holds the batch scraper's per-metro
+                                     #   checkpoints (resumability)
+  raw/                                # gitignored -- every raw response saved + manifest.jsonl
 
 tests/
   fixtures/                 # saved HTML/JSON used by parser unit tests
   parsing/                    # parser tests (no network)
   etl/                          # transform/dedupe tests (no network)
-  reference/                     # Category/Location tests
-  scraping/                        # search param-building + proxy tests
+  reference/                     # Category/Location/City/Metro/geo tests
+  scraping/                        # search param-building + proxy + client tests
+  pipeline/                          # CSVSink tests
 
 scripts/
-  run_search.py             # CLI: pick category + location -> ETL -> configured sinks
+  run_search.py             # CLI: category + location -> ETL -> sinks (plain / --coverage / --metro)
   run_business.py             # CLI: fetch + parse one profile page
   fetch_details.py            # CLI: enrich an existing CSV's profile_urls, no re-search needed
   fetch_categories.py           # CLI stub: scrape BBB's category taxonomy into data/reference/
   check_proxy.py                 # CLI: verify the configured proxy actually works
+  build_us_cities.py               # one-time reference-data build (needs a free CENSUS_API_KEY)
+  batch_scrape_metros.py             # run one industry across many metros, checkpointed +
+                                      #   auto-published to site/ as each one finishes
+  publish_site_data.py                 # CSV (or in-memory records) -> site/data/*.json + manifest.json
+  deploy_site.py                         # aws s3 sync + cloudfront invalidation (site/DEPLOY.md)
 
-streamlit_app.py           # UI: form-based control panel over the same ETL pipeline
+streamlit_app.py           # main control-panel UI: one unified search flow (see "UI" below)
+pages/
+  1_Batch_Scraper.py          # Streamlit multi-page: run many metros in the background, live log
+
+site/                      # the genuinely static public site (S3+CloudFront) -- see "Static site"
+                            #   below; a different thing from streamlit_app.py on purpose
+
+run_streamlit.bat, open_cli.bat, deploy_site.bat   # double-click launchers (Windows) --
+                                                    #   activate the venv and run the thing named
 ```
 
 ## Searching by category + location
@@ -353,8 +384,11 @@ is a JSON API, not an HTML page -- `GET https://www.bbb.org/api/search` with
 `find_country`, `find_text` (the category phrase itself, e.g. "accredited
 cpa" -- there's no separate opaque category id in the request), `find_type=
 Category` (always this exact value), `find_latlng` or `find_loc`, and `page`.
-It requires cookies that satisfy Cloudflare bot management (see "Session
-cookies" below). The response shape is confirmed too -- `scraping/search.py`,
+The *original* assumption was that it also required cookies satisfying
+Cloudflare bot management -- later disproven, see "Session cookies" below
+for the full story; skip ahead there if you're wondering which is actually
+true, since this paragraph predates that finding. The response shape is
+confirmed too -- `scraping/search.py`,
 `parsing/search_parser.py`'s field mapping, `etl/extract.py`'s pagination
 loop (which reads the response's own `page`/`pageSize`/`totalPages`/
 `totalResults` rather than guessing), and `tests/fixtures/search_listing_sample.json`
@@ -507,8 +541,23 @@ traced back to the exact HTML that caused it.
   now given the above, but if BBB's protection posture changes and cookies
   become load-bearing again, refreshing them is still 100% manual.
 - Upsert-on-conflict for `SQLSink` (currently append-only).
-- `CSVSink` writes its header from whichever batch of records hits it
-  first; a later batch with different/more fields (e.g. summaries then
-  details, or a schema change) gets silently truncated to that original
-  header on append rather than growing to fit. Fine for a single run, worth
-  fixing before relying on it across many runs with evolving fields.
+- **(Fixed)** `CSVSink` used to write its header from whichever batch hit it
+  first and silently truncate a later batch's new fields on append -- fixed
+  a while back: it now reads the real on-disk header, appends safely when
+  the batch's columns are already covered, or rewrites the file with a
+  union header when they're not (see `pipeline/sinks/csv_sink.py`).
+- No cross-run dedup on `data/processed/businesses.csv` itself -- it's a
+  pure append log by design (every run's records land in it, regardless of
+  whether the same business was already scraped in an earlier run). A
+  handful of duplicate ids from re-running the same test search across
+  separate sessions is expected, not corruption; if a genuinely
+  deduplicated master view is ever wanted, that's a one-off pass to build
+  (`etl/dedupe.py` already has the logic, just needs pointing at the whole
+  file), not something this sink should start doing automatically.
+- Publishing to the live site (`scripts/deploy_site.py`) is a manual,
+  on-demand step -- nothing watches for new data or a `git push` and
+  triggers it automatically. Local `site/data/` updates immediately when a
+  search publishes; the *live* CloudFront URL only updates when
+  `deploy_site.py` is actually run. A GitHub Action that runs it
+  automatically on every push is a real option if that's ever wanted, not
+  yet built.

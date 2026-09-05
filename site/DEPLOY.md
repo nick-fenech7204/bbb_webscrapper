@@ -213,6 +213,13 @@ a local config file (`~/.aws/credentials` on Mac/Linux, `%UserProfile%\.aws\cred
 on Windows) that only the AWS CLI reads -- nothing in this repo ever sees
 or stores them.
 
+**Common gotcha (hit this exact thing during the real setup):** if you just
+installed the AWS CLI and `aws` (or `aws configure`) says "not recognized"
+right after, that's almost always a stale PATH, not a failed install -- the
+installer updated it, but any terminal window already open when you
+installed still has the old PATH from before. **Close that window and open
+a brand new one**, then try again.
+
 ### 3. Set the two identifiers in `.env`
 
 Already done if you're reading this after Nick's setup -- `AWS_S3_BUCKET`
