@@ -39,6 +39,7 @@ import re
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 from bbb_scraper.config import settings
 from bbb_scraper.etl.dedupe import dedupe_records
@@ -52,6 +53,33 @@ from bbb_scraper.utils.stats import RunStats
 
 configure_logging()
 st.set_page_config(page_title="BBB Scraper", page_icon="\U0001F4CB", layout="wide")
+
+# Turns off the browser's own autofill/autocomplete suggestions on every text
+# field -- confirmed 2026-09-05 these visually overlap Streamlit's own
+# "Press Enter to submit form" hint on the industry field (both render right
+# under the input at once). st.text_input has no autocomplete= param, so
+# this reaches into the real DOM via components.html's iframe -- same-origin
+# with the main page, so window.parent.document is reachable -- rather than
+# st.markdown(unsafe_allow_html=True), which doesn't execute injected
+# <script> tags at all (browsers don't run scripts inserted via innerHTML).
+# A MutationObserver keeps re-applying it as Streamlit re-renders on every
+# interaction, not just once at page load.
+components.html(
+    """
+    <script>
+    const disableAutocomplete = () => {
+      window.parent.document.querySelectorAll('input, textarea').forEach((el) => {
+        if (el.getAttribute('autocomplete') !== 'off') el.setAttribute('autocomplete', 'off');
+      });
+    };
+    disableAutocomplete();
+    new MutationObserver(disableAutocomplete).observe(window.parent.document.body, {
+      childList: true, subtree: true,
+    });
+    </script>
+    """,
+    height=0,
+)
 
 # Fixed sweep parameters -- proven values from real runs (Miami: tight,
 # dense local cluster; Providence: a much larger multi-state sweep, 10x
