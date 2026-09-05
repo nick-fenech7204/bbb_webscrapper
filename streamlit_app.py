@@ -36,6 +36,8 @@ right tool), just not exposed on this page anymore.
 from __future__ import annotations
 
 import re
+import sys
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
@@ -50,6 +52,9 @@ from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.reference.models import Category, parse_location
 from bbb_scraper.utils.flatten import flatten_record
 from bbb_scraper.utils.stats import RunStats
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
+from publish_site_data import publish_records  # noqa: E402 -- see sys.path insert above
 
 configure_logging()
 st.set_page_config(page_title="BBB Scraper", page_icon="\U0001F4CB", layout="wide")
@@ -152,6 +157,15 @@ with st.sidebar:
             f"Also save to configured sinks ({', '.join(settings.output_sink_names)})",
             value=True,
         )
+        publish_to_site = st.checkbox(
+            "Also publish to the static site",
+            value=True,
+            help="Publishes each place searched above as its own industry+place "
+                 "dataset on the site (site/data/), same as the Batch Scraper page "
+                 "already does automatically -- confirmed 2026-09-05 this page didn't "
+                 "do that before, so past searches here never showed up on the site. "
+                 "Uncheck for a quick test you don't want reflected publicly.",
+        )
         submitted = st.form_submit_button("Run search", type="primary", use_container_width=True)
 
     with st.expander("Configuration"):
@@ -179,11 +193,17 @@ if submitted:
 
     stats = RunStats()
     all_records = []
+    records_by_location: dict[str, list[dict]] = {}  # location.display -> its own records,
+    # kept separate from all_records' global dedup below so each place can be
+    # published as its own industry+place dataset -- publishing the combined,
+    # globally-deduped blob under every place's name would wrongly attribute
+    # every other place's businesses to each one.
     progress = st.progress(0.0)
     status = st.empty()
 
     with Extractor(stats=stats) as extractor:
         for i, location in enumerate(locations):
+            location_records: list[dict] = []
 
             def _on_place_done(place_name, done, total, running_count, _i=i, _n=len(locations), _loc=location):
                 overall = (_i + done / total) / _n if total else (_i + 1) / _n
@@ -200,7 +220,7 @@ if submitted:
                 max_pages_per_place=SWEEP_MAX_PAGES_PER_PLACE,
                 on_place_done=_on_place_done,
             )
-            all_records.extend(transform_summary(s) for s in summaries)
+            location_records.extend(transform_summary(s) for s in summaries)
 
             if fetch_details:
                 for j, summary in enumerate(summaries):
@@ -212,9 +232,12 @@ if submitted:
                     )
                     try:
                         detail = extractor.extract_business(summary.profile_url)
-                        all_records.append(transform_detail(detail))
+                        location_records.append(transform_detail(detail))
                     except Exception as exc:
                         st.warning(f"Failed to fetch detail for {summary.profile_url}: {exc}")
+
+            records_by_location[location.display] = location_records
+            all_records.extend(location_records)
 
     all_records = dedupe_records(all_records, stats=stats)
     status.empty()
@@ -226,6 +249,18 @@ if submitted:
                 sink.load(all_records)
             except Exception as exc:
                 st.warning(f"Sink {sink.name!r} failed: {exc}")
+
+    if publish_to_site:
+        for place_display, place_records in records_by_location.items():
+            if not place_records:
+                continue
+            deduped_place_records = dedupe_records(place_records)
+            try:
+                entry = publish_records(deduped_place_records, category.name, place_display)
+                st.write(f"Published **{entry['record_count']}** record(s) to the site for "
+                         f"**{category.name}** in **{place_display}**.")
+            except Exception as exc:
+                st.warning(f"Failed to publish {place_display!r} to the site: {exc}")
 
     st.session_state["results"] = all_records
     st.session_state["stats"] = stats.as_dict()

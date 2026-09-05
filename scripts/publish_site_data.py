@@ -53,6 +53,30 @@ def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.strip().lower()).strip("-") or "dataset"
 
 
+def select_public_fields(record: dict) -> dict:
+    """Extract just the public-site fields from an already in-memory,
+    natively-typed record (straight from transform_summary/transform_detail,
+    before any CSV round-trip -- `categories`/`contacts`/etc. are still real
+    lists/dicts, not yet flattened to JSON strings). Used by
+    `publish_records` below for publishing straight out of a running search
+    (the Streamlit UI), without writing a CSV first. `load_records` below is
+    the CSV-round-trip counterpart -- same field selection, plus decoding
+    those fields back out of their flattened string form.
+    """
+    result = {}
+    for field in _PUBLIC_FIELDS:
+        value = record.get(field)
+        if field in _JSON_FIELDS:
+            result[field] = value if value is not None else ([] if field != "reviews_complaints" else {})
+        else:
+            # Normalize None -> "" same as load_records' CSV path (a CSV
+            # cell can't be None to begin with) -- keeps a dataset published
+            # from memory and one published from a CSV byte-for-byte
+            # identical in shape, not just "close enough."
+            result[field] = value if value is not None else ""
+    return result
+
+
 def load_records(csv_path: Path) -> list[dict]:
     with csv_path.open(newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
@@ -80,18 +104,14 @@ def load_manifest() -> dict:
     return {"generated_at": None, "datasets": []}
 
 
-def publish_dataset(csv_path: Path, industry: str, metro: str) -> dict:
-    """Publish one CSV as one industry+metro dataset -- the reusable core
-    this module's CLI wraps, also imported directly by
-    scripts/batch_scrape_metros.py so a batch run can publish each metro
-    the moment it finishes, without shelling out to this file as a
-    subprocess per metro.
-
-    Returns the manifest entry that was written (id/industry/metro/
-    record_count/file), so a caller can report on what just happened
-    without re-reading the manifest itself.
+def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
+    """Shared manifest-file-writing logic behind both `publish_dataset`
+    (from a CSV on disk) and `publish_records` (from in-memory records) --
+    `records` must already be field-selected (see `select_public_fields`/
+    `load_records` above), this just writes the JSON file and updates the
+    manifest (adds/replaces this one dataset id, leaves every other entry
+    untouched).
     """
-    records = load_records(csv_path)
     dataset_id = f"{slugify(industry)}--{slugify(metro)}"
     filename = f"{dataset_id}.json"
 
@@ -115,6 +135,29 @@ def publish_dataset(csv_path: Path, industry: str, metro: str) -> dict:
     MANIFEST_PATH.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     return entry
+
+
+def publish_dataset(csv_path: Path, industry: str, metro: str) -> dict:
+    """Publish one CSV as one industry+metro dataset -- the reusable core
+    this module's CLI wraps, also imported directly by
+    scripts/batch_scrape_metros.py so a batch run can publish each metro
+    the moment it finishes, without shelling out to this file as a
+    subprocess per metro.
+
+    Returns the manifest entry that was written (id/industry/metro/
+    record_count/file), so a caller can report on what just happened
+    without re-reading the manifest itself.
+    """
+    return _write_dataset(load_records(csv_path), industry, metro)
+
+
+def publish_records(records: list[dict], industry: str, metro: str) -> dict:
+    """Like `publish_dataset`, but for records already in memory (e.g.
+    straight out of a completed Streamlit search) -- no CSV round-trip
+    needed. `records` should be the natively-typed dicts transform_summary/
+    transform_detail produce, not yet flattened for CSV.
+    """
+    return _write_dataset([select_public_fields(r) for r in records], industry, metro)
 
 
 def main() -> int:

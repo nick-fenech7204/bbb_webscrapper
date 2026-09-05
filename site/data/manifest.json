@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T18:23:09.110695+00:00",
+  "generated_at": "2026-09-05T14:18:00.327190+00:00",
   "datasets": [
     {
       "id": "car-dealers--miami-fl",
@@ -7,6 +7,13 @@
       "metro": "Miami, FL",
       "record_count": 200,
       "file": "car-dealers--miami-fl.json"
+    },
+    {
+      "id": "ice-cream-shops--palm-coast-fl",
+      "industry": "Ice Cream Shops",
+      "metro": "Palm Coast, FL",
+      "record_count": 2,
+      "file": "ice-cream-shops--palm-coast-fl.json"
     },
     {
       "id": "car-dealers--providence-ri",
