@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Business Leads — BBB + Yelp</title>
-  <meta name="description" content="Browse and export BBB-listed businesses by industry and location.">
+  <title>Intelligence — BBB + Yelp</title>
+  <meta name="description" content="Derived lead-scoring signals from BBB profiles matched against Yelp.">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-view="leads">
+<body data-view="intel">
   <header class="site-header">
     <div class="wrap">
       <h1>Business Intelligence</h1>
-      <p class="tagline">Real business listing data — BBB profiles matched against Yelp, browsable and exportable by industry and location.</p>
+      <p class="tagline">Each BBB business matched to its Yelp listing, scored for outreach priority — where BBB and Yelp disagree, and who looks like they need review help.</p>
       <nav class="site-nav">
-        <a href="index.html" class="active">Lead records</a>
-        <a href="intelligence.html">Intelligence</a>
+        <a href="index.html">Lead records</a>
+        <a href="intelligence.html" class="active">Intelligence</a>
       </nav>
     </div>
   </header>
@@ -40,6 +40,18 @@
 
     <p id="status" class="status" role="status">Loading available data…</p>
     <p id="intel-note" class="intel-note" hidden></p>
+
+    <details class="legend">
+      <summary>What the columns mean</summary>
+      <ul>
+        <li><strong>Yelp</strong> — the matched Yelp listing's star rating and review count (links to Yelp).</li>
+        <li><strong>BBB−Yelp gap</strong> — BBB letter grade and Yelp stars both put on a 0–5 scale, BBB minus Yelp. Positive = BBB looks kinder than Yelp.</li>
+        <li><strong>Review-need</strong> (0–100) — how low the Yelp rating is (60%) plus how thin the review volume is (40%). Higher = more likely to want review help.</li>
+        <li><strong>Lead priority</strong> — Review-need plus bumps for reputation divergence, an accredited-but-low-rated business, and an established (10+ yr) business.</li>
+        <li><strong>Flags</strong> — <em>BBB↑ Yelp↓</em>: BBB grade A− or better but a reviewed Yelp rating under 3. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews.</li>
+      </ul>
+      <p class="legend-foot">Derived scoring is a v1 starting point, not a finished model.</p>
+    </details>
 
     <div class="table-wrap">
       <table id="results-table">

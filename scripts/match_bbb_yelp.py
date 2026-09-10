@@ -31,16 +31,6 @@ def load_bbb_csv(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
-def yelp_to_dict(yb) -> dict:
-    d = yb.model_dump()
-    d["id"] = d.pop("yelp_id")
-    d["url"] = d.pop("yelp_url")
-    d["alias"] = d.pop("yelp_alias")
-    d.pop("scraped_at", None)
-    d.pop("raw_extra", None)
-    return d
-
-
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--bbb-csv", required=True, type=Path)
@@ -68,7 +58,7 @@ def main() -> None:
     logger.info("yelp: %d businesses (%d live API calls)", len(yb), extractor.client.calls_made)
     if extractor.client.last_rate_limit:
         logger.info("yelp quota now: %s", extractor.client.last_rate_limit)
-    yelp = [yelp_to_dict(b) for b in yb]
+    yelp = [b.to_match_dict() for b in yb]
 
     name_drop = {t.strip().lower() for t in args.name_drop.split(",") if t.strip()}
     outcome = match_datasets(bbb, yelp, name_extra_drop=name_drop or None)

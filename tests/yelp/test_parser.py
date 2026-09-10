@@ -59,3 +59,17 @@ def test_parse_business_handles_missing_optional_blocks():
     assert biz.lat is None
     assert biz.categories == []
     assert biz.review_count is None
+
+
+def test_to_match_dict_shape(load_json_fixture):
+    data = load_json_fixture("yelp_search_car_dealers_jacksonville.json")
+    d = parse_yelp_search_response(data)[0].to_match_dict()
+    # keys the matcher / master table expect -- id/url, NOT yelp_id/yelp_url
+    assert d["id"] == "OkQQ0-P2gyO4FamOKZLUcg"
+    assert d["url"].startswith("https://www.yelp.com/biz/")
+    assert d["phone"] == "+19043029611"
+    assert d["postal_code"] == "32225"
+    assert d["rating"] == 2.3
+    assert d["review_count"] == 620
+    assert d["categories"] == ["Car Dealers", "Car Rental", "Auto Repair"]
+    assert "yelp_id" not in d and "raw_extra" not in d

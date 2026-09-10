@@ -11,51 +11,55 @@ this only ever reads data you've already collected and chosen to publish).
 
 ```
 site/
-  index.html       page markup
-  css/style.css     styling (light/dark aware)
-  js/app.js         all interactivity -- loads data/manifest.json, then
-                     the selected dataset's JSON, filters/sorts/exports
-                     client-side
+  index.html         "Lead records" page -- the standard BBB lead
+  intelligence.html   "Intelligence" page -- BBB matched to Yelp, scored
+  css/style.css        styling (light/dark aware)
+  js/app.js            all interactivity, shared by both pages -- picks a
+                        column set + default sort from <body data-view>,
+                        loads data/manifest.json then the selected
+                        dataset's JSON, filters/sorts/exports client-side
   data/
-    manifest.json    which datasets exist (metro, industry, filename, count)
-    <id>.json        one file per industry+metro dataset
+    manifest.json      which datasets exist (metro, industry, filename,
+                        record_count, has_intel)
+    <id>.json          one file per industry+metro dataset, read by BOTH pages
 ```
+
+Each record in a dataset JSON carries: the BBB public fields, a
+`last_updated` date, the matched Yelp fields (`yelp_name` / `yelp_rating` /
+`yelp_review_count` / `yelp_url` -- null when unmatched), and our derived
+columns (`review_need_score`, `lead_priority_score`, the flags). The Lead
+records page shows the BBB columns; the Intelligence page shows the Yelp +
+derived columns. Raw Yelp fields beyond those four (phone, id, price, ...)
+stay local -- see `_YELP_SITE_FIELDS` / `_INTEL_SITE_FIELDS` in
+`publish_site_data.py`.
 
 ## Publishing a new dataset
 
-Three ways data actually gets here, all funneling through the same
-underlying logic in `scripts/publish_site_data.py`:
+Ways data gets here, all funneling through `scripts/publish_site_data.py`:
 
-1. **From a CSV on disk** -- after a pipeline run produces one (e.g. from
-   `scripts/run_search.py --metro ...`), publish it by hand:
+1. **Automatically, per metro, from a batch run** (the normal path) --
+   `scripts/batch_scrape_metros.py` calls `publish_master_rows()` on each
+   metro's master table the moment it finishes, unless `--no-publish`. This
+   carries the Yelp + intelligence columns. `yelp_only` rows are dropped.
+2. **From a master-table CSV on disk** -- e.g. `scripts/match_bbb_yelp.py`
+   output:
    ```bash
-   python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \
+   python scripts/publish_site_data.py --master \
+       data/processed/bbb_yelp_master__car-dealers-miami-fl.csv \
        --industry "Car Dealers" --metro "Miami, FL"
    ```
-   (`publish_dataset()` -- reads the CSV, JSON-decodes the flattened
-   `categories`/`contacts`/`socials`/`reviews_complaints` columns back into
-   real lists/dicts.)
-2. **Straight from a running search, no CSV round-trip** -- the main
-   Streamlit page's "Also publish to the static site" checkbox (on by
-   default) calls `publish_records()` directly on the just-scraped,
-   already-in-memory records, one dataset per place searched. Bonus of
-   skipping the CSV round-trip: real types are preserved (`accredited:
-   true`, not the string `"True"`) -- `js/app.js`'s `isTrue()` handles both
-   shapes either way, so this isn't something you need to worry about.
-3. **Automatically, per metro, from a batch run** -- `scripts/
-   batch_scrape_metros.py` (and the Batch Scraper Streamlit page) calls
-   `publish_dataset()` on each metro's checkpoint CSV the moment it
-   finishes, unless run with `--no-publish`.
+3. **From a BBB-only CSV on disk** -- `publish_dataset()`; the record gets
+   `last_updated` and null Yelp/intelligence fields (the Intelligence page
+   shows a "no Yelp enrichment" note for that dataset).
+4. **In-memory BBB records** -- `publish_records()`, same as (3) but no CSV.
 
-All three write/overwrite `site/data/<industry>--<metro>.json` and update
-`site/data/manifest.json` (only that one entry -- other published datasets
-are untouched). Re-run any of them any time to refresh a dataset with newer
-data.
+All write/overwrite `site/data/<industry>--<metro>.json` and update the one
+matching `manifest.json` entry (others untouched). Re-run any time to
+refresh.
 
-Field selection (what's public vs. dropped) is `_PUBLIC_FIELDS` in
-`publish_site_data.py` -- edit it there to add/remove a column everywhere
-at once (site table, CSV export, and the underlying JSON), regardless of
-which of the three paths above produced the data.
+Field selection: `_PUBLIC_FIELDS` (BBB), `_YELP_SITE_FIELDS`,
+`_INTEL_SITE_FIELDS` in `publish_site_data.py` -- edit there to change a
+column everywhere at once.
 
 **Publishing here only updates local files** -- see "Deploying" below to
 actually push a change onto the live site.

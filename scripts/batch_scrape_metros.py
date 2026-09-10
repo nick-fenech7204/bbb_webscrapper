@@ -15,27 +15,29 @@ Usage:
     python scripts/run_search.py --list-metros   # see available metro ids
 
 Meant to run a long time (many metros x many requests each) -- built to be
-launched as a background process (the Streamlit "Batch scraper" page does
-this for you; from a plain terminal, background it yourself).
+launched as a background process (the Streamlit page does this for you;
+from a plain terminal, background it yourself).
 
 Per metro:
-  1. extract_search_metro_coverage (same as a single metro sweep).
-  2. transform + dedupe.
-  3. optionally --details: fetch full contact info for every unique result
-     (off by default -- roughly doubles time per metro; see --help).
-  4. write data/processed/batch/<industry-slug>--<metro-id>.csv (the
-     resumability checkpoint -- a metro whose file already exists here is
-     skipped on a re-run, use --force to redo it anyway).
-  5. unless --no-publish: publish that CSV to site/ immediately (calls
-     publish_site_data.publish_dataset directly, not as a subprocess).
-  6. append into the shared data/processed/businesses.csv sink too, same
-     as every other run in this project.
+  1. extract_search_metro_coverage (same as a single metro sweep) -> BBB
+     records, transformed + deduped (+ optionally --details).
+  2. unless --no-yelp: one Yelp Fusion `search_area` for the metro (~5 API
+     calls), matched to the BBB records. Best-effort -- if the key is
+     missing, the daily quota is nearly spent, or a call fails, Yelp is
+     dropped for the rest of the batch and metros just come out BBB-only.
+  3. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
+     BBB|Yelp master table (bbb_* / yelp_* columns + derived-intelligence
+     columns; yelp_* blank when there was no match). This file's existence
+     is the resume marker: a metro already checkpointed for this industry
+     is skipped on a re-run (--force to redo).
+  4. append the BBB records (not the wide table) into the shared
+     data/processed/businesses.csv sink, same as every other run.
+  5. unless --no-publish: publish the BBB fields of that metro to site/
+     immediately. The public site stays BBB-only on purpose -- Yelp's API
+     terms restrict redistributing raw Yelp data.
 
-After the whole batch, also rebuilds data/processed/<industry-slug>_all_metros.csv
--- every metro run for this industry so far, concatenated, for a single
-"the whole list" file to hand to a mentor/for analysis. Rebuilt from the
-per-metro checkpoint files each time (cheap, always consistent), not
-incrementally appended.
+After the whole batch, rebuilds data/processed/<industry-slug>_all_metros.csv
+-- every metro run for this industry so far, concatenated, as one file.
 """
 from __future__ import annotations
 
@@ -49,17 +51,19 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # for publish_site_data below
 
-from bbb_scraper.etl.dedupe import dedupe_records  # noqa: E402
-from bbb_scraper.etl.extract import Extractor  # noqa: E402
-from bbb_scraper.etl.transform import transform_detail, transform_summary  # noqa: E402
-from bbb_scraper.logging_setup import configure_logging, get_logger  # noqa: E402
-from bbb_scraper.pipeline.registry import build_sinks_from_settings  # noqa: E402
-from bbb_scraper.pipeline.sinks.csv_sink import CSVSink  # noqa: E402
-from bbb_scraper.reference.metros import MetroDirectory  # noqa: E402
-from bbb_scraper.reference.models import Category, Metro, parse_location  # noqa: E402
-from bbb_scraper.scraping.search import build_referer  # noqa: E402
-from bbb_scraper.utils.stats import RunStats  # noqa: E402
-from publish_site_data import publish_dataset, slugify  # noqa: E402
+from publish_site_data import publish_master_rows, slugify
+
+from bbb_scraper.etl.dedupe import dedupe_records
+from bbb_scraper.etl.extract import Extractor
+from bbb_scraper.etl.transform import transform_detail, transform_summary
+from bbb_scraper.logging_setup import configure_logging, get_logger
+from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
+from bbb_scraper.pipeline.registry import build_sinks_from_settings
+from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
+from bbb_scraper.reference.metros import MetroDirectory
+from bbb_scraper.reference.models import Category, Metro, parse_location
+from bbb_scraper.scraping.search import build_referer
+from bbb_scraper.utils.stats import RunStats
 
 configure_logging()
 logger = get_logger(__name__)
@@ -72,7 +76,7 @@ def scrape_one_metro(
     radius_miles: float, min_population: int, max_pages_per_place: int,
     fetch_details: bool, stats: RunStats,
 ) -> list[dict]:
-    """One metro's worth of records, deduped -- details-first if
+    """One metro's worth of BBB records, deduped -- details-first if
     fetch_details, same merge pattern already proven on the real Miami
     car-dealers run (a business's detail record wins over its own summary
     on id collision, since it's fetched first and dedupe keeps first-seen).
@@ -112,7 +116,7 @@ def rebuild_all_metros_file(industry_slug: str) -> Path:
     out_path = REPO_ROOT / "data" / "processed" / f"{industry_slug}_all_metros.csv"
     if all_rows:
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        fieldnames = sorted({key for row in all_rows for key in row.keys()})
+        fieldnames = sorted({key for row in all_rows for key in row})
         with out_path.open("w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
             writer.writeheader()
@@ -136,8 +140,14 @@ def main() -> int:
         "detail, enrich a specific subset with details later if needed)",
     )
     parser.add_argument(
+        "--yelp", action=argparse.BooleanOptionalAction, default=True,
+        help="Enrich each metro with a Yelp Fusion search (~5 API calls/metro) matched to "
+        "the BBB rows (default: on). Best-effort: no key / low quota / a failed call just "
+        "means BBB-only output for the rest of the batch, never an error.",
+    )
+    parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
-        help="Publish each metro to site/ as soon as it's done (default: on: --no-publish to skip)",
+        help="Publish each metro's BBB fields to site/ as soon as it's done (default: on)",
     )
     parser.add_argument("--force", action="store_true", help="Redo metros that already have a checkpoint file")
     args = parser.parse_args()
@@ -163,9 +173,12 @@ def main() -> int:
     industry_slug = slugify(args.industry)
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
 
+    yelp_state = open_yelp_enrichment(args.yelp)
+    yelp_note = "on" if yelp_state.enabled else f"off ({yelp_state.reason_off})"
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
-          f"pages_per_place={args.pages_per_place}, details={args.details}, publish={args.publish}")
+          f"pages_per_place={args.pages_per_place}, details={args.details}, "
+          f"yelp={yelp_note}, publish={args.publish}")
 
     done = 0
     skipped = 0
@@ -191,25 +204,35 @@ def main() -> int:
             print(f"[{i}/{len(metros)}] {metro.name}: FAILED (see log) -- continuing with the rest")
             continue
 
-        CSVSink(checkpoint_path).load(records)
+        master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
+        CSVSink(checkpoint_path).load(master_rows)
+
         for sink in build_sinks_from_settings():
             try:
-                sink.load(records)
+                sink.load(records)  # BBB records only -- businesses.csv stays a pure BBB log
             except Exception:
                 logger.exception("Shared sink %r failed to load", sink.name)
 
         elapsed = time.monotonic() - start
-        print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} unique businesses "
-              f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} requests)")
+        matched = sum(r.get("match_status") == "matched" for r in master_rows)
+        print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
+              f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''} "
+              f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
 
         if args.publish:
-            entry = publish_dataset(checkpoint_path, args.industry, metro.name)
-            print(f"    published -> site/data/{entry['file']}")
+            # master_rows, not `records` -- so the site gets our derived
+            # intelligence columns too. publish_master_rows drops every raw
+            # yelp_* field, so the public site stays BBB-only.
+            entry = publish_master_rows(master_rows, args.industry, metro.name)
+            print(f"    published -> site/data/{entry['file']} "
+                  f"(intelligence: {'yes' if entry['has_intel'] else 'no'})")
 
         done += 1
 
     all_metros_path = rebuild_all_metros_file(industry_slug)
     print(f"\nBatch complete: {done} metro(s) run, {skipped} skipped (already done).")
+    if yelp_state.reason_off and args.yelp:
+        print(f"Note: Yelp enrichment stopped partway -- {yelp_state.reason_off}")
     print(f"Compiled file: {all_metros_path}")
     return 0
 

@@ -27,7 +27,7 @@ from bbb_scraper.match.normalize import letter_grade_to_num
 BBB_FIELDS = [
     "name", "phone", "city", "state", "postal_code", "rating", "rating_score",
     "accredited", "years_in_business", "website", "primary_category_name",
-    "principal_contact", "profile_url", "bbb_id",
+    "principal_contact", "profile_url", "bbb_id", "scraped_at",
 ]
 YELP_FIELDS = [
     "name", "phone", "city", "state", "postal_code", "rating", "review_count",
@@ -188,7 +188,12 @@ def _row(status: str, *, bbb: dict | None, yelp: dict | None,
     return row
 
 
-def build_master_table(outcome: MatchOutcome) -> list[dict[str, Any]]:
+def build_master_table(
+    outcome: MatchOutcome, *, include_yelp_only: bool = True
+) -> list[dict[str, Any]]:
+    """One wide row per business. `include_yelp_only=False` keeps it
+    BBB-primary (matched + bbb_only rows only) -- what the batch scraper
+    wants when Yelp is just supplementary enrichment."""
     rows: list[dict[str, Any]] = []
     for p in outcome.pairs:
         rows.append(
@@ -197,6 +202,7 @@ def build_master_table(outcome: MatchOutcome) -> list[dict[str, Any]]:
         )
     for b in outcome.bbb_only:
         rows.append(_row("bbb_only", bbb=b, yelp=None))
-    for y in outcome.yelp_only:
-        rows.append(_row("yelp_only", bbb=None, yelp=y))
+    if include_yelp_only:
+        for y in outcome.yelp_only:
+            rows.append(_row("yelp_only", bbb=None, yelp=y))
     return rows

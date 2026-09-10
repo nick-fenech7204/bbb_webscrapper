@@ -46,6 +46,20 @@ def test_unrated_yelp_listing_is_not_treated_as_one_star():
     assert r["review_need_score"] == 70.0  # "no reviews" need, not 100
 
 
+def test_include_yelp_only_false_drops_the_yelp_only_tail():
+    out = MatchOutcome(
+        pairs=[_pair({"name": "A"}, {"name": "A", "id": "1", "url": "u"})],
+        bbb_only=[{"name": "B"}],
+        yelp_only=[{"name": "C", "id": "2", "url": "u"}],
+    )
+    full = build_master_table(out)
+    assert {r["match_status"] for r in full} == {"matched", "bbb_only", "yelp_only"}
+
+    primary = build_master_table(out, include_yelp_only=False)
+    assert {r["match_status"] for r in primary} == {"matched", "bbb_only"}
+    assert len(primary) == 2
+
+
 def test_genuine_low_reviewed_rating_triggers_divergence():
     out = MatchOutcome(pairs=[_pair(
         {"name": "Cars Business LLC", "rating": "A+", "years_in_business": "12"},

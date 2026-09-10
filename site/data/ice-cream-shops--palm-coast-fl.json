@@ -29,7 +29,19 @@
     "lat": 30.2,
     "lon": -81.62,
     "profile_url": "https://www.bbb.org/us/fl/jacksonville/profile/caterer/frozen-fusion-0403-236032368",
-    "scraped_at": "2026-09-05T14:17:45.761407+00:00"
+    "scraped_at": "2026-09-05T14:17:45.761407+00:00",
+    "last_updated": "2026-09-05",
+    "yelp_name": null,
+    "yelp_rating": null,
+    "yelp_review_count": null,
+    "yelp_url": null,
+    "review_need_score": null,
+    "lead_priority_score": null,
+    "reputation_divergence_flag": null,
+    "low_review_volume_flag": null,
+    "accredited_but_low_rated": null,
+    "rating_gap_bbb_minus_yelp": null,
+    "on_yelp": false
   },
   {
     "name": "Nan & Pop's Ice Cream Shop",
@@ -59,6 +71,18 @@
     "lat": 28.7079497,
     "lon": -81.3480345,
     "profile_url": "https://www.bbb.org/us/fl/longwood/profile/ice-cream/nan-pops-ice-cream-shop-0733-90833015",
-    "scraped_at": "2026-09-05T14:17:45.761435+00:00"
+    "scraped_at": "2026-09-05T14:17:45.761435+00:00",
+    "last_updated": "2026-09-05",
+    "yelp_name": null,
+    "yelp_rating": null,
+    "yelp_review_count": null,
+    "yelp_url": null,
+    "review_need_score": null,
+    "lead_priority_score": null,
+    "reputation_divergence_flag": null,
+    "low_review_volume_flag": null,
+    "accredited_but_low_rated": null,
+    "rating_gap_bbb_minus_yelp": null,
+    "on_yelp": false
   }
 ]

@@ -1,283 +1,177 @@
 """
-BBB Scraper -- control panel UI.
+BBB batch scraper -- the only UI this project ships.
 
 Run locally:
-    streamlit run streamlit_app.py
+    streamlit run streamlit_app.py      (or double-click run_streamlit.bat)
 
-Deploy: push this repo to GitHub (already done), connect it at
-share.streamlit.io, point it at streamlit_app.py -- free hosting, and the
-default filename is what Streamlit Community Cloud looks for automatically.
+This is a personal control panel, not a public app: clicking "Start batch"
+launches real scraping through your real proxy / BBB session, and (unless
+you turn it off) real Yelp API calls. Keep it private -- there's no auth.
 
-Read this before deploying anywhere reachable by anyone but you: this page
-*is* the live backend -- clicking "Run search" makes real requests through
-your real proxy using your real BBB session. It is not the same thing as
-the "cheap static public insight site" discussed separately (that one reads
-pre-generated data files, no live scraping involved). Put this behind auth
-before it's public, or keep it private -- there's none built in here.
+Thin presentation layer, on purpose: this page doesn't scrape anything
+itself. It launches scripts/batch_scrape_metros.py as a background OS
+process and tails its log. All the real logic -- the metro sweep,
+checkpointing/resume, Yelp enrichment + quota handling, per-metro site
+publish -- lives in that script, so the CLI and this page can't drift.
 
-This file is a thin presentation layer, nothing more: it calls the exact
-same Extractor / transform / dedupe / sinks everything else in the repo
-uses. No scraping or parsing logic lives here -- if a search or a field
-mapping needs to change, that's still bbb_scraper/, not this file.
-
-Revamped 2026-09-04 (Nick's request) to a single, simplified search flow:
-one form, no mode picker, no exposed radius/population/pages knobs. Every
-place typed in gets `Extractor.extract_search_area_coverage` -- the same
-smart "sweep real nearby cities" logic the batch scraper's metro mode uses,
-generalized to work for ANY resolvable place, not just the curated
-data/reference/metros.json list (see that method's docstring). A big metro
-sweeps wide automatically; a small town with nothing substantial nearby
-just searches itself -- no separate "which mode do I want" decision needed.
-The old lat/lon ring sweep (`extract_search_coverage`) and the
-curated-metro-only mode are still in bbb_scraper/ (still used by the CLI
-and the Batch Scraper page, where a fixed named-metro list is genuinely the
-right tool), just not exposed on this page anymore.
+Runs as a background *process*, not a Streamlit loop: a multi-metro batch
+can run for hours. Because it's a separate process it survives closing
+this tab -- only "Stop batch" (or stopping the Streamlit server) ends it.
 """
 from __future__ import annotations
 
-import re
+import subprocess
 import sys
+import time
 from pathlib import Path
 
-import pandas as pd
 import streamlit as st
-import streamlit.components.v1 as components
 
 from bbb_scraper.config import settings
-from bbb_scraper.etl.dedupe import dedupe_records
-from bbb_scraper.etl.extract import Extractor
-from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import configure_logging
-from bbb_scraper.pipeline.registry import build_sinks_from_settings
-from bbb_scraper.reference.models import Category, parse_location
-from bbb_scraper.utils.flatten import flatten_record
-from bbb_scraper.utils.stats import RunStats
-
-sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
-from publish_site_data import publish_records  # noqa: E402 -- see sys.path insert above
+from bbb_scraper.reference.metros import MetroDirectory
 
 configure_logging()
-st.set_page_config(page_title="BBB Scraper", page_icon="\U0001F4CB", layout="wide")
+st.set_page_config(page_title="BBB Batch Scraper", page_icon="\U0001F5C3", layout="wide")
 
-# Turns off the browser's own autofill/autocomplete suggestions on every text
-# field -- confirmed 2026-09-05 these visually overlap Streamlit's own
-# "Press Enter to submit form" hint on the industry field (both render right
-# under the input at once). st.text_input has no autocomplete= param, so
-# this reaches into the real DOM via components.html's iframe -- same-origin
-# with the main page, so window.parent.document is reachable -- rather than
-# st.markdown(unsafe_allow_html=True), which doesn't execute injected
-# <script> tags at all (browsers don't run scripts inserted via innerHTML).
-# A MutationObserver keeps re-applying it as Streamlit re-renders on every
-# interaction, not just once at page load.
-components.html(
-    """
-    <script>
-    const disableAutocomplete = () => {
-      window.parent.document.querySelectorAll('input, textarea').forEach((el) => {
-        if (el.getAttribute('autocomplete') !== 'off') el.setAttribute('autocomplete', 'off');
-      });
-    };
-    disableAutocomplete();
-    new MutationObserver(disableAutocomplete).observe(window.parent.document.body, {
-      childList: true, subtree: true,
-    });
-    </script>
-    """,
-    height=0,
-)
+REPO_ROOT = Path(__file__).resolve().parent
+LOG_DIR = REPO_ROOT / "logs" / "batch"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-# Fixed sweep parameters -- proven values from real runs (Miami: tight,
-# dense local cluster; Providence: a much larger multi-state sweep, 10x
-# Miami's count at these same settings), no longer exposed as UI knobs on
-# this page per Nick's request (2026-09-04): one less decision per search.
-# Still overridable for power users via the CLI (scripts/run_search.py
-# --metro-radius etc.) or the batch scraper -- this page just always uses
-# what's worked well so far.
-SWEEP_RADIUS_MILES = 40.0
-SWEEP_MIN_POPULATION = 25_000
-SWEEP_MAX_PAGES_PER_PLACE = 15
-
-# No dropdown/directory lookup for the industry field on purpose: BBB's
-# search takes the industry phrase directly as `find_text` (confirmed
-# 2026-09-01 -- see reference/models.py's Category docstring) and accepts a
-# wide range of phrasing, so data/reference/categories.json's curated
-# 11-entry list isn't a gate on what you can search -- it's still used by
-# the CLI's --category resolution and by scripts/fetch_categories.py, just
-# not by this form.
-
-
-def _slugify(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", text.strip().lower()).strip("-") or "custom"
-
-
-def _build_category(text: str) -> Category | None:
-    text = text.strip()
-    if not text:
-        return None
-    return Category(id=_slugify(text), name=text)
-
-
-st.title("BBB Scraper")
+st.title("BBB Batch Scraper")
 st.caption(
-    "Type an industry and one or more places. Each place is searched together "
-    "with real nearby towns automatically -- a big metro sweeps wide, a small "
-    "town with nothing substantial nearby just searches itself."
+    "Run one industry across many metros in one sitting. Each metro is BBB-swept, "
+    "matched against a Yelp Fusion search, and checkpointed to "
+    "`data/processed/batch/` as it finishes -- a long batch is never all-or-nothing, "
+    "and re-running with an overlapping metro list skips whatever's already done."
 )
 
-with st.sidebar:
-    st.header("Search")
-    with st.form("search_form"):
-        industry_text = st.text_input(
-            "Industry / category",
-            placeholder="e.g. Roofing Contractors, Plumbers, Heating and Air Conditioning, CPA",
-        )
-        st.caption("Sent as-is to BBB's search -- most industry phrasing works.")
+metro_directory = MetroDirectory.load()
+metro_options = {m.id: m.name for m in metro_directory.all()}
 
-        locations_text = st.text_area(
-            "Places, one per line",
-            placeholder="Miami, FL\nPalm Coast, FL\n78701",
-            height=100,
-            help='Any city/state, ZIP, or town BBB can resolve -- a major metro or '
-                 'somewhere small alike. Not limited to a fixed list.',
-        )
-        st.caption(
-            f"Each place is swept together with real nearby towns within "
-            f"{SWEEP_RADIUS_MILES:g} miles (population {SWEEP_MIN_POPULATION:,}+) -- "
-            "automatic, nothing to configure. Nothing substantial nearby just means "
-            "that place gets searched on its own."
-        )
+if "batch_process" not in st.session_state:
+    st.session_state.batch_process = None
+    st.session_state.batch_log_path = None
+    st.session_state.batch_cmd = None
 
-        fetch_details = st.checkbox(
-            "Fetch full details (contacts, socials, reviews)",
-            value=False,
-            help="One extra request per business -- can take a while for a large "
-                 "result set. Off fetches listing data only.",
-        )
-        save_to_sinks = st.checkbox(
-            f"Also save to configured sinks ({', '.join(settings.output_sink_names)})",
-            value=True,
-        )
-        publish_to_site = st.checkbox(
-            "Also publish to the static site",
-            value=True,
-            help="Publishes each place searched above as its own industry+place "
-                 "dataset on the site (site/data/), same as the Batch Scraper page "
-                 "already does automatically -- confirmed 2026-09-05 this page didn't "
-                 "do that before, so past searches here never showed up on the site. "
-                 "Uncheck for a quick test you don't want reflected publicly.",
-        )
-        submitted = st.form_submit_button("Run search", type="primary", use_container_width=True)
 
-    with st.expander("Configuration"):
-        st.write(f"**Proxy:** {'enabled' if settings.proxy_enabled else 'disabled'}"
-                  + (f" ({settings.proxy_host})" if settings.proxy_enabled else ""))
-        st.write(f"**Impersonation:** `{settings.http_impersonate}`")
-        st.write(f"**BBB session file:** "
-                  f"{'found' if settings.bbb_session_file.exists() else 'not found (optional)'}")
-        st.write(
-            f"**Sweep settings:** {SWEEP_RADIUS_MILES:g}mi radius, "
-            f"{SWEEP_MIN_POPULATION:,}+ population, {SWEEP_MAX_PAGES_PER_PLACE} pages/place "
-            "-- fixed, see scripts/run_search.py for CLI overrides."
-        )
+def _is_running() -> bool:
+    proc = st.session_state.batch_process
+    return proc is not None and proc.poll() is None
 
-if submitted:
-    category = _build_category(industry_text)
-    locations = [parse_location(line.strip()) for line in locations_text.splitlines() if line.strip()]
 
-    if category is None:
-        st.error("Enter a category phrase.")
-        st.stop()
-    if not locations:
-        st.error("Enter at least one place.")
-        st.stop()
-
-    stats = RunStats()
-    all_records = []
-    records_by_location: dict[str, list[dict]] = {}  # location.display -> its own records,
-    # kept separate from all_records' global dedup below so each place can be
-    # published as its own industry+place dataset -- publishing the combined,
-    # globally-deduped blob under every place's name would wrongly attribute
-    # every other place's businesses to each one.
-    progress = st.progress(0.0)
-    status = st.empty()
-
-    with Extractor(stats=stats) as extractor:
-        for i, location in enumerate(locations):
-            location_records: list[dict] = []
-
-            def _on_place_done(place_name, done, total, running_count, _i=i, _n=len(locations), _loc=location):
-                overall = (_i + done / total) / _n if total else (_i + 1) / _n
-                progress.progress(min(overall, 1.0))
-                status.write(
-                    f"**{_loc.display}** ({_i + 1}/{_n}): searched **{place_name}** "
-                    f"({done}/{total} place{'s' if total != 1 else ''}) -- "
-                    f"{running_count} businesses found so far…"
-                )
-
-            summaries = extractor.extract_search_area_coverage(
-                category, location,
-                radius_miles=SWEEP_RADIUS_MILES, min_population=SWEEP_MIN_POPULATION,
-                max_pages_per_place=SWEEP_MAX_PAGES_PER_PLACE,
-                on_place_done=_on_place_done,
-            )
-            location_records.extend(transform_summary(s) for s in summaries)
-
-            if fetch_details:
-                for j, summary in enumerate(summaries):
-                    if not summary.profile_url:
-                        continue
-                    status.write(
-                        f"Fetching details for **{location.display}**: "
-                        f"{j + 1}/{len(summaries)}…"
-                    )
-                    try:
-                        detail = extractor.extract_business(summary.profile_url)
-                        location_records.append(transform_detail(detail))
-                    except Exception as exc:
-                        st.warning(f"Failed to fetch detail for {summary.profile_url}: {exc}")
-
-            records_by_location[location.display] = location_records
-            all_records.extend(location_records)
-
-    all_records = dedupe_records(all_records, stats=stats)
-    status.empty()
-    progress.empty()
-
-    if save_to_sinks:
-        for sink in build_sinks_from_settings():
-            try:
-                sink.load(all_records)
-            except Exception as exc:
-                st.warning(f"Sink {sink.name!r} failed: {exc}")
-
-    if publish_to_site:
-        for place_display, place_records in records_by_location.items():
-            if not place_records:
-                continue
-            deduped_place_records = dedupe_records(place_records)
-            try:
-                entry = publish_records(deduped_place_records, category.name, place_display)
-                st.write(f"Published **{entry['record_count']}** record(s) to the site for "
-                         f"**{category.name}** in **{place_display}**.")
-            except Exception as exc:
-                st.warning(f"Failed to publish {place_display!r} to the site: {exc}")
-
-    st.session_state["results"] = all_records
-    st.session_state["stats"] = stats.as_dict()
-    st.success(f"Done — {len(all_records)} unique record(s). {stats.summary_line()}")
-
-if "results" in st.session_state and st.session_state["results"]:
-    records = st.session_state["results"]
-    df = pd.DataFrame([flatten_record(r) for r in records])
-
-    st.subheader(f"Results ({len(df)})")
-    st.dataframe(df, use_container_width=True, height=500)
-
-    st.download_button(
-        "Download CSV",
-        df.to_csv(index=False).encode("utf-8"),
-        file_name="bbb_results.csv",
-        mime="text/csv",
+with st.form("batch_form"):
+    industry_text = st.text_input(
+        "Industry / category", placeholder="e.g. Car Dealers, Roofing Contractors, CPA"
     )
+    st.caption("Sent as-is to BBB's search (and used as the Yelp search term) -- most phrasing works.")
+
+    selected_metro_ids = st.multiselect(
+        "Metros", options=list(metro_options.keys()),
+        format_func=lambda mid: metro_options[mid],
+        help="Run one after another, not in parallel -- more metros means a longer "
+             "batch, not a faster one.",
+    )
+    run_all = st.checkbox(f"...or run every metro ({len(metro_options)} total)", value=False)
+
+    col1, col2, col3 = st.columns(3)
+    radius = col1.number_input("Radius (mi)", min_value=1.0, value=40.0, step=5.0)
+    min_population = col2.number_input("Min population", min_value=0, value=25_000, step=5_000)
+    pages_per_place = col3.number_input(
+        "Pages/place", min_value=1, max_value=settings.bbb_max_search_pages, value=15,
+    )
+
+    enrich_yelp = st.checkbox(
+        "Enrich with Yelp (~5 API calls per metro)",
+        value=True,
+        help="Runs one Yelp Fusion search per metro and matches it to the BBB rows, "
+             "adding yelp_* columns + derived-intelligence columns to the checkpoint. "
+             "Best-effort: no API key, a low daily quota (free tier is 300/day), or a "
+             "failed call just means BBB-only output for the rest of the batch -- never "
+             "an error. The public site stays BBB-only regardless.",
+    )
+    fetch_details = st.checkbox(
+        "Fetch full BBB contact details for every business",
+        value=False,
+        help="Off by default -- roughly doubles time per metro. Breadth (more metros) "
+             "usually matters more than depth for a first pass; re-run a specific metro "
+             "with this on later.",
+    )
+    force = st.checkbox(
+        "Redo metros already run for this exact industry", value=False,
+        help="Off by default -- a metro already checkpointed for this industry is "
+             "skipped, so it's always safe to add more metros to a previous batch.",
+    )
+    submitted = st.form_submit_button(
+        "Start batch", type="primary", use_container_width=True, disabled=_is_running()
+    )
+
+if submitted and not _is_running():
+    if not industry_text.strip():
+        st.error("Enter an industry.")
+        st.stop()
+    if not selected_metro_ids and not run_all:
+        st.error('Select at least one metro (or check "run every metro").')
+        st.stop()
+
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    log_path = LOG_DIR / f"batch-{timestamp}.log"
+
+    cmd = [
+        sys.executable, str(REPO_ROOT / "scripts" / "batch_scrape_metros.py"),
+        "--industry", industry_text.strip(),
+        "--radius", str(radius), "--min-population", str(int(min_population)),
+        "--pages-per-place", str(int(pages_per_place)),
+    ]
+    cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
+    cmd.append("--yelp" if enrich_yelp else "--no-yelp")
+    if fetch_details:
+        cmd.append("--details")
+    if force:
+        cmd.append("--force")
+
+    log_file = log_path.open("w", encoding="utf-8")
+    process = subprocess.Popen(cmd, stdout=log_file, stderr=subprocess.STDOUT, cwd=str(REPO_ROOT))
+    st.session_state.batch_process = process
+    st.session_state.batch_log_path = log_path
+    st.session_state.batch_cmd = cmd
+    st.rerun()
+
+with st.expander("Configuration"):
+    st.write(f"**Proxy:** {'enabled' if settings.proxy_enabled else 'disabled'}"
+             + (f" ({settings.proxy_host})" if settings.proxy_enabled else ""))
+    st.write(f"**Impersonation:** `{settings.http_impersonate}`")
+    st.write(f"**BBB session file:** "
+             f"{'found' if settings.bbb_session_file.exists() else 'not found (optional)'}")
+    st.write(f"**Yelp API key:** {'set' if settings.yelp_api_key else 'not set (Yelp enrichment will be skipped)'}")
+    st.write(f"**Output sinks:** {', '.join(settings.output_sink_names)}")
+
+st.divider()
+
+if st.session_state.batch_log_path is not None:
+    log_path = st.session_state.batch_log_path
+    running = _is_running()
+
+    status_col, stop_col = st.columns([5, 1])
+    with status_col:
+        if running:
+            st.info(
+                "Batch running -- this page refreshes itself every few seconds. "
+                "Safe to close this tab; the process keeps going as long as the "
+                f"Streamlit server itself stays running. Log file: `{log_path}`"
+            )
+        else:
+            st.success(f"Not currently running (finished, stopped, or not started this session). Log file: `{log_path}`")
+    with stop_col:
+        if running and st.button("Stop batch"):
+            st.session_state.batch_process.terminate()
+            st.rerun()
+
+    log_text = log_path.read_text(encoding="utf-8") if log_path.exists() else ""
+    st.code(log_text or "(no output yet)", language=None)
+
+    if running:
+        time.sleep(3)
+        st.rerun()
 elif not submitted:
-    st.info("Fill in the search form in the sidebar and click **Run search** to get started.")
+    st.info("Fill in the form above and click **Start batch** to get going.")

@@ -75,6 +75,8 @@ bbb_scraper/
                              #   letter_grade_to_num -- street address deliberately NOT used
     matcher.py                 # match_datasets: block -> weighted signals -> greedy 1:1 -> bands
     merge.py                     # build_master_table: wide bbb_* | yelp_* cols + v1 derived-BI cols
+    enrich.py                      # best-effort Yelp enrichment for the batch scraper: one search
+                                   #   per metro, quota-aware, degrades to BBB-only, never raises
   utils/
     rate_limit.py, hashing.py, stats.py, flatten.py
 
@@ -83,7 +85,7 @@ data/
     categories.json        # BBB industry/category taxonomy (11 entries, mostly real -- see its README)
     us_cities.csv             # every US incorporated place + CDP, real lat/lon + 2020 Census
                                #   population (scripts/build_us_cities.py builds this)
-    metros.json                  # curated major-metro list for --metro / the Batch Scraper page
+    metros.json                  # curated major-metro list for --metro / the batch scraper
   secrets/                        # gitignored -- bbb_session.json (optional, not required)
   processed/                        # gitignored -- businesses.csv is the one cumulative sink every
                                      #   run appends to; batch/ holds the batch scraper's per-metro
@@ -105,16 +107,15 @@ scripts/
   fetch_categories.py           # CLI stub: scrape BBB's category taxonomy into data/reference/
   check_proxy.py                 # CLI: verify the configured proxy actually works
   build_us_cities.py               # one-time reference-data build (needs a free CENSUS_API_KEY)
-  batch_scrape_metros.py             # run one industry across many metros, checkpointed +
-                                      #   auto-published to site/ as each one finishes
-  match_bbb_yelp.py                    # scrape Yelp for an industry+location (~5 API calls), match
-                                       #   to a BBB CSV, write the wide BBB|Yelp master table
+  batch_scrape_metros.py             # run one industry across many metros: BBB sweep + Yelp
+                                      #   enrichment per metro, checkpointed, auto-published to site/
+  match_bbb_yelp.py                    # one-off: scrape Yelp for an industry+location (~5 API calls),
+                                       #   match to a BBB CSV, write the wide BBB|Yelp master table
   publish_site_data.py                  # CSV (or in-memory records) -> site/data/*.json + manifest.json
   deploy_site.py                          # aws s3 sync + cloudfront invalidation (site/DEPLOY.md)
 
-streamlit_app.py           # main control-panel UI: one unified search flow (see "UI" below)
-pages/
-  1_Batch_Scraper.py          # Streamlit multi-page: run many metros in the background, live log
+streamlit_app.py           # the only UI: the batch scraper control panel (see "UI" below).
+                           #   Launches batch_scrape_metros.py as a background process, tails its log.
 
 site/                      # the genuinely static public site (S3+CloudFront) -- see "Static site"
                             #   below; a different thing from streamlit_app.py on purpose
@@ -186,8 +187,8 @@ center. The same options are available programmatically via
 `ETLPipeline.run_search(..., coverage=True, radius_miles=..., num_points=...,
 max_pages_per_point=...)`, and at a lower level via
 `Extractor.extract_search_coverage()` if you want the raw, undeduped
-summaries. CLI-only now -- the main Streamlit search page uses metro-style
-sweeping (below) for every place automatically instead.
+summaries. CLI / programmatic only -- superseded by metro-style sweeping
+(below) for anything wanting real full-metro coverage.
 
 Coverage mode multiplies request count by roughly `num_points *
 max_pages_per_point` -- keep both modest (the defaults above: 16 points x 2
@@ -215,9 +216,8 @@ still has its place for a quick sweep around a single unnamed point.
 
 Works around the limitation above by searching real, named nearby
 cities/CDPs instead of mathematical points -- confirmed to reach local
-results plain coverage search cannot. This is what the main Streamlit
-search page uses for every place automatically (see UI section below) --
-the CLI form below is the same thing, explicit and scriptable.
+results plain coverage search cannot. This is what the batch scraper runs
+per metro; the CLI form below is the same thing, explicit and scriptable.
 
 ```bash
 python scripts/run_search.py --category "Car Dealers" --metro miami-fl \
@@ -250,12 +250,11 @@ nothing substantial is genuinely nearby):
 
 - **`Extractor.extract_search_area_coverage(category, location, ...)`** --
   the general version, takes any `Location` (typed free text, resolved by
-  BBB). This is what the main Streamlit page and `ETLPipeline.run_search`
-  use.
+  BBB). Used by `ETLPipeline.run_search` and `scripts/run_search.py`.
 - **`Extractor.extract_search_metro_coverage(category, metro, ...)`** -- a
   thin wrapper over the above for the curated `data/reference/metros.json`
-  list specifically (the CLI's `--metro` flag above, and the Batch
-  Scraper's multi-metro picker) -- useful when you want a fixed, known-good
+  list specifically (the CLI's `--metro` flag above, and the batch
+  scraper's multi-metro picker) -- useful when you want a fixed, known-good
   list of major metros to iterate rather than typing places freely.
 
 **Regenerating `us_cities.csv`:** only needed occasionally (Census updates
@@ -323,62 +322,51 @@ withholds organic business data anyway. The API is the sanctioned path.
    `name -> fn(row)` map, meant to grow after the metrics conversation, not
    a finished scoring model.
 
-Run it: `python scripts/match_bbb_yelp.py --bbb-csv <csv> --industry
-"<term>" --location "<place>"` (~5 Yelp API calls). Output:
-`data/processed/bbb_yelp_master__<slug>.csv`.
+**In the batch scraper** (the normal path): `batch_scrape_metros.py` calls
+`match.enrich.enrich_bbb_with_yelp` per metro -- one `search_area` (~5
+calls), matched to that metro's BBB rows, written to the checkpoint as the
+wide master table (BBB-primary: `matched` + `bbb_only` rows, no `yelp_only`
+tail). Yelp is treated as *supplementary*: one shared client tracks the
+daily quota across the whole batch, and the moment the key is missing, the
+quota drops below a small floor, or a call fails, enrichment switches off
+for the rest of the run and the remaining metros come out BBB-only. It
+never raises. `--no-yelp` skips it entirely.
+
+**One-off / exploration:** `python scripts/match_bbb_yelp.py --bbb-csv
+<csv> --industry "<term>" --location "<place>"` (~5 Yelp API calls) writes
+`data/processed/bbb_yelp_master__<slug>.csv` -- the full table including the
+`yelp_only` tail.
 
 Note on redistribution: Yelp's API terms restrict storing/reselling raw
-Yelp fields, so the intended split is **publish BBB data + our own derived
-scores to the static site, keep raw Yelp columns local** as the enrichment
-input. The site is BBB-only today.
+Yelp fields, so the split is **publish BBB fields + our own derived scores
+to the static site, keep raw Yelp columns local**. The batch scraper's
+site-publish step only ever sends BBB fields; the site is BBB-only.
 
 ## UI
 
-A [Streamlit](https://streamlit.io) control panel (`streamlit_app.py`) for
-the same searches, if you'd rather use a form than the CLI. Revamped
-2026-09-04 to one simple flow, no mode picker: type an industry/category
-phrase (free text -- BBB's search takes `find_text` directly and accepts a
-wide range of phrasing) and one or more places, one per line -- *any*
-resolvable place, a major metro or a small town alike (e.g. "Palm Coast,
-FL"), not limited to a curated list. Every place gets
-`Extractor.extract_search_area_coverage` automatically: swept together with
-real nearby towns at fixed, proven settings (40mi radius, 25,000+
-population, full page depth -- no longer exposed as knobs, see that
-method's docstring for why these particular numbers), so a big metro
-sweeps wide and a small town with nothing substantial nearby just searches
-itself -- no separate decision needed either way. A live progress line
-shows exactly which place is being searched and a running result count,
-not just a single bar that jumps at the very end. Optionally fetch full
-details, then get a sortable table plus a CSV download in the browser.
-It's a thin presentation layer over the exact same
-`Extractor`/`transform`/`dedupe`/sinks everything else uses -- no separate
-scraping or parsing logic lives in it. (The lat/lon ring sweep and the
-curated-metro-list mode described above are still available -- CLI only
-now, and the curated metro list still drives the separate Batch Scraper
-page's multi-metro picker, see below -- just not exposed on this page
-anymore.)
+One [Streamlit](https://streamlit.io) page (`streamlit_app.py`): the **batch
+scraper control panel**. Type an industry phrase and pick metros (or "run
+every metro"), set the sweep radius / population floor / pages-per-place,
+choose whether to enrich with Yelp and whether to fetch full BBB contact
+details, and click **Start batch**.
+
+It's a thin launcher, not the scraper itself: it starts
+`scripts/batch_scrape_metros.py` as a background OS process and tails its
+log file. Because that's a real separate process, a multi-hour batch keeps
+running even if you close the browser tab -- only **Stop batch** (or
+stopping the Streamlit server) ends it. All the real logic -- the metro
+sweep, checkpoint/resume, Yelp enrichment + quota handling, per-metro site
+publish -- lives in that script, so the page and the CLI can't drift apart.
 
 ```bash
-streamlit run streamlit_app.py
+streamlit run streamlit_app.py      # or double-click run_streamlit.bat
 ```
 
-**Deploying it:** push to GitHub (already set up), connect the repo at
-[share.streamlit.io](https://share.streamlit.io) pointed at
-`streamlit_app.py` -- free hosting, and that's the default filename their
-auto-deploy looks for. You'll need to set `PROXY_*`/`HTTP_IMPERSONATE`/etc.
-via Streamlit's own Secrets manager there instead of a committed `.env`
-(same values, different mechanism -- `.env` never gets deployed, it's
-gitignored).
-
-**Before deploying it somewhere public, read this:** this page *is* a live
-backend, not a static site -- clicking "Run search" makes real requests
-through your real proxy using your real BBB session. It's a different thing
-from the "cheap static public insight site" discussed separately (that one
-reads pre-generated data files with no live scraping involved). A publicly
-reachable "run scraper" button tied to your proxy account with no auth in
-front of it is a real cost/abuse risk -- there's none built into this app.
-Keep it private, or put real authentication in front of it, before treating
-"deployed" as "public."
+**Keep it private.** Clicking Start batch makes real requests through your
+real proxy / BBB session and (unless you uncheck it) real Yelp API calls.
+There's no auth. It's a personal tool, not something to deploy publicly --
+the public-facing thing is the static site below, which has no live backend
+at all.
 
 ## Static site
 
@@ -389,9 +377,31 @@ only ever reads pre-published data files, never scrapes live. That's the
 whole safety story -- there's no publicly reachable path to your proxy or
 BBB session, so there's nothing to lock down or rate-limit.
 
+**Two pages, same data files:**
+
+- **`index.html` -- Lead records.** The standard BBB lead: name, BBB
+  rating, accreditation, phone, website, contact, years, and a
+  **Last updated** date per record (from that row's scrape time -- just a
+  date, no change history).
+- **`intelligence.html` -- Intelligence.** Each BBB business matched to its
+  Yelp listing, sorted by outreach priority: the matched Yelp rating +
+  review count (linking to Yelp), the BBB-vs-Yelp rating gap, our
+  `review_need_score` / `lead_priority_score`, and the reputation-
+  divergence / accredited-but-low-rated / few-reviews flags.
+
+The batch scraper publishes to both automatically (`publish_master_rows`),
+carrying the matched `yelp_*` fields + our derived columns. `yelp_only`
+rows are dropped -- the site is a BBB directory enriched with Yelp, not a
+Yelp directory. Yelp's terms want attribution: the footer credits Yelp and
+every matched record links to its Yelp page.
+
 ```bash
-# publish a dataset (after a pipeline run produces a CSV)
+# publish a BBB-only CSV
 python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \
+    --industry "Car Dealers" --metro "Miami, FL"
+# publish a BBB|Yelp master-table CSV (with the intelligence columns)
+python scripts/publish_site_data.py --master \
+    data/processed/bbb_yelp_master__car-dealers-miami-fl.csv \
     --industry "Car Dealers" --metro "Miami, FL"
 
 # preview locally

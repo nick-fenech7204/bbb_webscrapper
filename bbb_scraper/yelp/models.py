@@ -76,3 +76,27 @@ class YelpBusiness(BaseModel):
     scraped_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     raw_extra: dict[str, Any] = Field(default_factory=dict)
+
+    def to_match_dict(self) -> dict[str, Any]:
+        """Flat dict shaped for bbb_scraper.match -- the Yelp side of
+        `match_datasets` and the `yelp_*` columns of the master table.
+        `id`/`url` (not `yelp_id`/`yelp_url`) so the master table's columns
+        come out `yelp_id`/`yelp_url`, not `yelp_yelp_id`."""
+        return {
+            "id": self.yelp_id,
+            "url": self.yelp_url,
+            "alias": self.yelp_alias,
+            "name": self.name,
+            "phone": self.phone,
+            "display_phone": self.display_phone,
+            "city": self.city,
+            "state": self.state,
+            "postal_code": self.postal_code,
+            "lat": self.lat,
+            "lon": self.lon,
+            "rating": self.rating,
+            "review_count": self.review_count,
+            "price": self.price,
+            "is_closed": self.is_closed,
+            "categories": self.categories,
+        }
