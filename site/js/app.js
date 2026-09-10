@@ -62,12 +62,10 @@
   }
 
   function yelpCell(r) {
-    if (!r.on_yelp || num(r.yelp_rating) === null) {
-      return `<span class="badge badge-no">not on Yelp</span>`;
-    }
-    const stars = num(r.yelp_rating);
+    if (!r.on_yelp) return `<span class="badge badge-no">not on Yelp</span>`;
     const count = num(r.yelp_review_count);
-    const text = `${stars}★${count !== null ? ` (${count})` : ""}`;
+    const rating = num(r.yelp_rating);
+    const text = !count ? "on Yelp" : `${rating}★ (${count})`;
     return r.yelp_url
       ? `<a href="${esc(r.yelp_url)}" target="_blank" rel="noopener">${esc(text)} ↗</a>`
       : esc(text);
