@@ -11,27 +11,29 @@ this only ever reads data you've already collected and chosen to publish).
 
 ```
 site/
-  index.html         "Lead records" page -- the standard BBB lead
-  intelligence.html   "Intelligence" page -- BBB matched to Yelp, scored
-  css/style.css        styling (light/dark aware)
-  js/app.js            all interactivity, shared by both pages -- picks a
-                        column set + default sort from <body data-view>,
-                        loads data/manifest.json then the selected
-                        dataset's JSON, filters/sorts/exports client-side
+  index.html      the whole site -- one hash-routed shell:
+                    #/                     home: a card per lead list
+                    #/<dataset-id>         that list, Lead records view
+                    #/<dataset-id>/intel   that list, Intelligence view
+  css/style.css    styling (light/dark aware)
+  js/app.js         router + all interactivity -- reads data/manifest.json
+                     for the home cards, fetches a dataset's JSON on first
+                     open (cached), picks a column set + default sort per
+                     view, filters/sorts/exports client-side
   data/
-    manifest.json      which datasets exist (metro, industry, filename,
-                        record_count, has_intel)
-    <id>.json          one file per industry+metro dataset, read by BOTH pages
+    manifest.json   the lead lists: id, industry, metro, record_count,
+                     has_yelp, yelp_matched, top_lead_score, file
+    <id>.json       one file per industry+metro dataset
 ```
 
 Each record in a dataset JSON carries: the BBB public fields, a
 `last_updated` date, the matched Yelp fields (`yelp_name` / `yelp_rating` /
 `yelp_review_count` / `yelp_url` -- null when unmatched), and our derived
-columns (`review_need_score`, `lead_priority_score`, the flags). The Lead
-records page shows the BBB columns; the Intelligence page shows the Yelp +
-derived columns. Raw Yelp fields beyond those four (phone, id, price, ...)
-stay local -- see `_YELP_SITE_FIELDS` / `_INTEL_SITE_FIELDS` in
-`publish_site_data.py`.
+columns (`reputation_score`, `lead_priority_score`, `bbb_complaints_total`,
+the flags). The Lead records view shows the BBB columns; the Intelligence
+view shows the Yelp + derived columns. Raw Yelp fields beyond those four
+(phone, id, price, ...) stay local -- see `_YELP_SITE_FIELDS` /
+`_INTEL_SITE_FIELDS` in `publish_site_data.py`.
 
 ## Publishing a new dataset
 

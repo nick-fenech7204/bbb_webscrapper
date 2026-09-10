@@ -377,22 +377,20 @@ only ever reads pre-published data files, never scrapes live. That's the
 whole safety story -- there's no publicly reachable path to your proxy or
 BBB session, so there's nothing to lock down or rate-limit.
 
-**Two pages, same data files:**
+**One hash-routed page** (`site/index.html`): a **home** listing every lead
+list as a card (`#/`), and per dataset a **Lead records** view (`#/<id>`)
+and an **Intelligence** view (`#/<id>/intel`) -- each a real, bookmarkable
+URL. Lead records is the standard BBB lead (rating, accreditation, phone,
+website, contact, years, BBB complaints, a per-record **Last updated**
+date -- just a date, no change history). Intelligence adds the matched
+Yelp rating + review count (linking to Yelp), `reputation_score`,
+`lead_priority_score`, and the reputation-gap / accredited-but-low-rated /
+few-reviews flags, sorted by lead priority.
 
-- **`index.html` -- Lead records.** The standard BBB lead: name, BBB
-  rating, accreditation, phone, website, contact, years, and a
-  **Last updated** date per record (from that row's scrape time -- just a
-  date, no change history).
-- **`intelligence.html` -- Intelligence.** Each BBB business matched to its
-  Yelp listing, sorted by outreach priority: the matched Yelp rating +
-  review count (linking to Yelp), the BBB-vs-Yelp rating gap, our
-  `review_need_score` / `lead_priority_score`, and the reputation-
-  divergence / accredited-but-low-rated / few-reviews flags.
-
-The batch scraper publishes to both automatically (`publish_master_rows`),
-carrying the matched `yelp_*` fields + our derived columns. `yelp_only`
-rows are dropped -- the site is a BBB directory enriched with Yelp, not a
-Yelp directory. Yelp's terms want attribution: the footer credits Yelp and
+The batch scraper publishes automatically (`publish_master_rows`), carrying
+the matched `yelp_*` fields + our derived columns. `yelp_only` rows are
+dropped -- the site is a BBB directory enriched with Yelp, not a Yelp
+directory. Yelp's terms want attribution: the footer credits Yelp and
 every matched record links to its Yelp page.
 
 ```bash

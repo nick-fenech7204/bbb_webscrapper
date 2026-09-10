@@ -3,52 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Business Leads — BBB + Yelp</title>
-  <meta name="description" content="Browse and export BBB-listed businesses by industry and location.">
+  <title>Lead Intelligence — BBB + Yelp</title>
+  <meta name="description" content="BBB business listings matched against Yelp and scored as sales leads for review & reputation-management firms.">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-view="leads">
+<body>
   <header class="site-header">
     <div class="wrap">
-      <h1>Business Intelligence</h1>
-      <p class="tagline">Real business listing data — BBB profiles matched against Yelp, browsable and exportable by industry and location.</p>
-      <nav class="site-nav">
-        <a href="index.html" class="active">Lead records</a>
-        <a href="intelligence.html">Intelligence</a>
-      </nav>
+      <a class="brand" href="#/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Lead Intelligence</span>
+      </a>
+      <p class="brand-tag">
+        BBB business listings matched against Yelp and scored as sales leads
+        for firms that sell review &amp; reputation-management services.
+      </p>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="controls" aria-label="Filters">
-      <div class="field">
-        <label for="metro-select">Location</label>
-        <select id="metro-select" disabled><option value="">Loading…</option></select>
-      </div>
-      <div class="field">
-        <label for="industry-select">Industry</label>
-        <select id="industry-select" disabled><option value="">Select a location first</option></select>
-      </div>
-      <div class="field">
-        <label for="search-box">Filter results</label>
-        <input id="search-box" type="text" placeholder="Search name, city, category…" disabled>
-      </div>
-      <div class="field field-action">
-        <button id="export-btn" type="button" disabled>Export CSV</button>
-      </div>
+  <main class="wrap" id="app">
+    <!-- ============ HOME ============ -->
+    <section id="home-view" hidden>
+      <h1 class="view-title">Lead lists</h1>
+      <p class="view-sub">
+        One list per market. Each has a browsable <strong>lead table</strong>
+        and a scored <strong>intelligence</strong> view.
+      </p>
+      <div id="home-cards" class="card-grid"></div>
     </section>
 
-    <p id="status" class="status" role="status">Loading available data…</p>
-    <p id="intel-note" class="intel-note" hidden></p>
+    <!-- ============ DATASET ============ -->
+    <section id="dataset-view" hidden>
+      <a class="back-link" href="#/"><span aria-hidden="true">&larr;</span> All lead lists</a>
 
-    <div class="table-wrap">
-      <table id="results-table">
-        <thead><tr id="head-row"></tr></thead>
-        <tbody id="results-body"></tbody>
-      </table>
-    </div>
+      <div class="dataset-head">
+        <div class="dataset-head-text">
+          <h1 class="view-title" id="ds-title">&nbsp;</h1>
+          <p class="view-sub" id="ds-sub">&nbsp;</p>
+        </div>
+        <div class="view-toggle" role="tablist" aria-label="View">
+          <a id="tab-leads" class="toggle-btn" role="tab" href="#/">Lead records</a>
+          <a id="tab-intel" class="toggle-btn" role="tab" href="#/">Intelligence</a>
+        </div>
+      </div>
 
-    <p id="empty-state" class="empty-state" hidden>No results match your filter.</p>
+      <p id="intel-note" class="intel-note" hidden></p>
+
+      <details id="legend" class="legend" hidden>
+        <summary>What the intelligence columns mean</summary>
+        <ul>
+          <li><strong>BBB grade / BBB complaints</strong> — the letter grade and the number of complaints filed with BBB (complaints appear only for datasets scraped with full detail).</li>
+          <li><strong>Yelp &#9733; / Yelp #</strong> — the matched Yelp listing's star rating and review count (rating links to Yelp).</li>
+          <li><strong>Reputation</strong> (0&ndash;100) — blended &ldquo;how weak is this business's public reputation&rdquo;: BBB grade, BBB review average + complaints, and Yelp rating + volume, weighted over whatever's available. Higher = weaker.</li>
+          <li><strong>Lead priority</strong> (0&ndash;130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower.</li>
+          <li><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A&minus; or better) but the actual feedback doesn't. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews.</li>
+        </ul>
+        <p class="legend-foot">Derived scoring is a v1 starting point, not a finished model.</p>
+      </details>
+
+      <div class="controls">
+        <input id="search-box" type="text" placeholder="Filter this table by name, city, category…">
+        <button id="export-btn" type="button">Export CSV</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="results-table">
+          <thead><tr id="head-row"></tr></thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+      <p id="empty-state" class="empty-state" hidden>No rows match your filter.</p>
+    </section>
+
+    <p id="loading" class="loading">Loading…</p>
   </main>
 
   <footer class="site-footer">

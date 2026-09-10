@@ -169,7 +169,13 @@ def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
         json.dumps(records, indent=2, default=str), encoding="utf-8"
     )
 
-    has_yelp = any(r.get("on_yelp") for r in records)
+    def _lead(r: dict) -> float:
+        v = r.get("lead_priority_score")
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return 0.0
+
     manifest = load_manifest()
     manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
     manifest["datasets"] = [d for d in manifest["datasets"] if d["id"] != dataset_id]
@@ -178,7 +184,9 @@ def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
         "industry": industry,
         "metro": metro,
         "record_count": len(records),
-        "has_yelp": has_yelp,
+        "has_yelp": any(r.get("on_yelp") for r in records),
+        "yelp_matched": sum(1 for r in records if r.get("on_yelp")),
+        "top_lead_score": round(max((_lead(r) for r in records), default=0.0), 1),
         "file": filename,
     }
     manifest["datasets"].append(entry)
