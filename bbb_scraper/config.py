@@ -76,6 +76,24 @@ class Settings(BaseSettings):
     # not the running app) -- free signup: https://api.census.gov/data/key_signup.html
     census_api_key: str = Field(default="", alias="CENSUS_API_KEY")
 
+    # --- Yelp Fusion API ---------------------------------------------------
+    # Official API (api.yelp.com), bearer-token auth -- NOT the same as
+    # scraping yelp.com (which is DataDome-protected and blocks on request 1,
+    # confirmed 2026-09-10). This is the sanctioned path. Free "Starter" tier
+    # is quota-limited (the exact number comes back in every response's
+    # RateLimit-* headers -- don't hardcode an assumption). Get a key at
+    # https://www.yelp.com/developers/v3/manage_app
+    yelp_api_key: str = Field(default="", alias="YELP_API_KEY")
+    yelp_api_base_url: str = Field(
+        default="https://api.yelp.com/v3", alias="YELP_API_BASE_URL"
+    )
+    # Yelp's API is authenticated and un-proxied on purpose -- routing it
+    # through the residential proxy (which we need for bbb.org) would only
+    # obscure an identified caller. Separate, gentler pacing than the
+    # scraper's since there's no bot-detection to out-wait, just a quota.
+    yelp_min_delay_seconds: float = Field(default=0.5, alias="YELP_MIN_DELAY_SECONDS")
+    yelp_max_delay_seconds: float = Field(default=1.0, alias="YELP_MAX_DELAY_SECONDS")
+
     # --- Static site deployment (scripts/deploy_site.py only) -----------------
     # Not used by the running app itself -- only by the deploy script, which
     # shells out to the AWS CLI (never handles credentials directly; the CLI

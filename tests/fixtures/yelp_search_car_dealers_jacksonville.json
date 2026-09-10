@@ -1,0 +1,4434 @@
+{
+  "businesses": [
+    {
+      "id": "OkQQ0-P2gyO4FamOKZLUcg",
+      "alias": "arlington-toyota-jacksonville-2",
+      "name": "Arlington Toyota",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/liasphU7M1Tsi7wwYvULow/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/arlington-toyota-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 620,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "carrental",
+          "title": "Car Rental"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 2.3,
+      "coordinates": {
+        "latitude": 30.32563,
+        "longitude": -81.51713
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10939 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "10939 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19043029611",
+      "display_phone": "(904) 302-9611",
+      "distance": 10533.28490245068,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "0000",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "r7fv2dSqDV10zwcdEMl4-Q",
+      "alias": "subaru-of-jacksonville-jacksonville",
+      "name": "Subaru of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/KDGWkEk7noFlYtryNVxTYg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/subaru-of-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 117,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 4.3,
+      "coordinates": {
+        "latitude": 30.322476633317788,
+        "longitude": -81.521766
+      },
+      "transactions": [],
+      "location": {
+        "address1": "1717 St Johns Bluff Rd S",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32246",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "1717 St Johns Bluff Rd S",
+          "Jacksonville, FL 32246"
+        ]
+      },
+      "phone": "+19046416455",
+      "display_phone": "(904) 641-6455",
+      "distance": 9979.1243392351,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "yauydNF2gDhZvccr0uAS7Q",
+      "alias": "enterprise-car-sales-jacksonville",
+      "name": "Enterprise Car Sales",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/S7HXGDCs6m20mjcnoK1_3Q/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/enterprise-car-sales-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 38,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        },
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        }
+      ],
+      "rating": 3.9,
+      "coordinates": {
+        "latitude": 30.32354863420185,
+        "longitude": -81.51417186250956
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11034 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11034 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+18004721504",
+      "display_phone": "(800) 472-1504",
+      "distance": 10698.087489674606,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "UoJ7XF4_J6c_ikncMb1z7A",
+      "alias": "autoline-preowned-jacksonville",
+      "name": "Autoline Preowned",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/hbcNJ5FsAr5fBuClvH3e0A/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/autoline-preowned-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 76,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 4.6,
+      "coordinates": {
+        "latitude": 30.34348,
+        "longitude": -81.41388
+      },
+      "transactions": [],
+      "location": {
+        "address1": "2126 Mayport Rd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32233",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "2126 Mayport Rd",
+          "Jacksonville, FL 32233"
+        ]
+      },
+      "phone": "+19042428000",
+      "display_phone": "(904) 242-8000",
+      "distance": 20494.854826346327,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1800",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1600",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "9HH1YZN3gvoEdSTqTpPUeA",
+      "alias": "carvana-jacksonville-jacksonville",
+      "name": "Carvana Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/OtkrCyg80y0z9yJ4Xj5Qgw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/carvana-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 158,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autoloanproviders",
+          "title": "Auto Loan Providers"
+        },
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        }
+      ],
+      "rating": 3.6,
+      "coordinates": {
+        "latitude": 30.251096,
+        "longitude": -81.597685
+      },
+      "transactions": [],
+      "location": {
+        "address1": "4777 Lenoir Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32216",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "4777 Lenoir Ave",
+          "Jacksonville, FL 32216"
+        ]
+      },
+      "phone": "+18003334554",
+      "display_phone": "(800) 333-4554",
+      "distance": 4453.8900801616055,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "hIkUm1Y82FAnXYRkkSemWQ",
+      "alias": "coggin-nissan-at-the-avenues-jacksonville-5",
+      "name": "Coggin Nissan At The Avenues",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/G0oAXuZXVEsMzHeCKTwFww/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/coggin-nissan-at-the-avenues-jacksonville-5?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 96,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.9,
+      "coordinates": {
+        "latitude": 30.17231,
+        "longitude": -81.54441
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10859 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "10859 Philips Hwy",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19047478567",
+      "display_phone": "(904) 747-8567",
+      "distance": 14585.760690541918,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "ZZtfdbz2ubgiRyi4L7JjDQ",
+      "alias": "jacksonville-chrysler-dodge-jeep-ram-arlington-jacksonville",
+      "name": "Jacksonville Chrysler Dodge Jeep Ram Arlington",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/NAySc6RGH4FOhy-uP9mM2w/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/jacksonville-chrysler-dodge-jeep-ram-arlington-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 235,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 1.9,
+      "coordinates": {
+        "latitude": 30.32044,
+        "longitude": -81.549275
+      },
+      "transactions": [],
+      "location": {
+        "address1": "9600 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "9600 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19047216888",
+      "display_phone": "(904) 721-6888",
+      "distance": 7527.594231133304,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "KzDVbpikwFOkjhUFlJQUxw",
+      "alias": "lucas-honda-of-jacksonville-jacksonville",
+      "name": "Lucas Honda Of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/7KdP2BSu8uRLwc9LMhdTnw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/lucas-honda-of-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 73,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "tires",
+          "title": "Tires"
+        }
+      ],
+      "rating": 2.9,
+      "coordinates": {
+        "latitude": 30.20628758935208,
+        "longitude": -81.73820722428893
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7801 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7801 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19042692277",
+      "display_phone": "(904) 269-2277",
+      "distance": 14692.829660282745,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1700",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1700",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "y-DUVRwgURavvDTqBjfsjw",
+      "alias": "nimnicht-chevrolet-jacksonville-7",
+      "name": "Nimnicht Chevrolet",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/UuCnD3ibFSHvFq2Re20xzQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/nimnicht-chevrolet-jacksonville-7?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 132,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.9,
+      "coordinates": {
+        "latitude": 30.29067,
+        "longitude": -81.731627
+      },
+      "transactions": [],
+      "location": {
+        "address1": "1550 Cassat Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32210",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "1550 Cassat Ave",
+          "Jacksonville, FL 32210"
+        ]
+      },
+      "phone": "+19043874041",
+      "display_phone": "(904) 387-4041",
+      "distance": 10925.329623818992,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1700",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "hKuIALnKEeG2WdHjE7GeyQ",
+      "alias": "lexus-of-jacksonville-jacksonville-3",
+      "name": "Lexus of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/KewHnRIwH4f5NCjP0DZ7hQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/lexus-of-jacksonville-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 119,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        }
+      ],
+      "rating": 3.8,
+      "coordinates": {
+        "latitude": 30.323998655205923,
+        "longitude": -81.53383690244675
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10259 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "10259 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19047215000",
+      "display_phone": "(904) 721-5000",
+      "distance": 8999.436914264334,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "jMmZoec6IWNKoROtssPzdQ",
+      "alias": "united-imports-jacksonville",
+      "name": "United Imports",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/vn7_m5gfz5D2OUPV0AVgVg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/united-imports-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 5,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 5.0,
+      "coordinates": {
+        "latitude": 30.31722,
+        "longitude": -81.56048
+      },
+      "transactions": [],
+      "location": {
+        "address1": "142 Mill Creek Rd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32211",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "142 Mill Creek Rd",
+          "Jacksonville, FL 32211"
+        ]
+      },
+      "phone": "+19046347599",
+      "display_phone": "(904) 634-7599",
+      "distance": 6395.8600134335675,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1700",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "TM3Y6Cd5KSHokDZUENQU2g",
+      "alias": "accurate-automotive-of-jacksonville-jacksonville-2",
+      "name": "Accurate Automotive of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/sBD1mBaioxt-IVqfZfH-rA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/accurate-automotive-of-jacksonville-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 38,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 3.4,
+      "coordinates": {
+        "latitude": 30.228008861915626,
+        "longitude": -81.59093173000063
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7840 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7840 Philips Hwy",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19044469696",
+      "display_phone": "(904) 446-9696",
+      "distance": 7074.405909459372,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "Cxn7xYSsGcZguAEfRVLuEA",
+      "alias": "honda-of-the-avenues-jacksonville-3",
+      "name": "Honda Of The Avenues",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/HH_rRrhysMJPuh0v4IvDdw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/honda-of-the-avenues-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 190,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.4,
+      "coordinates": {
+        "latitude": 30.16423980908258,
+        "longitude": -81.53651130552342
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11333 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11333 Philips Hwy",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19043701300",
+      "display_phone": "(904) 370-1300",
+      "distance": 15744.883994297988,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "jlsH2m5rBOF4tFvv-CsuOg",
+      "alias": "tom-bush-bmw-jacksonville-jacksonville",
+      "name": "Tom Bush BMW Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/nziJG5IjCgqY8hmoB3rniA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/tom-bush-bmw-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 181,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        }
+      ],
+      "rating": 3.0,
+      "coordinates": {
+        "latitude": 30.3228621856527,
+        "longitude": -81.5427339330437
+      },
+      "transactions": [],
+      "location": {
+        "address1": "9875 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "9875 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19043714790",
+      "display_phone": "(904) 371-4790",
+      "distance": 8185.229911441838,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "JfaEyU3XA8jADREE2TUwGw",
+      "alias": "autonation-ford-jacksonville-jacksonville",
+      "name": "AutoNation Ford Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/oMRPTkCqza8ic2XX0sZlig/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/autonation-ford-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 170,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        },
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        }
+      ],
+      "rating": 2.4,
+      "coordinates": {
+        "latitude": 30.174727078670912,
+        "longitude": -81.5491482832679
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10720 Philips Highway",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "10720 Philips Highway",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19042426499",
+      "display_phone": "(904) 242-6499",
+      "distance": 14139.301370559302,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "miB0YHVwdQFGgkkW6sAmuQ",
+      "alias": "coggin-buick-gmc-of-orange-park-jacksonville-5",
+      "name": "Coggin Buick/GMC of Orange Park",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/tIG6CGhWylF7zkLO3o74kA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/coggin-buick-gmc-of-orange-park-jacksonville-5?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 82,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.4,
+      "coordinates": {
+        "latitude": 30.2147302625159,
+        "longitude": -81.7358322348628
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7245 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7245 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19046829278",
+      "display_phone": "(904) 682-9278",
+      "distance": 13949.196694968388,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "Htgd3CYsrjdiia2DzJ_BDQ",
+      "alias": "jacksonville-chrysler-jeep-dodge-ram-jacksonville",
+      "name": "Jacksonville Chrysler Jeep Dodge Ram",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/LAG5aagmIcZr1H4-cLXF2g/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/jacksonville-chrysler-jeep-dodge-ram-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 244,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "bodyshops",
+          "title": "Body Shops"
+        }
+      ],
+      "rating": 1.9,
+      "coordinates": {
+        "latitude": 30.2217430720891,
+        "longitude": -81.5128442645073
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11101 Nursery Field Dr",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11101 Nursery Field Dr",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19044930000",
+      "display_phone": "(904) 493-0000",
+      "distance": 12416.346787752555,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1900",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "iRniwChsHBvysyk5ymk-dA",
+      "alias": "o-steen-volkswagen-jacksonville",
+      "name": "O'Steen Volkswagen",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/wLabA45Pkir87v45QS_iqQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/o-steen-volkswagen-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 87,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 3.8,
+      "coordinates": {
+        "latitude": 30.16333072952036,
+        "longitude": -81.5352349743348
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11401 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11401 Philips Hwy",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19043225100",
+      "display_phone": "(904) 322-5100",
+      "distance": 15893.45665021446,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "45gkkYdbbOwkVRG3KtBysw",
+      "alias": "world-imports-usa-lotus-of-jacksonville-jacksonville-3",
+      "name": "World Imports USA  Lotus of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/3LAiiJOFD4pAede7lNZVjw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/world-imports-usa-lotus-of-jacksonville-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 48,
+      "categories": [
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        }
+      ],
+      "rating": 3.2,
+      "coordinates": {
+        "latitude": 30.28625,
+        "longitude": -81.51832
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11650 Beach Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32246",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11650 Beach Blvd",
+          "Jacksonville, FL 32246"
+        ]
+      },
+      "phone": "+19049989992",
+      "display_phone": "(904) 998-9992",
+      "distance": 9517.31758671335,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1500",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "ukJqje-Po_BviY13RzYVwQ",
+      "alias": "audi-orange-park-jacksonville",
+      "name": "Audi Orange Park",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/sye6aw7wBEERoXFb9s-0dA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/audi-orange-park-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 110,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        }
+      ],
+      "rating": 2.7,
+      "coordinates": {
+        "latitude": 30.2151864,
+        "longitude": -81.738549
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7230 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7230 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19045654000",
+      "display_phone": "(904) 565-4000",
+      "distance": 14133.869975463029,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "4f9EZP9pJOT9usq378FE3Q",
+      "alias": "coggin-honda-jacksonville-jacksonville-3",
+      "name": "Coggin Honda Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/NuZtkU8Oj_LIQEwpJHoYWw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/coggin-honda-jacksonville-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 158,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 3.2,
+      "coordinates": {
+        "latitude": 30.325671,
+        "longitude": -81.512683
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11003 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11003 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19047478668",
+      "display_phone": "(904) 747-8668",
+      "distance": 10960.795160742446,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "xp5PVw0MhCHMZGSel8fW3w",
+      "alias": "fields-cadillac-jacksonville-jacksonville-2",
+      "name": "Fields Cadillac Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/HedkrvQx9D3A81cQ2V0yBQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/fields-cadillac-jacksonville-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 55,
+      "categories": [
+        {
+          "alias": "tires",
+          "title": "Tires"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 3.6,
+      "coordinates": {
+        "latitude": 30.201862,
+        "longitude": -81.73819
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7999 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7999 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19047787700",
+      "display_phone": "(904) 778-7700",
+      "distance": 14999.274959468716,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "JNF4LCxyh2YLzNGFBB473g",
+      "alias": "audi-jacksonville-jacksonville-3",
+      "name": "Audi Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/wRos3w--ioXF_rpBur-VIA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/audi-jacksonville-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 91,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.5,
+      "coordinates": {
+        "latitude": 30.324464,
+        "longitude": -81.50416
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11401 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11401 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19043673703",
+      "display_phone": "(904) 367-3703",
+      "distance": 11629.976465995707,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "NXmtvTvZPv9apTJlvm3f-g",
+      "alias": "george-moore-chevrolet-jacksonville-2",
+      "name": "George Moore Chevrolet",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/8fwJNEXR5XAilwiIBA7zLw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/george-moore-chevrolet-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 140,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 2.1,
+      "coordinates": {
+        "latitude": 30.32527210793256,
+        "longitude": -81.51500416041026
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10979 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "10979 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19044829000",
+      "display_phone": "(904) 482-9000",
+      "distance": 10698.050274395808,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "Gh43E-VZexl4n2v8sw9dvw",
+      "alias": "land-rover-jacksonville-jacksonville-2",
+      "name": "Land Rover Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/dCyRypAtODwjtn0GqyJ4Gw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/land-rover-jacksonville-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 51,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.7,
+      "coordinates": {
+        "latitude": 30.325143,
+        "longitude": -81.508502
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11217 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11217 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19046421500",
+      "display_phone": "(904) 642-1500",
+      "distance": 11269.102756557719,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "-loy8n4UtwCnDcwMDkYJ3g",
+      "alias": "carmax-jacksonville-4",
+      "name": "CarMax",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/wx0WI8xgVyvZbLg6STUMdw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/carmax-jacksonville-4?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 127,
+      "categories": [
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        },
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        }
+      ],
+      "rating": 3.2,
+      "coordinates": {
+        "latitude": 30.32312,
+        "longitude": -81.50262
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11335 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11335 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19045967446",
+      "display_phone": "(904) 596-7446",
+      "distance": 11716.850831856786,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1900",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "703y3KAQLbpJFkt6cKhvuA",
+      "alias": "beaver-chevrolet-jacksonville-2",
+      "name": "Beaver Chevrolet",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/whlH21cLxdeCsyrS9sBYdA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/beaver-chevrolet-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 92,
+      "categories": [
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        },
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.9,
+      "coordinates": {
+        "latitude": 30.2900902130898,
+        "longitude": -81.6369556619713
+      },
+      "transactions": [],
+      "location": {
+        "address1": "3494 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32207",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "3494 Philips Hwy",
+          "Jacksonville, FL 32207"
+        ]
+      },
+      "phone": "+19043983036",
+      "display_phone": "(904) 398-3036",
+      "distance": 1898.8608030035596,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "w5UOV7sIehE3ZG94yy-DqQ",
+      "alias": "hyundai-of-orange-park-jacksonville",
+      "name": "Hyundai of Orange Park",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/ElSIkhO4qVBPueAa57aQWg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/hyundai-of-orange-park-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 144,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.7,
+      "coordinates": {
+        "latitude": 30.2101237814066,
+        "longitude": -81.738930309787
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7600 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7600 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19048778929",
+      "display_phone": "(904) 877-8929",
+      "distance": 14490.704537795009,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "FR_47kmqnJBRuZkDhW5oNA",
+      "alias": "kia-on-atlantic-jacksonville",
+      "name": "Kia on Atlantic",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/tPc9NRRtRD-tif4TeZoeDQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/kia-on-atlantic-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 146,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 2.2,
+      "coordinates": {
+        "latitude": 30.31999,
+        "longitude": -81.55477
+      },
+      "transactions": [],
+      "location": {
+        "address1": "9401 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "9401 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19044006650",
+      "display_phone": "(904) 400-6650",
+      "distance": 7033.693554846985,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "LiyJdifyiKEKvDP7A7rZoQ",
+      "alias": "jenkins-hyundai-of-jacksonville-jacksonville",
+      "name": "Jenkins Genesis of North East Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/gLSqzssV2WZ2IsLzBXvHbQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/jenkins-hyundai-of-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 97,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 2.2,
+      "coordinates": {
+        "latitude": 30.325571,
+        "longitude": -81.511529
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11109 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11109 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19048692220",
+      "display_phone": "(904) 869-2220",
+      "distance": 11018.223975215811,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": true,
+              "start": "0900",
+              "end": "0800",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "iUjuxnHI5bmjN8zdvdZZ1A",
+      "alias": "auto-boutique-jacksonville",
+      "name": "Auto Boutique",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/KDMTdOhik-fu3Xopq-Hr9Q/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/auto-boutique-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 152,
+      "categories": [
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        }
+      ],
+      "rating": 2.2,
+      "coordinates": {
+        "latitude": 30.285971,
+        "longitude": -81.561958
+      },
+      "transactions": [],
+      "location": {
+        "address1": "9012 Beach Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32216",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "9012 Beach Blvd",
+          "Jacksonville, FL 32216"
+        ]
+      },
+      "phone": "+19046773333",
+      "display_phone": "(904) 677-3333",
+      "distance": 5328.946433568104,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1800",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1600",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "N4cQlgtSsnbFD5zd7Fx3QQ",
+      "alias": "darcars-orange-park-chrysler-dodge-jeep-ram-jacksonville",
+      "name": "DARCARS Orange Park Chrysler Dodge Jeep Ram",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/YirLkMJagq-BmmZawnZp2Q/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/darcars-orange-park-chrysler-dodge-jeep-ram-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 113,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 1.9,
+      "coordinates": {
+        "latitude": 30.215828,
+        "longitude": -81.7358543
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7233 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7233 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19047775500",
+      "display_phone": "(904) 777-5500",
+      "distance": 13880.558550326636,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "iWcajiuaXfYO7eZkX5MXrA",
+      "alias": "hanania-auto-group-jacksonville",
+      "name": "Hanania Auto Group",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/c4DcHxDfG8K8Zk6XhMu9fg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/hanania-auto-group-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 21,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 1.0,
+      "coordinates": {
+        "latitude": 30.2165441,
+        "longitude": -81.7383161
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7200 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7200 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19047775600",
+      "display_phone": "(904) 777-5600",
+      "distance": 14030.09991463587,
+      "business_hours": [],
+      "attributes": {}
+    },
+    {
+      "id": "H5rt59t0t4RyjksDjpjQpw",
+      "alias": "jax-auto-wholesale-jacksonville",
+      "name": "Jax Auto Wholesale",
+      "image_url": "",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/jax-auto-wholesale-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 4,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 4.0,
+      "coordinates": {
+        "latitude": 30.24769,
+        "longitude": -81.78546
+      },
+      "transactions": [],
+      "location": {
+        "address1": "8190 103rd St",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32210",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "8190 103rd St",
+          "Jacksonville, FL 32210"
+        ]
+      },
+      "phone": "+19047784288",
+      "display_phone": "(904) 778-4288",
+      "distance": 16734.619275819343,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1600",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "uBjdFyt2br4sEAekXYCG7Q",
+      "alias": "hanania-subaru-of-orange-park-jacksonville",
+      "name": "Hanania Subaru",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/9TqTabXnsu6sS5h1Kd5WPg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/hanania-subaru-of-orange-park-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 109,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 3.4,
+      "coordinates": {
+        "latitude": 30.233254644045523,
+        "longitude": -81.74079610804979
+      },
+      "transactions": [],
+      "location": {
+        "address1": "6400 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "6400 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19049061235",
+      "display_phone": "(904) 906-1235",
+      "distance": 13288.85433269601,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "CcvkZrsA2j8ZY8KSjLUuIg",
+      "alias": "north-florida-lincoln-jacksonville-2",
+      "name": "North Florida Lincoln",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/TtCGsfQiDiISma5um9wCOg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/north-florida-lincoln-jacksonville-2?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 42,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 3.6,
+      "coordinates": {
+        "latitude": 30.260537242064217,
+        "longitude": -81.5574373411045
+      },
+      "transactions": [],
+      "location": {
+        "address1": "4620 Southside Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32216",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "4620 Southside Blvd",
+          "Jacksonville, FL 32216"
+        ]
+      },
+      "phone": "+19046424100",
+      "display_phone": "(904) 642-4100",
+      "distance": 6488.058214435654,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "PSQGvvhfSvrVwCELqfWEBw",
+      "alias": "davis-nissan-of-jacksonville-jacksonville",
+      "name": "Davis Nissan of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/5gEB4TzXvXHVo4Z0Ehpxyw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/davis-nissan-of-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 0,
+      "categories": [
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        },
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 0.0,
+      "coordinates": {
+        "latitude": 30.28829,
+        "longitude": -81.73143
+      },
+      "transactions": [],
+      "location": {
+        "address1": "1726 Cassat Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32210",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "1726 Cassat Ave",
+          "Jacksonville, FL 32210"
+        ]
+      },
+      "phone": "+19043893621",
+      "display_phone": "(904) 389-3621",
+      "distance": 10944.245121860547,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1700",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {
+        "waitlist_reservation": false
+      }
+    },
+    {
+      "id": "DlL2Fk6ZG_cEJ_FpsUUkhQ",
+      "alias": "top-dollar-car-jacksonville-4",
+      "name": "Top Dollar Car",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/BUazgd2sCA1B44adPq94qA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/top-dollar-car-jacksonville-4?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 19,
+      "categories": [
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        },
+        {
+          "alias": "carbrokers",
+          "title": "Car Brokers"
+        },
+        {
+          "alias": "appraisalservices",
+          "title": "Appraisal Services"
+        }
+      ],
+      "rating": 4.6,
+      "coordinates": {
+        "latitude": 30.3176811761745,
+        "longitude": -81.72728830925558
+      },
+      "transactions": [],
+      "location": {
+        "address1": "4737 Dellwood Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32205",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "4737 Dellwood Ave",
+          "Jacksonville, FL 32205"
+        ]
+      },
+      "phone": "+19044300034",
+      "display_phone": "(904) 430-0034",
+      "distance": 11071.987630361764,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "GJXtJSRIfWIm2xV-oDqo4A",
+      "alias": "march-motors-jacksonville",
+      "name": "March Motors",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/uGOeofmBPiwgmViNFEbJog/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/march-motors-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 18,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.5,
+      "coordinates": {
+        "latitude": 30.314537,
+        "longitude": -81.567977
+      },
+      "transactions": [],
+      "location": {
+        "address1": "8505 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32211",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "8505 Atlantic Blvd",
+          "Jacksonville, FL 32211"
+        ]
+      },
+      "phone": "+19048058624",
+      "display_phone": "(904) 805-8624",
+      "distance": 5611.698316496106,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1830",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1830",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1400",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1830",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1830",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1600",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "fIzS5TMKtRrSNkBA0E58Rw",
+      "alias": "nimnicht-buick-gmc-jacksonville-3",
+      "name": "Nimnicht Buick GMC",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/uvJwYJetdv2Aut7aMaiV5g/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/nimnicht-buick-gmc-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 77,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autoloanproviders",
+          "title": "Auto Loan Providers"
+        }
+      ],
+      "rating": 2.8,
+      "coordinates": {
+        "latitude": 30.1610509584643,
+        "longitude": -81.5333304066772
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11503 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11503 Philips Hwy",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19043522211",
+      "display_phone": "(904) 352-2211",
+      "distance": 16204.450654055781,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1700",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {
+        "waitlist_reservation": false
+      }
+    },
+    {
+      "id": "MnOt_g7aOF1xFdhwIxcfvA",
+      "alias": "duval-ford-jacksonville",
+      "name": "Duval Ford",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/eAbxN6qbP2vw137IaLyeUw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/duval-ford-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 118,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 3.2,
+      "coordinates": {
+        "latitude": 30.2896274,
+        "longitude": -81.730999
+      },
+      "transactions": [],
+      "location": {
+        "address1": "1616 Cassat Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32210",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "1616 Cassat Ave",
+          "Jacksonville, FL 32210"
+        ]
+      },
+      "phone": "+19043876541",
+      "display_phone": "(904) 387-6541",
+      "distance": 10907.211607989544,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "2000",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "PdobqlI0UfgDzm8EFbJ5eA",
+      "alias": "keith-pierson-toyota-jacksonville-4",
+      "name": "Keith Pierson Toyota",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/4RV7m7DSYxR5s8_-85GoFQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/keith-pierson-toyota-jacksonville-4?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 263,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 2.5,
+      "coordinates": {
+        "latitude": 30.198838,
+        "longitude": -81.748963
+      },
+      "transactions": [],
+      "location": {
+        "address1": "6501 Youngerman Cir",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "6501 Youngerman Cir",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19042077065",
+      "display_phone": "(904) 207-7065",
+      "distance": 16017.306945356699,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1900",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "cfloeeSOVB7A2MUCpDsTdA",
+      "alias": "mercedes-benz-and-sprinter-of-jacksonville-jacksonville",
+      "name": "Mercedes-Benz of Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/AqAv9Ji8L-L2ah0-NsVAKw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/mercedes-benz-and-sprinter-of-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 151,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 2.9,
+      "coordinates": {
+        "latitude": 30.3237287,
+        "longitude": -81.5348879
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10231 Atlantic Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32225",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "10231 Atlantic Blvd",
+          "Jacksonville, FL 32225"
+        ]
+      },
+      "phone": "+19049137085",
+      "display_phone": "(904) 913-7085",
+      "distance": 8895.910422177887,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0730",
+              "end": "1930",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "AtRqpoV6-J6-dv-qNCtwpw",
+      "alias": "westside-hyundai-jacksonville",
+      "name": "Westside Hyundai",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/ZwCKnHXOP-B0oLWKzH1NjQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/westside-hyundai-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 94,
+      "categories": [
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        }
+      ],
+      "rating": 2.1,
+      "coordinates": {
+        "latitude": 30.2886830463726,
+        "longitude": -81.7309633273697
+      },
+      "transactions": [],
+      "location": {
+        "address1": "1672 Cassat Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32210",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "1672 Cassat Ave",
+          "Jacksonville, FL 32210"
+        ]
+      },
+      "phone": "+19044401668",
+      "display_phone": "(904) 440-1668",
+      "distance": 10901.928309763814,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "_EsxRquFPMzr-fthKoR7Xg",
+      "alias": "dallva-motors-jacksonville-3",
+      "name": "Dallva Motors",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/OPqwj-nPYIuRSmzb6n4yeQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/dallva-motors-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 14,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        }
+      ],
+      "rating": 4.3,
+      "coordinates": {
+        "latitude": 30.2782521722134,
+        "longitude": -81.627139556414
+      },
+      "transactions": [],
+      "location": {
+        "address1": "4360 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32207",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "4360 Philips Hwy",
+          "Jacksonville, FL 32207"
+        ]
+      },
+      "phone": "+19046078678",
+      "display_phone": "(904) 607-8678",
+      "distance": 1377.2876010808804,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1700",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "NC0YaOwxTwIhFueWUMcEHw",
+      "alias": "lexus-of-orange-park-jacksonville-3",
+      "name": "Lexus of Orange Park",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/kWO7l0XxKanx-8vutVUo9Q/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/lexus-of-orange-park-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 69,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autopartssupplies",
+          "title": "Auto Parts & Supplies"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        }
+      ],
+      "rating": 3.9,
+      "coordinates": {
+        "latitude": 30.2196697,
+        "longitude": -81.7382131
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7040 Blanding Blvd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7040 Blanding Blvd",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19047775100",
+      "display_phone": "(904) 777-5100",
+      "distance": 13829.544196466322,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0700",
+              "end": "1930",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0800",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "aIl8K6pvEohZiUqx1-mH-w",
+      "alias": "coggin-toyota-at-the-avenues-jacksonville-3",
+      "name": "Coggin Toyota At The Avenues",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/YTUFqV4CUzvg2f01OE_wWQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/coggin-toyota-at-the-avenues-jacksonville-3?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 5,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        },
+        {
+          "alias": "autoloanproviders",
+          "title": "Auto Loan Providers"
+        }
+      ],
+      "rating": 3.4,
+      "coordinates": {
+        "latitude": 30.163097294282135,
+        "longitude": -81.5375304744367
+      },
+      "transactions": [],
+      "location": {
+        "address1": "11340 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "11340 Philips Hwy",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19043376618",
+      "display_phone": "(904) 337-6618",
+      "distance": 15807.719194739342,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1930",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1930",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1930",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1930",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1930",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1930",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1100",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "UvSFsW7uD7nEF9Equ0YmzA",
+      "alias": "autonation-lincoln-orange-park-jacksonville",
+      "name": "AutoNation Lincoln Orange Park",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/BAReBTgoWU2_hEHub59p2w/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/autonation-lincoln-orange-park-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 97,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "carbuyers",
+          "title": "Car Buyers"
+        },
+        {
+          "alias": "usedcardealers",
+          "title": "Used Car Dealers"
+        }
+      ],
+      "rating": 2.1,
+      "coordinates": {
+        "latitude": 30.206909,
+        "longitude": -81.739979
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7700 Blanding Boulevard",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32244",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7700 Blanding Boulevard",
+          "Jacksonville, FL 32244"
+        ]
+      },
+      "phone": "+19043728639",
+      "display_phone": "(904) 372-8639",
+      "distance": 14785.636531278424,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2100",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "2000",
+              "day": 5
+            },
+            {
+              "is_overnight": false,
+              "start": "1200",
+              "end": "1800",
+              "day": 6
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "Vo6vDp7Ss2h9XtwlTVmrew",
+      "alias": "maserati-jacksonville-jacksonville",
+      "name": "Maserati Jacksonville",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/GeDj1jUuXpCjYVmmxYkh_A/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/maserati-jacksonville-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 6,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "autorepair",
+          "title": "Auto Repair"
+        },
+        {
+          "alias": "autoloanproviders",
+          "title": "Auto Loan Providers"
+        }
+      ],
+      "rating": 3.0,
+      "coordinates": {
+        "latitude": 30.245442719664027,
+        "longitude": -81.59367042331455
+      },
+      "transactions": [],
+      "location": {
+        "address1": "7137 Bonneval Rd",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32256",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "7137 Bonneval Rd",
+          "Jacksonville, FL 32256"
+        ]
+      },
+      "phone": "+19043099050",
+      "display_phone": "(904) 309-9050",
+      "distance": 5190.655104967466,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0830",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    },
+    {
+      "id": "pgz6OYi2IS9RgnQB-9QDKw",
+      "alias": "a-and-p-auto-sales-jacksonville",
+      "name": "A&p Auto Sales",
+      "image_url": "https://s3-media0.fl.yelpcdn.com/bphoto/UsIFHwNhvvPyFK51tyrDqA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/a-and-p-auto-sales-jacksonville?adjust_creative=5Czg3VFP3Lm9CPvb3_UpTw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=5Czg3VFP3Lm9CPvb3_UpTw",
+      "review_count": 4,
+      "categories": [
+        {
+          "alias": "car_dealers",
+          "title": "Car Dealers"
+        },
+        {
+          "alias": "bodyshops",
+          "title": "Body Shops"
+        }
+      ],
+      "rating": 4.8,
+      "coordinates": {
+        "latitude": 30.2556111,
+        "longitude": -81.6104646
+      },
+      "transactions": [],
+      "location": {
+        "address1": "6384 Philips Hwy",
+        "address2": "",
+        "address3": "",
+        "city": "Jacksonville",
+        "zip_code": "32216",
+        "country": "US",
+        "state": "FL",
+        "display_address": [
+          "6384 Philips Hwy",
+          "Jacksonville, FL 32216"
+        ]
+      },
+      "phone": "+19046999699",
+      "display_phone": "(904) 699-9699",
+      "distance": 3594.282026318965,
+      "business_hours": [
+        {
+          "open": [
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 0
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 1
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 2
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 3
+            },
+            {
+              "is_overnight": false,
+              "start": "0900",
+              "end": "1900",
+              "day": 4
+            },
+            {
+              "is_overnight": false,
+              "start": "1000",
+              "end": "1800",
+              "day": 5
+            }
+          ],
+          "hours_type": "REGULAR",
+          "is_open_now": true
+        }
+      ],
+      "attributes": {}
+    }
+  ],
+  "total": 732,
+  "region": {
+    "center": {
+      "longitude": -81.617431640625,
+      "latitude": 30.28737032374274
+    }
+  }
+}

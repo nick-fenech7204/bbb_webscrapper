@@ -63,6 +63,18 @@ bbb_scraper/
     base.py                # Sink ABC
     registry.py              # OUTPUT_SINKS env var -> list[Sink]
     sinks/                     # csv, excel, sql, json, http, null
+  yelp/                     # Yelp Fusion API integration (official API, NOT scraping yelp.com
+                            #   -- that's DataDome-blocked; confirmed 2026-09-10)
+    client.py               # YelpClient: bearer auth, no proxy, read-through disk cache,
+                             #   reads real quota off RateLimit-* headers (free tier = 300/day)
+    models.py                # YelpBusiness (field names overlap BusinessSummary where they can)
+    parser.py                  # Fusion JSON -> YelpBusiness
+    extract.py                   # YelpExtractor.search_area: one location query + pagination (~5 calls)
+  match/                    # BBB <-> Yelp record linkage
+    normalize.py            # phone_key, name_similarity (generic-word distinctiveness gate),
+                             #   letter_grade_to_num -- street address deliberately NOT used
+    matcher.py                 # match_datasets: block -> weighted signals -> greedy 1:1 -> bands
+    merge.py                     # build_master_table: wide bbb_* | yelp_* cols + v1 derived-BI cols
   utils/
     rate_limit.py, hashing.py, stats.py, flatten.py
 
@@ -95,8 +107,10 @@ scripts/
   build_us_cities.py               # one-time reference-data build (needs a free CENSUS_API_KEY)
   batch_scrape_metros.py             # run one industry across many metros, checkpointed +
                                       #   auto-published to site/ as each one finishes
-  publish_site_data.py                 # CSV (or in-memory records) -> site/data/*.json + manifest.json
-  deploy_site.py                         # aws s3 sync + cloudfront invalidation (site/DEPLOY.md)
+  match_bbb_yelp.py                    # scrape Yelp for an industry+location (~5 API calls), match
+                                       #   to a BBB CSV, write the wide BBB|Yelp master table
+  publish_site_data.py                  # CSV (or in-memory records) -> site/data/*.json + manifest.json
+  deploy_site.py                          # aws s3 sync + cloudfront invalidation (site/DEPLOY.md)
 
 streamlit_app.py           # main control-panel UI: one unified search flow (see "UI" below)
 pages/
@@ -259,6 +273,64 @@ metro_max_pages_per_place` -- easily 200-300+ for a big metro at the default
 floor, so the same politeness-delay guidance in
 [Session cookies](#session-cookies-optional-not-required) applies here even
 more than to plain coverage search.
+
+## Yelp (official API) + BBB<->Yelp matching
+
+`bbb_scraper/yelp/` talks to the **Yelp Fusion API** (`api.yelp.com`, bearer
+token in `YELP_API_KEY`). It is *not* a yelp.com scraper -- yelp.com is
+DataDome-protected and 403s a fully browser-impersonated request on the
+first hit (confirmed 2026-09-10), and the search page's bootstrap JSON
+withholds organic business data anyway. The API is the sanctioned path.
+
+- **Quota is read, not assumed.** Every response carries `RateLimit-*`
+  headers; `YelpClient.last_rate_limit` holds the latest. Free "Starter"
+  tier is 300 calls/24h (resets midnight UTC).
+- **Every response is disk-cached** to `data/raw/yelp/` (read-through), so
+  parser iteration and tests never spend quota, and a given query is paid
+  for once. `use_cache=False` forces live calls.
+- **`YelpExtractor.search_area`** -- one `location=` query + pagination,
+  ~5 calls, up to Fusion's hard cap of 240 results per query. This is the
+  only path the matcher uses -- deliberately kept cheap (~60 metros/day on
+  the free tier).
+- That 240 cap means dense metros are only partially covered (Miami has
+  ~2,300 "car dealers", we see the top 240 by relevance). Widening it was
+  explored -- a lat/lon grid of tight-radius sub-searches roughly doubled
+  BBB<->Yelp match coverage on Miami (17 -> 35) but at ~10x the API cost,
+  so it's left out of the shipped path. A named-nearby-cities sweep did
+  *worse* (more Yelp rows, fewer matches: a city-name query returns the
+  relevance-ranked top ~150, franchise-heavy, so the small independent
+  lots that overlap BBB fall past the page).
+
+`bbb_scraper/match/` links the two sources:
+
+1. **normalize** -- `phone_key` (bare 10 digits), `name_similarity`
+   (token-set + char similarity, with a gate so a shared generic tail like
+   "... Auto Sales" alone can't score two different businesses as similar),
+   `letter_grade_to_num`. **Street address is deliberately not a signal**
+   -- suite-line noise, PO boxes, one street coded to several cities; ZIP +
+   city/state + coordinate distance carry location instead.
+2. **matcher** -- block on shared phone / shared ZIP / <3mi, score each
+   candidate pair on weighted signals (`phone .40 / name .34 / geo .16 /
+   zip .06 / city .04`, weighted over *available* signals so a missing geo
+   doesn't dilute a strong phone+name pair), greedy 1:1 assignment, bands
+   `confident >= 0.80` / `review >= 0.60`. Pairs with no phone match and a
+   weak name are dropped.
+3. **merge** -- `build_master_table`: one wide row per real business,
+   `bbb_<field>` and `yelp_<field>` side by side, `match_status` one of
+   `matched` / `bbb_only` / `yelp_only`, plus a **v1 derived-intelligence**
+   column block (`review_need_score`, `reputation_divergence_flag`,
+   `rating_gap_bbb_minus_yelp`, `lead_priority_score`, ...) -- a plain
+   `name -> fn(row)` map, meant to grow after the metrics conversation, not
+   a finished scoring model.
+
+Run it: `python scripts/match_bbb_yelp.py --bbb-csv <csv> --industry
+"<term>" --location "<place>"` (~5 Yelp API calls). Output:
+`data/processed/bbb_yelp_master__<slug>.csv`.
+
+Note on redistribution: Yelp's API terms restrict storing/reselling raw
+Yelp fields, so the intended split is **publish BBB data + our own derived
+scores to the static site, keep raw Yelp columns local** as the enrichment
+input. The site is BBB-only today.
 
 ## UI
 
