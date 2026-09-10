@@ -5,19 +5,22 @@ Publish scraped data into site/data/ for the static site to read -- the
 from scraping. The site is genuinely static (no live backend) and only
 ever reads pre-generated files like the ones this script writes.
 
-Three ways in, all producing the same per-record shape:
+Four ways in, all funneling through match.merge.build_master_table so every
+record gets the same shape and the same BBB-side intelligence columns:
   - publish_dataset(csv_path, ...)      -- a BBB CSV on disk
   - publish_records(records, ...)       -- in-memory BBB records
-  - publish_master_rows(rows, ...)      -- rows from match.merge.build_master_table
-                                          (BBB fields + derived-intelligence
-                                          columns; raw yelp_* columns dropped)
+  - publish_master_rows(rows, ...)      -- rows from build_master_table (BBB
+                                          + Yelp matched); raw yelp_* beyond
+                                          the four site fields are dropped
   - publish_master_csv(csv_path, ...)   -- a master-table CSV on disk
 
 Every record carries the BBB public fields, a `last_updated` date, the
 matched Yelp fields (name/rating/review_count/url -- null when unmatched),
-and our derived-intelligence columns. See _YELP_SITE_FIELDS /
-_INTEL_SITE_FIELDS. The site footer credits Yelp and links each matched
-record back to its Yelp page.
+and our derived-intelligence columns (reputation_score,
+lead_priority_score, the flags -- computed for every BBB record; a Yelp
+match just adds signal). See _YELP_SITE_FIELDS / _INTEL_SITE_FIELDS. The
+site footer credits Yelp and links each matched record back to its Yelp
+page.
 
 Usage:
     python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \\
@@ -35,6 +38,10 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from bbb_scraper.match.matcher import MatchOutcome
+from bbb_scraper.match.merge import build_master_table
 
 SITE_DATA_DIR = Path(__file__).resolve().parent.parent / "site" / "data"
 MANIFEST_PATH = SITE_DATA_DIR / "manifest.json"
@@ -59,14 +66,20 @@ _JSON_FIELDS = {"categories", "contacts", "socials", "reviews_complaints"}
 _YELP_SITE_FIELDS = ["yelp_name", "yelp_rating", "yelp_review_count", "yelp_url"]
 
 # Our own derived-intelligence columns (read straight through from a
-# master-table row).
+# master-table row). These are available for every BBB record -- a Yelp
+# match just adds more signal, it isn't required.
 _INTEL_SITE_FIELDS = [
-    "review_need_score",
-    "lead_priority_score",
+    "bbb_grade_num",
+    "bbb_review_avg",
+    "bbb_reviews_total",
+    "bbb_complaints_total",
+    "rating_gap_bbb_minus_yelp",
+    "reputation_score",
     "reputation_divergence_flag",
+    "review_need_score",
     "low_review_volume_flag",
     "accredited_but_low_rated",
-    "rating_gap_bbb_minus_yelp",
+    "lead_priority_score",
 ]
 
 
@@ -81,14 +94,6 @@ def _date_only(value) -> str:
     return str(value)[:10]
 
 
-def _null_intel() -> dict:
-    """Yelp/intelligence fields for a record with no Yelp match (a BBB-only
-    dataset, or an unmatched row)."""
-    d = {f: None for f in (*_YELP_SITE_FIELDS, *_INTEL_SITE_FIELDS)}
-    d["on_yelp"] = False
-    return d
-
-
 def _decode_json_field(value, field: str):
     empty = {} if field == "reviews_complaints" else []
     if value in (None, ""):
@@ -101,39 +106,13 @@ def _decode_json_field(value, field: str):
         return empty
 
 
-def select_public_fields(record: dict) -> dict:
-    """From an in-memory, natively-typed BBB record (straight from
-    transform_summary/transform_detail). No Yelp -> null intelligence."""
-    result = {}
-    for field in _PUBLIC_FIELDS:
-        value = record.get(field)
-        if field in _JSON_FIELDS:
-            result[field] = _decode_json_field(value, field)
-        else:
-            result[field] = value if value is not None else ""
-    result["last_updated"] = _date_only(record.get("scraped_at"))
-    result.update(_null_intel())
-    return result
-
-
-def load_records(csv_path: Path) -> list[dict]:
-    """From a BBB CSV on disk. No Yelp -> null intelligence."""
-    with csv_path.open(newline="", encoding="utf-8") as f:
-        rows = list(csv.DictReader(f))
-
-    records = []
-    for row in rows:
-        record = {}
-        for field in _PUBLIC_FIELDS:
-            value = row.get(field, "")
-            if field in _JSON_FIELDS:
-                record[field] = _decode_json_field(value, field)
-            else:
-                record[field] = value
-        record["last_updated"] = _date_only(row.get("scraped_at"))
-        record.update(_null_intel())
-        records.append(record)
-    return records
+def _bbb_only_master(bbb_records: list[dict]) -> list[dict]:
+    """Run BBB-only records through build_master_table so they get the same
+    BBB-side intelligence columns (reputation_score, lead_priority_score,
+    the flags) as a Yelp-matched dataset -- the Yelp match just adds signal,
+    it isn't required for scoring."""
+    outcome = MatchOutcome(bbb_only=list(bbb_records))
+    return build_master_table(outcome, include_yelp_only=False)
 
 
 def _num_or_none(v):
@@ -168,6 +147,10 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["yelp_url"] = (row.get("yelp_url") or "") if matched else ""
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
+    # integer flags stay ints, not 1.0/0.0
+    for flag in ("reputation_divergence_flag", "low_review_volume_flag", "accredited_but_low_rated"):
+        if result.get(flag) is not None:
+            result[flag] = int(result[flag])
     return result
 
 
@@ -186,7 +169,7 @@ def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
         json.dumps(records, indent=2, default=str), encoding="utf-8"
     )
 
-    has_intel = any(r.get("review_need_score") is not None for r in records)
+    has_yelp = any(r.get("on_yelp") for r in records)
     manifest = load_manifest()
     manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
     manifest["datasets"] = [d for d in manifest["datasets"] if d["id"] != dataset_id]
@@ -195,7 +178,7 @@ def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
         "industry": industry,
         "metro": metro,
         "record_count": len(records),
-        "has_intel": has_intel,
+        "has_yelp": has_yelp,
         "file": filename,
     }
     manifest["datasets"].append(entry)
@@ -205,13 +188,18 @@ def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
 
 
 def publish_dataset(csv_path: Path, industry: str, metro: str) -> dict:
-    """Publish one BBB CSV as one industry+metro dataset."""
-    return _write_dataset(load_records(csv_path), industry, metro)
+    """Publish one BBB CSV as one industry+metro dataset (BBB-side
+    intelligence columns included; no Yelp)."""
+    with csv_path.open(newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    master = _bbb_only_master(rows)
+    return _write_dataset([select_public_fields_from_master(r) for r in master], industry, metro)
 
 
 def publish_records(records: list[dict], industry: str, metro: str) -> dict:
     """Publish in-memory BBB records (e.g. straight out of a scrape)."""
-    return _write_dataset([select_public_fields(r) for r in records], industry, metro)
+    master = _bbb_only_master(records)
+    return _write_dataset([select_public_fields_from_master(r) for r in master], industry, metro)
 
 
 def publish_master_rows(rows: list[dict], industry: str, metro: str) -> dict:

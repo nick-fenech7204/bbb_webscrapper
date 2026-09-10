@@ -66,21 +66,34 @@ body {
 
 .site-nav {
   display: flex;
-  gap: 4px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 18px;
 }
 
 .site-nav a {
-  padding: 6px 14px;
+  display: inline-block;
+  padding: 8px 18px;
+  border: 1px solid var(--border);
   border-radius: 6px;
-  text-decoration: none;
+  background: var(--bg);
   color: var(--text-muted);
   font-weight: 600;
   font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
 }
 
-.site-nav a:hover { color: var(--text); background: var(--bg); }
-.site-nav a.active { color: #fff; background: var(--accent); }
+.site-nav a:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.site-nav a.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 @media (prefers-color-scheme: dark) { .site-nav a.active { color: #10221c; } }
 
 main.wrap {

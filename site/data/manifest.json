@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-10T19:00:57.413584+00:00",
+  "generated_at": "2026-09-10T19:42:18.391042+00:00",
   "datasets": [
     {
       "id": "car-dealers--miami-fl",
       "industry": "Car Dealers",
       "metro": "Miami, FL",
       "record_count": 200,
-      "has_intel": true,
+      "has_yelp": true,
       "file": "car-dealers--miami-fl.json"
     },
     {
@@ -14,7 +14,7 @@
       "industry": "Ice Cream Shops",
       "metro": "Palm Coast, FL",
       "record_count": 2,
-      "has_intel": false,
+      "has_yelp": false,
       "file": "ice-cream-shops--palm-coast-fl.json"
     },
     {
@@ -22,7 +22,7 @@
       "industry": "Car Dealers",
       "metro": "Providence, RI",
       "record_count": 2002,
-      "has_intel": false,
+      "has_yelp": false,
       "file": "car-dealers--providence-ri.json"
     },
     {
@@ -30,7 +30,7 @@
       "industry": "Heating and Air Conditioning",
       "metro": "Seattle-Tacoma, WA",
       "record_count": 233,
-      "has_intel": false,
+      "has_yelp": false,
       "file": "heating-and-air-conditioning--seattle-tacoma-wa.json"
     }
   ]

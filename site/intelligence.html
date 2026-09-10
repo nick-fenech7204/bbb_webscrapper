@@ -11,7 +11,7 @@
   <header class="site-header">
     <div class="wrap">
       <h1>Business Intelligence</h1>
-      <p class="tagline">Each BBB business matched to its Yelp listing, scored for outreach priority — where BBB and Yelp disagree, and who looks like they need review help.</p>
+      <p class="tagline">A lead list for firms that sell review &amp; reputation-management services. Each BBB business scored on how good a target it is: a visible, fixable reputation problem — low ratings, thin reviews, complaints, or a gap between the BBB grade and what customers actually say — at a business established enough to pay for help.</p>
       <nav class="site-nav">
         <a href="index.html">Lead records</a>
         <a href="intelligence.html" class="active">Intelligence</a>
@@ -44,11 +44,11 @@
     <details class="legend">
       <summary>What the columns mean</summary>
       <ul>
-        <li><strong>Yelp</strong> — the matched Yelp listing's star rating and review count (links to Yelp).</li>
-        <li><strong>BBB−Yelp gap</strong> — BBB letter grade and Yelp stars both put on a 0–5 scale, BBB minus Yelp. Positive = BBB looks kinder than Yelp.</li>
-        <li><strong>Review-need</strong> (0–100) — how low the Yelp rating is (60%) plus how thin the review volume is (40%). Higher = more likely to want review help.</li>
-        <li><strong>Lead priority</strong> — Review-need plus bumps for reputation divergence, an accredited-but-low-rated business, and an established (10+ yr) business.</li>
-        <li><strong>Flags</strong> — <em>BBB↑ Yelp↓</em>: BBB grade A− or better but a reviewed Yelp rating under 3. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews.</li>
+        <li><strong>BBB grade / BBB complaints</strong> — the letter grade and the count of complaints filed with BBB (complaints show only for datasets scraped with full detail).</li>
+        <li><strong>Yelp ★ / Yelp #</strong> — the matched Yelp listing's star rating and review count (rating links to Yelp).</li>
+        <li><strong>Reputation</strong> (0–100) — blended "how weak is this business's public reputation": BBB grade, BBB review average + complaints, and Yelp rating + volume, weighted over whatever's available. Higher = weaker.</li>
+        <li><strong>Lead priority</strong> (0–130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower. Bumps for a reputation gap, an accredited business, an active (but not runaway) complaint history, and 10+ years in business.</li>
+        <li><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A− or better) but the actual feedback doesn't. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews.</li>
       </ul>
       <p class="legend-foot">Derived scoring is a v1 starting point, not a finished model.</p>
     </details>

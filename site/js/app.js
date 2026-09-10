@@ -61,14 +61,21 @@
       : `<span class="badge badge-no">${dash}</span>`;
   }
 
-  function yelpCell(r) {
-    if (!r.on_yelp) return `<span class="badge badge-no">not on Yelp</span>`;
-    const count = num(r.yelp_review_count);
+  function yelpRatingCell(r) {
+    if (!r.on_yelp) return `<span class="muted">${dash}</span>`;
     const rating = num(r.yelp_rating);
-    const text = !count ? "on Yelp" : `${rating}★ (${count})`;
+    const count = num(r.yelp_review_count);
+    const text = !count ? "on Yelp" : `${rating}★`;
     return r.yelp_url
       ? `<a href="${esc(r.yelp_url)}" target="_blank" rel="noopener">${esc(text)} ↗</a>`
       : esc(text);
+  }
+
+  function intCell(key) {
+    return (r) => {
+      const v = num(r[key]);
+      return v === null ? `<span class="muted">${dash}</span>` : String(v);
+    };
   }
 
   function scoreCell(key, max) {
@@ -84,7 +91,7 @@
   function flagsCell(r) {
     const out = [];
     if (isTrue(r.reputation_divergence_flag))
-      out.push('<span class="badge badge-flag" title="BBB grade A- or better, but Yelp rating under 3">BBB&#8593; Yelp&#8595;</span>');
+      out.push('<span class="badge badge-flag" title="BBB grade looks clean but the actual customer feedback (Yelp rating, BBB reviews, or BBB complaints) doesn\'t">Reputation gap</span>');
     if (isTrue(r.accredited_but_low_rated))
       out.push('<span class="badge badge-flag">Accredited, low-rated</span>');
     if (isTrue(r.low_review_volume_flag))
@@ -96,18 +103,12 @@
     return (r) => esc(r[key] ?? "");
   }
 
-  function gapCell(r) {
-    const v = num(r.rating_gap_bbb_minus_yelp);
-    if (v === null) return `<span class="muted">${dash}</span>`;
-    const sign = v > 0 ? "+" : "";
-    return `<span class="${v >= 1 ? "gap-pos" : ""}">${sign}${v}</span>`;
-  }
-
   const LEADS_COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", render: nameCell },
     { key: "city", label: "City", render: cityCell },
-    { key: "rating", label: "BBB rating", render: plain("rating") },
+    { key: "rating", label: "BBB grade", render: plain("rating") },
     { key: "accredited", label: "Accredited", render: accreditedCell },
+    { key: "bbb_complaints_total", label: "BBB complaints", render: intCell("bbb_complaints_total") },
     { key: "phone", label: "Phone", render: plain("phone") },
     { key: "website", label: "Website", render: websiteCell },
     { key: "principal_contact", label: "Contact", render: plain("principal_contact") },
@@ -118,10 +119,11 @@
   const INTEL_COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", render: nameCell },
     { key: "city", label: "City", render: cityCell },
-    { key: "rating", label: "BBB rating", render: plain("rating") },
-    { key: "yelp_rating", label: "Yelp", render: yelpCell },
-    { key: "rating_gap_bbb_minus_yelp", label: "BBB−Yelp gap", render: gapCell },
-    { key: "review_need_score", label: "Review-need", render: scoreCell("review_need_score", 100) },
+    { key: "rating", label: "BBB grade", render: plain("rating") },
+    { key: "bbb_complaints_total", label: "BBB complaints", render: intCell("bbb_complaints_total") },
+    { key: "yelp_rating", label: "Yelp ★", render: yelpRatingCell },
+    { key: "yelp_review_count", label: "Yelp #", render: intCell("yelp_review_count") },
+    { key: "reputation_score", label: "Reputation", render: scoreCell("reputation_score", 100) },
     { key: "lead_priority_score", label: "Lead priority", render: scoreCell("lead_priority_score", 130) },
     { key: "reputation_divergence_flag", label: "Flags", render: flagsCell },
     { key: "last_updated", label: "Last updated", render: plain("last_updated") },
@@ -225,11 +227,11 @@
       `Published ${asOf}.`;
 
     if (intelNote) {
-      if (VIEW === "intel" && currentDataset.has_intel === false) {
+      if (VIEW === "intel" && currentDataset.has_yelp === false) {
         intelNote.hidden = false;
         intelNote.textContent =
-          "This dataset was scraped without Yelp enrichment — the Yelp and " +
-          "intelligence columns are empty. Re-run the batch for this metro with Yelp enabled.";
+          "No Yelp match data for this dataset — scoring here uses BBB signal only " +
+          "(grade, reviews, complaints). Re-run the batch for this metro with Yelp enabled to add the Yelp columns.";
       } else {
         intelNote.hidden = true;
       }
