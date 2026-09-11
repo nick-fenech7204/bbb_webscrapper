@@ -14,6 +14,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from bbb_scraper.logging_setup import get_logger
+from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.matcher import match_datasets
 from bbb_scraper.match.merge import build_master_table
 from bbb_scraper.yelp.client import YelpClient, YelpConfigError
@@ -56,7 +57,14 @@ def enrich_bbb_with_yelp(
 ) -> list[dict]:
     """BBB records -> the wide BBB|Yelp master table, BBB-primary (matched +
     bbb_only rows, no yelp_only tail). If Yelp is off / exhausted / errors,
-    every row just comes back `bbb_only`."""
+    every row just comes back `bbb_only`.
+
+    Both sides are deduped by phone number first (dedupe_by_phone -- a no-op
+    if the caller already did it, e.g. the batch scraper's scrape_one_metro;
+    kept here too so this function is correct on its own for any caller).
+    """
+    bbb_records = dedupe_by_phone(bbb_records)
+
     yelp_rows: list[dict] = []
     if state.enabled and state.client is not None:
         remaining = state.client.last_rate_limit.get("remaining")
@@ -65,7 +73,7 @@ def enrich_bbb_with_yelp(
         else:
             try:
                 businesses = YelpExtractor(state.client).search_area(term, location)
-                yelp_rows = [b.to_match_dict() for b in businesses]
+                yelp_rows = dedupe_by_phone([b.to_match_dict() for b in businesses])
                 logger.info(
                     "Yelp: %d businesses for %r (quota remaining: %s)",
                     len(yelp_rows), location,

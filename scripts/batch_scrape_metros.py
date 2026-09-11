@@ -70,6 +70,7 @@ from bbb_scraper.etl.dedupe import dedupe_records
 from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import configure_logging, get_logger
+from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
@@ -89,10 +90,21 @@ def scrape_one_metro(
     radius_miles: float, min_population: int, max_pages_per_place: int,
     fetch_details: bool, stats: RunStats,
 ) -> list[dict]:
-    """One metro's worth of BBB records, deduped -- details-first if
-    fetch_details, same merge pattern already proven on the real Miami
-    car-dealers run (a business's detail record wins over its own summary
-    on id collision, since it's fetched first and dedupe keeps first-seen).
+    """One metro's worth of BBB records -- details-first if fetch_details,
+    same merge pattern already proven on the real Miami car-dealers run (a
+    business's detail record wins over its own summary on id collision,
+    since it's fetched first and dedupe keeps first-seen).
+
+    Two dedup passes, deliberately different and both kept:
+      1. dedupe_records (etl/dedupe.py) -- per-*listing* dedup by id. Two
+         requests landing the same BBB address twice (overlapping sweep
+         points) collapse; two different branch addresses of the same
+         company do NOT -- that's correct, real BBB data.
+      2. dedupe_by_phone (match/dedupe.py) -- per-*lead* dedup on top of
+         that. A company with several branch listings sharing one phone
+         number (common, and BBB-correct) still reads as one row here,
+         because from here on these records feed the lead list, checkpoint,
+         and businesses.csv -- not a BBB browsing view.
     """
     seed_location = parse_location(metro.seed_location)
     with Extractor(stats=stats) as extractor:
@@ -103,7 +115,7 @@ def scrape_one_metro(
         summary_records = [transform_summary(s) for s in summaries]
 
         if not fetch_details:
-            return dedupe_records(summary_records, stats=stats)
+            return dedupe_by_phone(dedupe_records(summary_records, stats=stats))
 
         detail_records = []
         for summary in summaries:
@@ -116,7 +128,7 @@ def scrape_one_metro(
             except Exception:
                 logger.exception("Detail fetch failed for %s", summary.profile_url)
 
-    return dedupe_records(detail_records + summary_records, stats=stats)
+    return dedupe_by_phone(dedupe_records(detail_records + summary_records, stats=stats))
 
 
 def rebuild_all_metros_file(industry_slug: str) -> Path:

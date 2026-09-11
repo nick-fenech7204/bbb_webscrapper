@@ -321,6 +321,15 @@ withholds organic business data anyway. The API is the sanctioned path.
    `rating_gap_bbb_minus_yelp`, `lead_priority_score`, ...) -- a plain
    `name -> fn(row)` map, meant to grow after the metrics conversation, not
    a finished scoring model.
+4. **dedupe** -- `dedupe_by_phone`: for the *lead list*, phone number is the
+   record's identity, always. A company with several BBB branch listings
+   (common, and correct BBB data -- `etl/dedupe.py`'s per-listing dedup
+   deliberately keeps them separate) still reads as one row from here on,
+   first one seen wins; a record with no phone is never merged with
+   another one that also has no phone. Runs on the BBB side before
+   matching (in `scrape_one_metro` and again inside `enrich_bbb_with_yelp`
+   itself, so the function is correct regardless of caller) and on the
+   Yelp side right after it's fetched.
 
 **In the batch scraper** (the normal path): `batch_scrape_metros.py` calls
 `match.enrich.enrich_bbb_with_yelp` per metro -- one `search_area` (~5

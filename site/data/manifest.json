@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-09-11T08:16:09.085599+00:00",
+  "generated_at": "2026-09-11T13:34:54.698247+00:00",
   "datasets": [
     {
       "id": "plumbers--chicago-il",
       "industry": "Plumbers",
       "metro": "Chicago, IL",
-      "record_count": 2307,
+      "record_count": 1935,
       "has_yelp": true,
-      "yelp_matched": 89,
+      "yelp_matched": 88,
       "top_lead_score": 96.7,
       "file": "plumbers--chicago-il.json"
     },

@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from bbb_scraper.logging_setup import get_logger
+from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.matcher import match_datasets
 from bbb_scraper.match.merge import build_master_table
 from bbb_scraper.yelp.client import YelpClient
@@ -47,8 +48,8 @@ def main() -> None:
     ap.add_argument("--no-cache", action="store_true", help="force live Yelp calls")
     args = ap.parse_args()
 
-    bbb = load_bbb_csv(args.bbb_csv)
-    logger.info("loaded %d BBB rows from %s", len(bbb), args.bbb_csv)
+    bbb = dedupe_by_phone(load_bbb_csv(args.bbb_csv))
+    logger.info("loaded %d BBB rows from %s (post phone-dedup)", len(bbb), args.bbb_csv)
 
     extractor = YelpExtractor(YelpClient(use_cache=not args.no_cache))
     term = args.yelp_term or args.industry
@@ -58,7 +59,7 @@ def main() -> None:
     logger.info("yelp: %d businesses (%d live API calls)", len(yb), extractor.client.calls_made)
     if extractor.client.last_rate_limit:
         logger.info("yelp quota now: %s", extractor.client.last_rate_limit)
-    yelp = [b.to_match_dict() for b in yb]
+    yelp = dedupe_by_phone([b.to_match_dict() for b in yb])
 
     name_drop = {t.strip().lower() for t in args.name_drop.split(",") if t.strip()}
     outcome = match_datasets(bbb, yelp, name_extra_drop=name_drop or None)

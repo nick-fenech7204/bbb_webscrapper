@@ -91,3 +91,19 @@ def test_open_yelp_enrichment_no_key(monkeypatch):
 
 def test_open_yelp_enrichment_disabled_flag():
     assert open_yelp_enrichment(enabled=False).enabled is False
+
+
+def test_bbb_branch_listings_sharing_a_phone_collapse_before_matching():
+    """Two BBB rows for one company (different branch addresses, one
+    phone) -> one lead, not two -- enrich_bbb_with_yelp phone-dedupes its
+    own input so it's correct even if a caller forgot to."""
+    branches = [
+        {"name": "Goode Plumbing", "phone": "(773) 930-3451", "city": "Evanston",
+         "state": "IL", "postal_code": "60201", "rating": "NR"},
+        {"name": "Goode Plumbing", "phone": "(773) 930-3451", "city": "Chicago",
+         "state": "IL", "postal_code": "60625", "rating": "NR"},
+    ]
+    state = YelpEnrichmentState(enabled=False)
+    rows = enrich_bbb_with_yelp(branches, "plumbers", "Chicago, IL", state)
+    assert len(rows) == 1
+    assert rows[0]["bbb_city"] == "Evanston"  # first seen wins
