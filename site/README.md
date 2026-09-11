@@ -1,8 +1,8 @@
 # Static site
 
 Genuinely static -- plain HTML/CSS/JS, no build step, no backend. Reads
-pre-published data files in `data/` and does all filtering/sorting/CSV
-export in the browser. This is deliberate: see the main
+pre-published data files in `data/` and does all filtering/sorting/export
+(CSV, Excel, PDF, Text) in the browser. This is deliberate: see the main
 [README's "Static site" section](../README.md) for why (in short: a public
 "run a scrape for me" button on your proxy account is a cost/abuse risk;
 this only ever reads data you've already collected and chosen to publish).
@@ -17,9 +17,11 @@ site/
                     #/<dataset-id>/intel   that list, Intelligence view
   css/style.css    styling (light/dark aware)
   js/app.js         router + all interactivity -- reads data/manifest.json
-                     for the home cards, fetches a dataset's JSON on first
-                     open (cached), picks a column set + default sort per
-                     view, filters/sorts/exports client-side
+                     for the home cards (filterable by industry/metro once
+                     there are enough of them to want that), fetches a
+                     dataset's JSON on first open (cached), picks a column
+                     set + default sort per view, filters/sorts/exports
+                     client-side
   data/
     manifest.json   the lead lists: id, industry, metro, record_count,
                      has_yelp, yelp_matched, top_lead_score, file

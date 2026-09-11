@@ -15,6 +15,11 @@
   const datasetView = $("dataset-view");
   const loadingEl = $("loading");
   const homeCards = $("home-cards");
+  const homeEmptyState = $("home-empty-state");
+  const homeResultCount = $("home-result-count");
+  const filterIndustry = $("filter-industry");
+  const filterMetro = $("filter-metro");
+  const filterClearBtn = $("filter-clear");
   const dsTitle = $("ds-title");
   const dsSub = $("ds-sub");
   const tabLeads = $("tab-leads");
@@ -23,8 +28,8 @@
   const legend = $("legend");
   const searchBox = $("search-box");
   const resultCount = $("result-count");
-  const exportCsvBtn = $("export-csv-btn");
-  const exportXlsxBtn = $("export-xlsx-btn");
+  const exportToggle = $("export-toggle");
+  const exportPanel = $("export-panel");
   const headRow = $("head-row");
   const tableBody = $("results-body");
   const emptyState = $("empty-state");
@@ -158,18 +163,47 @@
   }
 
   // ---------- home ----------
-  function showHome() {
-    ds = null;
-    datasetView.hidden = true;
-    loadingEl.hidden = true;
-    homeView.hidden = false;
-    document.title = "Lead Intelligence — BBB + Yelp";
+  // Options are built once off the full manifest and left alone after
+  // that -- the two dropdowns stay independent (each always lists every
+  // industry/metro, not narrowed by the other's current pick) since with
+  // a modest number of lists that's simpler and just as usable as the
+  // options narrowing each other would be. Selections persist in the
+  // <select> elements themselves across navigating away and back, same as
+  // a dataset table's sort state does.
+  let homeFiltersReady = false;
+  function populateHomeFilters() {
+    if (homeFiltersReady) return;
+    homeFiltersReady = true;
+    const industries = [...new Set(manifest.datasets.map((d) => d.industry))].sort();
+    const metros = [...new Set(manifest.datasets.map((d) => d.metro))].sort();
+    filterIndustry.innerHTML += industries.map((name) => `<option value="${esc(name)}">${esc(name)}</option>`).join("");
+    filterMetro.innerHTML += metros.map((name) => `<option value="${esc(name)}">${esc(name)}</option>`).join("");
+    filterIndustry.addEventListener("change", renderHomeCards);
+    filterMetro.addEventListener("change", renderHomeCards);
+    filterClearBtn.addEventListener("click", () => {
+      filterIndustry.value = "";
+      filterMetro.value = "";
+      renderHomeCards();
+    });
+  }
 
-    const asOf = manifest.generated_at
-      ? new Date(manifest.generated_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
-      : null;
+  function filteredDatasets() {
+    const industry = filterIndustry.value;
+    const metro = filterMetro.value;
+    return manifest.datasets.filter((d) =>
+      (!industry || d.industry === industry) && (!metro || d.metro === metro));
+  }
 
-    homeCards.innerHTML = manifest.datasets.map((d) => {
+  function renderHomeCards() {
+    const total = manifest.datasets.length;
+    const rows = filteredDatasets();
+    homeEmptyState.hidden = rows.length !== 0;
+    filterClearBtn.hidden = !(filterIndustry.value || filterMetro.value);
+    homeResultCount.textContent = rows.length === total
+      ? `${rows.length.toLocaleString()} list${rows.length === 1 ? "" : "s"}`
+      : `${rows.length.toLocaleString()} of ${total.toLocaleString()} lists`;
+
+    homeCards.innerHTML = rows.map((d) => {
       const chips = [`${d.record_count.toLocaleString()} businesses`];
       chips.push(d.has_yelp ? `${d.yelp_matched} matched to Yelp` : "BBB only");
       if (d.top_lead_score) chips.push(`top lead ${d.top_lead_score}`);
@@ -182,7 +216,21 @@
         <div class="lead-card-foot"><span>View list</span><span aria-hidden="true">&rarr;</span></div>
       </a>`;
     }).join("");
+  }
 
+  function showHome() {
+    ds = null;
+    datasetView.hidden = true;
+    loadingEl.hidden = true;
+    homeView.hidden = false;
+    document.title = "Lead Intelligence — BBB + Yelp";
+
+    populateHomeFilters();
+    renderHomeCards();
+
+    const asOf = manifest.generated_at
+      ? new Date(manifest.generated_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
+      : null;
     homeView.querySelector(".view-sub").innerHTML =
       `One list per market. Each has a browsable <strong>lead table</strong> and a scored ` +
       `<strong>intelligence</strong> view.` + (asOf ? ` <span class="muted">Data published ${asOf}.</span>` : "");
@@ -241,8 +289,7 @@
       sortKey = view === "intel" ? "lead_priority_score" : null;
       sortDir = -1;
     }
-    exportCsvBtn.disabled = records.length === 0;
-    exportXlsxBtn.disabled = records.length === 0;
+    exportToggle.disabled = records.length === 0;
     buildHead();
     renderTable();
     window.scrollTo(0, 0);
@@ -307,11 +354,25 @@
       : `${rows.length.toLocaleString()} of ${records.length.toLocaleString()} records`;
   }
 
-  // Both exports ship the FULL record (every field), not just the columns
-  // visible in the current view -- the on-screen table is a curated look,
-  // the download is the complete data a rep might want in a spreadsheet.
+  // ---------- export ----------
+  const exportBasename = () => `${ds ? ds.id : "export"}--${view}`;
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // CSV/Excel ship the FULL record (every field), not just the columns
+  // visible in the current view -- those are data-interchange formats, the
+  // download is the complete data a rep might want in a spreadsheet.
   // Nested list/dict fields (categories, contacts...) flatten to JSON text
-  // since neither CSV nor a spreadsheet cell holds a real array.
+  // since neither a CSV nor a spreadsheet cell holds a real array.
   function exportableRows() {
     return filteredRecords().map((row) => {
       const out = {};
@@ -322,6 +383,24 @@
       return out;
     });
   }
+
+  // PDF/Text are read, not processed further -- they ship only the columns
+  // the CURRENT view shows (same filter + sort as on screen), plain-text.
+  // Reusing each column's HTML render() and stripping tags (rather than a
+  // second parallel "as text" function per column) keeps one source of
+  // truth: whatever a cell displays is exactly what gets exported.
+  const scratchEl = document.createElement("div");
+  function cellText(col, r) {
+    scratchEl.innerHTML = col.render(r);
+    return scratchEl.textContent.replace(/\s+/g, " ").trim();
+  }
+  function visibleRowsForExport() {
+    const cols = columns();
+    const rows = filteredRecords().map((r) => cols.map((c) => cellText(c, r)));
+    return { cols, rows };
+  }
+  const exportTitle = () =>
+    `${ds ? `${ds.industry} — ${ds.metro}` : "Export"} (${view === "intel" ? "Intelligence" : "Lead records"})`;
 
   function exportCsv() {
     const rows = exportableRows();
@@ -334,20 +413,12 @@
     };
     const lines = [cols.join(",")];
     for (const row of rows) lines.push(cols.map((c) => cell(row[c])).join(","));
-    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${ds ? ds.id : "export"}--${view}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+    downloadBlob(new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" }), `${exportBasename()}.csv`);
   }
 
   function exportXlsx() {
     if (typeof XLSX === "undefined") {
-      alert("Excel export didn't load (probably a blocked script) -- use Export CSV instead, or reload the page.");
+      alert("Excel export didn't load (probably a blocked script) -- try another format, or reload the page.");
       return;
     }
     const rows = exportableRows();
@@ -355,15 +426,69 @@
     const ws = XLSX.utils.json_to_sheet(rows);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Leads");
-    XLSX.writeFile(wb, `${ds ? ds.id : "export"}--${view}.xlsx`);
+    XLSX.writeFile(wb, `${exportBasename()}.xlsx`);
+  }
+
+  function exportPdf() {
+    if (typeof window.jspdf === "undefined") {
+      alert("PDF export didn't load (probably a blocked script) -- try another format, or reload the page.");
+      return;
+    }
+    const { cols, rows } = visibleRowsForExport();
+    if (!rows.length) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "landscape" });
+    doc.setFontSize(12);
+    doc.text(exportTitle(), 14, 12);
+    doc.autoTable({
+      head: [cols.map((c) => c.label)],
+      body: rows,
+      startY: 18,
+      styles: { fontSize: 7, cellPadding: 2.5, overflow: "linebreak" },
+      headStyles: { fillColor: [23, 97, 74] },
+      margin: { left: 10, right: 10 },
+    });
+    doc.save(`${exportBasename()}.pdf`);
+  }
+
+  function exportTxt() {
+    const { cols, rows } = visibleRowsForExport();
+    if (!rows.length) return;
+    const rule = "-".repeat(40);
+    const blocks = rows.map((vals) => cols.map((c, i) => `${c.label}: ${vals[i] || dash}`).join("\n"));
+    const text = `${exportTitle()}\n${rows.length.toLocaleString()} record(s)\n\n${rule}\n\n` +
+      blocks.join(`\n\n${rule}\n\n`);
+    downloadBlob(new Blob([text], { type: "text/plain;charset=utf-8" }), `${exportBasename()}.txt`);
+  }
+
+  const EXPORTERS = { csv: exportCsv, xlsx: exportXlsx, pdf: exportPdf, txt: exportTxt };
+
+  function closeExportPanel() {
+    exportPanel.hidden = true;
+    exportToggle.setAttribute("aria-expanded", "false");
   }
 
   // ---------- init ----------
   async function init() {
     searchBox.addEventListener("input", renderTable);
-    exportCsvBtn.addEventListener("click", exportCsv);
-    exportXlsxBtn.addEventListener("click", exportXlsx);
     window.addEventListener("hashchange", route);
+
+    exportToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const opening = exportPanel.hidden;
+      exportPanel.hidden = !opening;
+      exportToggle.setAttribute("aria-expanded", String(opening));
+    });
+    exportPanel.addEventListener("click", (e) => {
+      const btn = e.target.closest(".export-item");
+      if (!btn) return;
+      closeExportPanel();
+      EXPORTERS[btn.dataset.format]?.();
+    });
+    document.addEventListener("click", (e) => {
+      if (!exportPanel.hidden && !exportPanel.contains(e.target) && e.target !== exportToggle) closeExportPanel();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeExportPanel(); });
 
     try {
       const res = await fetch("data/manifest.json", { cache: "no-store" });

@@ -414,7 +414,11 @@ whole safety story -- there's no publicly reachable path to your proxy or
 BBB session, so there's nothing to lock down or rate-limit.
 
 **One hash-routed page** (`site/index.html`): a **home** listing every lead
-list as a card (`#/`), and per dataset a **Lead records** view (`#/<id>`)
+list as a card (`#/`), filterable by industry and metro (two `<select>`s
+built off the distinct values in the manifest -- independent of each
+other, not narrowing one another, which is plenty for the dataset counts
+this is at; gets revisited if that stops being true), and per dataset a
+**Lead records** view (`#/<id>`)
 and an **Intelligence** view (`#/<id>/intel`) -- each a real, bookmarkable
 URL. Lead records is the standard BBB lead (rating, accreditation, phone,
 website, contact, years, BBB complaints, a per-record **Last updated**
@@ -431,10 +435,18 @@ The table itself (2026-09-11 redesign) doesn't force 10-11 columns of real
 data into one fixed width -- the business-name column is pinned
 (`position: sticky`) and the rest scroll sideways underneath it in a
 contained, always-legible region, the same pattern Sheets/Airtable use for
-wide data. Every record can be exported as **CSV or a real `.xlsx`**
-(client-side, via [SheetJS](https://sheetjs.com) off cdnjs -- no server
-round-trip), with the full record (every field, not just the columns the
-current view happens to show).
+wide data.
+
+An **Export** dropdown offers four formats, all client-side (no server
+round-trip) and all respecting the current search filter + sort:
+**CSV** and **Excel** (via [SheetJS](https://sheetjs.com) off cdnjs) ship
+the *full* record -- every field, not just the columns the current view
+happens to show, for further processing elsewhere. **PDF** (via
+[jsPDF](https://github.com/parallax/jsPDF) + jspdf-autotable, also cdnjs)
+and **Text** ship only the columns the current view actually displays,
+plain-text, one line per field -- those two are read-as-is formats, and a
+40-field wide table (with a couple of JSON blobs in it) would be
+unreadable rather than useful in either.
 
 The batch scraper publishes automatically (`publish_master_rows`), carrying
 the matched `yelp_*` fields + our derived columns. `yelp_only` rows are

@@ -29,7 +29,18 @@
         One list per market. Each has a browsable <strong>lead table</strong>
         and a scored <strong>intelligence</strong> view.
       </p>
+      <div class="home-filters">
+        <select id="filter-industry" aria-label="Filter by industry">
+          <option value="">All industries</option>
+        </select>
+        <select id="filter-metro" aria-label="Filter by metro">
+          <option value="">All metros</option>
+        </select>
+        <button id="filter-clear" type="button" class="link-btn" hidden>Clear filters</button>
+        <span id="home-result-count" class="result-count" aria-live="polite"></span>
+      </div>
       <div id="home-cards" class="card-grid"></div>
+      <p id="home-empty-state" class="empty-state" hidden>No lead lists match those filters.</p>
     </section>
 
     <!-- ============ DATASET ============ -->
@@ -65,9 +76,16 @@
       <div class="controls">
         <input id="search-box" type="text" placeholder="Filter this table by name, city, category…">
         <span id="result-count" class="result-count" aria-live="polite"></span>
-        <div class="export-group">
-          <button id="export-csv-btn" type="button" class="btn-outline">Export CSV</button>
-          <button id="export-xlsx-btn" type="button" class="btn-solid">Export Excel</button>
+        <div class="export-menu">
+          <button id="export-toggle" type="button" class="btn-solid" aria-haspopup="true" aria-expanded="false">
+            Export <span aria-hidden="true">&#9662;</span>
+          </button>
+          <div id="export-panel" class="export-panel" role="menu" hidden>
+            <button type="button" class="export-item" data-format="csv" role="menuitem">CSV</button>
+            <button type="button" class="export-item" data-format="xlsx" role="menuitem">Excel (.xlsx)</button>
+            <button type="button" class="export-item" data-format="pdf" role="menuitem">PDF</button>
+            <button type="button" class="export-item" data-format="txt" role="menuitem">Text (.txt)</button>
+          </div>
         </div>
       </div>
 
@@ -97,6 +115,8 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/4.2.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/5.0.8/jspdf.plugin.autotable.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
