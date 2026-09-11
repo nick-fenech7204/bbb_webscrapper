@@ -204,28 +204,41 @@ def main() -> int:
             print(f"[{i}/{len(metros)}] {metro.name}: FAILED (see log) -- continuing with the rest")
             continue
 
-        master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
-        CSVSink(checkpoint_path).load(master_rows)
+        # Everything from here on (checkpoint, shared sinks, publish) is
+        # wrapped: a batch runs unattended for hours across many metros, so
+        # a bug in this post-scrape step (there was one -- see below) must
+        # never be allowed to kill metros still queued behind it. Whatever
+        # already reached disk (checkpoint, businesses.csv, the site JSON)
+        # stays written either way; only this metro's `done` count and
+        # summary line are skipped on failure.
+        try:
+            master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
+            CSVSink(checkpoint_path).load(master_rows)
 
-        for sink in build_sinks_from_settings():
-            try:
-                sink.load(records)  # BBB records only -- businesses.csv stays a pure BBB log
-            except Exception:
-                logger.exception("Shared sink %r failed to load", sink.name)
+            for sink in build_sinks_from_settings():
+                try:
+                    sink.load(records)  # BBB records only -- businesses.csv stays a pure BBB log
+                except Exception:
+                    logger.exception("Shared sink %r failed to load", sink.name)
 
-        elapsed = time.monotonic() - start
-        matched = sum(r.get("match_status") == "matched" for r in master_rows)
-        print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
-              f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''} "
-              f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
+            elapsed = time.monotonic() - start
+            matched = sum(r.get("match_status") == "matched" for r in master_rows)
+            print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
+                  f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''} "
+                  f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
 
-        if args.publish:
-            # master_rows, not `records` -- so the site gets our derived
-            # intelligence columns too. publish_master_rows drops every raw
-            # yelp_* field, so the public site stays BBB-only.
-            entry = publish_master_rows(master_rows, args.industry, metro.name)
-            print(f"    published -> site/data/{entry['file']} "
-                  f"(intelligence: {'yes' if entry['has_intel'] else 'no'})")
+            if args.publish:
+                # master_rows, not `records` -- so the site gets our derived
+                # intelligence columns too. publish_master_rows drops every
+                # raw yelp_* field, so the public site stays BBB-only.
+                entry = publish_master_rows(master_rows, args.industry, metro.name)
+                print(f"    published -> site/data/{entry['file']} "
+                      f"({entry['yelp_matched']} matched to Yelp, top lead {entry['top_lead_score']})")
+        except Exception:
+            logger.exception("Metro %r: checkpoint/publish step failed", metro.name)
+            print(f"[{i}/{len(metros)}] {metro.name}: scraped OK but the checkpoint/publish step "
+                  f"FAILED (see log) -- continuing with the rest. Re-run with --force to redo this metro.")
+            continue
 
         done += 1
 

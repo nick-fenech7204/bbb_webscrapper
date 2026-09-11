@@ -244,7 +244,7 @@ def main() -> int:
     )
     manifest = load_manifest()
     print(f"Published {entry['record_count']} record(s) to site/data/{entry['file']} "
-          f"(intelligence: {'yes' if entry['has_intel'] else 'no'})")
+          f"({entry['yelp_matched']} matched to Yelp, top lead {entry['top_lead_score']})")
     print(f"Manifest now has {len(manifest['datasets'])} dataset(s)")
     return 0
 

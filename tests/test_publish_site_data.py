@@ -1,11 +1,13 @@
 """publish_site_data record-shaping (pure functions only -- no file I/O)."""
 from __future__ import annotations
 
+import csv
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
+import publish_site_data as psd
 from publish_site_data import (
     _bbb_only_master,
     select_public_fields_from_master,
@@ -69,3 +71,42 @@ def test_bbb_complaints_surface_from_reviews_complaints_json():
     })
     assert rec["bbb_complaints_total"] == 8
     assert rec["reputation_divergence_flag"] == 1  # clean grade, 8 complaints
+
+
+def test_manifest_entry_has_exactly_the_keys_callers_rely_on(tmp_path, monkeypatch):
+    """Regression test: batch_scrape_metros.py's per-metro summary print and
+    this module's own CLI main() both read specific keys off the entry
+    _write_dataset returns (file/record_count/yelp_matched/top_lead_score).
+    2026-09-11: a rename (has_intel -> has_yelp) left both call sites
+    reading the old key -- a KeyError that killed a live 9.5-hour batch run
+    partway through (see bbb-scraper-status memory). Pin the shape here so
+    a future rename fails fast in CI, not overnight in production."""
+    monkeypatch.setattr(psd, "SITE_DATA_DIR", tmp_path)
+    monkeypatch.setattr(psd, "MANIFEST_PATH", tmp_path / "manifest.json")
+
+    entry = psd.publish_records(
+        [{"name": "A Co", "rating": "A+", "scraped_at": "2026-09-11T00:00:00+00:00"}],
+        "Plumbers", "Chicago, IL",
+    )
+    assert entry.keys() >= {"id", "industry", "metro", "record_count", "has_yelp",
+                            "yelp_matched", "top_lead_score", "file"}
+    # exactly what the two print f-strings dereference -- would KeyError otherwise
+    entry["file"], entry["record_count"], entry["yelp_matched"], entry["top_lead_score"]
+
+
+def test_cli_main_runs_end_to_end_without_crashing(tmp_path, monkeypatch, capsys):
+    """Full main() smoke test -- the KeyError above only ever fired here and
+    in the batch script, neither of which any prior test actually invoked."""
+    monkeypatch.setattr(psd, "SITE_DATA_DIR", tmp_path)
+    monkeypatch.setattr(psd, "MANIFEST_PATH", tmp_path / "manifest.json")
+
+    csv_path = tmp_path / "bbb.csv"
+    with csv_path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["name", "rating", "scraped_at"])
+        w.writeheader()
+        w.writerow({"name": "A Co", "rating": "B", "scraped_at": "2026-09-11T00:00:00+00:00"})
+
+    monkeypatch.setattr(sys, "argv", ["publish_site_data.py", str(csv_path),
+                                      "--industry", "Plumbers", "--metro", "Chicago, IL"])
+    assert psd.main() == 0
+    assert "Published 1 record" in capsys.readouterr().out

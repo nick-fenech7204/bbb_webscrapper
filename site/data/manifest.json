@@ -1,6 +1,16 @@
 {
-  "generated_at": "2026-09-10T22:44:22.292140+00:00",
+  "generated_at": "2026-09-11T08:16:09.085599+00:00",
   "datasets": [
+    {
+      "id": "plumbers--chicago-il",
+      "industry": "Plumbers",
+      "metro": "Chicago, IL",
+      "record_count": 2307,
+      "has_yelp": true,
+      "yelp_matched": 89,
+      "top_lead_score": 96.7,
+      "file": "plumbers--chicago-il.json"
+    },
     {
       "id": "car-dealers--miami-fl",
       "industry": "Car Dealers",
