@@ -22,16 +22,6 @@
       "file": "car-dealers--miami-fl.json"
     },
     {
-      "id": "ice-cream-shops--palm-coast-fl",
-      "industry": "Ice Cream Shops",
-      "metro": "Palm Coast, FL",
-      "record_count": 2,
-      "has_yelp": false,
-      "yelp_matched": 0,
-      "top_lead_score": 26.0,
-      "file": "ice-cream-shops--palm-coast-fl.json"
-    },
-    {
       "id": "car-dealers--providence-ri",
       "industry": "Car Dealers",
       "metro": "Providence, RI",

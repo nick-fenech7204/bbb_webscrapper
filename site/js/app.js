@@ -11,6 +11,7 @@
   "use strict";
 
   const $ = (id) => document.getElementById(id);
+  const appEl = $("app");
   const homeView = $("home-view");
   const datasetView = $("dataset-view");
   const loadingEl = $("loading");
@@ -95,29 +96,32 @@
   }
   const plain = (key) => (r) => esc(r[key] ?? "");
 
+  // `w` is a percentage width -- each list sums to 100. table-layout:fixed
+  // (in style.css) makes the browser honor these instead of growing the
+  // table to fit content, which is what forces a horizontal scrollbar.
   const LEADS_COLUMNS = [
-    { key: "name", label: "Business", cls: "name-cell", render: nameCell },
-    { key: "city", label: "City", render: cityCell },
-    { key: "rating", label: "BBB grade", render: plain("rating") },
-    { key: "accredited", label: "Accredited", render: accreditedCell },
-    { key: "bbb_complaints_total", label: "BBB complaints", render: intCell("bbb_complaints_total") },
-    { key: "phone", label: "Phone", render: plain("phone") },
-    { key: "website", label: "Website", render: websiteCell },
-    { key: "principal_contact", label: "Contact", render: plain("principal_contact") },
-    { key: "years_in_business", label: "Years", render: plain("years_in_business") },
-    { key: "last_updated", label: "Last updated", render: plain("last_updated") },
+    { key: "name", label: "Business", cls: "name-cell", w: 16, render: nameCell },
+    { key: "city", label: "City", w: 10, render: cityCell },
+    { key: "rating", label: "BBB grade", w: 6, render: plain("rating") },
+    { key: "accredited", label: "Accredited", w: 8, render: accreditedCell },
+    { key: "bbb_complaints_total", label: "BBB complaints", w: 8, render: intCell("bbb_complaints_total") },
+    { key: "phone", label: "Phone", w: 10, render: plain("phone") },
+    { key: "website", label: "Website", w: 12, render: websiteCell },
+    { key: "principal_contact", label: "Contact", w: 12, render: plain("principal_contact") },
+    { key: "years_in_business", label: "Years", w: 6, render: plain("years_in_business") },
+    { key: "last_updated", label: "Last updated", w: 12, render: plain("last_updated") },
   ];
   const INTEL_COLUMNS = [
-    { key: "name", label: "Business", cls: "name-cell", render: nameCell },
-    { key: "city", label: "City", render: cityCell },
-    { key: "rating", label: "BBB grade", render: plain("rating") },
-    { key: "bbb_complaints_total", label: "BBB complaints", render: intCell("bbb_complaints_total") },
-    { key: "yelp_rating", label: "Yelp ★", render: yelpRatingCell },
-    { key: "yelp_review_count", label: "Yelp #", render: intCell("yelp_review_count") },
-    { key: "reputation_score", label: "Reputation", render: scoreCell("reputation_score", 100) },
-    { key: "lead_priority_score", label: "Lead priority", render: scoreCell("lead_priority_score", 130) },
-    { key: "reputation_divergence_flag", label: "Flags", render: flagsCell },
-    { key: "last_updated", label: "Last updated", render: plain("last_updated") },
+    { key: "name", label: "Business", cls: "name-cell", w: 18, render: nameCell },
+    { key: "city", label: "City", w: 10, render: cityCell },
+    { key: "rating", label: "BBB grade", w: 7, render: plain("rating") },
+    { key: "bbb_complaints_total", label: "BBB complaints", w: 9, render: intCell("bbb_complaints_total") },
+    { key: "yelp_rating", label: "Yelp ★", w: 8, render: yelpRatingCell },
+    { key: "yelp_review_count", label: "Yelp #", w: 7, render: intCell("yelp_review_count") },
+    { key: "reputation_score", label: "Reputation", w: 11, render: scoreCell("reputation_score", 100) },
+    { key: "lead_priority_score", label: "Lead priority", w: 11, render: scoreCell("lead_priority_score", 130) },
+    { key: "reputation_divergence_flag", label: "Flags", w: 12, render: flagsCell },
+    { key: "last_updated", label: "Last updated", w: 7, render: plain("last_updated") },
   ];
   const columns = () => (view === "intel" ? INTEL_COLUMNS : LEADS_COLUMNS);
 
@@ -142,6 +146,7 @@
     datasetView.hidden = true;
     loadingEl.hidden = true;
     homeView.hidden = false;
+    appEl.classList.remove("wrap-table");
     document.title = "Lead Intelligence — BBB + Yelp";
 
     const asOf = manifest.generated_at
@@ -170,6 +175,7 @@
   // ---------- dataset ----------
   async function showDataset(entry) {
     homeView.hidden = true;
+    appEl.classList.add("wrap-table");
     ds = entry;
     const key = `${ds.id}|${view}`;
     const changed = key !== renderedKey;
@@ -224,7 +230,9 @@
   }
 
   function buildHead() {
-    headRow.innerHTML = columns().map((c) => `<th data-key="${c.key}">${esc(c.label)}</th>`).join("");
+    headRow.innerHTML = columns().map((c) =>
+      `<th data-key="${c.key}" style="width:${c.w}%">${esc(c.label)}</th>`
+    ).join("");
     headRow.querySelectorAll("th[data-key]").forEach((th) => {
       th.addEventListener("click", () => onSort(th.dataset.key));
     });

@@ -331,11 +331,12 @@ daily quota across the whole batch, and the moment the key is missing, the
 quota drops below a small floor, or a call fails, enrichment switches off
 for the rest of the run and the remaining metros come out BBB-only. It
 never raises. `--no-yelp` skips it entirely. The per-metro checkpoint/
-sinks/publish step is itself wrapped the same way -- one metro's failure
-there is logged and skipped, not fatal to the rest of the batch. Once the
-whole batch finishes, `--deploy` (default on) pushes `site/` live
-automatically (`scripts/deploy_site.py`, S3 sync + CloudFront
-invalidation) if at least one metro actually ran; `--no-deploy` to only
+sinks/publish/deploy step is itself wrapped the same way -- one metro's
+failure there is logged and skipped, not fatal to the rest of the batch.
+`--deploy` (default on) pushes `site/` live (`scripts/deploy_site.py`, S3
+sync + CloudFront invalidation) right after *each* metro publishes
+locally -- live within seconds of that metro finishing, not batched up
+for the very end of a possibly-hours-long run; `--no-deploy` to only
 publish locally and deploy by hand later.
 
 **One-off / exploration:** `python scripts/match_bbb_yelp.py --bbb-csv

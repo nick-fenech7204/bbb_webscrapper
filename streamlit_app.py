@@ -98,13 +98,14 @@ with st.form("batch_form"):
              "with this on later.",
     )
     deploy_when_done = st.checkbox(
-        "Deploy to the live site when done",
+        "Deploy each metro to the live site as it finishes",
         value=True,
-        help="Runs scripts/deploy_site.py (S3 sync + CloudFront invalidation) once at the "
-             "end, if at least one metro actually ran. Needs the AWS CLI configured locally "
-             "-- if it isn't, this is reported but the batch still finishes normally; the "
-             "scrape and the local site/data/ files are unaffected either way. Uncheck to "
-             "only publish locally and deploy by hand later.",
+        help="Runs scripts/deploy_site.py (S3 sync + CloudFront invalidation) right after "
+             "each metro publishes locally -- live within seconds, not held back until the "
+             "whole batch finishes. Needs the AWS CLI configured locally -- if it isn't, this "
+             "is reported but the batch still finishes normally; the scrape and the local "
+             "site/data/ files are unaffected either way. Uncheck to only publish locally and "
+             "deploy by hand later.",
     )
     force = st.checkbox(
         "Redo metros already run for this exact industry", value=False,
