@@ -113,6 +113,8 @@ scripts/
                                        #   match to a BBB CSV, write the wide BBB|Yelp master table
   publish_site_data.py                  # CSV (or in-memory records) -> site/data/*.json + manifest.json
   deploy_site.py                          # aws s3 sync + cloudfront invalidation (site/DEPLOY.md)
+  dedupe_businesses_csv.py                  # periodic cleanup: collapse businesses.csv rows sharing
+                                             #   a phone number, keep the newest, back up first
 
 streamlit_app.py           # the only UI: the batch scraper control panel (see "UI" below).
                            #   Launches batch_scrape_metros.py as a background process, tails its log.
@@ -650,14 +652,17 @@ traced back to the exact HTML that caused it.
   a while back: it now reads the real on-disk header, appends safely when
   the batch's columns are already covered, or rewrites the file with a
   union header when they're not (see `pipeline/sinks/csv_sink.py`).
-- No cross-run dedup on `data/processed/businesses.csv` itself -- it's a
-  pure append log by design (every run's records land in it, regardless of
-  whether the same business was already scraped in an earlier run). A
-  handful of duplicate ids from re-running the same test search across
-  separate sessions is expected, not corruption; if a genuinely
-  deduplicated master view is ever wanted, that's a one-off pass to build
-  (`etl/dedupe.py` already has the logic, just needs pointing at the whole
-  file), not something this sink should start doing automatically.
+- `data/processed/businesses.csv` still isn't deduped as it's written --
+  it's a pure append log by design (every run's records land in it,
+  regardless of whether the same business was already scraped in an
+  earlier run), and stays that way on purpose (a "check the whole file on
+  every write" cost isn't worth paying day to day). What changed
+  2026-09-11: a periodic cleanup pass now exists --
+  `python scripts/dedupe_businesses_csv.py` collapses rows sharing a phone
+  number (same rule as the lead-list pipeline, see `match/dedupe.py`),
+  keeping the most recently scraped snapshot per phone, backing up the
+  original to `data/processed/archive/` first. Run by hand whenever a
+  cleaned-up snapshot is wanted (first real run: 4,936 -> 4,219 rows).
 - **`git push` still never touches the live site** -- GitHub is version
   control, not part of the deploy path, and nothing watches it. The batch
   scraper (`batch_scrape_metros.py` / its Streamlit page) *does* now deploy
