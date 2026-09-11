@@ -64,7 +64,7 @@ class Report(FPDF):
         self.set_text_color(*MUTED)
         self.cell(0, 8, "Lead Scoring Model", align="L")
         self.set_x(-40)
-        self.cell(30, 8, "Lead Intelligence", align="R")
+        self.cell(30, 8, "LossLess", align="R")
         self.ln(12)
 
     def footer(self):
@@ -256,7 +256,7 @@ def build(pdf: Report, example: dict, dataset_label: str):
     pdf.multi_cell(0, 12, "Lead Scoring Model")
     pdf.set_font("Helvetica", "", 13)
     pdf.set_text_color(*MUTED)
-    pdf.multi_cell(0, 8, "How Lead Intelligence scores a BBB + Yelp record as a sales lead")
+    pdf.multi_cell(0, 8, "How LossLess scores a BBB + Yelp record as a sales lead")
     pdf.ln(6)
     pdf.set_font("Helvetica", "", 9.5)
     pdf.set_text_color(*TEXT)

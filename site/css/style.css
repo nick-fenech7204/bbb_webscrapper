@@ -97,28 +97,25 @@ img { max-width: 100%; }
   flex: none;
 }
 
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
 .brand-name {
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.nav-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.9rem;
+.brand-tag {
+  font-size: 0.68rem;
   font-weight: 600;
-  padding: 6px 0;
-  border-bottom: 2px solid transparent;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
-.nav-link:hover { color: var(--text); }
-.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ---------- main / views ---------- */
 main.wrap {
@@ -646,6 +643,17 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
 .badge-yes { background: var(--accent-soft); color: var(--accent); }
 .badge-flag { background: var(--flag-bg); color: var(--flag); }
 .badge-soft { border: 1px solid var(--border-strong); color: var(--text-muted); }
+
+/* Flags cell can hold up to 3 badges that wrap onto more than one line in
+   a narrow column -- a real flex `gap` (both row- and column-wise) instead
+   of relying on a plain text-node space between them, which collapses
+   right at a line-wrap boundary and let two badges' rounded pill edges
+   touch/overlap with no visible gap there. */
+.badge-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px 6px;
+}
 
 /* score bar */
 .score {

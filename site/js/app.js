@@ -17,7 +17,6 @@
   const $ = (id) => document.getElementById(id);
   const landingView = $("landing-view");
   const heroStats = $("hero-stats");
-  const navLists = $("nav-lists");
   const listsView = $("lists-view");
   const datasetView = $("dataset-view");
   const loadingEl = $("loading");
@@ -134,7 +133,13 @@
       out.push('<span class="badge badge-flag">Accredited, low-rated</span>');
     if (isTrue(r.low_review_volume_flag))
       out.push('<span class="badge badge-soft">Few reviews</span>');
-    return out.join(" ") || `<span class="muted">${dash}</span>`;
+    if (!out.length) return `<span class="muted">${dash}</span>`;
+    // .badge-group gives real flex `gap` between badges, both between two
+    // on the same line and between wrapped rows -- a plain text-node space
+    // (the old `.join(" ")`) collapses right at a line-wrap boundary, which
+    // is what let two badges' rounded pill edges sit flush against each
+    // other with no visible gap there.
+    return `<span class="badge-group">${out.join("")}</span>`;
   }
   const plain = (key) => (r) => esc(r[key] ?? "");
   // Same, but with a title="" -- a minor bonus (the full value on one
@@ -187,10 +192,6 @@
     await showDataset(entry);  // parts[1] (an old /intel link) is ignored -- one combined view now
   }
 
-  function setNavActive(onListsSide) {
-    navLists.classList.toggle("active", onListsSide);
-  }
-
   // ---------- landing ----------
   function showLanding() {
     ds = null;
@@ -198,8 +199,7 @@
     datasetView.hidden = true;
     loadingEl.hidden = true;
     landingView.hidden = false;
-    setNavActive(false);
-    document.title = "Lead Intelligence — BBB + Yelp Leads for Reputation-Management Sales";
+    document.title = "LossLess — Lead Generation Platform";
 
     const datasets = manifest.datasets;
     const totalBiz = datasets.reduce((sum, d) => sum + d.record_count, 0);
@@ -278,8 +278,7 @@
     datasetView.hidden = true;
     loadingEl.hidden = true;
     listsView.hidden = false;
-    setNavActive(true);
-    document.title = "Lead lists — Lead Intelligence";
+    document.title = "Lead lists — LossLess";
 
     populateHomeFilters();
     renderHomeCards();
@@ -297,13 +296,12 @@
   async function showDataset(entry) {
     landingView.hidden = true;
     listsView.hidden = true;
-    setNavActive(true);  // a dataset view is conceptually under Lead lists
     ds = entry;
     const changed = ds.id !== renderedDatasetId;
     renderedDatasetId = ds.id;
 
     legend.hidden = false;
-    document.title = `${ds.industry} — ${ds.metro} — Lead Intelligence`;
+    document.title = `${ds.industry} — ${ds.metro} — LossLess`;
 
     if (!cache.has(ds.id)) {
       datasetView.hidden = true;
