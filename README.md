@@ -387,12 +387,31 @@ deploy to the live site when done, and click **Start batch**.
 
 It's a thin launcher, not the scraper itself: it starts
 `scripts/batch_scrape_metros.py` as a background OS process and tails its
-log file. Because that's a real separate process, a multi-hour batch keeps
-running even if you close the browser tab -- only **Stop batch** (or
-stopping the Streamlit server) ends it. All the real logic -- the metro
-sweep, checkpoint/resume, Yelp enrichment + quota handling, per-metro site
-publish, and the final deploy -- lives in that script, so the page and the
-CLI can't drift apart.
+log file. All the real logic -- the metro sweep, checkpoint/resume, Yelp
+enrichment + quota handling, per-metro site publish, and the final deploy --
+lives in that script, so the page and the CLI can't drift apart.
+
+**Robustness, 2026-09-11 (real incident):** two long `--details` batches
+were lost mid-run -- vanished after 65-78 minutes with zero checkpoint and
+no exception. Root cause: the batch subprocess shared this page's console
+(so closing the terminal or restarting Streamlit killed it instantly), and
+the page re-read the *entire*, ever-growing log file every ~3s auto-refresh
+(multi-hundred-KB to multi-MB by the time a batch had run a while), which
+made the page progressively slower until it looked frozen -- the likely
+trigger for closing/restarting it in the first place. Fixed three ways: the
+batch subprocess now runs fully detached (its own console/process group),
+so it's genuinely unaffected by this tab, its terminal, or Streamlit itself
+closing or restarting -- only **Stop batch** (or killing its PID directly)
+ends it now; the log view tails a bounded window of the file instead of the
+whole thing, so refresh cost stays constant no matter how long the batch
+runs; and the running batch's pid/log path are mirrored to
+`logs/batch/current_run.json` so a fresh session (after a Streamlit
+restart) reattaches to a still-running batch instead of showing "not
+running" and inviting a second, racing one. Belt-and-suspenders on the
+scraper side: a `--details` run now snapshots partial progress to
+`data/processed/batch/_partial/` every 25 businesses, so even a genuine
+hard kill (sleeping laptop, Task Manager, a power blip) loses at most a few
+minutes, not the whole metro.
 
 ```bash
 streamlit run streamlit_app.py      # or double-click run_streamlit.bat

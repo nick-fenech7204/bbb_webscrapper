@@ -14,12 +14,46 @@ process and tails its log. All the real logic -- the metro sweep,
 checkpointing/resume, Yelp enrichment + quota handling, per-metro site
 publish -- lives in that script, so the CLI and this page can't drift.
 
-Runs as a background *process*, not a Streamlit loop: a multi-metro batch
-can run for hours. Because it's a separate process it survives closing
-this tab -- only "Stop batch" (or stopping the Streamlit server) ends it.
+**Robustness rework, 2026-09-11**, after a real incident: two overnight-
+scale `--details` batches (Roof Contractors/Atlanta, then Electricians/
+Dallas) each ran 65-78 minutes -- thousands of successful requests -- then
+vanished mid-run with zero checkpoint, zero exception in the log, just a
+silent cutoff. Root cause, confirmed from the logs themselves: the batch
+subprocess was spawned as a plain child that shares this Streamlit
+process's console/process group, AND this page re-read the *entire*,
+ever-growing log file into memory and re-rendered it every ~3-second
+auto-refresh -- for a batch running long enough, that log grows into the
+hundreds of KB to multi-MB, making each refresh slower than the last until
+the page looks and feels frozen. The likely chain: the page felt frozen ->
+the terminal/Streamlit process got closed or restarted to "fix" it -> the
+still-running batch subprocess, sharing that console, died with it,
+instantly, with nothing left to flush. Three independent fixes:
+  1. The log view now tails a bounded window of the file (LOG_TAIL_BYTES),
+     never the whole thing -- constant cost per refresh no matter how long
+     the batch has been running.
+  2. The child process is launched fully detached (Windows:
+     CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS, its own stdin) so it does
+     NOT share this process's console -- closing this tab, closing the
+     terminal, or restarting Streamlit itself no longer touches it. Only
+     the "Stop batch" button (or killing its PID directly) ends it now,
+     matching what the old docstring already *claimed* but didn't actually
+     guarantee.
+  3. Because a Streamlit restart drops this page's in-memory
+     `st.session_state` (the Popen handle included), the running batch's
+     pid/log path are mirrored to logs/batch/current_run.json so a fresh
+     session can find and reattach to a still-running batch instead of
+     showing "not running" and inviting a second, racing one to start
+     against the same metros.
+Belt-and-suspenders on the scraper side too: scripts/batch_scrape_metros.py
+now writes a recoverable partial snapshot every 25 businesses during a long
+--details loop, so even a genuine hard kill (sleeping laptop, Task Manager,
+a power blip) loses at most a few minutes of progress, not the whole metro.
 """
 from __future__ import annotations
 
+import ctypes
+import json
+import os
 import subprocess
 import sys
 import time
@@ -37,6 +71,91 @@ st.set_page_config(page_title="BBB Batch Scraper", page_icon="\U0001F5C3", layou
 REPO_ROOT = Path(__file__).resolve().parent
 LOG_DIR = REPO_ROOT / "logs" / "batch"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
+RUN_STATE_PATH = LOG_DIR / "current_run.json"
+
+# Bytes of the log file to read+render per auto-refresh -- see the module
+# docstring. Keeps every refresh's cost constant regardless of how long the
+# batch has been running (the bug this fixes: reading a multi-MB file whole,
+# every ~3s, made the page progressively slower over the course of a batch).
+LOG_TAIL_BYTES = 12_000
+
+
+def _tail_file(path: Path, max_bytes: int = LOG_TAIL_BYTES) -> tuple[str, bool]:
+    """Read at most the last `max_bytes` of `path` without loading the whole
+    file into memory -- cheap to call every rerun even once a log is
+    multi-megabyte. Returns (text, truncated)."""
+    size = path.stat().st_size
+    with path.open("rb") as f:
+        if size > max_bytes:
+            f.seek(size - max_bytes)
+            f.readline()  # drop the partial first line from the mid-file seek
+            return f.read().decode("utf-8", errors="replace"), True
+        return f.read().decode("utf-8", errors="replace"), False
+
+
+def _pid_alive(pid: int) -> bool:
+    """True if `pid` is a live process. Works for a PID this session never
+    itself spawned (e.g. reattaching via current_run.json after a Streamlit
+    restart), unlike a held Popen handle's `.poll()`.
+
+    On Windows, a bare `OpenProcess` success is NOT enough -- confirmed by a
+    real test that first looked right and then wasn't: the process object
+    behind a PID can outlive the process itself as long as *any* handle to
+    it (even one held by an unrelated process, e.g. an unwaited Popen
+    object) is still open, so `OpenProcess` alone can report a just-killed
+    PID as still openable. `GetExitCodeProcess`'s STILL_ACTIVE is the real
+    liveness check.
+    """
+    if sys.platform == "win32":
+        process_query_limited_information = 0x1000
+        still_active = 259
+        handle = ctypes.windll.kernel32.OpenProcess(process_query_limited_information, False, pid)
+        if not handle:
+            return False
+        try:
+            exit_code = ctypes.c_ulong()
+            if not ctypes.windll.kernel32.GetExitCodeProcess(handle, ctypes.byref(exit_code)):
+                return False
+            return exit_code.value == still_active
+        finally:
+            ctypes.windll.kernel32.CloseHandle(handle)
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
+
+
+def _kill_pid(pid: int) -> None:
+    """Kill a batch we're only reattached to (no Popen handle to .terminate()
+    this session). `/T` also takes down anything it spawned (e.g. an AWS CLI
+    deploy call in flight)."""
+    if sys.platform == "win32":
+        subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True, check=False)
+    else:
+        import signal
+        os.kill(pid, signal.SIGTERM)
+
+
+def _write_run_state(pid: int, log_path: Path, cmd: list[str]) -> None:
+    RUN_STATE_PATH.write_text(
+        json.dumps({"pid": pid, "log_path": str(log_path), "cmd": cmd, "started_at": time.time()}),
+        encoding="utf-8",
+    )
+
+
+def _clear_run_state() -> None:
+    RUN_STATE_PATH.unlink(missing_ok=True)
+
+
+def _read_run_state() -> dict | None:
+    if not RUN_STATE_PATH.exists():
+        return None
+    try:
+        return json.loads(RUN_STATE_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+
 
 st.title("BBB Batch Scraper")
 st.caption(
@@ -50,14 +169,31 @@ metro_directory = MetroDirectory.load()
 metro_options = {m.id: m.name for m in metro_directory.all()}
 
 if "batch_process" not in st.session_state:
-    st.session_state.batch_process = None
+    st.session_state.batch_process = None  # a Popen handle, only if *this* session spawned it
+    st.session_state.batch_pid = None      # pid, whether owned or reattached
     st.session_state.batch_log_path = None
     st.session_state.batch_cmd = None
+
+    # Fresh session (new browser tab, or Streamlit itself restarted) -- if
+    # current_run.json says a batch is mid-flight, reattach instead of
+    # silently forgetting about it (which is what used to make a genuinely
+    # still-running batch look stopped, and invited starting a second one
+    # against the same metros).
+    _state = _read_run_state()
+    if _state and _pid_alive(_state["pid"]):
+        st.session_state.batch_pid = _state["pid"]
+        st.session_state.batch_log_path = Path(_state["log_path"])
+        st.session_state.batch_cmd = _state.get("cmd")
+    elif _state:
+        _clear_run_state()  # stale -- whatever pid this pointed at is gone
 
 
 def _is_running() -> bool:
     proc = st.session_state.batch_process
-    return proc is not None and proc.poll() is None
+    if proc is not None:
+        return proc.poll() is None
+    pid = st.session_state.batch_pid
+    return pid is not None and _pid_alive(pid)
 
 
 with st.form("batch_form"):
@@ -95,7 +231,10 @@ with st.form("batch_form"):
         value=False,
         help="Off by default -- roughly doubles time per metro. Breadth (more metros) "
              "usually matters more than depth for a first pass; re-run a specific metro "
-             "with this on later.",
+             "with this on later. A big metro with this on can run well over an hour -- "
+             "progress is now snapshotted every 25 businesses to data/processed/batch/"
+             "_partial/ so a crash mid-metro can't lose the whole thing (see the module "
+             "docstring in scripts/batch_scrape_metros.py).",
     )
     deploy_when_done = st.checkbox(
         "Deploy each metro to the live site as it finishes",
@@ -128,7 +267,7 @@ if submitted and not _is_running():
     log_path = LOG_DIR / f"batch-{timestamp}.log"
 
     cmd = [
-        sys.executable, str(REPO_ROOT / "scripts" / "batch_scrape_metros.py"),
+        sys.executable, "-u", str(REPO_ROOT / "scripts" / "batch_scrape_metros.py"),
         "--industry", industry_text.strip(),
         "--radius", str(radius), "--min-population", str(int(min_population)),
         "--pages-per-place", str(int(pages_per_place)),
@@ -142,10 +281,24 @@ if submitted and not _is_running():
         cmd.append("--force")
 
     log_file = log_path.open("w", encoding="utf-8")
-    process = subprocess.Popen(cmd, stdout=log_file, stderr=subprocess.STDOUT, cwd=str(REPO_ROOT))
+    popen_kwargs: dict = {}
+    if sys.platform == "win32":
+        # Fully detach: no shared console with this Streamlit process, so
+        # the child is unaffected by closing this tab, closing the terminal
+        # Streamlit runs in, or Streamlit itself being stopped/restarted.
+        # See the module docstring for the real incident this fixes.
+        popen_kwargs["creationflags"] = (
+            subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+        )
+    process = subprocess.Popen(
+        cmd, stdout=log_file, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+        cwd=str(REPO_ROOT), **popen_kwargs,
+    )
     st.session_state.batch_process = process
+    st.session_state.batch_pid = process.pid
     st.session_state.batch_log_path = log_path
     st.session_state.batch_cmd = cmd
+    _write_run_state(process.pid, log_path, cmd)
     st.rerun()
 
 with st.expander("Configuration"):
@@ -162,27 +315,53 @@ st.divider()
 if st.session_state.batch_log_path is not None:
     log_path = st.session_state.batch_log_path
     running = _is_running()
+    reattached = running and st.session_state.batch_process is None
 
     status_col, stop_col = st.columns([5, 1])
     with status_col:
         if running:
             st.info(
-                "Batch running -- this page refreshes itself every few seconds. "
-                "Safe to close this tab; the process keeps going as long as the "
-                f"Streamlit server itself stays running. Log file: `{log_path}`"
+                ("Batch running (reattached after a page/server restart -- still the same "
+                 "process, nothing was lost). " if reattached else "Batch running. ")
+                + "This page refreshes itself every few seconds. The batch is a fully "
+                "detached process, so it keeps running even if this tab, its terminal, or "
+                f"Streamlit itself closes or restarts. Log file: `{log_path}`"
             )
         else:
             st.success(f"Not currently running (finished, stopped, or not started this session). Log file: `{log_path}`")
     with stop_col:
         if running and st.button("Stop batch"):
-            st.session_state.batch_process.terminate()
+            if st.session_state.batch_process is not None:
+                st.session_state.batch_process.terminate()
+            elif st.session_state.batch_pid is not None:
+                _kill_pid(st.session_state.batch_pid)
+            _clear_run_state()
             st.rerun()
 
-    log_text = log_path.read_text(encoding="utf-8") if log_path.exists() else ""
-    st.code(log_text or "(no output yet)", language=None)
+    if log_path.exists():
+        text, truncated = _tail_file(log_path)
+        if truncated:
+            st.caption(
+                f"Showing the last ~{LOG_TAIL_BYTES // 1000}KB of a larger log file "
+                f"(full file: `{log_path}`)."
+            )
+        st.code(text or "(no output yet)", language=None)
+        if not running:
+            # Only offered once the batch is done -- while it's still
+            # running this would re-read the whole (possibly multi-MB and
+            # growing) file into memory every ~3s refresh, exactly the cost
+            # the tail view above exists to avoid.
+            st.download_button("Download full log", data=log_path.read_bytes(), file_name=log_path.name)
+    else:
+        st.code("(no output yet)", language=None)
 
     if running:
         time.sleep(3)
         st.rerun()
+    elif RUN_STATE_PATH.exists():
+        # Finished/crashed on its own (not via the Stop button) since we last
+        # checked -- clear the stale pointer so a future session doesn't
+        # chase a dead pid.
+        _clear_run_state()
 elif not submitted:
     st.info("Fill in the form above and click **Start batch** to get going.")

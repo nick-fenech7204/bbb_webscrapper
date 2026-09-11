@@ -48,6 +48,15 @@ Per metro:
   never undoes the fact that the scrape + checkpoint + local publish for
   that metro already succeeded.
 
+In --details mode, step 1's per-business detail loop can itself run well
+over an hour for a big metro (confirmed: 65-78 minutes, real 2026-09-11
+runs) -- a *hard* kill in there (closed terminal, sleeping laptop, killed
+process) previously lost the entire metro with zero trace, since nothing
+reached disk until the loop finished. It now writes a recoverable partial
+snapshot to data/processed/batch/_partial/ every 25 businesses (see
+_write_partial_checkpoint) -- insurance against a total loss, not resume
+logic (a re-run still re-scrapes the metro from scratch today).
+
 After the whole batch: rebuilds data/processed/<industry-slug>_all_metros.csv
 -- every metro run for this industry so far, concatenated, as one file.
 """
@@ -77,6 +86,7 @@ from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
 from bbb_scraper.reference.metros import MetroDirectory
 from bbb_scraper.reference.models import Category, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
+from bbb_scraper.utils.flatten import flatten_record
 from bbb_scraper.utils.stats import RunStats
 
 configure_logging()
@@ -85,10 +95,42 @@ logger = get_logger(__name__)
 BATCH_DIR = REPO_ROOT / "data" / "processed" / "batch"
 
 
+def _write_partial_checkpoint(path: Path, records: list[dict]) -> None:
+    """Overwrite `path` with the current in-progress snapshot of a metro's
+    detail-fetch loop -- pure defense-in-depth against a hard kill mid-metro
+    (closed terminal, sleeping laptop, a frozen-looking Streamlit tab
+    restarted by hand, ...). Added after a real incident (2026-09-11): two
+    back-to-back `--details` batches (Roof Contractors/Atlanta, then
+    Electricians/Dallas) each ran 65-78 minutes -- thousands of successful
+    requests -- then vanished with zero checkpoint and no exception, because
+    nothing reached disk until `scrape_one_metro` returned at the very end of
+    the whole metro. This writes a recoverable snapshot every
+    `partial_every` businesses instead, so a future crash loses at most the
+    last few minutes, not the whole metro. Not resume logic (a re-run still
+    re-scrapes from scratch) -- just making sure a crash is never a total loss.
+
+    Written atomically (temp file + `replace()`) so a kill mid-write can
+    never leave a half-written, corrupt partial file behind.
+    """
+    if not records:
+        return
+    deduped = dedupe_by_phone(dedupe_records(records))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    rows = [flatten_record(r) for r in deduped]
+    fieldnames = sorted({key for row in rows for key in row})
+    tmp_path = path.with_suffix(path.suffix + ".tmp")
+    with tmp_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+    tmp_path.replace(path)
+
+
 def scrape_one_metro(
     category: Category, metro: Metro, *,
     radius_miles: float, min_population: int, max_pages_per_place: int,
     fetch_details: bool, stats: RunStats,
+    partial_checkpoint_path: Path | None = None, partial_every: int = 25,
 ) -> list[dict]:
     """One metro's worth of BBB records -- details-first if fetch_details,
     same merge pattern already proven on the real Miami car-dealers run (a
@@ -105,6 +147,12 @@ def scrape_one_metro(
          number (common, and BBB-correct) still reads as one row here,
          because from here on these records feed the lead list, checkpoint,
          and businesses.csv -- not a BBB browsing view.
+
+    `partial_checkpoint_path`, when given, gets a recoverable snapshot of
+    `detail_records + summary_records` every `partial_every` businesses --
+    see `_write_partial_checkpoint`. Only matters in `--details` mode; a
+    no-details sweep is one pagination loop, not thousands of individual
+    requests, so it was never the failure mode this exists for.
     """
     seed_location = parse_location(metro.seed_location)
     with Extractor(stats=stats) as extractor:
@@ -118,7 +166,7 @@ def scrape_one_metro(
             return dedupe_by_phone(dedupe_records(summary_records, stats=stats))
 
         detail_records = []
-        for summary in summaries:
+        for i, summary in enumerate(summaries, 1):
             if not summary.profile_url:
                 continue
             try:
@@ -127,6 +175,12 @@ def scrape_one_metro(
                 detail_records.append(transform_detail(detail))
             except Exception:
                 logger.exception("Detail fetch failed for %s", summary.profile_url)
+
+            if partial_checkpoint_path and i % partial_every == 0:
+                _write_partial_checkpoint(partial_checkpoint_path, detail_records + summary_records)
+
+        if partial_checkpoint_path:
+            _write_partial_checkpoint(partial_checkpoint_path, detail_records + summary_records)
 
     return dedupe_by_phone(dedupe_records(detail_records + summary_records, stats=stats))
 
@@ -222,6 +276,18 @@ def main() -> int:
             skipped += 1
             continue
 
+        # Recoverable snapshot written periodically during a long --details
+        # loop (see _write_partial_checkpoint) -- not resume logic, just
+        # insurance against a hard kill losing the whole metro. A leftover
+        # file here means a previous attempt at this exact metro died before
+        # finishing; it's not read back in (no resume-skip logic yet), just
+        # flagged so it isn't silently overwritten without a word.
+        partial_path = BATCH_DIR / "_partial" / f"{industry_slug}--{metro.id}.csv"
+        if args.details and partial_path.exists():
+            print(f"[{i}/{len(metros)}] {metro.name}: found leftover partial progress from an "
+                  f"interrupted run at {partial_path} -- re-scraping this metro from scratch "
+                  f"(recover that file by hand first if you want its data too).")
+
         start = time.monotonic()
         print(f"[{i}/{len(metros)}] {metro.name}: starting...")
         stats = RunStats()
@@ -231,6 +297,7 @@ def main() -> int:
                 radius_miles=args.radius, min_population=args.min_population,
                 max_pages_per_place=args.pages_per_place, fetch_details=args.details,
                 stats=stats,
+                partial_checkpoint_path=partial_path if args.details else None,
             )
         except Exception:
             logger.exception("Metro %r failed -- skipping to the next one", metro.name)
@@ -247,6 +314,10 @@ def main() -> int:
         try:
             master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
             CSVSink(checkpoint_path).load(master_rows)
+            # The real checkpoint just landed -- any partial snapshot from
+            # this metro's detail loop is superseded, remove it so it can't
+            # be mistaken for still-relevant leftover data next run.
+            partial_path.unlink(missing_ok=True)
 
             for sink in build_sinks_from_settings():
                 try:
