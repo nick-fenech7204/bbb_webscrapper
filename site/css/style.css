@@ -60,9 +60,23 @@ img { max-width: 100%; }
 
 /* ---------- header ---------- */
 .site-header {
+  /* NOT sticky, on purpose: it needs to coordinate its height with the
+     dataset table's own sticky header (see thead th below), and
+     position:sticky with a non-zero offset set dynamically (either via a
+     CSS custom property or inline style) proved unreliable here -- it
+     silently stopped sticking altogether instead of sitting below the
+     site header. table-header stickiness is worth far more when scanning
+     a 1000+ row table than the nav staying pinned while scrolling one. */
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 26px 0 24px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
 }
 
 .brand {
@@ -71,6 +85,7 @@ img { max-width: 100%; }
   gap: 10px;
   text-decoration: none;
   color: var(--text);
+  flex: none;
 }
 
 .brand-mark {
@@ -88,17 +103,125 @@ img { max-width: 100%; }
   letter-spacing: -0.01em;
 }
 
-.brand-tag {
-  margin: 12px 0 0;
-  max-width: 60ch;
-  color: var(--text-muted);
-  font-size: 0.92rem;
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ---------- main / views ---------- */
 main.wrap {
   padding-top: 30px;
   padding-bottom: 64px;
+}
+
+/* ---------- landing ---------- */
+.hero {
+  padding: 56px 0 40px;
+  max-width: 760px;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.hero-sub {
+  margin: 18px 0 0;
+  max-width: 62ch;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.hero-actions { margin-top: 28px; }
+
+.btn-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  font-size: 0.98rem;
+  border-radius: 10px;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label { color: var(--text-muted); font-size: 0.82rem; }
+
+.feature-grid {
+  margin: 12px 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.feature {
+  padding: 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 12px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.feature h3 {
+  margin: 0 0 6px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 36px 0 28px; }
+  .hero-title { font-size: 1.9rem; }
 }
 
 .view-title {
@@ -338,6 +461,7 @@ main.wrap {
   border: 1px solid var(--accent);
   background: var(--accent);
   color: #fff;
+  text-decoration: none;  /* also used on <a> (the hero CTA) */
 }
 .btn-solid:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
 .btn-solid:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -388,6 +512,21 @@ main.wrap {
    far more robust across screen sizes than forcing everything to fit. */
 .table-wrap {
   overflow-x: auto;
+  /* Also bounds the height and scrolls it (rather than leaving overflow-y
+     at its default) so thead's position:sticky has an ancestor that
+     actually scrolls vertically to stick against. Setting overflow-x
+     alone, with overflow-y left "visible", doesn't give a truly unbounded
+     vertical overflow the way it looks like it would -- per the CSS
+     overflow spec, "visible" paired with a non-visible sibling axis
+     computes to "auto" instead, so .table-wrap was ALREADY the sticky
+     header's scrolling ancestor even without max-height/overflow-y here;
+     it just never actually scrolled vertically (unbounded height), so the
+     header silently never stuck. Bounding the height is what makes that
+     already-implied scroll container a real, working one -- a nice side
+     effect being a 1900-row table no longer makes the whole page enormous.
+  */
+  max-height: 70vh;
+  overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
@@ -425,7 +564,7 @@ thead th:first-child { z-index: 3; background: var(--surface-2); }
 
 thead th {
   position: sticky;
-  top: 0;
+  top: 0;  /* the site header isn't sticky, so this is the true viewport top -- see its comment */
   z-index: 2;
   background: var(--surface-2);
   color: var(--text-muted);

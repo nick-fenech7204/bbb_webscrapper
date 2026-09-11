@@ -413,11 +413,15 @@ only ever reads pre-published data files, never scrapes live. That's the
 whole safety story -- there's no publicly reachable path to your proxy or
 BBB session, so there's nothing to lock down or rate-limit.
 
-**One hash-routed page** (`site/index.html`): a **home** listing every lead
-list as a card (`#/`), filterable by industry and metro (two `<select>`s
-built off the distinct values in the manifest -- independent of each
-other, not narrowing one another, which is plenty for the dataset counts
-this is at; gets revisited if that stops being true), and per dataset a
+**One hash-routed page** (`site/index.html`), three tiers: a **landing**
+page (`#/`) -- a real marketing/intro page (headline, live stats summed
+off the manifest, a features grid), not the list index itself, with a
+persistent nav header (brand + a "Lead lists" link) across every page,
+2026-09-11 -- a **lists** page (`#/lists`) listing every lead list as a
+card, filterable by industry and metro (two `<select>`s built off the
+distinct values in the manifest -- independent of each other, not
+narrowing one another, which is plenty for the dataset counts this is at;
+gets revisited if that stops being true), and per dataset a
 **Lead records** view (`#/<id>`)
 and an **Intelligence** view (`#/<id>/intel`) -- each a real, bookmarkable
 URL. Lead records is the standard BBB lead (rating, accreditation, phone,

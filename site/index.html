@@ -9,21 +9,59 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap header-inner">
       <a class="brand" href="#/">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">Lead Intelligence</span>
       </a>
-      <p class="brand-tag">
-        BBB business listings matched against Yelp and scored as sales leads
-        for firms that sell review &amp; reputation-management services.
-      </p>
+      <nav class="site-nav" aria-label="Main">
+        <a id="nav-lists" class="nav-link" href="#/lists">Lead lists</a>
+      </nav>
     </div>
   </header>
 
   <main class="wrap" id="app">
-    <!-- ============ HOME ============ -->
-    <section id="home-view" hidden>
+    <!-- ============ LANDING ============ -->
+    <section id="landing-view" hidden>
+      <div class="hero">
+        <h1 class="hero-title">Find the businesses that need what you sell</h1>
+        <p class="hero-sub">
+          Public BBB listings matched against Yelp and scored as sales leads for firms
+          that sell review &amp; reputation-management services — who has a visible,
+          fixable reputation gap, and can you actually reach them today.
+        </p>
+        <div class="hero-actions">
+          <a href="#/lists" class="btn-solid btn-large">Browse lead lists <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div id="hero-stats" class="hero-stats"></div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">&#9737;</div>
+          <h3>BBB + Yelp, matched</h3>
+          <p>Every record is a real BBB business listing, cross-referenced against Yelp by phone, name, and location — not a scrape of Yelp itself.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">&#9650;</div>
+          <h3>Scored to find the pitch</h3>
+          <p>A blended reputation score and a lead-priority score built specifically for review/reputation-management sales — favoring a real, fixable gap over already-fine or beyond-help businesses.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">&#9742;</div>
+          <h3>Reachability built in</h3>
+          <p>A great-fit lead nobody can call isn't a lead yet. Every record is flagged by whether there's a phone number and a named contact to actually reach.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">&#8681;</div>
+          <h3>Export anywhere</h3>
+          <p>CSV, Excel, PDF, or plain text — filtered and sorted the way you're looking at it, one click, no server round-trip.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LISTS ============ -->
+    <section id="lists-view" hidden>
       <h1 class="view-title">Lead lists</h1>
       <p class="view-sub">
         One list per market. Each has a browsable <strong>lead table</strong>
@@ -45,7 +83,7 @@
 
     <!-- ============ DATASET ============ -->
     <section id="dataset-view" hidden>
-      <a class="back-link" href="#/"><span aria-hidden="true">&larr;</span> All lead lists</a>
+      <a class="back-link" href="#/lists"><span aria-hidden="true">&larr;</span> All lead lists</a>
 
       <div class="dataset-head">
         <div class="dataset-head-text">

@@ -4,14 +4,18 @@
 // the browser.
 //
 // Routes (hash):
-//   #/                       -> home: a card per lead list
+//   #/                       -> landing: intro + live stats + CTA
+//   #/lists                  -> a card per lead list, filterable
 //   #/<dataset-id>           -> that list, Lead records view
 //   #/<dataset-id>/intel     -> that list, Intelligence view
 (() => {
   "use strict";
 
   const $ = (id) => document.getElementById(id);
-  const homeView = $("home-view");
+  const landingView = $("landing-view");
+  const heroStats = $("hero-stats");
+  const navLists = $("nav-lists");
+  const listsView = $("lists-view");
   const datasetView = $("dataset-view");
   const loadingEl = $("loading");
   const homeCards = $("home-cards");
@@ -149,20 +153,50 @@
 
   // ---------- router ----------
   function parseHash() {
-    const parts = (location.hash || "").replace(/^#\/?/, "").split("/").filter(Boolean);
-    return { id: parts[0] || null, view: parts[1] === "intel" ? "intel" : "leads" };
+    return (location.hash || "").replace(/^#\/?/, "").split("/").filter(Boolean);
   }
 
   async function route() {
     if (!manifest) return;
-    const { id, view: v } = parseHash();
-    const entry = id && manifest.datasets.find((d) => d.id === id);
-    if (!entry) { showHome(); return; }
-    view = v;
+    const parts = parseHash();
+    if (parts.length === 0) { showLanding(); return; }
+    if (parts[0] === "lists") { showLists(); return; }
+    const entry = manifest.datasets.find((d) => d.id === parts[0]);
+    if (!entry) { showLists(); return; }  // unknown id -> the index, not the marketing page
+    view = parts[1] === "intel" ? "intel" : "leads";
     await showDataset(entry);
   }
 
-  // ---------- home ----------
+  function setNavActive(onListsSide) {
+    navLists.classList.toggle("active", onListsSide);
+  }
+
+  // ---------- landing ----------
+  function showLanding() {
+    ds = null;
+    listsView.hidden = true;
+    datasetView.hidden = true;
+    loadingEl.hidden = true;
+    landingView.hidden = false;
+    setNavActive(false);
+    document.title = "Lead Intelligence — BBB + Yelp Leads for Reputation-Management Sales";
+
+    const datasets = manifest.datasets;
+    const totalBiz = datasets.reduce((sum, d) => sum + d.record_count, 0);
+    const totalYelp = datasets.reduce((sum, d) => sum + d.yelp_matched, 0);
+    const metros = new Set(datasets.map((d) => d.metro)).size;
+    const stats = [
+      [datasets.length.toLocaleString(), `lead list${datasets.length === 1 ? "" : "s"}`],
+      [totalBiz.toLocaleString(), "businesses tracked"],
+      [metros.toLocaleString(), `market${metros === 1 ? "" : "s"}`],
+      [totalYelp.toLocaleString(), "matched to Yelp"],
+    ];
+    heroStats.innerHTML = stats.map(([num, label]) =>
+      `<div class="stat"><span class="stat-num">${esc(num)}</span><span class="stat-label">${esc(label)}</span></div>`
+    ).join("");
+  }
+
+  // ---------- lists ----------
   // Options are built once off the full manifest and left alone after
   // that -- the two dropdowns stay independent (each always lists every
   // industry/metro, not narrowed by the other's current pick) since with
@@ -218,12 +252,14 @@
     }).join("");
   }
 
-  function showHome() {
+  function showLists() {
     ds = null;
+    landingView.hidden = true;
     datasetView.hidden = true;
     loadingEl.hidden = true;
-    homeView.hidden = false;
-    document.title = "Lead Intelligence — BBB + Yelp";
+    listsView.hidden = false;
+    setNavActive(true);
+    document.title = "Lead lists — Lead Intelligence";
 
     populateHomeFilters();
     renderHomeCards();
@@ -231,14 +267,16 @@
     const asOf = manifest.generated_at
       ? new Date(manifest.generated_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
       : null;
-    homeView.querySelector(".view-sub").innerHTML =
+    listsView.querySelector(".view-sub").innerHTML =
       `One list per market. Each has a browsable <strong>lead table</strong> and a scored ` +
       `<strong>intelligence</strong> view.` + (asOf ? ` <span class="muted">Data published ${asOf}.</span>` : "");
   }
 
   // ---------- dataset ----------
   async function showDataset(entry) {
-    homeView.hidden = true;
+    landingView.hidden = true;
+    listsView.hidden = true;
+    setNavActive(true);  // a dataset view is conceptually under Lead lists
     ds = entry;
     const key = `${ds.id}|${view}`;
     const changed = key !== renderedKey;
@@ -288,6 +326,14 @@
     if (changed) {
       sortKey = view === "intel" ? "lead_priority_score" : null;
       sortDir = -1;
+      // .table-wrap scrolls independently now (a bounded, self-scrolling
+      // panel, not the whole page -- see its comment in style.css), so
+      // switching dataset/view has to reset ITS scroll explicitly too --
+      // replacing the row HTML alone doesn't reset a container's own
+      // scroll position, and leftover scroll would show the newly-sorted
+      // table starting mid-list instead of at its real top row.
+      const tw = document.querySelector(".table-wrap");
+      if (tw) { tw.scrollTop = 0; tw.scrollLeft = 0; }
     }
     exportToggle.disabled = records.length === 0;
     buildHead();
