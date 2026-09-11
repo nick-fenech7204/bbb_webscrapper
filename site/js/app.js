@@ -70,9 +70,9 @@
   function websiteCell(r) {
     if (!r.website) return "";
     const label = r.website.replace(/^https?:\/\//, "");
-    // Truncation is handled by the column's own td.trunc-cell (fixed
-    // table-layout means the column can't grow past its th's width no
-    // matter how long the URL is) -- title="" carries the full URL.
+    // A long URL just wraps onto another line like everything else in the
+    // table now -- title="" is a minor bonus (the full URL on one line on
+    // hover), not load-bearing the way it was when this truncated instead.
     return `<a href="${esc(r.website)}" target="_blank" rel="noopener" title="${esc(r.website)}">${esc(label)}</a>`;
   }
   // BBB grade + accreditation combined into one compact cell (was two
@@ -137,8 +137,9 @@
     return out.join(" ") || `<span class="muted">${dash}</span>`;
   }
   const plain = (key) => (r) => esc(r[key] ?? "");
-  // Same, but with a title="" so a value truncated by td.trunc-cell (a
-  // long contact name, say) is still readable on hover.
+  // Same, but with a title="" -- a minor bonus (the full value on one
+  // line on hover) for a cell whose value might wrap onto a couple of
+  // lines in the table itself.
   const plainTitled = (key) => (r) => {
     const v = r[key] ?? "";
     return v ? `<span title="${esc(v)}">${esc(v)}</span>` : "";
@@ -156,17 +157,17 @@
   // fit real screen widths without forcing horizontal scroll.
   const COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", w: 200, render: nameCell },
-    { key: "city", label: "City", cls: "trunc-cell", w: 110, render: cityCell },
+    { key: "city", label: "City", w: 110, render: cityCell },
     { key: "rating", label: "BBB", w: 75, render: bbbCell },
-    { key: "bbb_complaints_total", label: "BBB complaints", w: 75, cls: "num-cell", render: intCell("bbb_complaints_total") },
+    { key: "bbb_complaints_total", label: "BBB complaints", w: 105, cls: "num-cell", render: intCell("bbb_complaints_total") },
     { key: "yelp_rating", label: "Yelp", w: 110, cls: "num-cell", render: yelpCell },
     { key: "reputation_score", label: "Reputation (of 100)", w: 110, render: scoreCell("reputation_score", 100) },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },
-    { key: "principal_contact", label: "Contact", cls: "trunc-cell", w: 130, render: plainTitled("principal_contact") },
-    { key: "reputation_divergence_flag", label: "Flags", cls: "wrap-cell", w: 190, render: flagsCell },
-    { key: "website", label: "Website", cls: "trunc-cell", w: 110, render: websiteCell },
+    { key: "principal_contact", label: "Contact", w: 130, render: plainTitled("principal_contact") },
+    { key: "reputation_divergence_flag", label: "Flags", w: 190, render: flagsCell },
+    { key: "website", label: "Website", w: 110, render: websiteCell },
     { key: "last_updated", label: "Last updated", w: 90, render: plain("last_updated") },
   ];
   const columns = () => COLUMNS;

@@ -434,19 +434,24 @@ here to actually contact the business today (phone + a named BBB contact /
 phone only / email or a name but no phone / nothing) -- since a great-fit
 lead nobody can call isn't a working lead yet.
 
-The table (2026-09-11, redesigned twice -- see below) doesn't force a wide
-row of real data into a narrow reading-width column: the whole table area
-breaks out to the full browser width (the standard "full-bleed section
-inside a centered page" CSS trick), `table-layout: fixed` gives every
-column an exact pixel width instead of letting long content silently push
-it wider, and cells that could run long (a contact name, a URL) ellipsis
-with the full value in a hover tooltip rather than force their column
-wider or spill into the next one. Net result, measured, not assumed: zero
-horizontal scroll at 1680px+ (most laptops and any desktop monitor), a
-handful of pixels at 1600px, roughly two columns' worth at 1366px -- a real
-physical floor for how many columns of real data fit at a readable size,
-not something more CSS cleverness solves away. The business-name column
-still stays pinned (`position: sticky`) for whatever scroll a narrower
+The table (2026-09-11, redesigned three times -- see below) doesn't force
+a wide row of real data into a narrow reading-width column: the whole
+table area breaks out to the full browser width (the standard "full-bleed
+section inside a centered page" CSS trick), and `table-layout: fixed`
+gives every column an exact pixel width instead of letting long content
+silently push it wider. Cells that can run long (a contact name, a city, a
+URL) wrap onto another line rather than force their column wider or spill
+into the next one -- an earlier pass here ellipsis-truncated those instead
+with the full value in a hover tooltip, which fell apart the moment Nick
+opened the site on a phone: there's no hover on a touchscreen, so a
+truncated name was just permanently unreadable, not one tap away.
+Wrapping costs row height, never costs information. Net result, measured,
+not assumed: zero horizontal scroll at 1680px+ (most laptops and any
+desktop monitor), a handful of pixels at 1600px, roughly two columns'
+worth at 1366px -- a real physical floor for how many columns of real data
+fit at a readable size, not something more CSS cleverness solves away.
+The business-name column still stays pinned (`position: sticky`) for
+whatever scroll a narrower
 screen does need, the same pattern Sheets/Airtable use for wide data.
 `#scroll-hint` ("scroll sideways for more") only shows when a render
 actually overflows at the viewer's own width, checked live

@@ -549,37 +549,22 @@ th, td {
   text-align: left;
   padding: 9px 11px;
   border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-  overflow: hidden;   /* with table-layout:fixed a column can't grow past
-                          its th's width -- this stops content past that
-                          from visibly spilling into the next column */
-}
-
-thead th {
-  white-space: normal;  /* header labels get two lines before they'd force
-                            a column wider than its data ever needs */
-}
-
-/* Business name: the one BODY column long enough to need wrapping, and
-   the one that's pinned in place while the rest of the table scrolls. */
-td.name-cell {
+  /* Everything wraps by default now (2026-09-11) -- a contact name, a
+     city, a URL, a header label like "BBB complaints" all just flow onto
+     a 2nd line rather than getting cut off. An earlier pass here used
+     ellipsis truncation instead (nowrap + a title="" tooltip for the
+     hidden part); on a real phone there's no hover to reveal that
+     tooltip with, so truncated text was just permanently unreadable --
+     wrapping costs some row height, never costs information. overflow:
+     hidden stays as a backstop for non-text content that can't wrap at
+     all (a score bar has its own min-width and won't shrink to fit; this
+     just clips that rather than letting it spill into the next column --
+     column widths are sized with enough room that it shouldn't trigger). */
   white-space: normal;
   overflow-wrap: break-word;
+  overflow: hidden;
 }
 
-/* Long single-line values (a contact name, a city + state, a URL) ellipsis
-   rather than force their column wider or spill into the next one --
-   title="" on the cell's content carries the full value on hover. */
-td.trunc-cell {
-  text-overflow: ellipsis;
-}
-
-/* Flags is the one column that can hold more than one badge -- wrapping
-   a 2nd/3rd badge onto another line reads far better than truncating
-   mid-badge or force-widening the column for the rare 3-flag row. */
-td.wrap-cell {
-  white-space: normal;
-}
 thead th:first-child, tbody td:first-child {
   position: sticky;
   left: 0;
