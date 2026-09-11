@@ -216,9 +216,94 @@ main.wrap {
   line-height: 1.55;
 }
 
+/* ---------- landing: expanded sections ---------- */
+.landing-section {
+  padding: 48px 0 4px;
+  border-top: 1px solid var(--border);
+}
+.landing-section-first { padding-top: 44px; }
+
+.section-eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 6px 0 24px;
+  max-width: 46ch;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+/* same card shape as .feature (border/radius/padding), no icon badge --
+   these three are personas, not features, so the emphasis sits on the
+   heading instead of an icon. */
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.audience-card {
+  padding: 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.audience-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.008em;
+}
+
+.audience-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+.landing-cta {
+  /* var(--accent-soft) was the first pass here -- looked fine in light
+     mode but, measured in dark mode, its ~6% alpha over --bg (#131417) is
+     nearly indistinguishable from the page background at this size (it's
+     only ever used elsewhere as a small icon-badge fill, not a large
+     block). var(--surface) + a border is the same bordered-card treatment
+     already proven everywhere else on this page (.feature, .audience-card,
+     .lead-card) -- reads consistently in both themes. */
+  margin: 52px 0 40px;
+  padding: 40px 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  text-align: center;
+}
+.landing-cta h2 {
+  margin: 0;
+  color: var(--accent);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+.landing-cta p {
+  margin: 10px 0 22px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
 @media (max-width: 640px) {
   .hero { padding: 36px 0 28px; }
   .hero-title { font-size: 1.9rem; }
+  .landing-section { padding-top: 36px; }
+  .landing-cta { padding: 32px 22px; margin: 40px 0 28px; }
 }
 
 .view-title {
