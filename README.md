@@ -421,25 +421,36 @@ persistent nav header (brand + a "Lead lists" link) across every page,
 card, filterable by industry and metro (two `<select>`s built off the
 distinct values in the manifest -- independent of each other, not
 narrowing one another, which is plenty for the dataset counts this is at;
-gets revisited if that stops being true), and per dataset a
-**Lead records** view (`#/<id>`)
-and an **Intelligence** view (`#/<id>/intel`) -- each a real, bookmarkable
-URL. Lead records is the standard BBB lead (rating, accreditation, phone,
-website, contact, years, BBB complaints, a per-record **Last updated**
-date -- just a date, no change history). Intelligence adds the matched
-Yelp rating + review count (linking to Yelp), `reputation_score`,
-`lead_priority_score`, and the reputation-gap / accredited-but-low-rated /
-few-reviews flags, sorted by lead priority. Both views carry a **Reach**
-column (`contact_readiness`) -- a plain-language read on whether there's
-enough here to actually contact the business today (phone + a named BBB
-contact / phone only / email or a name but no phone / nothing) -- since a
-great-fit lead nobody can call isn't a working lead yet.
+gets revisited if that stops being true), and per dataset **one combined
+table** (`#/<id>`) -- Lead records and Intelligence used to be separate
+tabs with their own column sets; merged into a single table, sorted by
+lead priority by default, so nothing needs switching between views to see
+(an old `#/<id>/intel` link still resolves here, the trailing segment is
+just ignored). BBB grade + accreditation share one cell, as do Yelp rating
++ review count -- fewer columns fighting for the same screen width without
+losing either signal. Every record also carries a **Reach** column
+(`contact_readiness`) -- a plain-language read on whether there's enough
+here to actually contact the business today (phone + a named BBB contact /
+phone only / email or a name but no phone / nothing) -- since a great-fit
+lead nobody can call isn't a working lead yet.
 
-The table itself (2026-09-11 redesign) doesn't force 10-11 columns of real
-data into one fixed width -- the business-name column is pinned
-(`position: sticky`) and the rest scroll sideways underneath it in a
-contained, always-legible region, the same pattern Sheets/Airtable use for
-wide data.
+The table (2026-09-11, redesigned twice -- see below) doesn't force a wide
+row of real data into a narrow reading-width column: the whole table area
+breaks out to the full browser width (the standard "full-bleed section
+inside a centered page" CSS trick), `table-layout: fixed` gives every
+column an exact pixel width instead of letting long content silently push
+it wider, and cells that could run long (a contact name, a URL) ellipsis
+with the full value in a hover tooltip rather than force their column
+wider or spill into the next one. Net result, measured, not assumed: zero
+horizontal scroll at 1680px+ (most laptops and any desktop monitor), a
+handful of pixels at 1600px, roughly two columns' worth at 1366px -- a real
+physical floor for how many columns of real data fit at a readable size,
+not something more CSS cleverness solves away. The business-name column
+still stays pinned (`position: sticky`) for whatever scroll a narrower
+screen does need, the same pattern Sheets/Airtable use for wide data.
+`#scroll-hint` ("scroll sideways for more") only shows when a render
+actually overflows at the viewer's own width, checked live
+(`scrollWidth > clientWidth`) rather than stated as a standing claim.
 
 An **Export** dropdown offers four formats, all client-side (no server
 round-trip) and all respecting the current search filter + sort:

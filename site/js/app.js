@@ -6,8 +6,11 @@
 // Routes (hash):
 //   #/                       -> landing: intro + live stats + CTA
 //   #/lists                  -> a card per lead list, filterable
-//   #/<dataset-id>           -> that list, Lead records view
-//   #/<dataset-id>/intel     -> that list, Intelligence view
+//   #/<dataset-id>           -> that list: one combined lead + intelligence
+//                                table (2026-09-11: used to be two separate
+//                                views/tabs -- merged into one). A trailing
+//                                /intel from an old link still resolves
+//                                here, just ignored, so nothing old 404s.
 (() => {
   "use strict";
 
@@ -26,14 +29,13 @@
   const filterClearBtn = $("filter-clear");
   const dsTitle = $("ds-title");
   const dsSub = $("ds-sub");
-  const tabLeads = $("tab-leads");
-  const tabIntel = $("tab-intel");
   const intelNote = $("intel-note");
   const legend = $("legend");
   const searchBox = $("search-box");
   const resultCount = $("result-count");
   const exportToggle = $("export-toggle");
   const exportPanel = $("export-panel");
+  const scrollHint = $("scroll-hint");
   const headRow = $("head-row");
   const tableBody = $("results-body");
   const emptyState = $("empty-state");
@@ -41,8 +43,7 @@
   let manifest = null;
   const cache = new Map();   // dataset id -> records[]
   let ds = null;             // current manifest entry
-  let view = "leads";
-  let renderedKey = null;    // "<id>|<view>" last rendered -> detects a real change
+  let renderedDatasetId = null;   // last dataset id actually rendered -> detects a real change
   let records = [];
   let sortKey = null;
   let sortDir = 1;
@@ -62,24 +63,32 @@
     return r.profile_url
       ? `<a href="${esc(r.profile_url)}" target="_blank" rel="noopener">${label}</a>` : label;
   }
-  function cityCell(r) { return esc(r.city) + (r.state ? ", " + esc(r.state) : ""); }
+  function cityCell(r) {
+    const text = (r.city ?? "") + (r.state ? ", " + r.state : "");
+    return text ? `<span title="${esc(text)}">${esc(text)}</span>` : "";
+  }
   function websiteCell(r) {
     if (!r.website) return "";
     const label = r.website.replace(/^https?:\/\//, "");
-    // class="trunc" -- some scraped URLs carry long UTM/tracking query
-    // strings that would otherwise blow out the whole column's width.
-    return `<a class="trunc" href="${esc(r.website)}" target="_blank" rel="noopener" title="${esc(r.website)}">${esc(label)}</a>`;
+    // Truncation is handled by the column's own td.trunc-cell (fixed
+    // table-layout means the column can't grow past its th's width no
+    // matter how long the URL is) -- title="" carries the full URL.
+    return `<a href="${esc(r.website)}" target="_blank" rel="noopener" title="${esc(r.website)}">${esc(label)}</a>`;
   }
-  function accreditedCell(r) {
-    return isTrue(r.accredited)
-      ? '<span class="badge badge-yes">Accredited</span>'
-      : `<span class="muted">${dash}</span>`;
+  // BBB grade + accreditation combined into one compact cell (was two
+  // columns) -- a checkmark reads faster here than a whole separate column.
+  function bbbCell(r) {
+    const grade = r.rating ? esc(r.rating) : `<span class="muted">${dash}</span>`;
+    const check = isTrue(r.accredited)
+      ? ' <span class="accredited-check" title="BBB accredited">&#10003;</span>' : "";
+    return grade + check;
   }
-  function yelpRatingCell(r) {
+  // Yelp rating + review count combined into one cell (was two columns).
+  function yelpCell(r) {
     if (!r.on_yelp) return `<span class="muted">${dash}</span>`;
     const rating = num(r.yelp_rating);
     const count = num(r.yelp_review_count);
-    const text = !count ? "on Yelp" : `${rating}★`;
+    const text = !count ? "on Yelp" : `${rating}★ (${count})`;
     return r.yelp_url
       ? `<a href="${esc(r.yelp_url)}" target="_blank" rel="noopener">${esc(text)} ↗</a>` : esc(text);
   }
@@ -93,12 +102,21 @@
   // BBB contact is the best case, a bare phone is fine, anything less gets
   // flagged -- the badge color mirrors that (see contact_readiness_score
   // in bbb_scraper/match/merge.py for how the label itself is decided).
+  // Badge text is a short version of the real contact_readiness value --
+  // narrower column, full wording still lives in the title tooltip and,
+  // unabbreviated, in every export.
+  const REACH_SHORT = {
+    "Phone + named contact": "Phone + contact",
+    "Contact/email only, no phone": "No phone",
+    "No direct contact info": "Unreachable",
+  };
   function reachCell(r) {
     const label = r.contact_readiness;
     if (!label) return `<span class="muted">${dash}</span>`;
     const cls = label === "Phone + named contact" ? "badge-yes"
       : label === "Phone only" ? "badge-soft" : "badge-flag";
-    return `<span class="badge ${cls}">${esc(label)}</span>`;
+    const short = REACH_SHORT[label] || label;
+    return `<span class="badge ${cls}" title="${esc(label)}">${esc(short)}</span>`;
   }
   function scoreCell(key, max) {
     return (r) => {
@@ -119,37 +137,39 @@
     return out.join(" ") || `<span class="muted">${dash}</span>`;
   }
   const plain = (key) => (r) => esc(r[key] ?? "");
+  // Same, but with a title="" so a value truncated by td.trunc-cell (a
+  // long contact name, say) is still readable on hover.
+  const plainTitled = (key) => (r) => {
+    const v = r[key] ?? "";
+    return v ? `<span title="${esc(v)}">${esc(v)}</span>` : "";
+  };
 
-  // `w` is a pixel width, not a percentage -- the table is allowed to be
-  // wider than its container (.table-wrap scrolls it sideways) instead of
-  // every column being crushed to fit. See the big comment in style.css.
-  const LEADS_COLUMNS = [
-    { key: "name", label: "Business", cls: "name-cell", w: 260, render: nameCell },
-    { key: "city", label: "City", w: 150, render: cityCell },
-    { key: "rating", label: "BBB grade", w: 100, render: plain("rating") },
-    { key: "accredited", label: "Accredited", w: 120, render: accreditedCell },
-    { key: "bbb_complaints_total", label: "BBB complaints", w: 130, cls: "num-cell", render: intCell("bbb_complaints_total") },
-    { key: "phone", label: "Phone", w: 150, render: plain("phone") },
-    { key: "website", label: "Website", w: 190, render: websiteCell },
-    { key: "principal_contact", label: "Contact", w: 180, render: plain("principal_contact") },
-    { key: "contact_readiness_score", label: "Reach", w: 190, render: reachCell },
-    { key: "years_in_business", label: "Years", w: 90, cls: "num-cell", render: plain("years_in_business") },
-    { key: "last_updated", label: "Last updated", w: 130, render: plain("last_updated") },
+  // One combined table now (2026-09-11 -- used to be separate Lead
+  // records / Intelligence tabs with their own column sets; merged into
+  // one so everything is visible without switching views). Trimmed and
+  // combined from the old 11+11 columns down to 13 total specifically to
+  // keep this fitting in real screen width: BBB grade+accredited share a
+  // cell (bbbCell), Yelp rating+count share a cell (yelpCell), and
+  // years-in-business dropped from the visible table (still in every
+  // export) as the least scan-critical field. `w` is a pixel width, not a
+  // percentage -- see the big comment in style.css for how these columns
+  // fit real screen widths without forcing horizontal scroll.
+  const COLUMNS = [
+    { key: "name", label: "Business", cls: "name-cell", w: 200, render: nameCell },
+    { key: "city", label: "City", cls: "trunc-cell", w: 110, render: cityCell },
+    { key: "rating", label: "BBB", w: 75, render: bbbCell },
+    { key: "bbb_complaints_total", label: "BBB complaints", w: 75, cls: "num-cell", render: intCell("bbb_complaints_total") },
+    { key: "yelp_rating", label: "Yelp", w: 110, cls: "num-cell", render: yelpCell },
+    { key: "reputation_score", label: "Reputation (of 100)", w: 110, render: scoreCell("reputation_score", 100) },
+    { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
+    { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
+    { key: "phone", label: "Phone", w: 105, render: plain("phone") },
+    { key: "principal_contact", label: "Contact", cls: "trunc-cell", w: 130, render: plainTitled("principal_contact") },
+    { key: "reputation_divergence_flag", label: "Flags", cls: "wrap-cell", w: 190, render: flagsCell },
+    { key: "website", label: "Website", cls: "trunc-cell", w: 110, render: websiteCell },
+    { key: "last_updated", label: "Last updated", w: 90, render: plain("last_updated") },
   ];
-  const INTEL_COLUMNS = [
-    { key: "name", label: "Business", cls: "name-cell", w: 260, render: nameCell },
-    { key: "city", label: "City", w: 140, render: cityCell },
-    { key: "rating", label: "BBB grade", w: 100, render: plain("rating") },
-    { key: "bbb_complaints_total", label: "BBB complaints", w: 130, cls: "num-cell", render: intCell("bbb_complaints_total") },
-    { key: "yelp_rating", label: "Yelp ★", w: 110, cls: "num-cell", render: yelpRatingCell },
-    { key: "yelp_review_count", label: "Yelp #", w: 100, cls: "num-cell", render: intCell("yelp_review_count") },
-    { key: "reputation_score", label: "Reputation (of 100)", w: 170, render: scoreCell("reputation_score", 100) },
-    { key: "lead_priority_score", label: "Lead priority (of 130)", w: 170, render: scoreCell("lead_priority_score", 130) },
-    { key: "contact_readiness_score", label: "Reach", w: 190, render: reachCell },
-    { key: "reputation_divergence_flag", label: "Flags", w: 300, render: flagsCell },
-    { key: "last_updated", label: "Last updated", w: 130, render: plain("last_updated") },
-  ];
-  const columns = () => (view === "intel" ? INTEL_COLUMNS : LEADS_COLUMNS);
+  const columns = () => COLUMNS;
 
   // ---------- router ----------
   function parseHash() {
@@ -163,8 +183,7 @@
     if (parts[0] === "lists") { showLists(); return; }
     const entry = manifest.datasets.find((d) => d.id === parts[0]);
     if (!entry) { showLists(); return; }  // unknown id -> the index, not the marketing page
-    view = parts[1] === "intel" ? "intel" : "leads";
-    await showDataset(entry);
+    await showDataset(entry);  // parts[1] (an old /intel link) is ignored -- one combined view now
   }
 
   function setNavActive(onListsSide) {
@@ -268,8 +287,9 @@
       ? new Date(manifest.generated_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
       : null;
     listsView.querySelector(".view-sub").innerHTML =
-      `One list per market. Each has a browsable <strong>lead table</strong> and a scored ` +
-      `<strong>intelligence</strong> view.` + (asOf ? ` <span class="muted">Data published ${asOf}.</span>` : "");
+      `One list per market: BBB details, matched Yelp data, and lead scoring in a ` +
+      `single sortable, filterable <strong>table</strong>.` +
+      (asOf ? ` <span class="muted">Data published ${asOf}.</span>` : "");
   }
 
   // ---------- dataset ----------
@@ -278,18 +298,10 @@
     listsView.hidden = true;
     setNavActive(true);  // a dataset view is conceptually under Lead lists
     ds = entry;
-    const key = `${ds.id}|${view}`;
-    const changed = key !== renderedKey;
-    renderedKey = key;
+    const changed = ds.id !== renderedDatasetId;
+    renderedDatasetId = ds.id;
 
-    tabLeads.href = `#/${encodeURIComponent(ds.id)}`;
-    tabIntel.href = `#/${encodeURIComponent(ds.id)}/intel`;
-    tabLeads.classList.toggle("active", view === "leads");
-    tabIntel.classList.toggle("active", view === "intel");
     legend.hidden = false;
-    legend.querySelectorAll("li[data-view]").forEach((li) => {
-      li.hidden = !(li.dataset.view === "both" || li.dataset.view === view);
-    });
     document.title = `${ds.industry} — ${ds.metro} — Lead Intelligence`;
 
     if (!cache.has(ds.id)) {
@@ -316,7 +328,7 @@
       (ds.has_yelp ? `, ${ds.yelp_matched} matched to Yelp` : ", BBB only") +
       ` · published ${asOf}`;
 
-    intelNote.hidden = !(view === "intel" && ds.has_yelp === false);
+    intelNote.hidden = ds.has_yelp !== false;
     if (!intelNote.hidden) {
       intelNote.textContent =
         "No Yelp match data for this list — the scores here use BBB signal only " +
@@ -324,11 +336,11 @@
     }
 
     if (changed) {
-      sortKey = view === "intel" ? "lead_priority_score" : null;
+      sortKey = "lead_priority_score";
       sortDir = -1;
       // .table-wrap scrolls independently now (a bounded, self-scrolling
       // panel, not the whole page -- see its comment in style.css), so
-      // switching dataset/view has to reset ITS scroll explicitly too --
+      // switching dataset has to reset ITS scroll explicitly too --
       // replacing the row HTML alone doesn't reset a container's own
       // scroll position, and leftover scroll would show the newly-sorted
       // table starting mid-list instead of at its real top row.
@@ -342,7 +354,15 @@
   }
 
   function buildHead() {
-    headRow.innerHTML = columns().map((c) =>
+    const cols = columns();
+    // table-layout:fixed sizes columns from these widths, but the TABLE's
+    // own width still needs to be set explicitly -- left unset, a fixed-
+    // layout table just stretches to fill 100% of .table-wrap, which
+    // would proportionally re-inflate every column and throw away the
+    // point of picking real pixel widths per column.
+    const totalWidth = cols.reduce((sum, c) => sum + c.w, 0);
+    document.getElementById("results-table").style.width = `${totalWidth}px`;
+    headRow.innerHTML = cols.map((c) =>
       `<th data-key="${c.key}"${c.cls ? ` class="${c.cls}"` : ""} style="width:${c.w}px">${esc(c.label)}</th>`
     ).join("");
     headRow.querySelectorAll("th[data-key]").forEach((th) => {
@@ -398,10 +418,21 @@
     resultCount.textContent = rows.length === records.length
       ? `${rows.length.toLocaleString()} record${rows.length === 1 ? "" : "s"}`
       : `${rows.length.toLocaleString()} of ${records.length.toLocaleString()} records`;
+    syncScrollHint();
+  }
+
+  // Only claim the table scrolls sideways when it actually does at the
+  // viewer's own screen width -- reading scrollWidth/clientWidth forces
+  // the layout the browser already needs to do, so this is a real
+  // measurement each render, not a guess. A static "scroll for more" line
+  // that isn't true on a wide monitor is worse than saying nothing.
+  function syncScrollHint() {
+    const tw = document.querySelector(".table-wrap");
+    scrollHint.hidden = !tw || tw.scrollWidth <= tw.clientWidth;
   }
 
   // ---------- export ----------
-  const exportBasename = () => `${ds ? ds.id : "export"}--${view}`;
+  const exportBasename = () => (ds ? ds.id : "export");
 
   function downloadBlob(blob, filename) {
     const url = URL.createObjectURL(blob);
@@ -445,8 +476,7 @@
     const rows = filteredRecords().map((r) => cols.map((c) => cellText(c, r)));
     return { cols, rows };
   }
-  const exportTitle = () =>
-    `${ds ? `${ds.industry} — ${ds.metro}` : "Export"} (${view === "intel" ? "Intelligence" : "Lead records"})`;
+  const exportTitle = () => (ds ? `${ds.industry} — ${ds.metro}` : "Export");
 
   function exportCsv() {
     const rows = exportableRows();
@@ -518,6 +548,7 @@
   async function init() {
     searchBox.addEventListener("input", renderTable);
     window.addEventListener("hashchange", route);
+    window.addEventListener("resize", () => { if (!datasetView.hidden) syncScrollHint(); });
 
     exportToggle.addEventListener("click", (e) => {
       e.stopPropagation();

@@ -64,8 +64,8 @@
     <section id="lists-view" hidden>
       <h1 class="view-title">Lead lists</h1>
       <p class="view-sub">
-        One list per market. Each has a browsable <strong>lead table</strong>
-        and a scored <strong>intelligence</strong> view.
+        One list per market: BBB details, matched Yelp data, and lead scoring
+        in a single sortable, filterable <strong>table</strong>.
       </p>
       <div class="home-filters">
         <select id="filter-industry" aria-label="Filter by industry">
@@ -90,23 +90,20 @@
           <h1 class="view-title" id="ds-title">&nbsp;</h1>
           <p class="view-sub" id="ds-sub">&nbsp;</p>
         </div>
-        <div class="view-toggle" role="tablist" aria-label="View">
-          <a id="tab-leads" class="toggle-btn" role="tab" href="#/">Lead records</a>
-          <a id="tab-intel" class="toggle-btn" role="tab" href="#/">Intelligence</a>
-        </div>
       </div>
 
       <p id="intel-note" class="intel-note" hidden></p>
 
       <details id="legend" class="legend" hidden>
-        <summary>What the extra columns mean</summary>
+        <summary>What the columns mean</summary>
         <ul>
-          <li data-view="both"><strong>BBB grade / BBB complaints</strong> — the letter grade and the number of complaints filed with BBB (complaints appear only for datasets scraped with full detail).</li>
-          <li data-view="both"><strong>Reach</strong> — is there enough here to actually contact this business today: a phone number, and ideally a named contact (BBB's listed principal/manager) so the call lands on a real person instead of a front desk.</li>
-          <li data-view="intel"><strong>Yelp &#9733; / Yelp #</strong> — the matched Yelp listing's star rating and review count (rating links to Yelp).</li>
-          <li data-view="intel"><strong>Reputation</strong> (0&ndash;100) — blended &ldquo;how weak is this business's public reputation&rdquo;: BBB grade, BBB review average + complaints, and Yelp rating + volume, weighted over whatever's available. Higher = weaker.</li>
-          <li data-view="intel"><strong>Lead priority</strong> (0&ndash;130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower. A missing phone number pulls this down too: the best-fit lead is dead weight this week with no way to call it.</li>
-          <li data-view="intel"><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A&minus; or better) but the actual feedback doesn't. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews.</li>
+          <li><strong>BBB</strong> — the letter grade BBB gives the business, with a checkmark if they're BBB-accredited.</li>
+          <li><strong>BBB complaints</strong> — the number of complaints filed with BBB (appears only for datasets scraped with full detail).</li>
+          <li><strong>Yelp</strong> — the matched Yelp listing's star rating and review count (links to Yelp).</li>
+          <li><strong>Reputation</strong> (0&ndash;100) — blended &ldquo;how weak is this business's public reputation&rdquo;: BBB grade, BBB review average + complaints, and Yelp rating + volume, weighted over whatever's available. Higher = weaker.</li>
+          <li><strong>Lead priority</strong> (0&ndash;130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower. A missing phone number pulls this down too: the best-fit lead is dead weight this week with no way to call it.</li>
+          <li><strong>Reach</strong> — is there enough here to actually contact this business today: a phone number, and ideally a named contact (BBB's listed principal/manager) so the call lands on a real person instead of a front desk. Hover a badge for the full detail.</li>
+          <li><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A&minus; or better) but the actual feedback doesn't. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews.</li>
         </ul>
         <p class="legend-foot">Derived scoring is a v1 starting point, not a finished model.</p>
       </details>
@@ -127,12 +124,14 @@
         </div>
       </div>
 
-      <p class="scroll-hint">Scroll the table sideways for more columns — the business name stays put.</p>
-      <div class="table-wrap">
-        <table id="results-table">
-          <thead><tr id="head-row"></tr></thead>
-          <tbody id="results-body"></tbody>
-        </table>
+      <p id="scroll-hint" class="scroll-hint" hidden>Scroll the table sideways for more columns — the business name stays put.</p>
+      <div class="table-bleed">
+        <div class="table-wrap">
+          <table id="results-table">
+            <thead><tr id="head-row"></tr></thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
       </div>
       <p id="empty-state" class="empty-state" hidden>No rows match your filter.</p>
     </section>

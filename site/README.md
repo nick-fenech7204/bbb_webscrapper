@@ -14,16 +14,16 @@ site/
   index.html      the whole site -- one hash-routed shell:
                     #/                     landing: intro + live stats + CTA
                     #/lists                a card per lead list
-                    #/<dataset-id>         that list, Lead records view
-                    #/<dataset-id>/intel   that list, Intelligence view
+                    #/<dataset-id>         that list -- one combined table
+                                            (a trailing /intel from an old
+                                            link still resolves here)
   css/style.css    styling (light/dark aware)
   js/app.js         router + all interactivity -- reads data/manifest.json
                      for the landing page's live stats and the lists-page
                      cards (filterable by industry/metro once there are
                      enough of them to want that), fetches a dataset's
-                     JSON on first open (cached), picks a column set +
-                     default sort per view, filters/sorts/exports client-
-                     side
+                     JSON on first open (cached), sorts by lead priority by
+                     default, filters/sorts/exports client-side
   data/
     manifest.json   the lead lists: id, industry, metro, record_count,
                      has_yelp, yelp_matched, top_lead_score, file
@@ -35,10 +35,12 @@ Each record in a dataset JSON carries: the BBB public fields, a
 `yelp_review_count` / `yelp_url` -- null when unmatched), and our derived
 columns (`reputation_score`, `lead_priority_score`, `bbb_complaints_total`,
 the flags, and the reachability read: `has_phone` / `has_named_contact` /
-`has_email` / `contact_readiness` / `contact_readiness_score`). The Lead
-records view shows the BBB columns (+ Reach); the Intelligence view shows
-the Yelp + derived columns (+ Reach). Raw Yelp fields beyond those four
-(phone, id, price, ...) stay local -- see `_YELP_SITE_FIELDS` /
+`has_email` / `contact_readiness` / `contact_readiness_score`). The table
+shows BBB + Yelp + every derived column together (2026-09-11 -- used to be
+split across separate Lead records / Intelligence tabs); CSV/Excel export
+the full record regardless, PDF/Text export whatever's currently visible.
+Raw Yelp fields beyond those four (phone, id, price, ...) stay local --
+see `_YELP_SITE_FIELDS` /
 `_INTEL_SITE_FIELDS` in `publish_site_data.py`.
 
 ## Publishing a new dataset
