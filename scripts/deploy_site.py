@@ -73,6 +73,14 @@ def main() -> int:
                          # there that's no longer in the local folder, rather
                          # than letting stale files pile up forever.
             "--exclude", "DEPLOY.md", "--exclude", "README.md",
+            # Without this, S3 serves no Cache-Control header at all, so
+            # each browser falls back to its own heuristic (often a long,
+            # silent one) -- confirmed 2026-09-11 as the cause of a real
+            # "my fix isn't showing up" report: the live file was already
+            # correct, the visitor's browser just hadn't re-checked. This
+            # forces a revalidation (a cheap conditional GET, not a full
+            # re-download) on every visit, so a deploy is never invisible.
+            "--cache-control", "no-cache",
         ]
     )
     if rc != 0:
