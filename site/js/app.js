@@ -356,13 +356,17 @@
 
   function buildHead() {
     const cols = columns();
-    // table-layout:fixed sizes columns from these widths, but the TABLE's
-    // own width still needs to be set explicitly -- left unset, a fixed-
-    // layout table just stretches to fill 100% of .table-wrap, which
-    // would proportionally re-inflate every column and throw away the
-    // point of picking real pixel widths per column.
+    // min-width, not width: on a normal/narrow screen this is the table's
+    // real width (table-layout:fixed sizes columns from their own widths,
+    // which sum to this), and .table-wrap scrolls sideways past it same
+    // as always. On a wide/ultrawide monitor where .table-wrap itself is
+    // wider than this sum, style.css's `table { width: 100% }` takes over
+    // instead -- fixed layout distributes that extra width proportionally
+    // across every column rather than leaving it blank past the table's
+    // right edge (min-width is only a floor, never a ceiling, so it
+    // doesn't fight that).
     const totalWidth = cols.reduce((sum, c) => sum + c.w, 0);
-    document.getElementById("results-table").style.width = `${totalWidth}px`;
+    document.getElementById("results-table").style.minWidth = `${totalWidth}px`;
     headRow.innerHTML = cols.map((c) =>
       `<th data-key="${c.key}"${c.cls ? ` class="${c.cls}"` : ""} style="width:${c.w}px">${esc(c.label)}</th>`
     ).join("");
@@ -462,11 +466,11 @@
     });
   }
 
-  // PDF/Text are read, not processed further -- they ship only the columns
-  // the CURRENT view shows (same filter + sort as on screen), plain-text.
-  // Reusing each column's HTML render() and stripping tags (rather than a
-  // second parallel "as text" function per column) keeps one source of
-  // truth: whatever a cell displays is exactly what gets exported.
+  // PDF/Text are read, not processed further -- plain-text, same filter +
+  // sort as on screen. Reusing each column's HTML render() and stripping
+  // tags (rather than a second parallel "as text" function per column)
+  // keeps one source of truth: whatever a cell displays is exactly what
+  // gets exported.
   const scratchEl = document.createElement("div");
   function cellText(col, r) {
     scratchEl.innerHTML = col.render(r);
@@ -478,6 +482,16 @@
     return { cols, rows };
   }
   const exportTitle = () => (ds ? `${ds.industry} — ${ds.metro}` : "Export");
+
+  // jsPDF's built-in fonts only cover the WinAnsi codepage -- the ★ Yelp
+  // rating star, ✓ accreditation check, and ↗ external-link arrow used on
+  // screen are well outside it and came out as missing-glyph boxes/blanks
+  // in the PDF. Swap them for plain ASCII before anything reaches jsPDF.
+  // Text export doesn't need this -- a real UTF-8 .txt file has no such
+  // font limitation, so it keeps the on-screen glyphs as-is.
+  const PDF_UNSAFE = [[/★/g, ""], [/✓/g, " (Accred.)"], [/\s*↗/g, ""], [/—/g, "-"]];
+  const pdfSafe = (s) => PDF_UNSAFE.reduce((acc, [re, rep]) => acc.replace(re, rep), s)
+    .replace(/\s+/g, " ").trim();
 
   function exportCsv() {
     const rows = exportableRows();
@@ -506,23 +520,47 @@
     XLSX.writeFile(wb, `${exportBasename()}.xlsx`);
   }
 
+  // The PDF is a print-style summary sheet, not the full table -- the
+  // essentials for "who do I call and why" at a size that's actually
+  // readable on a landscape page, not all 13 on-screen columns crammed
+  // in and wrapped down to a few characters wide. Full data is always in
+  // CSV/Excel regardless, and Text keeps the complete current column set
+  // if that's what's wanted in a plain-text form.
+  const PDF_COLUMN_KEYS = [
+    "name", "city", "rating", "yelp_rating", "lead_priority_score",
+    "contact_readiness_score", "phone", "principal_contact",
+    "reputation_divergence_flag",
+  ];
+  // mm, sums to a landscape A4 page's usable width (297mm - 2x10mm
+  // margin) -- explicit so autoTable never has to auto-shrink a column to
+  // fit, which is what caused the illegible wrapping before. BBB (index 2)
+  // needs more than its grade alone (e.g. "A+") suggests: an accredited
+  // business gets "A+ (Accred.)" appended (see PDF_UNSAFE below), and that
+  // needs real room too, not just the couple of characters "A+" implies.
+  const PDF_COLUMN_WIDTHS = [42, 24, 26, 26, 20, 32, 24, 32, 41];
+
   function exportPdf() {
     if (typeof window.jspdf === "undefined") {
       alert("PDF export didn't load (probably a blocked script) -- try another format, or reload the page.");
       return;
     }
-    const { cols, rows } = visibleRowsForExport();
+    const cols = PDF_COLUMN_KEYS.map((key) => COLUMNS.find((c) => c.key === key));
+    const rows = filteredRecords().map((r) => cols.map((c) => pdfSafe(cellText(c, r))));
     if (!rows.length) return;
+
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "landscape" });
-    doc.setFontSize(12);
-    doc.text(exportTitle(), 14, 12);
+    doc.setFontSize(13);
+    doc.text(pdfSafe(exportTitle()), 14, 12);
+    const columnStyles = {};
+    PDF_COLUMN_WIDTHS.forEach((w, i) => { columnStyles[i] = { cellWidth: w }; });
     doc.autoTable({
-      head: [cols.map((c) => c.label)],
+      head: [cols.map((c) => pdfSafe(c.label))],
       body: rows,
       startY: 18,
-      styles: { fontSize: 7, cellPadding: 2.5, overflow: "linebreak" },
-      headStyles: { fillColor: [23, 97, 74] },
+      styles: { fontSize: 9, cellPadding: 3, overflow: "linebreak" },
+      headStyles: { fillColor: [23, 97, 74], fontSize: 9 },
+      columnStyles,
       margin: { left: 10, right: 10 },
     });
     doc.save(`${exportBasename()}.pdf`);

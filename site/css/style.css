@@ -497,9 +497,26 @@ main.wrap {
    render actually overflows (toggled in app.js), not as a standing claim
    that might not be true at the viewer's own width. */
 .table-bleed {
+  /* Pure breakout, uncapped -- always genuinely 100vw, so the
+     calc(50% - 50vw) trick (50% of the *constrained* parent minus 50% of
+     the true viewport) always correctly re-centers it at the real
+     viewport edges regardless of nesting. Capping this element directly
+     with a max-width does NOT work: past the cap this is no longer
+     really 100vw, so the formula overshoots and the element ends up
+     nowhere near centered (confirmed -- shipped that, then measured it on
+     a real ultrawide width and it wasn't). The cap belongs on the child
+     below instead, where centering it is just an ordinary margin:auto
+     within a genuinely full-viewport-width parent. */
   width: 100vw;
   margin-left: calc(50% - 50vw);
   padding: 0 28px;  /* matches .wrap's own side gutter */
+}
+.table-bleed-inner {
+  max-width: 2200px;  /* stop growing past a sane point on a genuinely
+                          huge/ultrawide monitor rather than stretching
+                          every column absurdly wide */
+  margin: 0 auto;  /* centers correctly because .table-bleed (its parent)
+                       is truly 100vw wide, unlike .table-bleed itself */
 }
 
 .table-wrap {
@@ -525,20 +542,24 @@ main.wrap {
 }
 
 table {
-  table-layout: fixed;  /* each column gets EXACTLY its th's width, not a
-                            hint content can override -- app.js also sets
-                            the table's own width to the sum of all
-                            columns (fixed layout otherwise just stretches
-                            columns to fill 100% of the container, which
-                            would throw away the whole point of picking
-                            per-column widths). This is what actually made
-                            "fit real content in real screen width" work --
-                            table-layout:auto (used before 2026-09-11)
+  table-layout: fixed;  /* each column gets EXACTLY its th's width as a
+                            MINIMUM, not just a hint content can override
+                            -- table-layout:auto (used before 2026-09-11)
                             only ever treats a th's width as a suggestion;
                             any nowrap cell with long content (a contact
-                            name, three flag badges) silently overrides it
-                            and the column ends up wider than intended
-                            regardless of what's specified. */
+                            name, three flag badges) silently overrode it
+                            and the column ended up wider than intended
+                            regardless of what was specified. */
+  width: 100%;  /* fixed layout's own rule: when the table's resolved
+                    width exceeds the sum of its column widths, the extra
+                    is distributed proportionally across columns rather
+                    than left blank -- this is what actually makes the
+                    table fill a wide/ultrawide monitor's real estate
+                    instead of stopping at its minimum width and leaving
+                    the rest of a full-bleed .table-wrap empty. app.js
+                    sets min-width (not width) to that column-width sum,
+                    so a narrower container still shrinks the table down
+                    to it (and scrolls) rather than crushing columns. */
   border-collapse: separate;  /* required for position:sticky cells to be
                                   reliable -- collapse breaks it in Safari */
   border-spacing: 0;
@@ -549,20 +570,20 @@ th, td {
   text-align: left;
   padding: 9px 11px;
   border-bottom: 1px solid var(--border);
-  /* Everything wraps by default now (2026-09-11) -- a contact name, a
-     city, a URL, a header label like "BBB complaints" all just flow onto
-     a 2nd line rather than getting cut off. An earlier pass here used
-     ellipsis truncation instead (nowrap + a title="" tooltip for the
-     hidden part); on a real phone there's no hover to reveal that
-     tooltip with, so truncated text was just permanently unreadable --
-     wrapping costs some row height, never costs information. overflow:
-     hidden stays as a backstop for non-text content that can't wrap at
-     all (a score bar has its own min-width and won't shrink to fit; this
-     just clips that rather than letting it spill into the next column --
-     column widths are sized with enough room that it shouldn't trigger). */
+  /* Everything wraps by default (2026-09-11) -- a contact name, a city, a
+     URL, a header label like "BBB complaints" all just flow onto a 2nd
+     line rather than getting cut off. An earlier pass here used ellipsis
+     truncation instead (nowrap + a title="" tooltip for the hidden part);
+     on a real phone there's no hover to reveal that tooltip with, so
+     truncated text was just permanently unreadable -- wrapping costs
+     some row height, never costs information. overflow stays visible
+     (not hidden) for the same reason: a score bar or badge that's ever
+     very slightly wider than its column should spill a few px rather
+     than be invisibly clipped -- column widths already have real
+     breathing room over what they hold, so this is a rare-case backstop,
+     not something expected to fire often. */
   white-space: normal;
   overflow-wrap: break-word;
-  overflow: hidden;
 }
 
 thead th:first-child, tbody td:first-child {

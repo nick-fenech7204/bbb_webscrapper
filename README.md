@@ -457,16 +457,42 @@ screen does need, the same pattern Sheets/Airtable use for wide data.
 actually overflows at the viewer's own width, checked live
 (`scrollWidth > clientWidth`) rather than stated as a standing claim.
 
+On an ultrawide/"stretch" monitor the table used to stop at its natural
+width and leave the rest of the full-bleed area visibly blank (Nick caught
+this) -- `table { width: 100% }` now lets `table-layout: fixed`'s own rule
+take over instead: when the table's resolved width exceeds the sum of its
+columns, the extra is distributed proportionally across every column
+rather than left empty (app.js sets `min-width`, not `width`, to that
+column sum, so a narrower screen still shrinks it down to that and scrolls
+same as before). `.table-bleed`'s own width is capped at 2200px so a truly
+huge display doesn't stretch every column absurdly wide -- centering a
+capped full-bleed element turned out to need its own nested wrapper
+(`.table-bleed-inner`, with the ordinary `margin: 0 auto`): a plain
+`margin: auto` fallback on `.table-bleed` itself centers relative to its
+*parent* (the page's constrained 1280px column), not the viewport, so it
+doesn't work once max-width has clamped an element that's supposed to
+be wider than that parent -- shipped that first, then measured it on a
+real ultrawide width and it wasn't actually centered.
+
 An **Export** dropdown offers four formats, all client-side (no server
 round-trip) and all respecting the current search filter + sort:
 **CSV** and **Excel** (via [SheetJS](https://sheetjs.com) off cdnjs) ship
-the *full* record -- every field, not just the columns the current view
-happens to show, for further processing elsewhere. **PDF** (via
+the *full* record -- every field, not just the columns on screen, for
+further processing elsewhere. **Text** ships the current on-screen columns,
+plain-text, one line per field. **PDF** (via
 [jsPDF](https://github.com/parallax/jsPDF) + jspdf-autotable, also cdnjs)
-and **Text** ship only the columns the current view actually displays,
-plain-text, one line per field -- those two are read-as-is formats, and a
-40-field wide table (with a couple of JSON blobs in it) would be
-unreadable rather than useful in either.
+is its own curated summary sheet -- 9 columns (business, city, BBB, Yelp,
+lead priority, reach, phone, contact, flags), not all 13 on-screen ones,
+with explicit per-column mm widths rather than autoTable's own
+auto-sizing. Two real problems turned up here after shipping (2026-09-11):
+jsPDF's built-in fonts only cover the WinAnsi codepage, so the on-screen
+★/✓/↗ glyphs came out as missing-glyph boxes -- swapped for plain ASCII
+text (`PDF_UNSAFE` in app.js) before anything reaches jsPDF, Text export
+unaffected since a real UTF-8 file has no such limitation; and cramming
+all 13 columns onto a landscape page with auto-sized widths wrapped
+everything down to a few characters per column, illegibly -- fixed by
+curating down to the columns that matter for "who do I call and why" and
+giving each real, explicit room.
 
 The batch scraper publishes automatically (`publish_master_rows`), carrying
 the matched `yelp_*` fields + our derived columns. `yelp_only` rows are
