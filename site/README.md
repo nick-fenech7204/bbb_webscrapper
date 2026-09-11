@@ -30,8 +30,10 @@ Each record in a dataset JSON carries: the BBB public fields, a
 `last_updated` date, the matched Yelp fields (`yelp_name` / `yelp_rating` /
 `yelp_review_count` / `yelp_url` -- null when unmatched), and our derived
 columns (`reputation_score`, `lead_priority_score`, `bbb_complaints_total`,
-the flags). The Lead records view shows the BBB columns; the Intelligence
-view shows the Yelp + derived columns. Raw Yelp fields beyond those four
+the flags, and the reachability read: `has_phone` / `has_named_contact` /
+`has_email` / `contact_readiness` / `contact_readiness_score`). The Lead
+records view shows the BBB columns (+ Reach); the Intelligence view shows
+the Yelp + derived columns (+ Reach). Raw Yelp fields beyond those four
 (phone, id, price, ...) stay local -- see `_YELP_SITE_FIELDS` /
 `_INTEL_SITE_FIELDS` in `publish_site_data.py`.
 
@@ -50,6 +52,11 @@ Ways data gets here, all funneling through `scripts/publish_site_data.py`:
        data/processed/bbb_yelp_master__car-dealers-miami-fl.csv \
        --industry "Car Dealers" --metro "Miami, FL"
    ```
+   This path (`publish_master_rows`) recomputes every derived-intelligence
+   column fresh (`merge.recompute_intel`) rather than trusting whatever was
+   already sitting in that CSV -- so re-running this after a scoring-formula
+   change picks it up, even against a master CSV written well before the
+   change.
 3. **From a BBB-only CSV on disk** -- `publish_dataset()`; the record gets
    `last_updated` and null Yelp/intelligence fields (the Intelligence page
    shows a "no Yelp enrichment" note for that dataset).

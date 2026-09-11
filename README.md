@@ -322,7 +322,19 @@ withholds organic business data anyway. The API is the sanctioned path.
    column block (`review_need_score`, `reputation_divergence_flag`,
    `rating_gap_bbb_minus_yelp`, `lead_priority_score`, ...) -- a plain
    `name -> fn(row)` map, meant to grow after the metrics conversation, not
-   a finished scoring model.
+   a finished scoring model. `lead_priority_score` (2026-09-11) also
+   factors **reachability**, not just fit: no `bbb_phone` at all halves the
+   score (a great-fit lead is dead weight this week with no way to call
+   it), and a named contact (`bbb_principal_contact`) on top of a phone
+   adds a small bonus. That same reachability read is exposed on its own
+   too, independent of the score, as `has_phone` / `has_named_contact` /
+   `has_email` / `contact_readiness` (a plain-language label) /
+   `contact_readiness_score`. Publishing from an already-built master CSV
+   (`publish_master_rows`/`--master`) recomputes every _INTEL column fresh
+   via `merge.recompute_intel` rather than trusting whatever was baked into
+   that CSV when it was written -- otherwise a scoring-formula change
+   silently wouldn't apply to a dataset published from an old master CSV
+   (a real bug this fix closes, not just a hypothetical).
 4. **dedupe** -- `dedupe_by_phone`: for the *lead list*, phone number is the
    record's identity, always. A company with several BBB branch listings
    (common, and correct BBB data -- `etl/dedupe.py`'s per-listing dedup
@@ -409,7 +421,20 @@ website, contact, years, BBB complaints, a per-record **Last updated**
 date -- just a date, no change history). Intelligence adds the matched
 Yelp rating + review count (linking to Yelp), `reputation_score`,
 `lead_priority_score`, and the reputation-gap / accredited-but-low-rated /
-few-reviews flags, sorted by lead priority.
+few-reviews flags, sorted by lead priority. Both views carry a **Reach**
+column (`contact_readiness`) -- a plain-language read on whether there's
+enough here to actually contact the business today (phone + a named BBB
+contact / phone only / email or a name but no phone / nothing) -- since a
+great-fit lead nobody can call isn't a working lead yet.
+
+The table itself (2026-09-11 redesign) doesn't force 10-11 columns of real
+data into one fixed width -- the business-name column is pinned
+(`position: sticky`) and the rest scroll sideways underneath it in a
+contained, always-legible region, the same pattern Sheets/Airtable use for
+wide data. Every record can be exported as **CSV or a real `.xlsx`**
+(client-side, via [SheetJS](https://sheetjs.com) off cdnjs -- no server
+round-trip), with the full record (every field, not just the columns the
+current view happens to show).
 
 The batch scraper publishes automatically (`publish_master_rows`), carrying
 the matched `yelp_*` fields + our derived columns. `yelp_only` rows are

@@ -11,7 +11,6 @@
   "use strict";
 
   const $ = (id) => document.getElementById(id);
-  const appEl = $("app");
   const homeView = $("home-view");
   const datasetView = $("dataset-view");
   const loadingEl = $("loading");
@@ -23,7 +22,9 @@
   const intelNote = $("intel-note");
   const legend = $("legend");
   const searchBox = $("search-box");
-  const exportBtn = $("export-btn");
+  const resultCount = $("result-count");
+  const exportCsvBtn = $("export-csv-btn");
+  const exportXlsxBtn = $("export-xlsx-btn");
   const headRow = $("head-row");
   const tableBody = $("results-body");
   const emptyState = $("empty-state");
@@ -55,7 +56,10 @@
   function cityCell(r) { return esc(r.city) + (r.state ? ", " + esc(r.state) : ""); }
   function websiteCell(r) {
     if (!r.website) return "";
-    return `<a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website.replace(/^https?:\/\//, ""))}</a>`;
+    const label = r.website.replace(/^https?:\/\//, "");
+    // class="trunc" -- some scraped URLs carry long UTM/tracking query
+    // strings that would otherwise blow out the whole column's width.
+    return `<a class="trunc" href="${esc(r.website)}" target="_blank" rel="noopener" title="${esc(r.website)}">${esc(label)}</a>`;
   }
   function accreditedCell(r) {
     return isTrue(r.accredited)
@@ -75,6 +79,17 @@
       const v = num(r[key]);
       return v === null ? `<span class="muted">${dash}</span>` : String(v);
     };
+  }
+  // Reach: can this business actually be contacted today? Phone + a named
+  // BBB contact is the best case, a bare phone is fine, anything less gets
+  // flagged -- the badge color mirrors that (see contact_readiness_score
+  // in bbb_scraper/match/merge.py for how the label itself is decided).
+  function reachCell(r) {
+    const label = r.contact_readiness;
+    if (!label) return `<span class="muted">${dash}</span>`;
+    const cls = label === "Phone + named contact" ? "badge-yes"
+      : label === "Phone only" ? "badge-soft" : "badge-flag";
+    return `<span class="badge ${cls}">${esc(label)}</span>`;
   }
   function scoreCell(key, max) {
     return (r) => {
@@ -96,32 +111,34 @@
   }
   const plain = (key) => (r) => esc(r[key] ?? "");
 
-  // `w` is a percentage width -- each list sums to 100. table-layout:fixed
-  // (in style.css) makes the browser honor these instead of growing the
-  // table to fit content, which is what forces a horizontal scrollbar.
+  // `w` is a pixel width, not a percentage -- the table is allowed to be
+  // wider than its container (.table-wrap scrolls it sideways) instead of
+  // every column being crushed to fit. See the big comment in style.css.
   const LEADS_COLUMNS = [
-    { key: "name", label: "Business", cls: "name-cell", w: 16, render: nameCell },
-    { key: "city", label: "City", w: 10, render: cityCell },
-    { key: "rating", label: "BBB grade", w: 6, render: plain("rating") },
-    { key: "accredited", label: "Accredited", w: 8, render: accreditedCell },
-    { key: "bbb_complaints_total", label: "BBB complaints", w: 8, render: intCell("bbb_complaints_total") },
-    { key: "phone", label: "Phone", w: 10, render: plain("phone") },
-    { key: "website", label: "Website", w: 12, render: websiteCell },
-    { key: "principal_contact", label: "Contact", w: 12, render: plain("principal_contact") },
-    { key: "years_in_business", label: "Years", w: 6, render: plain("years_in_business") },
-    { key: "last_updated", label: "Last updated", w: 12, render: plain("last_updated") },
+    { key: "name", label: "Business", cls: "name-cell", w: 260, render: nameCell },
+    { key: "city", label: "City", w: 150, render: cityCell },
+    { key: "rating", label: "BBB grade", w: 100, render: plain("rating") },
+    { key: "accredited", label: "Accredited", w: 120, render: accreditedCell },
+    { key: "bbb_complaints_total", label: "BBB complaints", w: 130, cls: "num-cell", render: intCell("bbb_complaints_total") },
+    { key: "phone", label: "Phone", w: 150, render: plain("phone") },
+    { key: "website", label: "Website", w: 190, render: websiteCell },
+    { key: "principal_contact", label: "Contact", w: 180, render: plain("principal_contact") },
+    { key: "contact_readiness_score", label: "Reach", w: 190, render: reachCell },
+    { key: "years_in_business", label: "Years", w: 90, cls: "num-cell", render: plain("years_in_business") },
+    { key: "last_updated", label: "Last updated", w: 130, render: plain("last_updated") },
   ];
   const INTEL_COLUMNS = [
-    { key: "name", label: "Business", cls: "name-cell", w: 18, render: nameCell },
-    { key: "city", label: "City", w: 10, render: cityCell },
-    { key: "rating", label: "BBB grade", w: 7, render: plain("rating") },
-    { key: "bbb_complaints_total", label: "BBB complaints", w: 9, render: intCell("bbb_complaints_total") },
-    { key: "yelp_rating", label: "Yelp ★", w: 8, render: yelpRatingCell },
-    { key: "yelp_review_count", label: "Yelp #", w: 7, render: intCell("yelp_review_count") },
-    { key: "reputation_score", label: "Reputation", w: 11, render: scoreCell("reputation_score", 100) },
-    { key: "lead_priority_score", label: "Lead priority", w: 11, render: scoreCell("lead_priority_score", 130) },
-    { key: "reputation_divergence_flag", label: "Flags", w: 12, render: flagsCell },
-    { key: "last_updated", label: "Last updated", w: 7, render: plain("last_updated") },
+    { key: "name", label: "Business", cls: "name-cell", w: 260, render: nameCell },
+    { key: "city", label: "City", w: 140, render: cityCell },
+    { key: "rating", label: "BBB grade", w: 100, render: plain("rating") },
+    { key: "bbb_complaints_total", label: "BBB complaints", w: 130, cls: "num-cell", render: intCell("bbb_complaints_total") },
+    { key: "yelp_rating", label: "Yelp ★", w: 110, cls: "num-cell", render: yelpRatingCell },
+    { key: "yelp_review_count", label: "Yelp #", w: 100, cls: "num-cell", render: intCell("yelp_review_count") },
+    { key: "reputation_score", label: "Reputation", w: 170, render: scoreCell("reputation_score", 100) },
+    { key: "lead_priority_score", label: "Lead priority", w: 170, render: scoreCell("lead_priority_score", 130) },
+    { key: "contact_readiness_score", label: "Reach", w: 190, render: reachCell },
+    { key: "reputation_divergence_flag", label: "Flags", w: 300, render: flagsCell },
+    { key: "last_updated", label: "Last updated", w: 130, render: plain("last_updated") },
   ];
   const columns = () => (view === "intel" ? INTEL_COLUMNS : LEADS_COLUMNS);
 
@@ -146,7 +163,6 @@
     datasetView.hidden = true;
     loadingEl.hidden = true;
     homeView.hidden = false;
-    appEl.classList.remove("wrap-table");
     document.title = "Lead Intelligence — BBB + Yelp";
 
     const asOf = manifest.generated_at
@@ -175,7 +191,6 @@
   // ---------- dataset ----------
   async function showDataset(entry) {
     homeView.hidden = true;
-    appEl.classList.add("wrap-table");
     ds = entry;
     const key = `${ds.id}|${view}`;
     const changed = key !== renderedKey;
@@ -185,7 +200,10 @@
     tabIntel.href = `#/${encodeURIComponent(ds.id)}/intel`;
     tabLeads.classList.toggle("active", view === "leads");
     tabIntel.classList.toggle("active", view === "intel");
-    legend.hidden = view !== "intel";
+    legend.hidden = false;
+    legend.querySelectorAll("li[data-view]").forEach((li) => {
+      li.hidden = !(li.dataset.view === "both" || li.dataset.view === view);
+    });
     document.title = `${ds.industry} — ${ds.metro} — Lead Intelligence`;
 
     if (!cache.has(ds.id)) {
@@ -223,7 +241,8 @@
       sortKey = view === "intel" ? "lead_priority_score" : null;
       sortDir = -1;
     }
-    exportBtn.disabled = records.length === 0;
+    exportCsvBtn.disabled = records.length === 0;
+    exportXlsxBtn.disabled = records.length === 0;
     buildHead();
     renderTable();
     window.scrollTo(0, 0);
@@ -231,7 +250,7 @@
 
   function buildHead() {
     headRow.innerHTML = columns().map((c) =>
-      `<th data-key="${c.key}" style="width:${c.w}%">${esc(c.label)}</th>`
+      `<th data-key="${c.key}"${c.cls ? ` class="${c.cls}"` : ""} style="width:${c.w}px">${esc(c.label)}</th>`
     ).join("");
     headRow.querySelectorAll("th[data-key]").forEach((th) => {
       th.addEventListener("click", () => onSort(th.dataset.key));
@@ -283,15 +302,34 @@
     tableBody.innerHTML = rows.map((r) =>
       "<tr>" + cols.map((c) => `<td${c.cls ? ` class="${c.cls}"` : ""}>${c.render(r)}</td>`).join("") + "</tr>"
     ).join("");
+    resultCount.textContent = rows.length === records.length
+      ? `${rows.length.toLocaleString()} record${rows.length === 1 ? "" : "s"}`
+      : `${rows.length.toLocaleString()} of ${records.length.toLocaleString()} records`;
+  }
+
+  // Both exports ship the FULL record (every field), not just the columns
+  // visible in the current view -- the on-screen table is a curated look,
+  // the download is the complete data a rep might want in a spreadsheet.
+  // Nested list/dict fields (categories, contacts...) flatten to JSON text
+  // since neither CSV nor a spreadsheet cell holds a real array.
+  function exportableRows() {
+    return filteredRecords().map((row) => {
+      const out = {};
+      for (const k of Object.keys(row)) {
+        const v = row[k];
+        out[k] = v != null && typeof v === "object" ? JSON.stringify(v) : v;
+      }
+      return out;
+    });
   }
 
   function exportCsv() {
-    const rows = filteredRecords();
+    const rows = exportableRows();
     if (!rows.length) return;
     const cols = Object.keys(rows[0]);
     const cell = (v) => {
       if (v == null) return "";
-      const s = typeof v === "object" ? JSON.stringify(v) : String(v);
+      const s = String(v);
       return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
     };
     const lines = [cols.join(",")];
@@ -307,10 +345,24 @@
     URL.revokeObjectURL(url);
   }
 
+  function exportXlsx() {
+    if (typeof XLSX === "undefined") {
+      alert("Excel export didn't load (probably a blocked script) -- use Export CSV instead, or reload the page.");
+      return;
+    }
+    const rows = exportableRows();
+    if (!rows.length) return;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Leads");
+    XLSX.writeFile(wb, `${ds ? ds.id : "export"}--${view}.xlsx`);
+  }
+
   // ---------- init ----------
   async function init() {
     searchBox.addEventListener("input", renderTable);
-    exportBtn.addEventListener("click", exportCsv);
+    exportCsvBtn.addEventListener("click", exportCsv);
+    exportXlsxBtn.addEventListener("click", exportXlsx);
     window.addEventListener("hashchange", route);
 
     try {

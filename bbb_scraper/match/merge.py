@@ -60,6 +60,14 @@ def _truthy(v: Any) -> bool:
     return str(v).strip().lower() in {"true", "1", "yes", "y", "t"}
 
 
+def _has_value(v: Any) -> bool:
+    """Non-empty after stripping -- "is there a real value here", as opposed
+    to _truthy's "does this look like a boolean yes". Used for contact
+    fields (phone/email/a name): a blank string or None means we don't have
+    it, regardless of what it would mean if it were 'true'/'false'."""
+    return v is not None and str(v).strip() != ""
+
+
 def _bbb_rc(r: dict) -> dict:
     """The BBB reviews/complaints block as a dict -- it's a JSON string off
     a CSV, a real dict in-memory, or absent on a no-details run."""
@@ -229,12 +237,62 @@ def _accredited_but_low_rated(r):
     return 0
 
 
+def _has_phone(r):
+    return int(_has_value(r.get("bbb_phone")))
+
+
+def _has_named_contact(r):
+    return int(_has_value(r.get("bbb_principal_contact")))
+
+
+def _has_email(r):
+    return int(_has_value(r.get("bbb_email")))
+
+
+def _contact_readiness(r):
+    """Plain-language read on whether there's enough here to actually call
+    or email this business today -- distinct from whether they're a good
+    *fit* (reputation_score / lead_priority_score already cover that). A
+    great lead nobody can reach isn't a working lead yet. Phone is what lets
+    a rep pick up and dial; a named contact (BBB's principal_contact, e.g.
+    "Glenn Wright, Manager") makes that call land on a real person instead
+    of a front desk; email is a fallback channel when there's no number."""
+    phone = _has_value(r.get("bbb_phone"))
+    contact = _has_value(r.get("bbb_principal_contact"))
+    email = _has_value(r.get("bbb_email"))
+    if phone and contact:
+        return "Phone + named contact"
+    if phone:
+        return "Phone only"
+    if contact or email:
+        return "Contact/email only, no phone"
+    return "No direct contact info"
+
+
+def _contact_readiness_score(r):
+    """0-100 version of _contact_readiness, for sorting the table by it.
+    Phone is the hard requirement to act on a lead today; a named contact
+    is a meaningful bonus on top of a phone (not a substitute for one)."""
+    phone = _has_value(r.get("bbb_phone"))
+    contact = _has_value(r.get("bbb_principal_contact"))
+    email = _has_value(r.get("bbb_email"))
+    if phone and contact:
+        return 100
+    if phone:
+        return 75
+    if contact or email:
+        return 30
+    return 0
+
+
 def _lead_priority_score(r):
     """How good a sales lead this business is *for a firm that sells review
     / reputation-management services*. Not raw reputation weakness -- it
     favors the salvageable middle: a visible, fixable problem at a business
     mature enough to pay. Both extremes (already fine / beyond help) score
-    lower. 0-130. Available for any BBB record.
+    lower. Reachability (phone / named contact) then scales the result --
+    the best-fit lead in the world is dead weight this week if there's no
+    number to call. 0-130. Available for any BBB record.
 
     v1, hand-tuned -- revisit after the metrics conversation.
     """
@@ -273,6 +331,19 @@ def _lead_priority_score(r):
     if _truthy(r.get("bbb_accredited")):
         score += 4  # already pays for a reputation/credibility service
 
+    # Reachability. A phone number is the hard requirement for a rep to
+    # act on this today; no phone means real extra work (hunting down a
+    # number elsewhere) before the lead is usable at all, so it's a real
+    # cut -- not a disqualifier, since the business is still findable, just
+    # not a "call it this afternoon" lead. A named contact on top of a
+    # phone is a smaller bonus: the call lands on a real person instead of
+    # a front desk, but it was already dialable without one.
+    if _has_value(r.get("bbb_phone")):
+        if _has_value(r.get("bbb_principal_contact")):
+            score += 5
+    else:
+        score *= 0.5
+
     return round(min(score, 130), 1)
 
 
@@ -291,6 +362,11 @@ _INTEL: dict[str, Callable[[dict[str, Any]], Any]] = {
     "low_review_volume_flag": _low_review_volume_flag,
     "accredited_but_low_rated": _accredited_but_low_rated,
     "lead_priority_score": _lead_priority_score,
+    "has_phone": _has_phone,
+    "has_named_contact": _has_named_contact,
+    "has_email": _has_email,
+    "contact_readiness": _contact_readiness,
+    "contact_readiness_score": _contact_readiness_score,
 }
 
 
@@ -307,6 +383,24 @@ def _row(status: str, *, bbb: dict | None, yelp: dict | None,
     for f in YELP_FIELDS:
         v = (yelp or {}).get(f, "")
         row[f"yelp_{f}"] = json.dumps(v) if isinstance(v, (list, dict)) else v
+    for name, fn in _INTEL.items():
+        try:
+            row[name] = fn(row)
+        except Exception:  # noqa: BLE001 -- a derived column must never break the table
+            row[name] = None
+    return row
+
+
+def recompute_intel(row: dict[str, Any]) -> dict[str, Any]:
+    """Recompute every _INTEL column on a row that already has its
+    bbb_*/yelp_*/match_status columns -- e.g. one read back off a
+    previously-written master-table CSV. build_master_table computes intel
+    fresh every time it builds a row, so this is only needed when you have
+    a row that *didn't* just come out of build_master_table: publishing an
+    old master CSV trusts whatever intel columns are already sitting in
+    it, which goes stale the moment the _INTEL formulas change. Returns a
+    new dict; doesn't mutate the one you pass in."""
+    row = dict(row)
     for name, fn in _INTEL.items():
         try:
             row[name] = fn(row)

@@ -41,7 +41,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from bbb_scraper.match.matcher import MatchOutcome
-from bbb_scraper.match.merge import build_master_table
+from bbb_scraper.match.merge import build_master_table, recompute_intel
 
 SITE_DATA_DIR = Path(__file__).resolve().parent.parent / "site" / "data"
 MANIFEST_PATH = SITE_DATA_DIR / "manifest.json"
@@ -80,6 +80,11 @@ _INTEL_SITE_FIELDS = [
     "low_review_volume_flag",
     "accredited_but_low_rated",
     "lead_priority_score",
+    "has_phone",
+    "has_named_contact",
+    "has_email",
+    "contact_readiness",
+    "contact_readiness_score",
 ]
 
 
@@ -148,7 +153,8 @@ def select_public_fields_from_master(row: dict) -> dict:
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0
-    for flag in ("reputation_divergence_flag", "low_review_volume_flag", "accredited_but_low_rated"):
+    for flag in ("reputation_divergence_flag", "low_review_volume_flag", "accredited_but_low_rated",
+                 "has_phone", "has_named_contact", "has_email"):
         if result.get(flag) is not None:
             result[flag] = int(result[flag])
     return result
@@ -213,8 +219,15 @@ def publish_records(records: list[dict], industry: str, metro: str) -> dict:
 def publish_master_rows(rows: list[dict], industry: str, metro: str) -> dict:
     """Publish match.merge.build_master_table rows. BBB-primary: `yelp_only`
     rows (a Yelp business with no BBB match) are dropped -- the site is a
-    BBB directory enriched with Yelp, not a Yelp directory."""
+    BBB directory enriched with Yelp, not a Yelp directory.
+
+    `rows` may be a previously-written master CSV read back off disk, whose
+    intel columns (reputation_score, lead_priority_score, ...) were computed
+    whenever that file was written -- recompute_intel refreshes them against
+    today's _INTEL formulas rather than trusting a possibly-stale snapshot.
+    """
     bbb_primary = [r for r in rows if str(r.get("match_status") or "") != "yelp_only"]
+    bbb_primary = [recompute_intel(r) for r in bbb_primary]
     return _write_dataset(
         [select_public_fields_from_master(r) for r in bbb_primary], industry, metro
     )

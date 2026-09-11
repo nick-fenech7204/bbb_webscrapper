@@ -53,15 +53,9 @@ a { color: var(--accent); }
 img { max-width: 100%; }
 
 .wrap {
-  max-width: 1160px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 28px;
-}
-
-/* The dataset table needs real width for 10 columns to fit without a
-   horizontal scrollbar -- wider than the reading-width header/prose use. */
-.wrap-table {
-  max-width: 1680px;
 }
 
 /* ---------- header ---------- */
@@ -263,8 +257,10 @@ main.wrap {
 /* ---------- controls ---------- */
 .controls {
   display: flex;
-  gap: 12px;
-  margin-bottom: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-bottom: 10px;
 }
 
 #search-box {
@@ -280,22 +276,59 @@ main.wrap {
 }
 #search-box:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
 
-#export-btn {
+.result-count {
+  flex: 1 1 auto;
+  color: var(--text-faint);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.export-group {
   flex: none;
-  padding: 9px 18px;
-  border: 1px solid var(--accent);
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn-outline, .btn-solid {
+  padding: 9px 16px;
   border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.86rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-outline {
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+}
+.btn-outline:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn-solid {
+  border: 1px solid var(--accent);
   background: var(--accent);
   color: #fff;
-  font-weight: 600;
-  font-size: 0.88rem;
-  cursor: pointer;
 }
-#export-btn:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
-#export-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-@media (prefers-color-scheme: dark) { #export-btn { color: #10221c; } }
+.btn-solid:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-outline:disabled, .btn-solid:disabled { opacity: 0.5; cursor: not-allowed; }
+@media (prefers-color-scheme: dark) { .btn-solid { color: #10221c; } }
 
-/* ---------- table ---------- */
+.scroll-hint {
+  margin: 0 0 8px;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+}
+
+/* ---------- table ----------
+   Wide data (10-11 columns) never fits a fixed viewport without either
+   crushing every column unreadably thin or overflowing. Rather than
+   force-fitting column widths to a percentage of the page, the table gets
+   comfortable, mostly-fixed pixel widths and is allowed to be wider than
+   its container -- .table-wrap scrolls it sideways. The business-name
+   column stays pinned (position: sticky) so you always know which row
+   you're looking at while the rest scrolls underneath. This is the
+   standard pattern wide-table UIs (Sheets, Airtable, etc.) use, and it's
+   far more robust across screen sizes than forcing everything to fit. */
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border);
@@ -304,26 +337,39 @@ main.wrap {
 }
 
 table {
-  width: 100%;
-  table-layout: fixed;  /* every column gets its th's width (set inline by
-                            app.js per column) instead of growing to fit
-                            content -- that's what forces a scrollbar */
-  border-collapse: collapse;
-  font-size: 0.83rem;
+  border-collapse: separate;  /* required for position:sticky cells to be
+                                  reliable -- collapse breaks it in Safari */
+  border-spacing: 0;
+  font-size: 0.85rem;
 }
 
 th, td {
   text-align: left;
-  padding: 8px 10px;
+  padding: 10px 14px;
   border-bottom: 1px solid var(--border);
-  white-space: normal;   /* wrap instead of forcing the column wider */
+  white-space: nowrap;   /* real per-column pixel widths now -- nothing
+                             needs to wrap to survive, except the name col */
+}
+
+/* Business name: the one column long enough to need wrapping, and the
+   one that's pinned in place while the rest of the table scrolls. */
+th[data-key="name"], td.name-cell {
+  white-space: normal;
   overflow-wrap: break-word;
 }
+thead th:first-child, tbody td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--surface);
+  box-shadow: 1px 0 0 var(--border);
+}
+thead th:first-child { z-index: 3; background: var(--surface-2); }
 
 thead th {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   background: var(--surface-2);
   color: var(--text-muted);
   font-weight: 600;
@@ -338,13 +384,30 @@ thead th.sorted::after { content: " \25BC"; font-size: 0.7em; }
 thead th.sorted-desc::after { content: " \25B2"; font-size: 0.7em; }
 
 tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 3%, var(--surface)); }
+tbody tr:hover td { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+tbody tr:nth-child(even) td:first-child { background: color-mix(in srgb, var(--text) 3%, var(--surface)); }
+tbody tr:hover td:first-child { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
 
 td { color: var(--text); font-variant-numeric: tabular-nums; }
+td.num-cell, thead th.num-cell { text-align: right; }
 
 td.name-cell { font-weight: 600; }
 td.name-cell a { color: var(--text); text-decoration: none; }
 td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
+
+/* Caps the rare unusually-long value (a URL with a long tracking query
+   string, say) so one outlier row can't blow out the whole column for
+   everyone -- the full value is still there in the title tooltip and the
+   href/export, just not forced on-screen. */
+a.trunc {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
 
 .muted { color: var(--text-faint); }
 
@@ -366,9 +429,9 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-width: 58px;
-  height: 20px;
-  padding: 0 8px;
+  min-width: 78px;
+  height: 22px;
+  padding: 0 9px;
   border-radius: 5px;
   background: var(--score-track);
   overflow: hidden;
@@ -400,4 +463,8 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
   .dataset-head { flex-direction: column; }
   .view-toggle { width: 100%; }
   .toggle-btn { flex: 1; text-align: center; }
+  #search-box { max-width: none; flex-basis: 100%; }
+  .result-count { order: 3; }
+  .export-group { flex-basis: 100%; margin-left: 0; }
+  .btn-outline, .btn-solid { flex: 1; text-align: center; }
 }

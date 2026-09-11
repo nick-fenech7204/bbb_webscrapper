@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-11T13:34:54.698247+00:00",
+  "generated_at": "2026-09-11T14:26:05.923220+00:00",
   "datasets": [
     {
       "id": "plumbers--chicago-il",
@@ -8,7 +8,7 @@
       "record_count": 1935,
       "has_yelp": true,
       "yelp_matched": 88,
-      "top_lead_score": 96.7,
+      "top_lead_score": 101.7,
       "file": "plumbers--chicago-il.json"
     },
     {
@@ -18,7 +18,7 @@
       "record_count": 200,
       "has_yelp": true,
       "yelp_matched": 17,
-      "top_lead_score": 88.7,
+      "top_lead_score": 93.7,
       "file": "car-dealers--miami-fl.json"
     },
     {
@@ -38,7 +38,7 @@
       "record_count": 233,
       "has_yelp": false,
       "yelp_matched": 0,
-      "top_lead_score": 94.5,
+      "top_lead_score": 99.5,
       "file": "heating-and-air-conditioning--seattle-tacoma-wa.json"
     }
   ]

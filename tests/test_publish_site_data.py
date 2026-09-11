@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import sys
 from pathlib import Path
 
@@ -64,6 +65,27 @@ def test_matched_master_row_carries_yelp_and_intel():
     assert callable(publish_master_rows)
 
 
+def test_contact_readiness_fields_surface_on_the_published_record():
+    reachable = _publish_one({
+        "name": "Goode Plumbing", "rating": "B", "phone": "(773) 930-3451",
+        "principal_contact": "Glenn Wright, Manager", "scraped_at": "2026-09-11T00:00:00+00:00",
+    })
+    assert reachable["has_phone"] == 1
+    assert reachable["has_named_contact"] == 1
+    assert reachable["contact_readiness"] == "Phone + named contact"
+    assert reachable["contact_readiness_score"] == 100
+    assert isinstance(reachable["has_phone"], int)  # not 1.0
+
+    unreachable = _publish_one({
+        "name": "No Way To Call LLC", "rating": "B", "scraped_at": "2026-09-11T00:00:00+00:00",
+    })
+    assert unreachable["has_phone"] == 0
+    assert unreachable["contact_readiness"] == "No direct contact info"
+    assert unreachable["contact_readiness_score"] == 0
+    # missing phone should have pulled lead_priority_score down vs. the reachable twin
+    assert unreachable["lead_priority_score"] < reachable["lead_priority_score"]
+
+
 def test_bbb_complaints_surface_from_reviews_complaints_json():
     rec = _publish_one({
         "name": "Looks Fine Motors", "rating": "A+", "scraped_at": "2026-09-04T00:00:00+00:00",
@@ -71,6 +93,30 @@ def test_bbb_complaints_surface_from_reviews_complaints_json():
     })
     assert rec["bbb_complaints_total"] == 8
     assert rec["reputation_divergence_flag"] == 1  # clean grade, 8 complaints
+
+
+def test_publish_master_rows_refreshes_stale_intel_columns(tmp_path, monkeypatch):
+    """Regression: a master CSV written before a scoring change carries
+    whatever intel columns existed when it was written. publish_master_rows
+    must recompute them against today's formula, not just pass a stale
+    snapshot through to the published site record."""
+    monkeypatch.setattr(psd, "SITE_DATA_DIR", tmp_path)
+    monkeypatch.setattr(psd, "MANIFEST_PATH", tmp_path / "manifest.json")
+
+    from publish_site_data import publish_master_rows
+    stale_row = {
+        "match_status": "bbb_only", "bbb_name": "Goode Plumbing", "bbb_rating": "NR",
+        "bbb_phone": "(773) 930-3451", "bbb_scraped_at": "2026-09-11T00:00:00+00:00",
+        # this dataset predates has_phone/contact_readiness entirely, and
+        # carries an intentionally-wrong lead_priority_score to prove it
+        # gets overwritten rather than trusted as-is
+        "lead_priority_score": 999,
+    }
+    entry = publish_master_rows([stale_row], "Plumbers", "Chicago, IL")
+    published = json.loads((tmp_path / entry["file"]).read_text(encoding="utf-8"))
+    assert published[0]["has_phone"] == 1
+    assert published[0]["contact_readiness"] == "Phone only"
+    assert published[0]["lead_priority_score"] != 999
 
 
 def test_manifest_entry_has_exactly_the_keys_callers_rely_on(tmp_path, monkeypatch):

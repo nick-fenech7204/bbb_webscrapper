@@ -67,7 +67,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 36.5
+    "lead_priority_score": 36.5,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Olson Energy Service",
@@ -142,7 +147,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Go Green Heating AC and Electric LLC",
@@ -221,7 +231,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 36.5
+    "lead_priority_score": 41.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Comfort Tech Heating & Air Conditioning",
@@ -304,7 +319,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "HD Partners",
@@ -379,7 +399,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Raymark Plumbing and Sewer",
@@ -484,7 +509,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Olson Energy Service",
@@ -559,7 +589,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Puget Sound Plumbing & Heating",
@@ -643,7 +678,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Glendale Heating & Air Conditioning Inc",
@@ -742,7 +782,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Brennan Heating & Air Conditioning",
@@ -852,7 +897,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 85,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Green House Plumbing and Heating",
@@ -955,7 +1005,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Donso Energy Solutions LLC",
@@ -1037,7 +1092,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Greenwood Heating & Home Services",
@@ -1144,7 +1204,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Dynamic Utility Services, Inc.",
@@ -1241,7 +1306,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Astro Heating & Air Conditioning LLC",
@@ -1312,7 +1382,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Derr Heating & Cooling LLC",
@@ -1409,7 +1484,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 27.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Advanced Heating & Cooling Inc",
@@ -1494,7 +1574,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "BlueRidge Company",
@@ -1581,7 +1666,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "BlueRidge Company",
@@ -1668,7 +1758,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Economy Hearth & Home Inc",
@@ -1747,7 +1842,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Trucore Heating and Air LLC",
@@ -1818,7 +1918,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "One Hour Heating & Air Conditioning",
@@ -1911,7 +2016,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Home Comfort Alliance",
@@ -2033,7 +2143,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 52
+    "lead_priority_score": 57,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cardinal Heating, Air, Electrical and Plumbing",
@@ -2135,7 +2250,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ballard Natural Gas Service Inc",
@@ -2227,7 +2347,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 52
+    "lead_priority_score": 52,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Epic Air Heating & Cooling LLC",
@@ -2305,7 +2430,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "A-Game Plumbing and Heating LLC",
@@ -2388,7 +2518,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Economy Air Systems Inc",
@@ -2470,7 +2605,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Economy Air Systems Inc",
@@ -2552,7 +2692,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "South West Plumbing, Heating, Air & Electric",
@@ -2649,7 +2794,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 48.5
+    "lead_priority_score": 53.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Energy Works LLC",
@@ -2730,7 +2880,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Fischer Plumbing Co., Inc.",
@@ -2824,7 +2979,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Fischer Heating and Air Conditioning, Inc.",
@@ -2903,7 +3063,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Overlake Heating & Air Conditioning",
@@ -2978,7 +3143,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Innovative Home Solutions NW, LLC",
@@ -3041,7 +3211,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Home Comfort Alliance, LLC",
@@ -3131,7 +3306,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Bob's Heating & Air Conditioning",
@@ -3232,7 +3412,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 52
+    "lead_priority_score": 57,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Innovative Comfort Systems Inc",
@@ -3314,7 +3499,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "CM Heating",
@@ -3413,7 +3603,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 77
+    "lead_priority_score": 82,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Price Jones, LLC",
@@ -3483,7 +3678,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Washington Energy Services",
@@ -3610,7 +3810,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Even Flo Heating and Air-Conditioning",
@@ -3710,7 +3915,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Dana's Heating Inc",
@@ -3821,7 +4031,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Husky Mechanical LLC",
@@ -3885,7 +4100,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Sundance Energy Services Inc",
@@ -3984,7 +4204,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Complete Heating & Air Conditioning Inc",
@@ -4057,7 +4282,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Desert Express LLC",
@@ -4137,7 +4367,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Bassett Home Heating Inc",
@@ -4217,7 +4452,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "PNW Air Solutions LLC",
@@ -4287,7 +4527,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Day & Nite Plumbing & Heating Inc",
@@ -4423,7 +4668,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 77
+    "lead_priority_score": 82,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Dear Services",
@@ -4517,7 +4767,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40.5
+    "lead_priority_score": 45.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Evergreen Home Pro",
@@ -4599,7 +4854,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Breeze Heating Air & Electrical, LLC",
@@ -4671,7 +4931,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Endeavor Heating And Cooling, LLC",
@@ -4742,7 +5007,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Adaptive HVAC, LLC",
@@ -4850,7 +5120,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Derr Heating & Cooling LLC",
@@ -4947,7 +5222,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 27.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Derr Heating & Cooling LLC",
@@ -5044,7 +5324,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 27.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Price Jones, LLC",
@@ -5114,7 +5399,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Washington Natural Gas Heating and Air Conditioning",
@@ -5203,7 +5493,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 36.5
+    "lead_priority_score": 41.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Innovation HVAC LLC",
@@ -5289,7 +5584,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Price Jones, LLC",
@@ -5359,7 +5659,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Furnace Doctors",
@@ -5432,7 +5737,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Lifetime Heating & Air Conditioning",
@@ -5534,7 +5844,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 34,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Northwest Comfort Systems Inc",
@@ -5622,7 +5937,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Seatown Electric Heating and Air LLC",
@@ -5727,7 +6047,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 77
+    "lead_priority_score": 77,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "All Points Heating & Fireplace",
@@ -5817,7 +6142,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Belred Heating, Cooling & Plumbing, LLC",
@@ -5921,7 +6251,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Forest Song LLC",
@@ -5988,7 +6323,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Affordable Heating & Air Conditioning Inc.",
@@ -6068,7 +6408,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Climate Control Experts HVAC LLC",
@@ -6144,7 +6489,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Meridian Mechanical",
@@ -6231,7 +6581,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "East Hill Heating & Cooling",
@@ -6311,7 +6666,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Precision Air Services Inc",
@@ -6383,7 +6743,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cool Heat 365 LLC",
@@ -6449,7 +6814,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "K & D Mechanical Inc",
@@ -6535,7 +6905,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cummings Inc.",
@@ -6622,7 +6997,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Green City Heating & Air Conditioning Inc",
@@ -6717,7 +7097,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Allred Heating Cooling Electric LLC",
@@ -6813,7 +7198,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 52
+    "lead_priority_score": 57,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Varsity Heating and Cooling, LLC",
@@ -6892,7 +7282,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Northwest Expert Heating LLC",
@@ -6966,7 +7361,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 34,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "RMR Heating & Cooling LLC",
@@ -7035,7 +7435,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Greener Cleaner Heating & Air LLC",
@@ -7106,7 +7511,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Mainstream Air Ltd",
@@ -7180,7 +7590,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Climate Control Experts HVAC LLC",
@@ -7256,7 +7671,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "All Star Heating & Air Conditioning Inc",
@@ -7350,7 +7770,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "CM Heating",
@@ -7449,7 +7874,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 77
+    "lead_priority_score": 82,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "All Weather Heating Air Conditioning & Refrigeration LLC",
@@ -7531,7 +7961,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "2 Sons Plumbing",
@@ -7610,7 +8045,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 39,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Metalsmiths, Inc.",
@@ -7699,7 +8139,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Metalsmiths, Inc.",
@@ -7788,7 +8233,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Heat Flow Mechanical LLC",
@@ -7865,7 +8315,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Absolute Heating & Cooling",
@@ -7958,7 +8413,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Leo's Heating & Cooling LLC",
@@ -8035,7 +8495,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Custom Radiant Design Inc",
@@ -8125,7 +8590,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "HVAC & Appliance Repair Guys",
@@ -8214,7 +8684,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 27.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Hunt's Services",
@@ -8355,7 +8830,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "All Seasons Inc",
@@ -8431,7 +8911,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Smart Electric",
@@ -8505,7 +8990,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Precision Mechanical, Inc.",
@@ -8576,7 +9066,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Kohler Heating & Air Conditioning Inc",
@@ -8646,7 +9141,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "NW Remodeling Consultants LLC",
@@ -8740,7 +9240,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 22.5,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Bros Air LLC",
@@ -8813,7 +9318,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Harts Plumbers, Electricians, & HVAC Technicians",
@@ -8929,7 +9439,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 94.5
+    "lead_priority_score": 99.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Air Systems Engineering Inc",
@@ -9010,7 +9525,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 32,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Home Comfort Alliance, LLC",
@@ -9117,7 +9637,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Good Guys Heating, Air and Electrical Corp.",
@@ -9189,7 +9714,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Prime HVAC, LLC",
@@ -9264,7 +9794,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Valley Furnace Inc",
@@ -9344,7 +9879,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Wrench Hvac Pro LLC",
@@ -9404,7 +9944,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Royal Heating LLC",
@@ -9465,7 +10010,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Narrows Heating & Air Conditioning Inc",
@@ -9580,7 +10130,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 32,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Dr Cool Heating & Air Conditioning",
@@ -9672,7 +10227,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Top Quality Home Service LLC",
@@ -9764,7 +10324,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Dr Cool Heating & Air Conditioning",
@@ -9856,7 +10421,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Above the Best, Inc",
@@ -9930,7 +10500,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Madco Heating & Cooling LLC",
@@ -10011,7 +10586,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Nisqually Comfort LLC",
@@ -10098,7 +10678,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Rainier Heating & Cooling LLC",
@@ -10165,7 +10750,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Sunrise Energy Systems",
@@ -10268,7 +10858,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Specialty Pump & Plumbing Inc",
@@ -10373,7 +10968,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 33
+    "lead_priority_score": 38,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Serenity Air Inc",
@@ -10476,7 +11076,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Puyallup Heating & Air Conditioning",
@@ -10554,7 +11159,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cummings Inc.",
@@ -10641,7 +11251,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Pacific Heating & Cooling",
@@ -10741,7 +11356,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 65
+    "lead_priority_score": 70,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "PNW Fresh Air LLC",
@@ -10825,7 +11445,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Any Season Comfort Solutions",
@@ -10895,7 +11520,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Hayes Heating and Cooling, Inc",
@@ -10977,7 +11607,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 32,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Puget Heating Company Inc.",
@@ -11075,7 +11710,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Beaver Heating & Air LLC",
@@ -11148,7 +11788,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Mayster Heating and Air",
@@ -11219,7 +11864,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Snoqualmie Valley Mechanical LLC",
@@ -11289,7 +11939,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ranger Pro",
@@ -11369,7 +12024,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Kliemann Bros Heating & Air Conditioning Inc",
@@ -11472,7 +12132,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "My PHD Services Inc",
@@ -11548,7 +12213,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Five Star Mechanical",
@@ -11626,7 +12296,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 32,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "HVAC Service Pros",
@@ -11701,7 +12376,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Polk Mechanical LLC",
@@ -11783,7 +12463,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Best Choice Heating",
@@ -11851,7 +12536,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Omni Mechanical Inc",
@@ -11948,7 +12638,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Greenflow Heating & Cooling",
@@ -12027,7 +12722,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "LSM Heating, Plumbing, Electric, Inc.",
@@ -12145,7 +12845,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Paragon Heating and Home Comfort Solutions, LLC",
@@ -12237,7 +12942,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Elevated HVAC Technologies, LLC",
@@ -12329,7 +13039,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "First Call Heating & Air Conditioning LLC",
@@ -12402,7 +13117,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Any Season Comfort Solutions",
@@ -12472,7 +13192,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Puget Heating Company Inc.",
@@ -12570,7 +13295,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Chasevac LLC",
@@ -12633,7 +13363,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Pristine Air Services LLC",
@@ -12716,7 +13451,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Gene Johnson Plumbing, Heating, Cooling & Electrical, LLC",
@@ -12840,7 +13580,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Best Air Duct Cleaning Services",
@@ -12911,7 +13656,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Sound Heating & Air Conditioning",
@@ -12993,7 +13743,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "All Seasons Heating & Climate Control",
@@ -13073,7 +13828,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Airbest Home Services",
@@ -13165,7 +13925,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30.5
+    "lead_priority_score": 35.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cool Heat 365 LLC",
@@ -13231,7 +13996,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Frederickson Electric",
@@ -13312,7 +14082,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Infinity Heating & Air LLC",
@@ -13388,7 +14163,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Parretta Plumbing & Rooter LLC",
@@ -13458,7 +14238,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Frederickson Electric",
@@ -13539,7 +14324,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Northern Comfort Heating & Cooling",
@@ -13616,7 +14406,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Diamondback HVAC LLC",
@@ -13683,7 +14478,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "BB Heating LLC",
@@ -13770,7 +14570,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Blanning Family Remodeling and Handiwork, Inc.",
@@ -13832,7 +14637,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Capital Heating & Cooling",
@@ -13959,7 +14769,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Sunset Air",
@@ -14069,7 +14884,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Air Flo Heating Company Inc",
@@ -14157,7 +14977,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Copper and Cable Electric Co.",
@@ -14239,7 +15064,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 39,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "A'alona HVAC Solutions LLC",
@@ -14319,7 +15149,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Chehalis Sheet Metal & Roofing Co., Inc.",
@@ -14428,7 +15263,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Copper and Cable Electric Co.",
@@ -14510,7 +15350,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 39,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Black Hills Inc",
@@ -14603,7 +15448,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 77
+    "lead_priority_score": 77,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Glacier Peak Mechanical LLC",
@@ -14679,7 +15529,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Flow Tech Heating AC & Electric",
@@ -14766,7 +15621,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Iceberg Mechanical Services, LLC",
@@ -14848,7 +15708,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Anytime Service",
@@ -14913,7 +15778,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Foss Heating & Cooling Inc",
@@ -15001,7 +15871,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Sundance Energy Services Inc",
@@ -15100,7 +15975,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "CPI Plumbing & Heating",
@@ -15216,7 +16096,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "HVAC Pros of Skagit & Island County",
@@ -15292,7 +16177,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "R & H Mechanical Inc",
@@ -15366,7 +16256,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Evergreen Air Inc",
@@ -15436,7 +16331,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ronk Brothers",
@@ -15537,7 +16437,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ronk Brothers",
@@ -15638,7 +16543,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Green Energy Systems",
@@ -15710,7 +16620,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Americool Heating and A/C LLC",
@@ -15796,7 +16711,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Americool Heating and A/C LLC",
@@ -15882,7 +16802,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "West Mechanical Inc",
@@ -15966,7 +16891,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Chehalis Sheet Metal & Roofing Co., Inc.",
@@ -16075,7 +17005,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "LSM Heating, Plumbing, Electric, Inc.",
@@ -16193,7 +17128,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Clean Air Comfort Systems Inc",
@@ -16282,7 +17222,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Emerge Electrical LLC",
@@ -16365,7 +17310,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Marr's Heating and Air Conditioning Inc",
@@ -16467,7 +17417,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "West Mechanical Inc",
@@ -16551,7 +17506,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Truly Radiant Heating",
@@ -16623,7 +17583,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Visionary Construction Solutions LLC",
@@ -16710,7 +17675,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Truly Radiant Heating",
@@ -16782,7 +17752,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "LSM Heating, Plumbing, Electric, Inc.",
@@ -16900,7 +17875,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "ThermAll Heating, Cooling & Electric",
@@ -17012,7 +17992,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Bid Mechanical Inc",
@@ -17080,7 +18065,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Phil's Heating & Air Conditioning",
@@ -17144,7 +18134,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Choice Electric, Heating, & Cooling",
@@ -17213,7 +18208,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Patriot Plumbing",
@@ -17308,7 +18308,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 36.5
+    "lead_priority_score": 36.5,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Cozy Comfort Heating and Air Conditioning, Inc.",
@@ -17385,7 +18390,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cozy Comfort Heating and Air Conditioning, Inc.",
@@ -17462,7 +18472,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Secure Plumbing & Heating Service LLC",
@@ -17529,7 +18544,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Bid Mechanical Inc",
@@ -17597,7 +18617,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Consistent Climate Heating and Cooling LLC",
@@ -17673,7 +18698,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 27.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Hedera LLC",
@@ -17743,7 +18773,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Advanced Mechanical Heating and Cooling, LLC",
@@ -17819,7 +18854,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Diversified Mechanical Solutions, LLC",
@@ -17936,7 +18976,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Fisher Refrigeration",
@@ -18011,7 +19056,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Entek Corporation",
@@ -18104,7 +19154,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 32,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Campbell & Company",
@@ -18225,7 +19280,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 48.5
+    "lead_priority_score": 48.5,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Thermal Heating And Cooling LLC",
@@ -18291,7 +19351,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "ThermAll Heating, Cooling & Electric",
@@ -18403,7 +19468,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "MBI Construction Services, Inc",
@@ -18479,7 +19549,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Thermex Valley Heating & Air Conditioning, LLC",
@@ -18554,7 +19629,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Cascade Mechanical Contractors, Incorporated",
@@ -18659,7 +19739,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Vance Heating & Air Conditioning Inc",
@@ -18741,7 +19826,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Vance Heating & Air Conditioning Inc",
@@ -18823,7 +19913,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28.5
+    "lead_priority_score": 33.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "MAS Pro Service LLC",
@@ -18898,7 +19993,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Fisher Refrigeration",
@@ -18973,7 +20073,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Mallard Mechanical LLC",
@@ -19048,7 +20153,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 39,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "All Fixed Heating & Air Conditioning LLC",
@@ -19114,7 +20224,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "All Around Mechanical LLC",
@@ -19188,7 +20303,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "ABA HVAC & Home Solutions, Inc.",
@@ -19284,7 +20404,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "AM/PM Heating & Cooling Inc",
@@ -19372,7 +20497,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Sure Flame LLC",
@@ -19443,7 +20573,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Advanced Air Systems Inc",
@@ -19524,7 +20659,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Quality Pro Services of Vancouver",
@@ -19593,7 +20733,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Smart HVAC LLC",
@@ -19691,7 +20836,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 26
+    "lead_priority_score": 31,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Rescue Rooter",
@@ -19815,7 +20965,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 77
+    "lead_priority_score": 77,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Blue Flame Heating, Air & Electric",
@@ -19939,7 +21094,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 77
+    "lead_priority_score": 77,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Rescue Rooter",
@@ -20063,6 +21223,11 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 77
+    "lead_priority_score": 77,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   }
 ]

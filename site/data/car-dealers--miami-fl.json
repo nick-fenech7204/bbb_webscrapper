@@ -57,7 +57,12 @@
     "review_need_score": 79.9,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 68.7
+    "lead_priority_score": 73.7,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Bird Road Auto Sales",
@@ -131,7 +136,12 @@
     "review_need_score": 69.7,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 88.7
+    "lead_priority_score": 93.7,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Miami Auto Mall Inc",
@@ -198,7 +208,12 @@
     "review_need_score": 74.8,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 70
+    "lead_priority_score": 75,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Better Auto of Miami",
@@ -255,7 +270,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 37
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Newport Universal Group Corp.",
@@ -315,7 +335,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 72
+    "lead_priority_score": 77,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Machado Auto Sales, LLC",
@@ -383,7 +408,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 57
+    "lead_priority_score": 62,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Green Light Auto Sales Inc",
@@ -443,7 +473,12 @@
     "review_need_score": 54,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 42.7
+    "lead_priority_score": 47.7,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Repo Auto Brokers LLC",
@@ -495,7 +530,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 47
+    "lead_priority_score": 47,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Colon Auto Sales, Inc",
@@ -562,7 +602,12 @@
     "review_need_score": 64,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 76.7
+    "lead_priority_score": 81.7,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Amaro Auto Sales Inc.",
@@ -614,7 +659,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 47
+    "lead_priority_score": 47,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Dollars Plus Car II, LLC",
@@ -681,7 +731,12 @@
     "review_need_score": 75.7,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 76.7
+    "lead_priority_score": 81.7,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Walt Grace, Inc.",
@@ -733,7 +788,12 @@
     "review_need_score": 13.7,
     "low_review_volume_flag": 0,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 23.3
+    "lead_priority_score": 23.3,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Gables Autohaus",
@@ -793,7 +853,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 47
+    "lead_priority_score": 52,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Elite Auto Sales",
@@ -845,7 +910,12 @@
     "review_need_score": 74.8,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 81
+    "lead_priority_score": 81,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Cars Business, LLC",
@@ -917,7 +987,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 55
+    "lead_priority_score": 60,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Brickell Motors, LLC",
@@ -977,7 +1052,12 @@
     "review_need_score": 70,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 72.7
+    "lead_priority_score": 77.7,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Miami Easy Autos Corp",
@@ -1046,7 +1126,12 @@
     "review_need_score": 48.3,
     "low_review_volume_flag": 1,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 39,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ramirez Super Motor, Inc.",
@@ -1113,7 +1198,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "D-Lux Group, Inc",
@@ -1173,7 +1263,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ovi Auto Depot LLC",
@@ -1240,7 +1335,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Kaizen Global Trade Us",
@@ -1292,7 +1392,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Miami One Enterprise Inc",
@@ -1352,7 +1457,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Comfort Rent-a-Car & Leasing LLC",
@@ -1404,7 +1514,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Totto Auto Dealer Inc",
@@ -1456,7 +1571,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "A & D Motors Sales Corp",
@@ -1513,7 +1633,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 28,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "One Way Motors LLC",
@@ -1565,7 +1690,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Bonanza Auto Center, Inc.",
@@ -1625,7 +1755,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Subaru North Miami",
@@ -1685,7 +1820,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Albert Dent Master Inc",
@@ -1737,7 +1877,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Thor Logistics Corp",
@@ -1789,7 +1934,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Impact Auto Depot Inc",
@@ -1849,7 +1999,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Adrian & May Flagler Scooter LLC",
@@ -1901,7 +2056,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Amt Enterprises Group, LLC",
@@ -1953,7 +2113,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Miami Auto Wholesale LLC",
@@ -2013,7 +2178,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Nice Drive Miami, LLC",
@@ -2073,7 +2243,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Flipsavvy Group LLC",
@@ -2125,7 +2300,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Triple SSS Auto Sales Inc",
@@ -2177,7 +2357,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Deluxe Sport Cars LLC",
@@ -2237,7 +2422,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Wivalka Motor's LLC",
@@ -2289,7 +2479,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Wells Fargo",
@@ -2377,7 +2572,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 58
+    "lead_priority_score": 63,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Matrix Auto Sales",
@@ -2429,7 +2629,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 73,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Genesis Motors Miami LLC",
@@ -2481,7 +2686,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Damor Motors 105",
@@ -2541,7 +2751,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Magic City Auto",
@@ -2601,7 +2816,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Belloliz Auto Service Corp",
@@ -2686,7 +2906,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22.5
+    "lead_priority_score": 27.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "MGP Motor Holdings, LLC",
@@ -2753,7 +2978,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Motors, Inc.",
@@ -2813,7 +3043,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Prime Auto",
@@ -2873,7 +3108,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 45,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Urlo Investment LLC",
@@ -2925,7 +3165,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Todo Auto USA Corp",
@@ -2977,7 +3222,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Autodeal Miami LLC",
@@ -3051,7 +3301,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Latin Motors International LLC",
@@ -3118,7 +3373,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "d'LUXURY Custom Enterprise Corp",
@@ -3170,7 +3430,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Miami Auto Sales Corp",
@@ -3230,7 +3495,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Long's Motorcycle Sales Inc",
@@ -3282,7 +3552,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Lugovations, LLC",
@@ -3334,7 +3609,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "VIP Auto Sales N 1 LLC",
@@ -3386,7 +3666,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "TPA Auto Sales Llc",
@@ -3446,7 +3731,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 36.5,
+    "has_phone": 0,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Contact/email only, no phone",
+    "contact_readiness_score": 30
   },
   {
     "name": "EM Auto Sale, Inc.",
@@ -3506,7 +3796,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Hgreg Trucks",
@@ -3566,7 +3861,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 76.5
+    "lead_priority_score": 76.5,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Five Star Caribe Auto Sales Miami, Corp.",
@@ -3626,7 +3926,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "A & L International Motor Corp",
@@ -3678,7 +3983,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Fuego's Cars",
@@ -3738,7 +4048,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Volks Doctor, Inc",
@@ -3790,7 +4105,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Rock Nation Automotive LLC",
@@ -3842,7 +4162,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Car Factory Outlet",
@@ -3928,7 +4253,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 77
+    "lead_priority_score": 82,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "W.S. Motors Corp",
@@ -3988,7 +4318,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Supreme Tires & Accessories",
@@ -4048,7 +4383,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Automotive Trends, LLC",
@@ -4115,7 +4455,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Nice Drive Miami, LLC",
@@ -4175,7 +4520,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ayres Motors Group LLC",
@@ -4227,7 +4577,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Auto Pros USA LLC",
@@ -4279,7 +4634,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Biltmore Motors",
@@ -4339,7 +4699,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Prestige Import & Export Corp",
@@ -4391,7 +4756,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "J & JC Auto Group Inc",
@@ -4443,7 +4813,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Auto Quality Corp",
@@ -4503,7 +4878,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "JC&B Auto Sales",
@@ -4570,7 +4950,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Porteno Cars LLC",
@@ -4622,7 +5007,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "The King Of Trucks",
@@ -4687,7 +5077,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 32
+    "lead_priority_score": 37,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Douglas Auto Sales inc.",
@@ -4747,7 +5142,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Auto Superstore, Inc.",
@@ -4814,7 +5214,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Latinos Unidos Auto Sales",
@@ -4866,7 +5271,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Harkham Trading LLC",
@@ -4918,7 +5328,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Aquam Ev",
@@ -4978,7 +5393,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 20,
+    "has_phone": 0,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Contact/email only, no phone",
+    "contact_readiness_score": 30
   },
   {
     "name": "Hyundai of North Miami",
@@ -5059,7 +5479,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 60
+    "lead_priority_score": 65,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "T Motor Sales Inc.",
@@ -5126,7 +5551,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Miles Auto Sales, LLC",
@@ -5193,7 +5623,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Carmar Sales Group Inc",
@@ -5245,7 +5680,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Scooter 305 Inc",
@@ -5297,7 +5737,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Roly Roll Motors Inc",
@@ -5357,7 +5802,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "D&D Business corp.",
@@ -5417,7 +5867,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Murgado Automotive Group, Inc.",
@@ -5497,7 +5952,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 42
+    "lead_priority_score": 47,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Capital Auto Group Inc",
@@ -5557,7 +6017,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Bill Seidle's Nissan",
@@ -5624,7 +6089,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 42
+    "lead_priority_score": 21,
+    "has_phone": 0,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Contact/email only, no phone",
+    "contact_readiness_score": 30
   },
   {
     "name": "Pischler Automotive LLC",
@@ -5684,7 +6154,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 40
+    "lead_priority_score": 20,
+    "has_phone": 0,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Contact/email only, no phone",
+    "contact_readiness_score": 30
   },
   {
     "name": "Power Scooter Inc",
@@ -5736,7 +6211,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Kings Auto USA LLC",
@@ -5796,7 +6276,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 73,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Skyteam Motors",
@@ -5848,7 +6333,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Prestige Auto Depot",
@@ -5908,7 +6398,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ferco Motors Corp.",
@@ -5990,7 +6485,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 85
+    "lead_priority_score": 90,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Drive Us LLC",
@@ -6055,7 +6555,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Elite Auto Collision Miami Corp",
@@ -6107,7 +6612,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "BCG Imports, LLC",
@@ -6199,7 +6709,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 34
+    "lead_priority_score": 39,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Zezgo Fleet Solutions LLC",
@@ -6251,7 +6766,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Sosa King Motor Corp.",
@@ -6303,7 +6823,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Startcar Inc",
@@ -6355,7 +6880,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "World's Best Motor Sales, LLC",
@@ -6407,7 +6937,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Empire Motors Miami",
@@ -6467,7 +7002,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Kairos Auto LLC",
@@ -6519,7 +7059,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Autostop Florida, Inc.",
@@ -6571,7 +7116,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Henderson Auto Sales Inc",
@@ -6623,7 +7173,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Classic Car Club Miami",
@@ -6683,7 +7238,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Olympus Auto Group LLC",
@@ -6743,7 +7303,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Gn Auto Center Corp",
@@ -6808,7 +7373,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Wells Fargo",
@@ -6896,7 +7466,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 58
+    "lead_priority_score": 63,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Car Spot",
@@ -6953,7 +7528,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Piky Auto Sales, LLC",
@@ -7005,7 +7585,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Sky Auto Trader Group LLC",
@@ -7065,7 +7650,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Concept Auto, Inc",
@@ -7132,7 +7722,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Volvo Cars North Miami",
@@ -7192,7 +7787,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Villegas Group LLC",
@@ -7244,7 +7844,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Interstate Auto Sales and Leasing Corp",
@@ -7296,7 +7901,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Maserati Stuart",
@@ -7356,7 +7966,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Marins Collections",
@@ -7416,7 +8031,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Milano Automotive Group LLC",
@@ -7485,7 +8105,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30.5
+    "lead_priority_score": 35.5,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Buggy Doctor Auto Sales",
@@ -7545,7 +8170,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Family Auto Store, LLC",
@@ -7605,7 +8235,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Roberto Auto Sales Inc",
@@ -7657,7 +8292,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Alex Used Auto Sales Inc.",
@@ -7709,7 +8349,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Shop Smart Autos",
@@ -7761,7 +8406,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Miami 440 Inc",
@@ -7821,7 +8471,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Peiby Motors Corp",
@@ -7873,7 +8528,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Novi Motors Inc.",
@@ -7933,7 +8593,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Elvis Auto Group LLC",
@@ -7985,7 +8650,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Car Trust",
@@ -8045,7 +8715,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Dade Auto Depot, Inc.",
@@ -8105,7 +8780,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Universal Auto Sales, Inc.",
@@ -8172,7 +8852,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Nava Motors Corp.",
@@ -8232,7 +8917,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Mac1 Auto Sale, LLC.",
@@ -8284,7 +8974,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Prime Auto Miami Corp",
@@ -8344,7 +9039,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "J&I Sales Group Inc.",
@@ -8404,7 +9104,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Auto Platinum Inc",
@@ -8456,7 +9161,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Premier Motors Investment, Corp.",
@@ -8508,7 +9218,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "B & H Motor Sports Corp",
@@ -8575,7 +9290,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Vinton Auto Consignment & Sales, Inc.",
@@ -8635,7 +9355,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Mercedes Master Shop Corp",
@@ -8695,7 +9420,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "J & M Auto of Miami Inc",
@@ -8747,7 +9477,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Mad Max Motorcycles, LLC",
@@ -8799,7 +9534,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Es Auto Sales & Body Shop LLC",
@@ -8851,7 +9591,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Car Plus Inc",
@@ -8911,7 +9656,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "South Florida Exotics Corp.",
@@ -8963,7 +9713,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "City Auto Sales, Inc",
@@ -9030,7 +9785,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Executive Auto Brokers & Leasing Inc",
@@ -9082,7 +9842,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "JD Auto Credit Corp.",
@@ -9134,7 +9899,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "SoFlo Motorz Inc.",
@@ -9194,7 +9964,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Tini Auto Sales Inc",
@@ -9246,7 +10021,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Concept Auto, Inc",
@@ -9313,7 +10093,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Easy Cars Dealership, LLC",
@@ -9373,7 +10158,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Romero Car Sales Corp",
@@ -9433,7 +10223,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "J P Auto Brokers, Inc",
@@ -9493,7 +10288,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": null
+    "lead_priority_score": null,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Brickell Key Estates LLC",
@@ -9545,7 +10345,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Wholesale66 LLC",
@@ -9597,7 +10402,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Mikalyzed Auto Boutique, LLC",
@@ -9649,7 +10459,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "B & T Auto Sales Group LLC",
@@ -9701,7 +10516,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Premier Automotive Export Inc",
@@ -9761,7 +10581,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Braga Management Inc",
@@ -9821,7 +10646,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Speedart Motorsports, LLC",
@@ -9908,7 +10738,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Carwarriors LLC",
@@ -9969,7 +10804,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 1,
-    "lead_priority_score": 71
+    "lead_priority_score": 76,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "RPM.Miami LLC",
@@ -10036,7 +10876,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Car One Rental",
@@ -10096,7 +10941,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Wells Fargo",
@@ -10184,7 +11034,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 58
+    "lead_priority_score": 63,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "The Best of Miami Quality Cars Inc.",
@@ -10244,7 +11099,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Gio's Auto Paint & Body Shop, Corp",
@@ -10296,7 +11156,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Market Auto Export LLC",
@@ -10348,7 +11213,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "111 Auto Financed LLC",
@@ -10408,7 +11278,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Ramirez Super Motor, Inc.",
@@ -10475,7 +11350,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 28
+    "lead_priority_score": 33,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "36 ST Mechanic and Tires Shops Inc",
@@ -10527,7 +11407,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Barroso Auto Brokers, Inc",
@@ -10579,7 +11464,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Miami Automotive Retail, Inc.",
@@ -10636,7 +11526,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 60
+    "lead_priority_score": 60,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "P J Auto Wholesale Inc",
@@ -10696,7 +11591,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 30
+    "lead_priority_score": 35,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "AutoNation Nissan Miami",
@@ -10761,7 +11661,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 46
+    "lead_priority_score": 51,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Barroso Auto Sales Inc",
@@ -10822,7 +11727,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 38
+    "lead_priority_score": 38,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 1,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "AutoSmart",
@@ -10896,7 +11806,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Motorink LLC",
@@ -10948,7 +11863,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Economic Auto Sales",
@@ -11008,7 +11928,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "B & H Motors Sports Corp",
@@ -11060,7 +11985,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Andino's Auto Sales LLC",
@@ -11112,7 +12042,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Florida Auto One Corp",
@@ -11186,7 +12121,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "AA Asap Automotive & Transport, LLC",
@@ -11238,7 +12178,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Used Auto Discount",
@@ -11290,7 +12235,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Miami Builders Auto Sales",
@@ -11350,7 +12300,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "City Image Auto Sales LLC",
@@ -11402,7 +12357,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "AA Auto Sales, Inc",
@@ -11454,7 +12414,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "Mr. Car Luxury & Quality Motors LLC",
@@ -11521,7 +12486,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "BCG International Corp",
@@ -11605,7 +12575,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 36
+    "lead_priority_score": 41,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Buying Fast Auto Sales LLC",
@@ -11665,7 +12640,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Velare Motorcycles Inc",
@@ -11717,7 +12697,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   },
   {
     "name": "SR Top Equipment LLC",
@@ -11777,7 +12762,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 73
+    "lead_priority_score": 78,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 0,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "Singer Auto Sales Corp",
@@ -11837,7 +12827,12 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 27,
+    "has_phone": 1,
+    "has_named_contact": 1,
+    "has_email": 1,
+    "contact_readiness": "Phone + named contact",
+    "contact_readiness_score": 100
   },
   {
     "name": "A1 Solutions Car Inc",
@@ -11889,6 +12884,11 @@
     "review_need_score": null,
     "low_review_volume_flag": null,
     "accredited_but_low_rated": 0,
-    "lead_priority_score": 22
+    "lead_priority_score": 22,
+    "has_phone": 1,
+    "has_named_contact": 0,
+    "has_email": 0,
+    "contact_readiness": "Phone only",
+    "contact_readiness_score": 75
   }
 ]
