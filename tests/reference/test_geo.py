@@ -49,7 +49,7 @@ def test_destination_point_zero_distance_returns_same_point():
 def test_destination_point_normalizes_longitude_crossing_antimeridian():
     # Starting near +179 longitude and heading east should wrap to negative,
     # not blow past 180.
-    lat, lon = destination_point(0.0, 179.5, 100.0, bearing_degrees=90.0)
+    _lat, lon = destination_point(0.0, 179.5, 100.0, bearing_degrees=90.0)
     assert -180.0 <= lon <= 180.0
 
 

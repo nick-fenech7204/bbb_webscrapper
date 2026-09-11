@@ -32,7 +32,7 @@ from typing import Any
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.json_extract import extract_window_assignment
 from bbb_scraper.parsing.models import BusinessDetail
-from bbb_scraper.utils.stats import RunStats, PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED
+from bbb_scraper.utils.stats import PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED, RunStats
 
 logger = get_logger(__name__)
 

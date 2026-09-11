@@ -25,7 +25,8 @@ from __future__ import annotations
 
 import uuid
 
-from bbb_scraper.config import Settings, settings as default_settings
+from bbb_scraper.config import Settings
+from bbb_scraper.config import settings as default_settings
 
 
 def new_session_id(prefix: str | None = None) -> str:

@@ -75,7 +75,7 @@ class City(BaseModel):
     def display(self) -> str:
         return f"{self.name}, {self.state}"
 
-    def to_location(self) -> "Location":
+    def to_location(self) -> Location:
         """As a name-based Location for a find_loc search -- confirmed
         2026-09-02 this is what actually reaches a different local result
         pool, unlike a raw lat/lon Location (find_latlng) -- see

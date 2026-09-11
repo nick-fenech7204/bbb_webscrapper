@@ -18,13 +18,13 @@ from bbb_scraper.utils.stats import RunStats
 
 
 def _cfg(tmp_path: Path, **overrides) -> Settings:
-    base = dict(
-        proxy_enabled=False,
-        bbb_session_file=tmp_path / "no_such_session.json",  # missing on purpose
-        http_impersonate="chrome150",
-        http_min_delay_seconds=0.0,
-        http_max_delay_seconds=0.0,
-    )
+    base = {
+        "proxy_enabled": False,
+        "bbb_session_file": tmp_path / "no_such_session.json",  # missing on purpose
+        "http_impersonate": "chrome150",
+        "http_min_delay_seconds": 0.0,
+        "http_max_delay_seconds": 0.0,
+    }
     base.update(overrides)
     return Settings(**base)
 

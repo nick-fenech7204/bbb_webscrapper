@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from bbb_scraper.logging_setup import get_logger
-from bbb_scraper.utils.stats import RunStats, RECORDS_DEDUPED
+from bbb_scraper.utils.stats import RECORDS_DEDUPED, RunStats
 
 logger = get_logger(__name__)
 

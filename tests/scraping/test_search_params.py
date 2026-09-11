@@ -4,7 +4,7 @@ from bbb_scraper.scraping.search import build_referer, build_search_params
 
 
 def _cfg(**overrides) -> Settings:
-    base = dict(bbb_find_country="USA")
+    base = {"bbb_find_country": "USA"}
     base.update(overrides)
     return Settings(**base)
 

@@ -330,25 +330,36 @@ tail). Yelp is treated as *supplementary*: one shared client tracks the
 daily quota across the whole batch, and the moment the key is missing, the
 quota drops below a small floor, or a call fails, enrichment switches off
 for the rest of the run and the remaining metros come out BBB-only. It
-never raises. `--no-yelp` skips it entirely.
+never raises. `--no-yelp` skips it entirely. The per-metro checkpoint/
+sinks/publish step is itself wrapped the same way -- one metro's failure
+there is logged and skipped, not fatal to the rest of the batch. Once the
+whole batch finishes, `--deploy` (default on) pushes `site/` live
+automatically (`scripts/deploy_site.py`, S3 sync + CloudFront
+invalidation) if at least one metro actually ran; `--no-deploy` to only
+publish locally and deploy by hand later.
 
 **One-off / exploration:** `python scripts/match_bbb_yelp.py --bbb-csv
 <csv> --industry "<term>" --location "<place>"` (~5 Yelp API calls) writes
 `data/processed/bbb_yelp_master__<slug>.csv` -- the full table including the
 `yelp_only` tail.
 
-Note on redistribution: Yelp's API terms restrict storing/reselling raw
-Yelp fields, so the split is **publish BBB fields + our own derived scores
-to the static site, keep raw Yelp columns local**. The batch scraper's
-site-publish step only ever sends BBB fields; the site is BBB-only.
+Note on redistribution: Yelp's API terms restrict publicly redistributing/
+caching raw Yelp data. Nick's call (2026-09-10, considered explicitly) is
+to publish the **matched** business's `yelp_name` / `yelp_rating` /
+`yelp_review_count` / `yelp_url` on the public site alongside our own
+derived scores -- every other raw Yelp field (phone, id, price, hours,
+...) stays local-only. That's `_YELP_SITE_FIELDS` in
+`publish_site_data.py`, one place to widen or narrow it. Mitigation: the
+site footer credits Yelp, and every matched record links back to its real
+Yelp page.
 
 ## UI
 
 One [Streamlit](https://streamlit.io) page (`streamlit_app.py`): the **batch
 scraper control panel**. Type an industry phrase and pick metros (or "run
 every metro"), set the sweep radius / population floor / pages-per-place,
-choose whether to enrich with Yelp and whether to fetch full BBB contact
-details, and click **Start batch**.
+choose whether to enrich with Yelp, fetch full BBB contact details, and/or
+deploy to the live site when done, and click **Start batch**.
 
 It's a thin launcher, not the scraper itself: it starts
 `scripts/batch_scrape_metros.py` as a background OS process and tails its
@@ -356,7 +367,8 @@ log file. Because that's a real separate process, a multi-hour batch keeps
 running even if you close the browser tab -- only **Stop batch** (or
 stopping the Streamlit server) ends it. All the real logic -- the metro
 sweep, checkpoint/resume, Yelp enrichment + quota handling, per-metro site
-publish -- lives in that script, so the page and the CLI can't drift apart.
+publish, and the final deploy -- lives in that script, so the page and the
+CLI can't drift apart.
 
 ```bash
 streamlit run streamlit_app.py      # or double-click run_streamlit.bat
@@ -415,7 +427,9 @@ per DEPLOY.md). Publishing an update after that first deploy is
 `python scripts/deploy_site.py` (or double-click `deploy_site.bat`) --
 syncs `site/` to S3 and invalidates CloudFront in one step; see
 DEPLOY.md's "Automating updates" section for the one-time AWS CLI setup
-it needs.
+it needs. The batch scraper calls this automatically at the end of a run
+(`--deploy`, default on -- see "Yelp (official API) + BBB<->Yelp matching"
+above); everything else that publishes locally still needs it run by hand.
 
 ## Setup
 
@@ -634,10 +648,12 @@ traced back to the exact HTML that caused it.
   deduplicated master view is ever wanted, that's a one-off pass to build
   (`etl/dedupe.py` already has the logic, just needs pointing at the whole
   file), not something this sink should start doing automatically.
-- Publishing to the live site (`scripts/deploy_site.py`) is a manual,
-  on-demand step -- nothing watches for new data or a `git push` and
-  triggers it automatically. Local `site/data/` updates immediately when a
-  search publishes; the *live* CloudFront URL only updates when
-  `deploy_site.py` is actually run. A GitHub Action that runs it
-  automatically on every push is a real option if that's ever wanted, not
-  yet built.
+- **`git push` still never touches the live site** -- GitHub is version
+  control, not part of the deploy path, and nothing watches it. The batch
+  scraper (`batch_scrape_metros.py` / its Streamlit page) *does* now deploy
+  automatically -- `--deploy` (default on) runs `scripts/deploy_site.py`
+  once at the end, if at least one metro actually ran. `scripts/
+  match_bbb_yelp.py` and any other publish path are still local-only;
+  `deploy_site.py` has to be run by hand (or `deploy_site.bat`) to push
+  those live. A GitHub Action triggered on push is still a real option if
+  that path is ever wanted too, not built.

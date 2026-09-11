@@ -35,7 +35,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from urllib.parse import urlencode
 
-from bbb_scraper.config import Settings, settings as default_settings
+from bbb_scraper.config import Settings
+from bbb_scraper.config import settings as default_settings
 from bbb_scraper.exceptions import ParsingError
 from bbb_scraper.reference.models import Category, Location
 from bbb_scraper.scraping.capture import CaptureResult, RawCapture

@@ -5,16 +5,16 @@ from bbb_scraper.scraping.proxies import get_proxies
 
 
 def _cfg(**overrides) -> Settings:
-    base = dict(
-        proxy_enabled=True,
-        proxy_host="",
-        proxy_port=0,
-        proxy_username="",
-        proxy_password="",
-        proxy_protocol="http",
-        proxy_country=None,
-        proxy_session_prefix="bbb",
-    )
+    base = {
+        "proxy_enabled": True,
+        "proxy_host": "",
+        "proxy_port": 0,
+        "proxy_username": "",
+        "proxy_password": "",
+        "proxy_protocol": "http",
+        "proxy_country": None,
+        "proxy_session_prefix": "bbb",
+    }
     base.update(overrides)
     return Settings(**base)
 

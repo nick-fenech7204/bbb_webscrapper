@@ -25,7 +25,7 @@ class MetroDirectory:
         self._by_id = {m.id: m for m in metros}
 
     @classmethod
-    def load(cls, path: Path | str | None = None) -> "MetroDirectory":
+    def load(cls, path: Path | str | None = None) -> MetroDirectory:
         path = Path(path) if path else settings.metros_file
         if not path.exists():
             logger.warning(

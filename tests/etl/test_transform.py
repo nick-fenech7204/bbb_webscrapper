@@ -1,4 +1,9 @@
-from bbb_scraper.etl.transform import normalize_phone, normalize_whitespace, transform_detail, transform_summary
+from bbb_scraper.etl.transform import (
+    normalize_phone,
+    normalize_whitespace,
+    transform_detail,
+    transform_summary,
+)
 from bbb_scraper.parsing.models import BusinessDetail, BusinessSummary
 
 

@@ -25,7 +25,7 @@ class CSVSink(Sink):
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
         rows = [flatten_record(r) for r in records]
-        batch_fieldnames = sorted({key for row in rows for key in row.keys()})
+        batch_fieldnames = sorted({key for row in rows for key in row})
 
         existing_fieldnames = self._read_header()
 

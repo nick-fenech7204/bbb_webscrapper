@@ -18,7 +18,7 @@ from bbb_scraper.pipeline.base import Sink
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.reference.models import Category, Location, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
-from bbb_scraper.utils.stats import RunStats, RECORDS_LOADED
+from bbb_scraper.utils.stats import RECORDS_LOADED, RunStats
 
 logger = get_logger(__name__)
 

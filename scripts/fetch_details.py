@@ -17,12 +17,12 @@ import argparse
 import csv
 import sys
 
-from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.dedupe import dedupe_records
+from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail
 from bbb_scraper.logging_setup import configure_logging, get_logger
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
-from bbb_scraper.utils.stats import RunStats, RECORDS_LOADED
+from bbb_scraper.utils.stats import RECORDS_LOADED, RunStats
 
 logger = get_logger(__name__)
 

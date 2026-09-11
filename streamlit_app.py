@@ -85,10 +85,10 @@ with st.form("batch_form"):
         "Enrich with Yelp (~5 API calls per metro)",
         value=True,
         help="Runs one Yelp Fusion search per metro and matches it to the BBB rows, "
-             "adding yelp_* columns + derived-intelligence columns to the checkpoint. "
-             "Best-effort: no API key, a low daily quota (free tier is 300/day), or a "
-             "failed call just means BBB-only output for the rest of the batch -- never "
-             "an error. The public site stays BBB-only regardless.",
+             "adding the matched yelp_name/rating/review_count/url + derived-intelligence "
+             "columns to the checkpoint and to the site's Intelligence view. Best-effort: "
+             "no API key, a low daily quota (free tier is 300/day), or a failed call just "
+             "means BBB-only output for the rest of the batch -- never an error.",
     )
     fetch_details = st.checkbox(
         "Fetch full BBB contact details for every business",
@@ -96,6 +96,15 @@ with st.form("batch_form"):
         help="Off by default -- roughly doubles time per metro. Breadth (more metros) "
              "usually matters more than depth for a first pass; re-run a specific metro "
              "with this on later.",
+    )
+    deploy_when_done = st.checkbox(
+        "Deploy to the live site when done",
+        value=True,
+        help="Runs scripts/deploy_site.py (S3 sync + CloudFront invalidation) once at the "
+             "end, if at least one metro actually ran. Needs the AWS CLI configured locally "
+             "-- if it isn't, this is reported but the batch still finishes normally; the "
+             "scrape and the local site/data/ files are unaffected either way. Uncheck to "
+             "only publish locally and deploy by hand later.",
     )
     force = st.checkbox(
         "Redo metros already run for this exact industry", value=False,
@@ -125,6 +134,7 @@ if submitted and not _is_running():
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
     cmd.append("--yelp" if enrich_yelp else "--no-yelp")
+    cmd.append("--deploy" if deploy_when_done else "--no-deploy")
     if fetch_details:
         cmd.append("--details")
     if force:

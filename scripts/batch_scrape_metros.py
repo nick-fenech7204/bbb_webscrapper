@@ -32,12 +32,21 @@ Per metro:
      is skipped on a re-run (--force to redo).
   4. append the BBB records (not the wide table) into the shared
      data/processed/businesses.csv sink, same as every other run.
-  5. unless --no-publish: publish the BBB fields of that metro to site/
-     immediately. The public site stays BBB-only on purpose -- Yelp's API
-     terms restrict redistributing raw Yelp data.
+  5. unless --no-publish: publish that metro to site/data/ locally (BBB
+     fields + the matched yelp_name/rating/review_count/url + our derived
+     intelligence columns -- raw Yelp beyond those four stays out).
+  Steps 3-5 are wrapped: a failure there is logged and this metro is
+  skipped, the rest of the batch keeps going rather than the whole run
+  dying (this used to be able to kill hours of already-finished, already-
+  correct work over a bug in a print statement -- see git history).
 
-After the whole batch, rebuilds data/processed/<industry-slug>_all_metros.csv
--- every metro run for this industry so far, concatenated, as one file.
+After the whole batch: rebuilds data/processed/<industry-slug>_all_metros.csv
+(every metro run for this industry so far, concatenated), then unless
+--no-deploy, and only if at least one metro actually ran this time, pushes
+site/ live (S3 sync + CloudFront invalidation) once -- see
+scripts/deploy_site.py. A deploy problem is reported but never makes the
+batch itself look like it failed; the scrape + local publish already
+succeeded regardless, and `python scripts/deploy_site.py` alone retries it.
 """
 from __future__ import annotations
 
@@ -51,6 +60,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # for publish_site_data below
 
+import deploy_site
 from publish_site_data import publish_master_rows, slugify
 
 from bbb_scraper.etl.dedupe import dedupe_records
@@ -149,6 +159,13 @@ def main() -> int:
         "--publish", action=argparse.BooleanOptionalAction, default=True,
         help="Publish each metro's BBB fields to site/ as soon as it's done (default: on)",
     )
+    parser.add_argument(
+        "--deploy", action=argparse.BooleanOptionalAction, default=True,
+        help="Push site/ live (S3 sync + CloudFront invalidation) once at the end of the batch, "
+        "if at least one metro actually ran (default: on). Needs the AWS CLI configured -- see "
+        "scripts/deploy_site.py; a missing/broken AWS setup prints a message here and the batch "
+        "still finishes normally, it just doesn't go live. --no-deploy to only publish locally.",
+    )
     parser.add_argument("--force", action="store_true", help="Redo metros that already have a checkpoint file")
     args = parser.parse_args()
 
@@ -178,7 +195,7 @@ def main() -> int:
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
-          f"yelp={yelp_note}, publish={args.publish}")
+          f"yelp={yelp_note}, publish={args.publish}, deploy={args.deploy}")
 
     done = 0
     skipped = 0
@@ -247,6 +264,27 @@ def main() -> int:
     if yelp_state.reason_off and args.yelp:
         print(f"Note: Yelp enrichment stopped partway -- {yelp_state.reason_off}")
     print(f"Compiled file: {all_metros_path}")
+
+    if args.deploy and args.publish and done > 0:
+        # One deploy at the very end, not per metro: metros already publish
+        # locally to site/data/ as they finish (above), so this is just the
+        # "make the accumulated local changes live" step. Never lets a
+        # deploy problem look like the batch itself failed -- the scrape
+        # already succeeded and is safely on disk either way; --no-deploy
+        # or a manual `python scripts/deploy_site.py` retry always still
+        # works if this trips.
+        print("\nDeploying to the live site...")
+        try:
+            rc = deploy_site.main()
+        except Exception:
+            logger.exception("Deploy step raised unexpectedly")
+            rc = 1
+        if rc != 0:
+            print("Deploy failed (see above) -- the scrape + local publish are still fine; "
+                  "re-run `python scripts/deploy_site.py` once the problem's fixed.")
+    elif args.deploy and done == 0:
+        print("\nNothing new this run -- skipping deploy (site/ has nothing changed to push).")
+
     return 0
 
 

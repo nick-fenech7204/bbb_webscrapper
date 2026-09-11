@@ -36,7 +36,7 @@ class CityDirectory:
         self._cities = cities
 
     @classmethod
-    def load(cls, path: Path | str | None = None) -> "CityDirectory":
+    def load(cls, path: Path | str | None = None) -> CityDirectory:
         path = Path(path) if path else settings.us_cities_file
         if not path.exists():
             logger.warning(

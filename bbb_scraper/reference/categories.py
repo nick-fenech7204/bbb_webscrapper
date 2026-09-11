@@ -25,7 +25,7 @@ class CategoryDirectory:
         self._by_slug = {c.slug: c for c in categories if c.slug}
 
     @classmethod
-    def load(cls, path: Path | str | None = None) -> "CategoryDirectory":
+    def load(cls, path: Path | str | None = None) -> CategoryDirectory:
         path = Path(path) if path else settings.categories_file
         if not path.exists():
             logger.warning(

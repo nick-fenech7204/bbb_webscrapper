@@ -29,7 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from bbb_scraper.config import settings  # noqa: E402 -- see sys.path insert above
+from bbb_scraper.config import settings
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SITE_DIR = REPO_ROOT / "site"
@@ -37,7 +37,10 @@ SITE_DIR = REPO_ROOT / "site"
 
 def run(cmd: list[str]) -> int:
     print(f"$ {' '.join(cmd)}")
-    return subprocess.run(cmd).returncode
+    # check=False, explicitly: callers below inspect the returncode
+    # themselves (different message for sync vs. invalidation failure)
+    # rather than wanting a CalledProcessError raised here.
+    return subprocess.run(cmd, check=False).returncode
 
 
 def main() -> int:

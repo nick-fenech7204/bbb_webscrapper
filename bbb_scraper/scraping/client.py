@@ -26,20 +26,21 @@ import logging
 
 from curl_cffi import requests as curl_requests
 from tenacity import (
+    before_sleep_log,
     retry,
     retry_if_exception_type,
     stop_after_attempt,
     wait_exponential,
-    before_sleep_log,
 )
 
-from bbb_scraper.config import Settings, settings as default_settings
+from bbb_scraper.config import Settings
+from bbb_scraper.config import settings as default_settings
 from bbb_scraper.exceptions import BlockedError, RateLimitedError, ScrapeError
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.scraping.proxies import get_proxies
 from bbb_scraper.scraping.session import load_bbb_session
 from bbb_scraper.utils.rate_limit import RateLimiter
-from bbb_scraper.utils.stats import RunStats, REQUESTS_SENT, REQUESTS_FAILED, REQUESTS_RETRIED
+from bbb_scraper.utils.stats import REQUESTS_FAILED, REQUESTS_RETRIED, REQUESTS_SENT, RunStats
 
 logger = get_logger(__name__)
 
@@ -136,7 +137,7 @@ class HttpClient:
     def close(self) -> None:
         self.session.close()
 
-    def __enter__(self) -> "HttpClient":
+    def __enter__(self) -> HttpClient:
         return self
 
     def __exit__(self, *exc_info) -> None:

@@ -23,7 +23,7 @@ from typing import Any
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.models import BusinessSummary
 from bbb_scraper.reference.models import Category, Location
-from bbb_scraper.utils.stats import RunStats, PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED
+from bbb_scraper.utils.stats import PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED, RunStats
 
 logger = get_logger(__name__)
 

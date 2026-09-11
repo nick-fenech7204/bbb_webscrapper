@@ -9,9 +9,10 @@ module involved either. This is where the two meet.
 """
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
-from bbb_scraper.config import Settings, settings as default_settings
+from bbb_scraper.config import Settings
+from bbb_scraper.config import settings as default_settings
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.business_parser import parse_business_page
 from bbb_scraper.parsing.models import BusinessDetail, BusinessSummary
@@ -338,7 +339,7 @@ class Extractor:
     def close(self) -> None:
         self.http.close()
 
-    def __enter__(self) -> "Extractor":
+    def __enter__(self) -> Extractor:
         return self
 
     def __exit__(self, *exc_info) -> None:
