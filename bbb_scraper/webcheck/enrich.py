@@ -19,6 +19,14 @@ Concurrency is bounded (ThreadPoolExecutor, default 10 workers) -- this is
 I/O-bound waiting on many *different* hosts, not the repeated-single-host
 pattern BBB scraping has to pace politely; a modest worker count is a
 normal level of concurrency for a one-off liveness sweep, not a burst.
+
+The cache saves periodically during a run (every CACHE_SAVE_EVERY checks),
+not just once at the end -- on a large sweep (thousands of unique domains,
+comfortably 20+ minutes) a kill partway through used to lose every result
+checked so far, not just whatever was still in flight. Same category of
+risk this project already hardened the batch scraper against; worth the
+same fix here (2026-09-14, prompted by a real ad hoc run over all of
+businesses.csv's ~5,600 unique domains).
 """
 from __future__ import annotations
 
@@ -35,6 +43,8 @@ from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.webcheck.checker import WebsiteCheck, _normalize_url, check_website
 
 logger = get_logger(__name__)
+
+CACHE_SAVE_EVERY = 100
 
 
 class WebsiteCheckCache:
@@ -137,6 +147,16 @@ def check_websites(
                 done += 1
                 if on_progress:
                     on_progress(done, total)
+                # Periodic, not just once at the very end -- on a large
+                # sweep (thousands of unique domains, easily 20+ minutes)
+                # this used to mean a kill partway through lost every
+                # result checked so far, not just the ones still in
+                # flight. Same category of risk this project already
+                # hardened the batch scraper against (see
+                # _write_partial_checkpoint's docstring) -- worth the same
+                # fix here now that a real ad hoc run is this size.
+                if done % CACHE_SAVE_EVERY == 0:
+                    cache.save()
         cache.save()
 
     out: list[dict] = []

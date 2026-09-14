@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T02:49:35.632387+00:00",
+  "generated_at": "2026-09-14T16:15:40.659137+00:00",
   "datasets": [
     {
       "id": "real-estate-agents--atlanta-ga",
@@ -60,6 +60,16 @@
       "yelp_matched": 11,
       "top_lead_score": 84.0,
       "file": "real-estate-agents--cincinnati-oh.json"
+    },
+    {
+      "id": "dentists--denver-co",
+      "industry": "Dentists",
+      "metro": "Denver, CO",
+      "record_count": 852,
+      "has_yelp": true,
+      "yelp_matched": 128,
+      "top_lead_score": 92.0,
+      "file": "dentists--denver-co.json"
     },
     {
       "id": "landscapers--detroit-mi",

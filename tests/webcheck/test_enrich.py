@@ -166,3 +166,28 @@ def test_on_progress_called_with_final_totals(tmp_path, monkeypatch):
     seen: list[tuple[int, int]] = []
     check_websites(records, cache_path=tmp_path / "cache.json", on_progress=lambda d, t: seen.append((d, t)))
     assert seen[-1] == (2, 2)
+
+
+def test_cache_saves_periodically_not_just_once_at_the_end(tmp_path, monkeypatch):
+    """A long sweep (thousands of unique domains) used to lose every result
+    checked so far if killed partway through -- only the unconditional
+    save() after the whole loop ever ran. Confirms the periodic save
+    actually fires mid-run, not just at completion."""
+    monkeypatch.setattr(enrich_mod, "check_website", _fake_check_website_factory([]))
+    monkeypatch.setattr(enrich_mod, "CACHE_SAVE_EVERY", 2)
+
+    save_calls = []
+    original_save = enrich_mod.WebsiteCheckCache.save
+    def _counting_save(self):
+        save_calls.append(len(self._data))
+        return original_save(self)
+    monkeypatch.setattr(enrich_mod.WebsiteCheckCache, "save", _counting_save)
+
+    records = [{"website": f"https://site{i}.example"} for i in range(5)]
+    check_websites(records, cache_path=tmp_path / "cache.json")
+
+    # 5 URLs, saving every 2 -> mid-run saves at 2 and 4, plus the final
+    # unconditional one at 5 -- more than the single end-of-run save this
+    # used to be.
+    assert len(save_calls) >= 3
+    assert save_calls[0] < 5  # at least one save happened before everything finished
