@@ -199,7 +199,7 @@
     datasetView.hidden = true;
     loadingEl.hidden = true;
     landingView.hidden = false;
-    document.title = "LossLess — Lead Generation Platform";
+    document.title = "LossLess — Reputation Sales Intelligence";
 
     const datasets = manifest.datasets;
     const totalBiz = datasets.reduce((sum, d) => sum + d.record_count, 0);
@@ -287,8 +287,8 @@
       ? new Date(manifest.generated_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
       : null;
     listsView.querySelector(".view-sub").innerHTML =
-      `One list per market: BBB details, matched Yelp data, and lead scoring in a ` +
-      `single sortable, filterable <strong>table</strong>.` +
+      `A ranked, ready-to-call prospect list for every market — BBB details, matched ` +
+      `Yelp data, and a reputation score, all in one sortable, filterable <strong>table</strong>.` +
       (asOf ? ` <span class="muted">Data published ${asOf}.</span>` : "");
   }
 
