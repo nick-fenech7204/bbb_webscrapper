@@ -4,10 +4,16 @@ each ran over an hour and vanished with zero checkpoint on a hard kill mid-
 metro. `_write_partial_checkpoint` and its wiring into `scrape_one_metro`
 exist so that can't happen silently again -- see the module docstring in
 scripts/batch_scrape_metros.py.
+
+Also covers `_write_progress` (2026-09-13) -- structured per-metro JSON
+progress for Streamlit's batch page to poll instead of tailing the raw
+log, opt-in via `--progress-file` (None -> no-op, a plain CLI run is
+unaffected).
 """
 from __future__ import annotations
 
 import csv
+import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -69,6 +75,31 @@ def test_write_partial_checkpoint_never_leaves_a_half_written_file(tmp_path):
     path = tmp_path / "partial.csv"
     bsm._write_partial_checkpoint(path, [{"id": "1", "phone": "555-1111", "name": "A"}])
     assert not path.with_suffix(path.suffix + ".tmp").exists()  # temp file cleaned up via replace()
+
+
+def test_write_progress_writes_json(tmp_path):
+    path = tmp_path / "progress.json"
+    bsm._write_progress(path, {"industry": "Plumbers", "total_metros": 2})
+    assert json.loads(path.read_text(encoding="utf-8")) == {"industry": "Plumbers", "total_metros": 2}
+
+
+def test_write_progress_none_path_is_a_noop(tmp_path):
+    # --progress-file is opt-in -- a plain CLI run passes None and this
+    # must do nothing (no directory created, no exception).
+    bsm._write_progress(None, {"anything": "here"})  # must not raise
+
+
+def test_write_progress_overwrites_not_appends(tmp_path):
+    path = tmp_path / "progress.json"
+    bsm._write_progress(path, {"total_metros": 5, "metros": ["first snapshot"]})
+    bsm._write_progress(path, {"total_metros": 5, "metros": ["second snapshot"]})
+    assert json.loads(path.read_text(encoding="utf-8"))["metros"] == ["second snapshot"]
+
+
+def test_write_progress_never_leaves_a_half_written_file(tmp_path):
+    path = tmp_path / "progress.json"
+    bsm._write_progress(path, {"a": 1})
+    assert not path.with_suffix(path.suffix + ".tmp").exists()  # cleaned up via replace()
 
 
 class _FakeExtractor:

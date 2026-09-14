@@ -59,11 +59,18 @@ logic (a re-run still re-scrapes the metro from scratch today).
 
 After the whole batch: rebuilds data/processed/<industry-slug>_all_metros.csv
 -- every metro run for this industry so far, concatenated, as one file.
+
+--progress-file <path> (optional) writes structured per-metro JSON progress
+(status/counts, not log text) as the batch runs -- Streamlit's batch page
+polls this to render a clean per-metro checklist instead of tailing the
+raw log (see _write_progress). Purely additive: a plain CLI run without
+this flag behaves exactly as before.
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sys
 import time
 from pathlib import Path
@@ -93,6 +100,23 @@ configure_logging()
 logger = get_logger(__name__)
 
 BATCH_DIR = REPO_ROOT / "data" / "processed" / "batch"
+
+
+def _write_progress(path: Path | None, state: dict) -> None:
+    """Best-effort structured progress for a UI to poll (2026-09-13, replacing
+    the old raw-log-tail view in Streamlit's batch page -- Nick's ask, after
+    the log-bloat incident, for "a clean loading UI... or even just counts",
+    not a wall of scrolling request-by-request text). No-op when `path` is
+    None -- opt-in via --progress-file, so a plain CLI/manual run behaves
+    exactly as before. Atomic write (temp file + replace), same pattern as
+    _write_partial_checkpoint, so a poller never sees a half-written file.
+    """
+    if path is None:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = path.with_suffix(path.suffix + ".tmp")
+    tmp_path.write_text(json.dumps(state), encoding="utf-8")
+    tmp_path.replace(path)
 
 
 def _write_partial_checkpoint(path: Path, records: list[dict]) -> None:
@@ -237,6 +261,12 @@ def main() -> int:
         "that metro just doesn't go live. --no-deploy to only publish locally.",
     )
     parser.add_argument("--force", action="store_true", help="Redo metros that already have a checkpoint file")
+    parser.add_argument(
+        "--progress-file", default=None,
+        help="Optional path to write structured per-metro JSON progress to, for a UI to poll "
+        "instead of tailing the raw log (the Streamlit batch page uses this). Omit for a plain "
+        "CLI run -- has no effect on the scrape itself either way.",
+    )
     args = parser.parse_args()
 
     directory = MetroDirectory.load()
@@ -260,12 +290,31 @@ def main() -> int:
     industry_slug = slugify(args.industry)
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
 
+    progress_path = Path(args.progress_file) if args.progress_file else None
+    # One entry per metro, pre-built so a UI polling this file always sees
+    # every metro (including ones not yet started) rather than a list that
+    # only grows as the batch progresses.
+    metro_states: list[dict] = [
+        {
+            "id": metro.id, "name": metro.name,
+            "status": "skipped" if (BATCH_DIR / f"{industry_slug}--{metro.id}.csv").exists() and not args.force else "pending",
+            "businesses": None, "yelp_matched": None, "top_lead_score": None,
+            "elapsed_s": None, "error": None,
+        }
+        for metro in metros
+    ]
+
+    def _snapshot(finished: bool = False) -> dict:
+        return {"industry": args.industry, "total_metros": len(metros), "metros": metro_states,
+                "finished": finished, "updated_at": time.time()}
+
     yelp_state = open_yelp_enrichment(args.yelp)
     yelp_note = "on" if yelp_state.enabled else f"off ({yelp_state.reason_off})"
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
           f"yelp={yelp_note}, publish={args.publish}, deploy={args.deploy}")
+    _write_progress(progress_path, _snapshot())
 
     done = 0
     skipped = 0
@@ -290,6 +339,8 @@ def main() -> int:
 
         start = time.monotonic()
         print(f"[{i}/{len(metros)}] {metro.name}: starting...")
+        metro_states[i - 1]["status"] = "running"
+        _write_progress(progress_path, _snapshot())
         stats = RunStats()
         try:
             records = scrape_one_metro(
@@ -302,6 +353,9 @@ def main() -> int:
         except Exception:
             logger.exception("Metro %r failed -- skipping to the next one", metro.name)
             print(f"[{i}/{len(metros)}] {metro.name}: FAILED (see log) -- continuing with the rest")
+            metro_states[i - 1]["status"] = "failed"
+            metro_states[i - 1]["error"] = "Scrape failed -- see the full log for the traceback."
+            _write_progress(progress_path, _snapshot())
             continue
 
         # Everything from here on (checkpoint, shared sinks, publish) is
@@ -330,6 +384,12 @@ def main() -> int:
             print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
                   f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
+            metro_states[i - 1].update({
+                "status": "done", "businesses": len(records),
+                "yelp_matched": matched if yelp_state.enabled else None,
+                "elapsed_s": round(elapsed),
+            })
+            _write_progress(progress_path, _snapshot())
 
             if args.publish:
                 # master_rows, not `records` -- so the site gets our derived
@@ -340,6 +400,8 @@ def main() -> int:
                 entry = publish_master_rows(master_rows, args.industry, metro.name)
                 print(f"    published -> site/data/{entry['file']} "
                       f"({entry['yelp_matched']} matched to Yelp, top lead {entry['top_lead_score']})")
+                metro_states[i - 1]["top_lead_score"] = entry.get("top_lead_score")
+                _write_progress(progress_path, _snapshot())
 
                 if args.deploy:
                     # Deploy right after this metro's local publish, not
@@ -366,6 +428,9 @@ def main() -> int:
             logger.exception("Metro %r: checkpoint/publish step failed", metro.name)
             print(f"[{i}/{len(metros)}] {metro.name}: scraped OK but the checkpoint/publish step "
                   f"FAILED (see log) -- continuing with the rest. Re-run with --force to redo this metro.")
+            metro_states[i - 1]["status"] = "failed"
+            metro_states[i - 1]["error"] = "Scraped OK but checkpoint/publish failed -- see the full log."
+            _write_progress(progress_path, _snapshot())
             continue
 
         done += 1
@@ -375,6 +440,7 @@ def main() -> int:
     if yelp_state.reason_off and args.yelp:
         print(f"Note: Yelp enrichment stopped partway -- {yelp_state.reason_off}")
     print(f"Compiled file: {all_metros_path}")
+    _write_progress(progress_path, _snapshot(finished=True))
     return 0
 
 

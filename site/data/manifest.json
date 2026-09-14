@@ -1,6 +1,46 @@
 {
-  "generated_at": "2026-09-11T14:26:05.923220+00:00",
+  "generated_at": "2026-09-14T02:49:35.632387+00:00",
   "datasets": [
+    {
+      "id": "real-estate-agents--atlanta-ga",
+      "industry": "Real Estate Agents",
+      "metro": "Atlanta, GA",
+      "record_count": 1262,
+      "has_yelp": true,
+      "yelp_matched": 17,
+      "top_lead_score": 97.0,
+      "file": "real-estate-agents--atlanta-ga.json"
+    },
+    {
+      "id": "real-estate-agents--baltimore-md",
+      "industry": "Real Estate Agents",
+      "metro": "Baltimore, MD",
+      "record_count": 479,
+      "has_yelp": true,
+      "yelp_matched": 12,
+      "top_lead_score": 88.0,
+      "file": "real-estate-agents--baltimore-md.json"
+    },
+    {
+      "id": "landscapers--baltimore-md",
+      "industry": "landscapers",
+      "metro": "Baltimore, MD",
+      "record_count": 338,
+      "has_yelp": true,
+      "yelp_matched": 26,
+      "top_lead_score": 85.0,
+      "file": "landscapers--baltimore-md.json"
+    },
+    {
+      "id": "landscapers--boston-ma",
+      "industry": "landscapers",
+      "metro": "Boston, MA",
+      "record_count": 576,
+      "has_yelp": true,
+      "yelp_matched": 53,
+      "top_lead_score": 101.7,
+      "file": "landscapers--boston-ma.json"
+    },
     {
       "id": "plumbers--chicago-il",
       "industry": "Plumbers",
@@ -10,6 +50,36 @@
       "yelp_matched": 88,
       "top_lead_score": 101.7,
       "file": "plumbers--chicago-il.json"
+    },
+    {
+      "id": "real-estate-agents--cincinnati-oh",
+      "industry": "Real Estate Agents",
+      "metro": "Cincinnati, OH",
+      "record_count": 235,
+      "has_yelp": true,
+      "yelp_matched": 11,
+      "top_lead_score": 84.0,
+      "file": "real-estate-agents--cincinnati-oh.json"
+    },
+    {
+      "id": "landscapers--detroit-mi",
+      "industry": "landscapers",
+      "metro": "Detroit, MI",
+      "record_count": 473,
+      "has_yelp": true,
+      "yelp_matched": 28,
+      "top_lead_score": 90.0,
+      "file": "landscapers--detroit-mi.json"
+    },
+    {
+      "id": "real-estate-agents--louisville-ky",
+      "industry": "Real Estate Agents",
+      "metro": "Louisville, KY",
+      "record_count": 211,
+      "has_yelp": true,
+      "yelp_matched": 11,
+      "top_lead_score": 89.7,
+      "file": "real-estate-agents--louisville-ky.json"
     },
     {
       "id": "car-dealers--miami-fl",
@@ -22,6 +92,26 @@
       "file": "car-dealers--miami-fl.json"
     },
     {
+      "id": "real-estate-agents--miami-fl",
+      "industry": "Real Estate Agents",
+      "metro": "Miami, FL",
+      "record_count": 890,
+      "has_yelp": true,
+      "yelp_matched": 6,
+      "top_lead_score": 99.5,
+      "file": "real-estate-agents--miami-fl.json"
+    },
+    {
+      "id": "real-estate-agents--new-york-ny",
+      "industry": "Real Estate Agents",
+      "metro": "New York, NY",
+      "record_count": 618,
+      "has_yelp": true,
+      "yelp_matched": 13,
+      "top_lead_score": 84.0,
+      "file": "real-estate-agents--new-york-ny.json"
+    },
+    {
       "id": "car-dealers--providence-ri",
       "industry": "Car Dealers",
       "metro": "Providence, RI",
@@ -30,6 +120,26 @@
       "yelp_matched": 0,
       "top_lead_score": 65.0,
       "file": "car-dealers--providence-ri.json"
+    },
+    {
+      "id": "landscapers--sacramento-ca",
+      "industry": "landscapers",
+      "metro": "Sacramento, CA",
+      "record_count": 628,
+      "has_yelp": true,
+      "yelp_matched": 26,
+      "top_lead_score": 85.0,
+      "file": "landscapers--sacramento-ca.json"
+    },
+    {
+      "id": "landscapers--san-antonio-tx",
+      "industry": "landscapers",
+      "metro": "San Antonio, TX",
+      "record_count": 216,
+      "has_yelp": true,
+      "yelp_matched": 19,
+      "top_lead_score": 90.0,
+      "file": "landscapers--san-antonio-tx.json"
     },
     {
       "id": "heating-and-air-conditioning--seattle-tacoma-wa",

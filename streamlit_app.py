@@ -48,6 +48,18 @@ Belt-and-suspenders on the scraper side too: scripts/batch_scrape_metros.py
 now writes a recoverable partial snapshot every 25 businesses during a long
 --details loop, so even a genuine hard kill (sleeping laptop, Task Manager,
 a power blip) loses at most a few minutes of progress, not the whole metro.
+
+**Progress UI replaced, 2026-09-13.** Even a bounded log tail is still a
+wall of raw "GET https://..." request lines -- Nick's ask, after the above
+incident (and a second one, unrelated to the log, that still made him
+distrust it): a clean per-metro checklist instead, not scrolling text. The
+launched script now also gets --progress-file <path>, and writes structured
+JSON (status/counts per metro, see _write_progress in batch_scrape_metros.py)
+that this page polls and renders as a progress bar + running totals + one
+line per metro (waiting / running / done with its numbers / failed with why)
+via st.status(). The raw log still exists (nothing about logging itself was
+removed -- it's still the thing a real bug gets traced back through) but
+now lives inside a collapsed "Full log" expander, off by default.
 """
 from __future__ import annotations
 
@@ -91,6 +103,25 @@ def _tail_file(path: Path, max_bytes: int = LOG_TAIL_BYTES) -> tuple[str, bool]:
             f.readline()  # drop the partial first line from the mid-file seek
             return f.read().decode("utf-8", errors="replace"), True
         return f.read().decode("utf-8", errors="replace"), False
+
+
+def _progress_path_for(log_path: Path) -> Path:
+    """Deterministic transform (same suffix swap on both the launch side and
+    the reattach side) so current_run.json doesn't need its own separate
+    field for this -- one less thing that could drift out of sync."""
+    return log_path.with_suffix(".progress.json")
+
+
+def _read_progress(path: Path) -> dict | None:
+    """None on anything short of a clean read -- missing (batch hasn't
+    written its first snapshot yet), or a half-written/corrupt file (should
+    be rare given _write_progress's atomic replace, but a poller reading
+    exactly the wrong instant is cheap to just tolerate here) -- either way
+    the caller falls back to the raw log tail rather than erroring."""
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
 
 
 def _pid_alive(pid: int) -> bool:
@@ -188,6 +219,52 @@ if "batch_process" not in st.session_state:
         _clear_run_state()  # stale -- whatever pid this pointed at is gone
 
 
+def _render_progress(progress: dict) -> None:
+    """Clean per-metro checklist -- a progress bar, running totals, and one
+    line per metro -- instead of a scrolling raw log. Streamlit's own
+    st.status() widget already draws exactly the spinner/checkmark/error
+    look this needs; no extra charting library required for something this
+    simple. Called fresh every ~3s rerun, so it just renders whatever the
+    latest progress.json snapshot says -- no state of its own to manage.
+    """
+    metros = progress.get("metros") or []
+    total = progress.get("total_metros") or len(metros) or 1
+    settled = sum(1 for m in metros if m["status"] in ("done", "skipped", "failed"))
+    st.progress(min(1.0, settled / total))
+
+    biz_total = sum(m.get("businesses") or 0 for m in metros if m["status"] == "done")
+    yelp_total = sum(m.get("yelp_matched") or 0 for m in metros if m["status"] == "done")
+    failed_total = sum(1 for m in metros if m["status"] == "failed")
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Metros", f"{settled}/{total}")
+    c2.metric("Businesses scraped", f"{biz_total:,}")
+    c3.metric("Matched to Yelp", f"{yelp_total:,}")
+    c4.metric("Failed", failed_total)
+
+    for m in metros:
+        status = m["status"]
+        if status == "pending":
+            st.markdown(f"○ **{m['name']}** — waiting")
+        elif status == "skipped":
+            st.markdown(f"⏭️ **{m['name']}** — already done, skipped")
+        elif status == "running":
+            with st.status(f"{m['name']} — scraping...", state="running"):
+                st.write("Sweeping BBB, matching Yelp, fetching contact details...")
+        elif status == "done":
+            bits = [f"{m['businesses']} businesses"]
+            if m.get("yelp_matched") is not None:
+                bits.append(f"{m['yelp_matched']} matched to Yelp")
+            if m.get("top_lead_score"):
+                bits.append(f"top lead {m['top_lead_score']}")
+            if m.get("elapsed_s"):
+                bits.append(f"{round(m['elapsed_s'] / 60)}m")
+            with st.status(f"{m['name']} — done", state="complete"):
+                st.write(", ".join(bits))
+        elif status == "failed":
+            with st.status(f"{m['name']} — failed", state="error", expanded=True):
+                st.write(m.get("error") or "See the full log below for details.")
+
+
 def _is_running() -> bool:
     proc = st.session_state.batch_process
     if proc is not None:
@@ -265,12 +342,14 @@ if submitted and not _is_running():
 
     timestamp = time.strftime("%Y%m%d-%H%M%S")
     log_path = LOG_DIR / f"batch-{timestamp}.log"
+    progress_path = _progress_path_for(log_path)
 
     cmd = [
         sys.executable, "-u", str(REPO_ROOT / "scripts" / "batch_scrape_metros.py"),
         "--industry", industry_text.strip(),
         "--radius", str(radius), "--min-population", str(int(min_population)),
         "--pages-per-place", str(int(pages_per_place)),
+        "--progress-file", str(progress_path),
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
     cmd.append("--yelp" if enrich_yelp else "--no-yelp")
@@ -338,22 +417,29 @@ if st.session_state.batch_log_path is not None:
             _clear_run_state()
             st.rerun()
 
-    if log_path.exists():
-        text, truncated = _tail_file(log_path)
-        if truncated:
-            st.caption(
-                f"Showing the last ~{LOG_TAIL_BYTES // 1000}KB of a larger log file "
-                f"(full file: `{log_path}`)."
-            )
-        st.code(text or "(no output yet)", language=None)
-        if not running:
-            # Only offered once the batch is done -- while it's still
-            # running this would re-read the whole (possibly multi-MB and
-            # growing) file into memory every ~3s refresh, exactly the cost
-            # the tail view above exists to avoid.
-            st.download_button("Download full log", data=log_path.read_bytes(), file_name=log_path.name)
-    else:
-        st.code("(no output yet)", language=None)
+    progress = _read_progress(_progress_path_for(log_path))
+    if progress is not None:
+        _render_progress(progress)
+    elif running:
+        st.caption("Starting up -- the first progress update lands once BBB search results start coming back.")
+
+    with st.expander("Full log (for troubleshooting)", expanded=progress is None):
+        if log_path.exists():
+            text, truncated = _tail_file(log_path)
+            if truncated:
+                st.caption(
+                    f"Showing the last ~{LOG_TAIL_BYTES // 1000}KB of a larger log file "
+                    f"(full file: `{log_path}`)."
+                )
+            st.code(text or "(no output yet)", language=None)
+            if not running:
+                # Only offered once the batch is done -- while it's still
+                # running this would re-read the whole (possibly multi-MB and
+                # growing) file into memory every ~3s refresh, exactly the
+                # cost the tail view above exists to avoid.
+                st.download_button("Download full log", data=log_path.read_bytes(), file_name=log_path.name)
+        else:
+            st.code("(no output yet)", language=None)
 
     if running:
         time.sleep(3)
