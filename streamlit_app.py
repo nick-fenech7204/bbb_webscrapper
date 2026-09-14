@@ -77,14 +77,22 @@ the recommended settings). Two changes:
      anything else still works exactly as before for BBB/Yelp. See
      data/reference/README.md's angi_categories.json section for why this
      list is narrower than BBB's own taxonomy (Angi is home-services only).
-  2. Radius/min-population/pages-per-place/full-detail are no longer
-     user-facing controls -- always run with ENFORCED_* below. There's no
-     real tradeoff being hidden on pages-per-place specifically: BBB caps
-     pagination at settings.bbb_max_search_pages regardless of what's
-     requested (see etl/extract.py), so a lower value only ever means
-     fewer results for no benefit. scripts/batch_scrape_metros.py's own
-     CLI flags are untouched -- still there for direct script use, just no
-     longer exposed as choices here.
+  2. Radius/min-population/pages-per-place/full-detail, and (as of a
+     same-day follow-up ask) Yelp enrichment/dead-website check/live
+     deploy, are no longer user-facing controls -- always run with
+     ENFORCED_* below, all of them on. There's no real tradeoff being
+     hidden on pages-per-place specifically: BBB caps pagination at
+     settings.bbb_max_search_pages regardless of what's requested (see
+     etl/extract.py), so a lower value only ever means fewer results for
+     no benefit; the other three were already best-effort/never-fatal
+     (a missing Yelp key, a webcheck failure, or no AWS CLI configured
+     just means that piece is skipped for the run, not an error), so
+     forcing them on risks nothing a checkbox was actually protecting
+     against. scripts/batch_scrape_metros.py's own CLI flags are
+     untouched -- still there for direct script use, just no longer
+     exposed as choices here. The only remaining checkbox is "redo metros
+     already run" -- a real per-run decision (whether to overwrite
+     existing checkpoints), not a "which settings are best" question.
 """
 from __future__ import annotations
 
@@ -357,41 +365,11 @@ with st.form("batch_form"):
     st.caption(
         f"Every run: {ENFORCED_RADIUS_MILES:g}mi radius, "
         f"{ENFORCED_MIN_POPULATION:,}+ population, full contact details, "
-        f"up to {ENFORCED_PAGES_PER_PLACE} pages/place (BBB's own max) -- "
-        "no longer per-run choices, see the Configuration section below."
+        f"up to {ENFORCED_PAGES_PER_PLACE} pages/place (BBB's own max), "
+        "Yelp enrichment, dead-website check, and live deploy as each metro "
+        "finishes -- no longer per-run choices, see the Configuration section below."
     )
 
-    enrich_yelp = st.checkbox(
-        "Enrich with Yelp (~5 API calls per metro)",
-        value=True,
-        help="Runs one Yelp Fusion search per metro and matches it to the BBB rows, "
-             "adding the matched yelp_name/rating/review_count/url + derived-intelligence "
-             "columns to the checkpoint and to the site's Intelligence view. Best-effort: "
-             "no API key, a low daily quota (free tier is 300/day), or a failed call just "
-             "means BBB-only output for the rest of the batch -- never an error.",
-    )
-    check_websites = st.checkbox(
-        "Check for dead/parked websites",
-        value=True,
-        help="Visits each business's own listed website once (unproxied -- a normal "
-             "one-off request, a different host per business, nothing to evade) and flags "
-             "it if it's unreachable, 404s, or is a parked/for-sale domain -- a separate "
-             "\"we can sell you a website\" angle alongside reputation scoring. "
-             "Deliberately conservative: a site that just blocks non-browser traffic (403) "
-             "or has a transient server error is recorded but never asserted dead. "
-             "Best-effort, like Yelp above -- a failure just means unchecked records for "
-             "that metro, never fatal.",
-    )
-    deploy_when_done = st.checkbox(
-        "Deploy each metro to the live site as it finishes",
-        value=True,
-        help="Runs scripts/deploy_site.py (S3 sync + CloudFront invalidation) right after "
-             "each metro publishes locally -- live within seconds, not held back until the "
-             "whole batch finishes. Needs the AWS CLI configured locally -- if it isn't, this "
-             "is reported but the batch still finishes normally; the scrape and the local "
-             "site/data/ files are unaffected either way. Uncheck to only publish locally and "
-             "deploy by hand later.",
-    )
     force = st.checkbox(
         "Redo metros already run for this exact industry", value=False,
         help="Off by default -- a metro already checkpointed for this industry is "
@@ -418,13 +396,10 @@ if submitted and not _is_running():
         "--industry", industry_text.strip(),
         "--radius", str(ENFORCED_RADIUS_MILES), "--min-population", str(ENFORCED_MIN_POPULATION),
         "--pages-per-place", str(ENFORCED_PAGES_PER_PLACE),
-        "--details",
+        "--details", "--yelp", "--check-websites", "--deploy",
         "--progress-file", str(progress_path),
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
-    cmd.append("--yelp" if enrich_yelp else "--no-yelp")
-    cmd.append("--check-websites" if check_websites else "--no-check-websites")
-    cmd.append("--deploy" if deploy_when_done else "--no-deploy")
     if force:
         cmd.append("--force")
 
@@ -454,7 +429,8 @@ with st.expander("Configuration"):
         f"**Search settings (fixed, not per-run):** {ENFORCED_RADIUS_MILES:g}mi radius, "
         f"{ENFORCED_MIN_POPULATION:,}+ minimum city population, full BBB contact details "
         f"always fetched, up to {ENFORCED_PAGES_PER_PLACE} pages per place (BBB's own cap, "
-        "not a choice below it -- see the module docstring's 2026-09-14 entry)."
+        "not a choice below it), Yelp enrichment, dead-website check, and live deploy all "
+        "always on -- see the module docstring's 2026-09-14 entry."
     )
     st.write(f"**Proxy:** {'enabled' if settings.proxy_enabled else 'disabled'}"
              + (f" ({settings.proxy_host})" if settings.proxy_enabled else ""))
