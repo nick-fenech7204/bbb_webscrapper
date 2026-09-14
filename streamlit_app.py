@@ -67,6 +67,24 @@ batch with --check-websites (see bbb_scraper/webcheck and
 batch_scrape_metros.py's _check_metro_websites) -- a per-metro dead-website
 count shows up in both the aggregate metrics row and each metro's own
 status line, same best-effort/never-fatal treatment as Yelp enrichment.
+
+**Interface simplified, 2026-09-14** (Nick's ask: fewer decisions, always
+the recommended settings). Two changes:
+  1. Industry is now `st.selectbox(..., accept_new_options=True)` seeded
+     with Angi's 167 companylist categories (data/reference/
+     angi_categories.json) instead of a bare text_input -- picking one
+     guarantees a match once Angi cross-referencing is built; typing
+     anything else still works exactly as before for BBB/Yelp. See
+     data/reference/README.md's angi_categories.json section for why this
+     list is narrower than BBB's own taxonomy (Angi is home-services only).
+  2. Radius/min-population/pages-per-place/full-detail are no longer
+     user-facing controls -- always run with ENFORCED_* below. There's no
+     real tradeoff being hidden on pages-per-place specifically: BBB caps
+     pagination at settings.bbb_max_search_pages regardless of what's
+     requested (see etl/extract.py), so a lower value only ever means
+     fewer results for no benefit. scripts/batch_scrape_metros.py's own
+     CLI flags are untouched -- still there for direct script use, just no
+     longer exposed as choices here.
 """
 from __future__ import annotations
 
@@ -82,6 +100,7 @@ import streamlit as st
 
 from bbb_scraper.config import settings
 from bbb_scraper.logging_setup import configure_logging
+from bbb_scraper.reference.categories import CategoryDirectory
 from bbb_scraper.reference.metros import MetroDirectory
 
 configure_logging()
@@ -97,6 +116,17 @@ RUN_STATE_PATH = LOG_DIR / "current_run.json"
 # batch has been running (the bug this fixes: reading a multi-MB file whole,
 # every ~3s, made the page progressively slower over the course of a batch).
 LOG_TAIL_BYTES = 12_000
+
+# Enforced batch settings, 2026-09-14 -- see the module docstring's
+# "Interface simplified" entry. No longer user-facing choices: every batch
+# always runs with these, rather than depending on whatever a particular
+# run's form happened to have set.
+ENFORCED_RADIUS_MILES = 15.0
+ENFORCED_MIN_POPULATION = 40_000
+# BBB's own hard ceiling, not a courtesy limit -- it caps totalPages at this
+# regardless of what's requested (confirmed in etl/extract.py), so there's
+# no lower value that would ever help; always ask for the max.
+ENFORCED_PAGES_PER_PLACE = settings.bbb_max_search_pages
 
 
 def _tail_file(path: Path, max_bytes: int = LOG_TAIL_BYTES) -> tuple[str, bool]:
@@ -206,6 +236,9 @@ st.caption(
 metro_directory = MetroDirectory.load()
 metro_options = {m.id: m.name for m in metro_directory.all()}
 
+angi_directory = CategoryDirectory.load(settings.angi_categories_file)
+angi_category_names = sorted(c.name for c in angi_directory.all())
+
 if "batch_process" not in st.session_state:
     st.session_state.batch_process = None  # a Popen handle, only if *this* session spawned it
     st.session_state.batch_pid = None      # pid, whether owned or reattached
@@ -296,8 +329,20 @@ def _is_running() -> bool:
 
 
 with st.form("batch_form"):
-    industry_text = st.text_input(
-        "Industry / category", placeholder="e.g. Car Dealers, Roofing Contractors, CPA"
+    industry_text = st.selectbox(
+        "Industry / category",
+        options=angi_category_names,
+        index=None,
+        accept_new_options=True,
+        placeholder="Pick a category, or type your own -- e.g. Car Dealers, CPA",
+        help=(
+            f"Pre-loaded with Angi's own {len(angi_category_names)} home-services "
+            "categories (plumbing, HVAC, roofing, landscaping, real estate agents, "
+            "...) -- picking one guarantees a match once Angi cross-referencing is "
+            "built. Angi doesn't cover every industry (no Dentists, Car Dealers, "
+            "etc.) -- type anything else and it still works fine for BBB and Yelp, "
+            "just without a guaranteed Angi match."
+        ),
     )
     st.caption("Sent as-is to BBB's search (and used as the Yelp search term) -- most phrasing works.")
 
@@ -309,11 +354,11 @@ with st.form("batch_form"):
     )
     run_all = st.checkbox(f"...or run every metro ({len(metro_options)} total)", value=False)
 
-    col1, col2, col3 = st.columns(3)
-    radius = col1.number_input("Radius (mi)", min_value=1.0, value=40.0, step=5.0)
-    min_population = col2.number_input("Min population", min_value=0, value=25_000, step=5_000)
-    pages_per_place = col3.number_input(
-        "Pages/place", min_value=1, max_value=settings.bbb_max_search_pages, value=15,
+    st.caption(
+        f"Every run: {ENFORCED_RADIUS_MILES:g}mi radius, "
+        f"{ENFORCED_MIN_POPULATION:,}+ population, full contact details, "
+        f"up to {ENFORCED_PAGES_PER_PLACE} pages/place (BBB's own max) -- "
+        "no longer per-run choices, see the Configuration section below."
     )
 
     enrich_yelp = st.checkbox(
@@ -337,16 +382,6 @@ with st.form("batch_form"):
              "Best-effort, like Yelp above -- a failure just means unchecked records for "
              "that metro, never fatal.",
     )
-    fetch_details = st.checkbox(
-        "Fetch full BBB contact details for every business",
-        value=False,
-        help="Off by default -- roughly doubles time per metro. Breadth (more metros) "
-             "usually matters more than depth for a first pass; re-run a specific metro "
-             "with this on later. A big metro with this on can run well over an hour -- "
-             "progress is now snapshotted every 25 businesses to data/processed/batch/"
-             "_partial/ so a crash mid-metro can't lose the whole thing (see the module "
-             "docstring in scripts/batch_scrape_metros.py).",
-    )
     deploy_when_done = st.checkbox(
         "Deploy each metro to the live site as it finishes",
         value=True,
@@ -367,8 +402,8 @@ with st.form("batch_form"):
     )
 
 if submitted and not _is_running():
-    if not industry_text.strip():
-        st.error("Enter an industry.")
+    if not industry_text or not industry_text.strip():
+        st.error("Enter or select an industry.")
         st.stop()
     if not selected_metro_ids and not run_all:
         st.error('Select at least one metro (or check "run every metro").')
@@ -381,16 +416,15 @@ if submitted and not _is_running():
     cmd = [
         sys.executable, "-u", str(REPO_ROOT / "scripts" / "batch_scrape_metros.py"),
         "--industry", industry_text.strip(),
-        "--radius", str(radius), "--min-population", str(int(min_population)),
-        "--pages-per-place", str(int(pages_per_place)),
+        "--radius", str(ENFORCED_RADIUS_MILES), "--min-population", str(ENFORCED_MIN_POPULATION),
+        "--pages-per-place", str(ENFORCED_PAGES_PER_PLACE),
+        "--details",
         "--progress-file", str(progress_path),
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
     cmd.append("--yelp" if enrich_yelp else "--no-yelp")
     cmd.append("--check-websites" if check_websites else "--no-check-websites")
     cmd.append("--deploy" if deploy_when_done else "--no-deploy")
-    if fetch_details:
-        cmd.append("--details")
     if force:
         cmd.append("--force")
 
@@ -416,6 +450,12 @@ if submitted and not _is_running():
     st.rerun()
 
 with st.expander("Configuration"):
+    st.write(
+        f"**Search settings (fixed, not per-run):** {ENFORCED_RADIUS_MILES:g}mi radius, "
+        f"{ENFORCED_MIN_POPULATION:,}+ minimum city population, full BBB contact details "
+        f"always fetched, up to {ENFORCED_PAGES_PER_PLACE} pages per place (BBB's own cap, "
+        "not a choice below it -- see the module docstring's 2026-09-14 entry)."
+    )
     st.write(f"**Proxy:** {'enabled' if settings.proxy_enabled else 'disabled'}"
              + (f" ({settings.proxy_host})" if settings.proxy_enabled else ""))
     st.write(f"**Impersonation:** `{settings.http_impersonate}`")
