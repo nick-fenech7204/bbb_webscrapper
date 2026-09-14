@@ -10,9 +10,9 @@
     "state": "FL",
     "postal_code": "33142-5245",
     "rating": "B-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "7",
+    "years_in_business": 7,
     "business_started": "2019-04-12T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -41,6 +41,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/italy-blue-auto-sales-llc-0633-90568056",
     "scraped_at": "2026-09-03T00:27:50.213737+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Italy Blue Auto Sales",
@@ -62,7 +63,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Bird Road Auto Sales",
@@ -75,9 +77,9 @@
     "state": "FL",
     "postal_code": "33155-4535",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "This company is not an accredited Business of the BBB. This company has failed to discontinue the use our Federally Registered Trademark when demands have been made to do so. Misrepresentation of BBB accreditation constitutes false and deceptive advertising and trademark infringement.",
-    "years_in_business": "20",
+    "years_in_business": 20,
     "business_started": "2006-03-24T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -120,6 +122,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/bird-road-auto-sales-0633-90045915",
     "scraped_at": "2026-09-03T00:27:48.454379+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Bird Road Auto Sales",
@@ -141,7 +144,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami Auto Mall Inc",
@@ -154,9 +158,9 @@
     "state": "FL",
     "postal_code": "33135-1024",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "8",
+    "years_in_business": 8,
     "business_started": "2018-01-02T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -192,6 +196,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/miami-auto-mall-inc-0633-92045430",
     "scraped_at": "2026-09-03T00:27:49.587445+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Miami Automall",
@@ -213,7 +218,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Better Auto of Miami",
@@ -226,9 +232,9 @@
     "state": "FL",
     "postal_code": "33142-5219",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "13",
+    "years_in_business": 13,
     "business_started": "2013-04-19T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -254,6 +260,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/better-auto-of-miami-0633-90125308",
     "scraped_at": "2026-09-03T00:27:50.073529+00:00",
+    "website_status": "dead_parked",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Better Auto of Miami",
@@ -275,7 +282,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Newport Universal Group Corp.",
@@ -288,9 +296,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -319,6 +327,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/newport-universal-group-corp-0633-92007403",
     "scraped_at": "2026-09-03T00:27:50.293297+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Newport Universal",
@@ -340,7 +349,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Machado Auto Sales, LLC",
@@ -353,9 +363,9 @@
     "state": "FL",
     "postal_code": "33125-3014",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "16",
+    "years_in_business": 16,
     "business_started": "2010-04-01T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -392,6 +402,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/machado-auto-sales-llc-0633-90415112",
     "scraped_at": "2026-09-03T00:27:49.728547+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Machado Auto Sales",
@@ -413,7 +424,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Green Light Auto Sales Inc",
@@ -426,9 +438,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -457,6 +469,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/green-light-auto-sales-inc-0633-90046633",
     "scraped_at": "2026-09-03T00:27:49.392522+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Green Light Auto Sales",
@@ -478,7 +491,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Repo Auto Brokers LLC",
@@ -491,9 +505,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -514,6 +528,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/repo-auto-brokers-llc-0633-92069084",
     "scraped_at": "2026-09-03T00:27:48.228894+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Repo Auto Brokers",
@@ -535,7 +550,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Colon Auto Sales, Inc",
@@ -548,9 +564,9 @@
     "state": "FL",
     "postal_code": "33142-6535",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "11",
+    "years_in_business": 11,
     "business_started": "2014-10-28T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -586,6 +602,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/colon-auto-sales-inc-0633-90356084",
     "scraped_at": "2026-09-03T00:27:48.989841+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Colon Auto Sales",
@@ -607,7 +624,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Amaro Auto Sales Inc.",
@@ -620,9 +638,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -643,6 +661,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/amaro-auto-sales-inc-0633-92069272",
     "scraped_at": "2026-09-03T00:27:49.173846+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Amaro Auto Sales",
@@ -664,7 +683,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Dollars Plus Car II, LLC",
@@ -677,9 +697,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "14",
+    "years_in_business": 14,
     "business_started": "2011-09-29T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -715,6 +735,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/dollars-plus-car-ii-llc-0633-90019551/addressId/43796",
     "scraped_at": "2026-09-03T00:27:48.357961+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Dollars Plus Car",
@@ -736,7 +757,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Walt Grace, Inc.",
@@ -749,9 +771,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -772,6 +794,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/walt-grace-inc-0633-92068978",
     "scraped_at": "2026-09-03T00:27:48.710108+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Walt Grace Vintage",
@@ -793,7 +816,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Gables Autohaus",
@@ -806,9 +830,9 @@
     "state": "FL",
     "postal_code": "33132-1170",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -837,6 +861,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/gables-autohaus-0633-90421750/addressId/99876",
     "scraped_at": "2026-09-03T00:27:48.872083+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Gables Autohaus Florida Mastercars",
@@ -858,7 +883,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Elite Auto Sales",
@@ -871,9 +897,9 @@
     "state": "FL",
     "postal_code": "33142-5358",
     "rating": "B-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -894,6 +920,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/elite-auto-sales-0633-90138898",
     "scraped_at": "2026-09-03T00:27:50.340611+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Elite Auto Sales",
@@ -915,7 +942,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Cars Business, LLC",
@@ -928,9 +956,9 @@
     "state": "FL",
     "postal_code": "33142-7111",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "4",
+    "years_in_business": 4,
     "business_started": "2022-04-30T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -971,6 +999,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/cars-business-llc-0633-92027587",
     "scraped_at": "2026-09-03T00:27:49.740364+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Inter Cars Miami Collection",
@@ -992,7 +1021,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Brickell Motors, LLC",
@@ -1005,9 +1035,9 @@
     "state": "FL",
     "postal_code": "33130-3308",
     "rating": "D-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "25",
+    "years_in_business": 25,
     "business_started": "2001-02-01T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -1036,6 +1066,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/brickell-motors-llc-0633-4004352",
     "scraped_at": "2026-09-03T00:27:49.335481+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Murgado Automotive Group",
@@ -1057,7 +1088,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami Easy Autos Corp",
@@ -1070,9 +1102,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1110,6 +1142,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/miami-easy-autos-corp-0633-92070225",
     "scraped_at": "2026-09-03T00:27:49.682436+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": true,
     "yelp_name": "Miami Auto Liquidators",
@@ -1131,7 +1164,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ramirez Super Motor, Inc.",
@@ -1144,9 +1178,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "42",
+    "years_in_business": 42,
     "business_started": "1984-01-01T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -1182,6 +1216,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/ramirez-super-motor-inc-0633-27003913",
     "scraped_at": "2026-09-03T00:27:48.075643+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1203,7 +1238,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "D-Lux Group, Inc",
@@ -1216,9 +1252,9 @@
     "state": "FL",
     "postal_code": "33132-1755",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1247,6 +1283,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/d-lux-group-inc-0633-90132207",
     "scraped_at": "2026-09-03T00:27:48.086956+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1268,7 +1305,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ovi Auto Depot LLC",
@@ -1281,9 +1319,9 @@
     "state": "FL",
     "postal_code": "33130",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1319,6 +1357,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/ovi-auto-depot-llc-0633-90555554/addressId/109583",
     "scraped_at": "2026-09-03T00:27:48.098940+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1340,7 +1379,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kaizen Global Trade Us",
@@ -1353,9 +1393,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1376,6 +1416,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/kaizen-global-trade-us-0633-92070053",
     "scraped_at": "2026-09-03T00:27:48.114723+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1397,7 +1438,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami One Enterprise Inc",
@@ -1410,9 +1452,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1441,6 +1483,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/miami-one-enterprise-inc-0633-92041363",
     "scraped_at": "2026-09-03T00:27:48.125763+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1462,7 +1505,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Comfort Rent-a-Car & Leasing LLC",
@@ -1475,9 +1519,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1498,6 +1542,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/comfort-rent-a-car-leasing-llc-0633-92069572",
     "scraped_at": "2026-09-03T00:27:48.136761+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1519,7 +1564,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Totto Auto Dealer Inc",
@@ -1532,9 +1578,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1555,6 +1601,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/totto-auto-dealer-inc-0633-92068878",
     "scraped_at": "2026-09-03T00:27:48.147700+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1576,7 +1623,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "A & D Motors Sales Corp",
@@ -1589,9 +1637,9 @@
     "state": "FL",
     "postal_code": "33142-5442",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "13",
+    "years_in_business": 13,
     "business_started": "2013-05-09T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1617,6 +1665,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/a-d-motors-sales-corp-0633-90369228",
     "scraped_at": "2026-09-03T00:27:48.159031+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1638,7 +1687,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "One Way Motors LLC",
@@ -1651,9 +1701,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -1674,6 +1724,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/one-way-motors-llc-0633-92068502",
     "scraped_at": "2026-09-03T00:27:48.170268+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1695,7 +1746,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Bonanza Auto Center, Inc.",
@@ -1708,9 +1760,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1739,6 +1791,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/bonanza-auto-center-inc-0633-90099397",
     "scraped_at": "2026-09-03T00:27:48.181132+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1760,7 +1813,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Subaru North Miami",
@@ -1773,9 +1827,9 @@
     "state": "FL",
     "postal_code": "33169",
     "rating": "C+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "4",
+    "years_in_business": 4,
     "business_started": "2022-03-11T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -1804,6 +1858,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami-gardens/profile/car-dealers/subaru-north-miami-0633-92053929",
     "scraped_at": "2026-09-03T00:27:48.192360+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1825,7 +1880,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Albert Dent Master Inc",
@@ -1838,9 +1894,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1861,6 +1917,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/albert-dent-master-inc-0633-92069246",
     "scraped_at": "2026-09-03T00:27:48.203416+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1882,7 +1939,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Thor Logistics Corp",
@@ -1895,9 +1953,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1918,6 +1976,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/thor-logistics-corp-0633-92068855",
     "scraped_at": "2026-09-03T00:27:48.218080+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -1939,7 +1998,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Impact Auto Depot Inc",
@@ -1952,9 +2012,9 @@
     "state": "FL",
     "postal_code": "33135-1501",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -1983,6 +2043,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/impact-auto-depot-inc-0633-90590390",
     "scraped_at": "2026-09-03T00:27:48.240667+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2004,7 +2065,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Adrian & May Flagler Scooter LLC",
@@ -2017,9 +2079,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2040,6 +2102,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/adrian-may-flagler-scooter-llc-0633-92069224",
     "scraped_at": "2026-09-03T00:27:48.251527+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2061,7 +2124,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Amt Enterprises Group, LLC",
@@ -2074,9 +2138,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2097,6 +2161,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/amt-enterprises-group-llc-0633-92069286",
     "scraped_at": "2026-09-03T00:27:48.262358+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2118,7 +2183,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami Auto Wholesale LLC",
@@ -2131,9 +2197,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "C",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2162,6 +2228,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/miami-auto-wholesale-llc-0633-92036687",
     "scraped_at": "2026-09-03T00:27:48.273669+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2183,7 +2250,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Nice Drive Miami, LLC",
@@ -2196,9 +2264,9 @@
     "state": "FL",
     "postal_code": "33126-5550",
     "rating": "A-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "6",
+    "years_in_business": 6,
     "business_started": "2020-07-21T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2227,6 +2295,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/nice-drive-miami-llc-0633-90603076/addressId/229810",
     "scraped_at": "2026-09-03T00:27:48.285094+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2248,7 +2317,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Flipsavvy Group LLC",
@@ -2261,9 +2331,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2284,6 +2354,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/flipsavvy-group-llc-0633-92069771",
     "scraped_at": "2026-09-03T00:27:48.299016+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2305,7 +2376,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Triple SSS Auto Sales Inc",
@@ -2318,9 +2390,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2341,6 +2413,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/triple-sss-auto-sales-inc-0633-92068897",
     "scraped_at": "2026-09-03T00:27:48.309957+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2362,7 +2435,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Deluxe Sport Cars LLC",
@@ -2375,9 +2449,9 @@
     "state": "FL",
     "postal_code": "33142-5050",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2406,6 +2480,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/deluxe-sport-cars-llc-0633-90409445",
     "scraped_at": "2026-09-03T00:27:48.320957+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2427,7 +2502,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Wivalka Motor's LLC",
@@ -2440,9 +2516,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2463,6 +2539,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/wivalka-motors-llc-0633-92068994",
     "scraped_at": "2026-09-03T00:27:48.332143+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2484,7 +2561,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Wells Fargo",
@@ -2497,9 +2575,9 @@
     "state": "FL",
     "postal_code": "33131-5309",
     "rating": "D-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "174",
+    "years_in_business": 174,
     "business_started": "1852-01-01T00:00:00",
     "primary_category_name": "Bank",
     "categories": [
@@ -2556,6 +2634,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/bank/wells-fargo-0633-90584630/addressId/124621",
     "scraped_at": "2026-09-03T00:27:48.344735+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2577,7 +2656,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Matrix Auto Sales",
@@ -2590,9 +2670,9 @@
     "state": "FL",
     "postal_code": "33142-6541",
     "rating": "B-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2613,6 +2693,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/matrix-auto-sales-0633-90604645",
     "scraped_at": "2026-09-03T00:27:48.369158+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2634,7 +2715,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Genesis Motors Miami LLC",
@@ -2647,9 +2729,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2670,6 +2752,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/genesis-motors-miami-llc-0633-92069825",
     "scraped_at": "2026-09-03T00:27:48.380278+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2691,7 +2774,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Damor Motors 105",
@@ -2704,9 +2788,9 @@
     "state": "FL",
     "postal_code": "33142-5714",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "8",
+    "years_in_business": 8,
     "business_started": "2018-01-17T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -2735,6 +2819,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/damor-motors-105-0633-90542931",
     "scraped_at": "2026-09-03T00:27:48.391563+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2756,7 +2841,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Magic City Auto",
@@ -2769,9 +2855,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "B-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "6",
+    "years_in_business": 6,
     "business_started": "2020-01-10T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -2800,6 +2886,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/magic-city-auto-0633-90603654",
     "scraped_at": "2026-09-03T00:27:48.404551+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2821,7 +2908,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Belloliz Auto Service Corp",
@@ -2834,9 +2922,9 @@
     "state": "FL",
     "postal_code": "33126-3217",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "3",
+    "years_in_business": 3,
     "business_started": "2022-12-09T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -2890,6 +2978,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/belloliz-auto-service-corp-0633-92047981",
     "scraped_at": "2026-09-03T00:27:48.417711+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2911,7 +3000,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "MGP Motor Holdings, LLC",
@@ -2924,9 +3014,9 @@
     "state": "FL",
     "postal_code": "33131",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "14",
+    "years_in_business": 14,
     "business_started": "2011-10-07T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -2962,6 +3052,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/mgp-motor-holdings-llc-0633-90081511",
     "scraped_at": "2026-09-03T00:27:48.429103+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -2983,7 +3074,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Motors, Inc.",
@@ -2996,9 +3088,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "30",
+    "years_in_business": 30,
     "business_started": "1996-01-01T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -3027,6 +3119,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/motors-inc-0633-20001620",
     "scraped_at": "2026-09-03T00:27:48.441694+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3048,7 +3141,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Prime Auto",
@@ -3061,9 +3155,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -3092,6 +3186,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/prime-auto-0633-92042744",
     "scraped_at": "2026-09-03T00:27:48.465837+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3113,7 +3208,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Urlo Investment LLC",
@@ -3126,9 +3222,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3149,6 +3245,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/urlo-investment-llc-0633-92068928",
     "scraped_at": "2026-09-03T00:27:48.476546+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3170,7 +3267,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Todo Auto USA Corp",
@@ -3183,9 +3281,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3206,6 +3304,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/todo-auto-usa-corp-0633-92069054",
     "scraped_at": "2026-09-03T00:27:48.487794+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3227,7 +3326,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Autodeal Miami LLC",
@@ -3240,9 +3340,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3285,6 +3385,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/autodeal-miami-llc-0633-90346482",
     "scraped_at": "2026-09-03T00:27:48.499428+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3306,7 +3407,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Latin Motors International LLC",
@@ -3319,9 +3421,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "15",
+    "years_in_business": 15,
     "business_started": "2011-08-25T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3357,6 +3459,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/latin-motors-international-llc-0633-90056719",
     "scraped_at": "2026-09-03T00:27:48.511892+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3378,7 +3481,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "d'LUXURY Custom Enterprise Corp",
@@ -3391,9 +3495,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3414,6 +3518,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/dluxury-custom-enterprise-corp-0633-92069631",
     "scraped_at": "2026-09-03T00:27:48.523126+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3435,7 +3540,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami Auto Sales Corp",
@@ -3448,9 +3554,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -3479,6 +3585,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/miami-auto-sales-corp-0633-92034129",
     "scraped_at": "2026-09-03T00:27:48.534167+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3500,7 +3607,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Long's Motorcycle Sales Inc",
@@ -3513,9 +3621,9 @@
     "state": "FL",
     "postal_code": "33136",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -3536,6 +3644,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/longs-motorcycle-sales-inc-0633-92070124",
     "scraped_at": "2026-09-03T00:27:48.546069+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3557,7 +3666,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Lugovations, LLC",
@@ -3570,9 +3680,9 @@
     "state": "FL",
     "postal_code": "33145",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3593,6 +3703,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/lugovations-llc-0633-92070133",
     "scraped_at": "2026-09-03T00:27:48.560521+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3614,7 +3725,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "VIP Auto Sales N 1 LLC",
@@ -3627,9 +3739,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3650,6 +3762,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/vip-auto-sales-n-1-llc-0633-92068960",
     "scraped_at": "2026-09-03T00:27:48.571600+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3671,7 +3784,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "TPA Auto Sales Llc",
@@ -3684,9 +3798,9 @@
     "state": "FL",
     "postal_code": "33160",
     "rating": "C",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "1",
+    "years_in_business": 1,
     "business_started": "2024-12-09T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -3715,6 +3829,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/n-miami-beach/profile/car-dealers/tpa-auto-sales-llc-0633-92047599",
     "scraped_at": "2026-09-03T00:27:48.583021+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3736,7 +3851,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "EM Auto Sale, Inc.",
@@ -3749,9 +3865,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -3780,6 +3896,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/em-auto-sale-inc-0633-92025489",
     "scraped_at": "2026-09-03T00:27:48.594120+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3801,7 +3918,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Hgreg Trucks",
@@ -3814,9 +3932,9 @@
     "state": "FL",
     "postal_code": "33142-5156",
     "rating": "B",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "2",
+    "years_in_business": 2,
     "business_started": "2024-04-12T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -3845,6 +3963,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/hgreg-trucks-0633-92030762",
     "scraped_at": "2026-09-03T00:27:48.607199+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3866,7 +3985,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Five Star Caribe Auto Sales Miami, Corp.",
@@ -3879,9 +3999,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3910,6 +4030,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/five-star-caribe-auto-sales-miami-corp-0633-92037673",
     "scraped_at": "2026-09-03T00:27:48.618125+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3931,7 +4052,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A & L International Motor Corp",
@@ -3944,9 +4066,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -3967,6 +4089,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/a-l-international-motor-corp-0633-92069175",
     "scraped_at": "2026-09-03T00:27:48.629008+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -3988,7 +4111,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Fuego's Cars",
@@ -4001,9 +4125,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -4032,6 +4156,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/fuegos-cars-0633-90583050",
     "scraped_at": "2026-09-03T00:27:48.640249+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4053,7 +4178,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Volks Doctor, Inc",
@@ -4066,9 +4192,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4089,6 +4215,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/volks-doctor-inc-0633-92068967",
     "scraped_at": "2026-09-03T00:27:48.651360+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4110,7 +4237,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Rock Nation Automotive LLC",
@@ -4123,9 +4251,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4146,6 +4274,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/rock-nation-automotive-llc-0633-92068660",
     "scraped_at": "2026-09-03T00:27:48.662578+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4167,7 +4296,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Car Factory Outlet",
@@ -4180,9 +4310,9 @@
     "state": "FL",
     "postal_code": "33125-4017",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "21",
+    "years_in_business": 21,
     "business_started": "2005-05-01T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4237,6 +4367,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/car-factory-outlet-0633-34000536/addressId/37640",
     "scraped_at": "2026-09-03T00:27:48.676925+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4258,7 +4389,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "W.S. Motors Corp",
@@ -4271,9 +4403,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "8",
+    "years_in_business": 8,
     "business_started": "2018-05-29T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4302,6 +4434,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/ws-motors-corp-0633-92051215",
     "scraped_at": "2026-09-03T00:27:48.688163+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4323,7 +4456,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Supreme Tires & Accessories",
@@ -4336,9 +4470,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -4367,6 +4501,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/supreme-tires-accessories-0633-11007355",
     "scraped_at": "2026-09-03T00:27:48.699162+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4388,7 +4523,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Automotive Trends, LLC",
@@ -4401,9 +4537,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "21",
+    "years_in_business": 21,
     "business_started": "2005-05-15T00:00:00",
     "primary_category_name": "Classic Car Dealers",
     "categories": [
@@ -4439,6 +4575,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/classic-car-dealers/automotive-trends-llc-0633-90126737",
     "scraped_at": "2026-09-03T00:27:48.721027+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4460,7 +4597,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Nice Drive Miami, LLC",
@@ -4473,9 +4611,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "6",
+    "years_in_business": 6,
     "business_started": "2020-07-21T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4504,6 +4642,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/nice-drive-miami-llc-0633-90603076",
     "scraped_at": "2026-09-03T00:27:48.733399+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4525,7 +4664,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ayres Motors Group LLC",
@@ -4538,9 +4678,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4561,6 +4701,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/ayres-motors-group-llc-0633-92069371",
     "scraped_at": "2026-09-03T00:27:48.744468+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4582,7 +4723,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Auto Pros USA LLC",
@@ -4595,9 +4737,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4618,6 +4760,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/auto-pros-usa-llc-0633-92069328",
     "scraped_at": "2026-09-03T00:27:48.755486+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4639,7 +4782,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Biltmore Motors",
@@ -4652,9 +4796,9 @@
     "state": "FL",
     "postal_code": "33142-7130",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "13",
+    "years_in_business": 13,
     "business_started": "2012-11-28T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4683,6 +4827,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/biltmore-motors-0633-90071316",
     "scraped_at": "2026-09-03T00:27:48.768379+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4704,7 +4849,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Prestige Import & Export Corp",
@@ -4717,9 +4863,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4740,6 +4886,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/prestige-import-export-corp-0633-92068581",
     "scraped_at": "2026-09-03T00:27:48.779935+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4761,7 +4908,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "J & JC Auto Group Inc",
@@ -4774,9 +4922,9 @@
     "state": "FL",
     "postal_code": "33142-5206",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4797,6 +4945,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/j-jc-auto-group-inc-0633-92086093",
     "scraped_at": "2026-09-03T00:27:48.791001+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4818,7 +4967,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Auto Quality Corp",
@@ -4831,9 +4981,9 @@
     "state": "FL",
     "postal_code": "33127-3013",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -4862,6 +5012,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/auto-quality-corp-0633-90568120",
     "scraped_at": "2026-09-03T00:27:48.802694+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4883,7 +5034,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "JC&B Auto Sales",
@@ -4896,9 +5048,9 @@
     "state": "FL",
     "postal_code": "33135-1615",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4934,6 +5086,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/jcb-auto-sales-0633-92026452",
     "scraped_at": "2026-09-03T00:27:48.814227+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -4955,7 +5108,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Porteno Cars LLC",
@@ -4968,9 +5122,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -4991,6 +5145,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/porteno-cars-llc-0633-92068561",
     "scraped_at": "2026-09-03T00:27:48.825456+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5012,7 +5167,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "The King Of Trucks",
@@ -5025,9 +5181,9 @@
     "state": "FL",
     "postal_code": "33142-6539",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "12",
+    "years_in_business": 12,
     "business_started": "2013-10-08T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5061,6 +5217,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/the-king-of-trucks-0633-90092630",
     "scraped_at": "2026-09-03T00:27:48.849245+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5082,7 +5239,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Douglas Auto Sales inc.",
@@ -5095,9 +5253,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5126,6 +5284,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/douglas-auto-sales-inc-0633-90428554",
     "scraped_at": "2026-09-03T00:27:48.860444+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5147,7 +5306,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Auto Superstore, Inc.",
@@ -5160,9 +5320,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5198,6 +5358,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/the-auto-superstore-inc-0633-92025915",
     "scraped_at": "2026-09-03T00:27:48.883869+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5219,7 +5380,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Latinos Unidos Auto Sales",
@@ -5232,9 +5394,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -5255,6 +5417,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/latinos-unidos-auto-sales-0633-92027723",
     "scraped_at": "2026-09-03T00:27:48.895878+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5276,7 +5439,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Harkham Trading LLC",
@@ -5289,9 +5453,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5312,6 +5476,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/harkham-trading-llc-0633-92069887",
     "scraped_at": "2026-09-03T00:27:48.908105+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5333,7 +5498,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Aquam Ev",
@@ -5346,9 +5512,9 @@
     "state": "FL",
     "postal_code": "33130",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "5",
+    "years_in_business": 5,
     "business_started": "2021-07-19T00:00:00",
     "primary_category_name": "Online Car Dealers",
     "categories": [
@@ -5377,6 +5543,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/online-car-dealers/aquam-ev-0633-92048370",
     "scraped_at": "2026-09-03T00:27:48.920836+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5398,7 +5565,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Hyundai of North Miami",
@@ -5411,9 +5579,9 @@
     "state": "FL",
     "postal_code": "33169",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -5463,6 +5631,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/north-miami/profile/car-dealers/hyundai-of-north-miami-0633-92040847",
     "scraped_at": "2026-09-03T00:27:48.933634+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5484,7 +5653,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "T Motor Sales Inc.",
@@ -5497,9 +5667,9 @@
     "state": "FL",
     "postal_code": "33142-5158",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "22",
+    "years_in_business": 22,
     "business_started": "2004-06-04T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5535,6 +5705,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/t-motor-sales-inc-0633-22003415",
     "scraped_at": "2026-09-03T00:27:48.944581+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5556,7 +5727,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Miles Auto Sales, LLC",
@@ -5569,9 +5741,9 @@
     "state": "FL",
     "postal_code": "33145-2630",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "17",
+    "years_in_business": 17,
     "business_started": "2009-01-29T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5607,6 +5779,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/coral-gables/profile/used-car-dealers/miles-auto-sales-llc-0633-92017177/addressId/148180",
     "scraped_at": "2026-09-03T00:27:48.956216+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5628,7 +5801,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Carmar Sales Group Inc",
@@ -5641,9 +5815,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5664,6 +5838,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/carmar-sales-group-inc-0633-92069501",
     "scraped_at": "2026-09-03T00:27:48.967267+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5685,7 +5860,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Scooter 305 Inc",
@@ -5698,9 +5874,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -5721,6 +5897,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/scooter-305-inc-0633-92068703",
     "scraped_at": "2026-09-03T00:27:48.978079+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5742,7 +5919,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Roly Roll Motors Inc",
@@ -5755,9 +5933,9 @@
     "state": "FL",
     "postal_code": "33142-5358",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "14",
+    "years_in_business": 14,
     "business_started": "2012-06-22T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5786,6 +5964,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/roly-roll-motors-inc-0633-90090722",
     "scraped_at": "2026-09-03T00:27:49.001174+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5807,7 +5986,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "D&D Business corp.",
@@ -5820,9 +6000,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -5851,6 +6031,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/dd-business-corp-0633-90023836",
     "scraped_at": "2026-09-03T00:27:49.011801+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5872,7 +6053,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Murgado Automotive Group, Inc.",
@@ -5885,9 +6067,9 @@
     "state": "FL",
     "postal_code": "33130-3308",
     "rating": "A-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -5936,6 +6118,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/murgado-automotive-group-inc-0633-90589211",
     "scraped_at": "2026-09-03T00:27:49.030552+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -5957,7 +6140,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Capital Auto Group Inc",
@@ -5970,9 +6154,9 @@
     "state": "FL",
     "postal_code": "33142-4914",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "10",
+    "years_in_business": 10,
     "business_started": "2015-10-01T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6001,6 +6185,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/capital-auto-group-inc-0633-90594761",
     "scraped_at": "2026-09-03T00:27:49.042068+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6022,7 +6207,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Bill Seidle's Nissan",
@@ -6035,9 +6221,9 @@
     "state": "FL",
     "postal_code": "33130",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -6073,6 +6259,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/bill-seidles-nissan-0633-92003982/addressId/137059",
     "scraped_at": "2026-09-03T00:27:49.053127+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6094,7 +6281,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Pischler Automotive LLC",
@@ -6107,9 +6295,9 @@
     "state": "FL",
     "postal_code": "33130",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Classic Car Dealers",
     "categories": [
@@ -6138,6 +6326,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/classic-car-dealers/pischler-automotive-llc-0633-92042627/addressId/188895",
     "scraped_at": "2026-09-03T00:27:49.064025+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6159,7 +6348,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Power Scooter Inc",
@@ -6172,9 +6362,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -6195,6 +6385,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/power-scooter-inc-0633-92068563",
     "scraped_at": "2026-09-03T00:27:49.075236+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6216,7 +6407,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kings Auto USA LLC",
@@ -6229,9 +6421,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "C",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6260,6 +6452,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/kings-auto-usa-llc-0633-92043114",
     "scraped_at": "2026-09-03T00:27:49.086332+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6281,7 +6474,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Skyteam Motors",
@@ -6294,9 +6488,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6317,6 +6511,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/skyteam-motors-0633-92018765",
     "scraped_at": "2026-09-03T00:27:49.097227+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6338,7 +6533,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Prestige Auto Depot",
@@ -6351,9 +6547,9 @@
     "state": "FL",
     "postal_code": "33131-3224",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -6382,6 +6578,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/prestige-auto-depot-0633-90560393",
     "scraped_at": "2026-09-03T00:27:49.108522+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6403,7 +6600,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ferco Motors Corp.",
@@ -6416,9 +6614,9 @@
     "state": "FL",
     "postal_code": "33135-2046",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "21",
+    "years_in_business": 21,
     "business_started": "2005-05-01T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6469,6 +6667,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/ferco-motors-corp-0633-7003008",
     "scraped_at": "2026-09-03T00:27:49.121853+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6490,7 +6689,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Drive Us LLC",
@@ -6503,9 +6703,9 @@
     "state": "FL",
     "postal_code": "33142-5050",
     "rating": "C",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6539,6 +6739,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/drive-us-llc-0633-90554674",
     "scraped_at": "2026-09-03T00:27:49.133482+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6560,7 +6761,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Elite Auto Collision Miami Corp",
@@ -6573,9 +6775,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6596,6 +6798,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/elite-auto-collision-miami-corp-0633-92069687",
     "scraped_at": "2026-09-03T00:27:49.144501+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6617,7 +6820,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "BCG Imports, LLC",
@@ -6630,9 +6834,9 @@
     "state": "FL",
     "postal_code": "33132-1463",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "3",
+    "years_in_business": 3,
     "business_started": "2022-10-24T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -6693,6 +6897,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/bcg-imports-llc-0633-92027842/addressId/166928",
     "scraped_at": "2026-09-03T00:27:49.162704+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6714,7 +6919,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Zezgo Fleet Solutions LLC",
@@ -6727,9 +6933,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6750,6 +6956,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/zezgo-fleet-solutions-llc-0633-92069021",
     "scraped_at": "2026-09-03T00:27:49.184990+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6771,7 +6978,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Sosa King Motor Corp.",
@@ -6784,9 +6992,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6807,6 +7015,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/sosa-king-motor-corp-0633-92068752",
     "scraped_at": "2026-09-03T00:27:49.195832+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6828,7 +7037,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Startcar Inc",
@@ -6841,9 +7051,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6864,6 +7074,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/startcar-inc-0633-92068793",
     "scraped_at": "2026-09-03T00:27:49.207530+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6885,7 +7096,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "World's Best Motor Sales, LLC",
@@ -6898,9 +7110,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -6921,6 +7133,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/worlds-best-motor-sales-llc-0633-92069002",
     "scraped_at": "2026-09-03T00:27:49.218464+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -6942,7 +7155,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Empire Motors Miami",
@@ -6955,9 +7169,9 @@
     "state": "FL",
     "postal_code": "33142-5823",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -6986,6 +7200,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/empire-motors-miami-0633-90610613",
     "scraped_at": "2026-09-03T00:27:49.231817+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7007,7 +7222,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kairos Auto LLC",
@@ -7020,9 +7236,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7043,6 +7259,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/kairos-auto-llc-0633-92070052",
     "scraped_at": "2026-09-03T00:27:49.242507+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7064,7 +7281,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Autostop Florida, Inc.",
@@ -7077,9 +7295,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7100,6 +7318,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/autostop-florida-inc-0633-92069360",
     "scraped_at": "2026-09-03T00:27:49.253434+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7121,7 +7340,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Henderson Auto Sales Inc",
@@ -7134,9 +7354,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7157,6 +7377,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/henderson-auto-sales-inc-0633-92069891",
     "scraped_at": "2026-09-03T00:27:49.264219+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7178,7 +7399,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Classic Car Club Miami",
@@ -7191,9 +7413,9 @@
     "state": "FL",
     "postal_code": "33127-4903",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Classic Car Dealers",
     "categories": [
@@ -7222,6 +7444,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/classic-car-dealers/classic-car-club-miami-0633-90601567/addressId/131256",
     "scraped_at": "2026-09-03T00:27:49.274984+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7243,7 +7466,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Olympus Auto Group LLC",
@@ -7256,9 +7480,9 @@
     "state": "FL",
     "postal_code": "33169",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7287,6 +7511,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami-gardens/profile/used-car-dealers/olympus-auto-group-llc-0633-92080361",
     "scraped_at": "2026-09-03T00:27:49.287773+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7308,7 +7533,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Gn Auto Center Corp",
@@ -7321,9 +7547,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "C-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -7357,6 +7583,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/gn-auto-center-corp-0633-92049251",
     "scraped_at": "2026-09-03T00:27:49.298756+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7378,7 +7605,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Wells Fargo",
@@ -7391,9 +7619,9 @@
     "state": "FL",
     "postal_code": "33134-3191",
     "rating": "D-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "174",
+    "years_in_business": 174,
     "business_started": "1852-01-01T00:00:00",
     "primary_category_name": "Bank",
     "categories": [
@@ -7450,6 +7678,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/coral-gables/profile/bank/wells-fargo-0633-90584631/addressId/124624",
     "scraped_at": "2026-09-03T00:27:49.311056+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7471,7 +7700,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Car Spot",
@@ -7484,9 +7714,9 @@
     "state": "FL",
     "postal_code": "33142-5877",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "8",
+    "years_in_business": 8,
     "business_started": "2018-05-16T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7512,6 +7742,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/the-car-spot-0633-92037689/addressId/182199",
     "scraped_at": "2026-09-03T00:27:49.322611+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7533,7 +7764,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Piky Auto Sales, LLC",
@@ -7546,9 +7778,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7569,6 +7801,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/piky-auto-sales-llc-0633-92068549",
     "scraped_at": "2026-09-03T00:27:49.346448+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7590,7 +7823,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Sky Auto Trader Group LLC",
@@ -7603,9 +7837,9 @@
     "state": "FL",
     "postal_code": "33136",
     "rating": "C+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -7634,6 +7868,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/sky-auto-trader-group-llc-0633-92040698",
     "scraped_at": "2026-09-03T00:27:49.357949+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7655,7 +7890,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Concept Auto, Inc",
@@ -7668,9 +7904,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "31",
+    "years_in_business": 31,
     "business_started": "1995-06-26T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7706,6 +7942,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/concept-auto-inc-0633-22002768/addressId/25569",
     "scraped_at": "2026-09-03T00:27:49.370292+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7727,7 +7964,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Volvo Cars North Miami",
@@ -7740,9 +7978,9 @@
     "state": "FL",
     "postal_code": "33169",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -7771,6 +8009,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/volvo-cars-north-miami-0633-92085855",
     "scraped_at": "2026-09-03T00:27:49.381778+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7792,7 +8031,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Villegas Group LLC",
@@ -7805,9 +8045,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7828,6 +8068,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/villegas-group-llc-0633-92068956",
     "scraped_at": "2026-09-03T00:27:49.403712+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7849,7 +8090,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Interstate Auto Sales and Leasing Corp",
@@ -7862,9 +8104,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -7885,6 +8127,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/interstate-auto-sales-and-leasing-corp-0633-92069942",
     "scraped_at": "2026-09-03T00:27:49.414764+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7906,7 +8149,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Maserati Stuart",
@@ -7919,9 +8163,9 @@
     "state": "FL",
     "postal_code": "33130-3308",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -7950,6 +8194,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/maserati-stuart-0633-90601200/addressId/131093",
     "scraped_at": "2026-09-03T00:27:49.426587+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -7971,7 +8216,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Marins Collections",
@@ -7984,9 +8230,9 @@
     "state": "FL",
     "postal_code": "33125-2139",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -8015,6 +8261,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/marins-collections-0633-90060651",
     "scraped_at": "2026-09-03T00:27:49.437824+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8036,7 +8283,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Milano Automotive Group LLC",
@@ -8049,9 +8297,9 @@
     "state": "FL",
     "postal_code": "33142-6541",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "3",
+    "years_in_business": 3,
     "business_started": "2022-12-16T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8089,6 +8337,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/milano-automotive-group-llc-0633-92068395",
     "scraped_at": "2026-09-03T00:27:49.451105+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8110,7 +8359,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Buggy Doctor Auto Sales",
@@ -8123,9 +8373,9 @@
     "state": "FL",
     "postal_code": "33142-4344",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "19",
+    "years_in_business": 19,
     "business_started": "2006-10-01T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -8154,6 +8404,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/buggy-doctor-auto-sales-0633-90541000",
     "scraped_at": "2026-09-03T00:27:49.463241+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8175,7 +8426,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "The Family Auto Store, LLC",
@@ -8188,9 +8440,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -8219,6 +8471,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/the-family-auto-store-llc-0633-92026932",
     "scraped_at": "2026-09-03T00:27:49.474198+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8240,7 +8493,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Roberto Auto Sales Inc",
@@ -8253,9 +8507,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8276,6 +8530,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/roberto-auto-sales-inc-0633-92068659",
     "scraped_at": "2026-09-03T00:27:49.485857+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8297,7 +8552,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Alex Used Auto Sales Inc.",
@@ -8310,9 +8566,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8333,6 +8589,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/alex-used-auto-sales-inc-0633-92069248",
     "scraped_at": "2026-09-03T00:27:49.497306+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8354,7 +8611,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Shop Smart Autos",
@@ -8367,9 +8625,9 @@
     "state": "FL",
     "postal_code": "33130",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Online Car Dealers",
     "categories": [
@@ -8390,6 +8648,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/online-car-dealers/shop-smart-autos-0633-92084910",
     "scraped_at": "2026-09-03T00:27:49.507993+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8411,7 +8670,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami 440 Inc",
@@ -8424,9 +8684,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8455,6 +8715,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/miami-440-inc-0633-90034192",
     "scraped_at": "2026-09-03T00:27:49.519249+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8476,7 +8737,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Peiby Motors Corp",
@@ -8489,9 +8751,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8512,6 +8774,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/peiby-motors-corp-0633-92068536",
     "scraped_at": "2026-09-03T00:27:49.530746+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8533,7 +8796,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Novi Motors Inc.",
@@ -8546,9 +8810,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8577,6 +8841,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/novi-motors-inc-0633-90030749",
     "scraped_at": "2026-09-03T00:27:49.541503+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8598,7 +8863,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Elvis Auto Group LLC",
@@ -8611,9 +8877,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8634,6 +8900,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/elvis-auto-group-llc-0633-92069694",
     "scraped_at": "2026-09-03T00:27:49.553210+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8655,7 +8922,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Car Trust",
@@ -8668,9 +8936,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -8699,6 +8967,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/car-trust-0633-26001967",
     "scraped_at": "2026-09-03T00:27:49.564057+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8720,7 +8989,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Dade Auto Depot, Inc.",
@@ -8733,9 +9003,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "4",
+    "years_in_business": 4,
     "business_started": "2022-04-28T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8764,6 +9034,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/dade-auto-depot-inc-0633-92031011",
     "scraped_at": "2026-09-03T00:27:49.576002+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8785,7 +9056,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Universal Auto Sales, Inc.",
@@ -8798,9 +9070,9 @@
     "state": "FL",
     "postal_code": "33127-3106",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "36",
+    "years_in_business": 36,
     "business_started": "1989-12-14T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -8836,6 +9108,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/universal-auto-sales-inc-0633-30002874",
     "scraped_at": "2026-09-03T00:27:49.599003+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8857,7 +9130,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Nava Motors Corp.",
@@ -8870,9 +9144,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8901,6 +9175,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/nava-motors-corp-0633-90057678",
     "scraped_at": "2026-09-03T00:27:49.610092+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8922,7 +9197,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Mac1 Auto Sale, LLC.",
@@ -8935,9 +9211,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -8958,6 +9234,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/mac1-auto-sale-llc-0633-92070162",
     "scraped_at": "2026-09-03T00:27:49.621643+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -8979,7 +9256,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Prime Auto Miami Corp",
@@ -8992,9 +9270,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "C+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -9023,6 +9301,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/prime-auto-miami-corp-0633-92048105",
     "scraped_at": "2026-09-03T00:27:49.632803+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9044,7 +9323,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "J&I Sales Group Inc.",
@@ -9057,9 +9337,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "9",
+    "years_in_business": 9,
     "business_started": "2017-02-23T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9088,6 +9368,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/ji-sales-group-inc-0633-92041669",
     "scraped_at": "2026-09-03T00:27:49.645068+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9109,7 +9390,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Auto Platinum Inc",
@@ -9122,9 +9404,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9145,6 +9427,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/auto-platinum-inc-0633-92069326",
     "scraped_at": "2026-09-03T00:27:49.656395+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9166,7 +9449,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Premier Motors Investment, Corp.",
@@ -9179,9 +9463,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9202,6 +9486,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/premier-motors-investment-corp-0633-92068574",
     "scraped_at": "2026-09-03T00:27:49.667829+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9223,7 +9508,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "B & H Motor Sports Corp",
@@ -9236,9 +9522,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9274,6 +9560,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/b-h-motor-sports-corp-0633-92026792",
     "scraped_at": "2026-09-03T00:27:49.693248+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9295,7 +9582,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Vinton Auto Consignment & Sales, Inc.",
@@ -9308,9 +9596,9 @@
     "state": "FL",
     "postal_code": "33145-3213",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9339,6 +9627,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/coral-gables/profile/used-car-dealers/vinton-auto-consignment-sales-inc-0633-90358273",
     "scraped_at": "2026-09-03T00:27:49.704095+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9360,7 +9649,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Mercedes Master Shop Corp",
@@ -9373,9 +9663,9 @@
     "state": "FL",
     "postal_code": "33162",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9404,6 +9694,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/north-miami-bch/profile/used-car-dealers/mercedes-master-shop-corp-0633-92086095",
     "scraped_at": "2026-09-03T00:27:49.714850+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9425,7 +9716,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "J & M Auto of Miami Inc",
@@ -9438,9 +9730,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9461,6 +9753,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/j-m-auto-of-miami-inc-0633-92069956",
     "scraped_at": "2026-09-03T00:27:49.751227+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9482,7 +9775,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Mad Max Motorcycles, LLC",
@@ -9495,9 +9789,9 @@
     "state": "FL",
     "postal_code": "33128",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9518,6 +9812,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/mad-max-motorcycles-llc-0633-92070166",
     "scraped_at": "2026-09-03T00:27:49.762048+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9539,7 +9834,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Es Auto Sales & Body Shop LLC",
@@ -9552,9 +9848,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9575,6 +9871,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/es-auto-sales-body-shop-llc-0633-92069703",
     "scraped_at": "2026-09-03T00:27:49.772965+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9596,7 +9893,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Car Plus Inc",
@@ -9609,9 +9907,9 @@
     "state": "FL",
     "postal_code": "33135-0785",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9640,6 +9938,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/car-plus-inc-0633-90141241",
     "scraped_at": "2026-09-03T00:27:49.784143+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9661,7 +9960,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "South Florida Exotics Corp.",
@@ -9674,9 +9974,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9697,6 +9997,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/south-florida-exotics-corp-0633-92068757",
     "scraped_at": "2026-09-03T00:27:49.795463+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9718,7 +10019,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "City Auto Sales, Inc",
@@ -9731,9 +10033,9 @@
     "state": "FL",
     "postal_code": "33142-3221",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "15",
+    "years_in_business": 15,
     "business_started": "2011-04-01T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9769,6 +10071,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/city-auto-sales-inc-0633-90321141",
     "scraped_at": "2026-09-03T00:27:49.807050+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9790,7 +10093,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Executive Auto Brokers & Leasing Inc",
@@ -9803,9 +10107,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9826,6 +10130,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/executive-auto-brokers-leasing-inc-0633-92069725",
     "scraped_at": "2026-09-03T00:27:49.817990+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9847,7 +10152,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "JD Auto Credit Corp.",
@@ -9860,9 +10166,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9883,6 +10189,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/jd-auto-credit-corp-0633-92069997",
     "scraped_at": "2026-09-03T00:27:49.828789+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9904,7 +10211,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "SoFlo Motorz Inc.",
@@ -9917,9 +10225,9 @@
     "state": "FL",
     "postal_code": "33142-6225",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -9948,6 +10256,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/soflo-motorz-inc-0633-90593646",
     "scraped_at": "2026-09-03T00:27:49.839747+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -9969,7 +10278,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tini Auto Sales Inc",
@@ -9982,9 +10292,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10005,6 +10315,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/tini-auto-sales-inc-0633-92068857",
     "scraped_at": "2026-09-03T00:27:49.850796+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10026,7 +10337,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Concept Auto, Inc",
@@ -10039,9 +10351,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "31",
+    "years_in_business": 31,
     "business_started": "1995-06-26T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10077,6 +10389,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/concept-auto-inc-0633-22002768",
     "scraped_at": "2026-09-03T00:27:49.863486+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10098,7 +10411,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Easy Cars Dealership, LLC",
@@ -10111,9 +10425,9 @@
     "state": "FL",
     "postal_code": "33167",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -10142,6 +10456,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/easy-cars-dealership-llc-0633-92060156",
     "scraped_at": "2026-09-03T00:27:49.874373+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10163,7 +10478,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Romero Car Sales Corp",
@@ -10176,9 +10492,9 @@
     "state": "FL",
     "postal_code": "33142-5384",
     "rating": "B-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -10207,6 +10523,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/romero-car-sales-corp-0633-92037324",
     "scraped_at": "2026-09-03T00:27:49.885455+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10228,7 +10545,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "J P Auto Brokers, Inc",
@@ -10241,9 +10559,9 @@
     "state": "FL",
     "postal_code": "33129-1930",
     "rating": "NR",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "35",
+    "years_in_business": 35,
     "business_started": "1991-01-01T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -10272,6 +10590,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/j-p-auto-brokers-inc-0633-34001226",
     "scraped_at": "2026-09-03T00:27:49.896948+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10293,7 +10612,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Brickell Key Estates LLC",
@@ -10306,9 +10626,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -10329,6 +10649,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/brickell-key-estates-llc-0633-92069443",
     "scraped_at": "2026-09-03T00:27:49.908130+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10350,7 +10671,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Wholesale66 LLC",
@@ -10363,9 +10685,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10386,6 +10708,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/wholesale66-llc-0633-92068989",
     "scraped_at": "2026-09-03T00:27:49.928604+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10407,7 +10730,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Mikalyzed Auto Boutique, LLC",
@@ -10420,9 +10744,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10443,6 +10767,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/mikalyzed-auto-boutique-llc-0633-92068394",
     "scraped_at": "2026-09-03T00:27:49.940043+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10464,7 +10789,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "B & T Auto Sales Group LLC",
@@ -10477,9 +10803,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10500,6 +10826,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/b-t-auto-sales-group-llc-0633-92069375",
     "scraped_at": "2026-09-03T00:27:49.950939+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10521,7 +10848,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Premier Automotive Export Inc",
@@ -10534,9 +10862,9 @@
     "state": "FL",
     "postal_code": "33142-4217",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -10565,6 +10893,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/premier-automotive-export-inc-0633-90558846",
     "scraped_at": "2026-09-03T00:27:49.961794+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10586,7 +10915,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Braga Management Inc",
@@ -10599,9 +10929,9 @@
     "state": "FL",
     "postal_code": "33131-2185",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "17",
+    "years_in_business": 17,
     "business_started": "2008-11-03T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10630,6 +10960,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/braga-management-inc--0021-477158/addressId/634365",
     "scraped_at": "2026-09-03T00:27:49.973540+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10651,7 +10982,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Speedart Motorsports, LLC",
@@ -10664,9 +10996,9 @@
     "state": "FL",
     "postal_code": "33137-3804",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "7",
+    "years_in_business": 7,
     "business_started": "2018-10-01T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10722,6 +11054,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/speedart-motorsports-llc-0633-92052595",
     "scraped_at": "2026-09-03T00:27:49.985530+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10743,7 +11076,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Carwarriors LLC",
@@ -10756,9 +11090,9 @@
     "state": "FL",
     "postal_code": "33142-5222",
     "rating": "A+",
-    "accredited": "True",
+    "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "3",
+    "years_in_business": 3,
     "business_started": "2023-02-02T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10788,6 +11122,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/carwarriors-llc-0633-92034026",
     "scraped_at": "2026-09-03T00:27:49.997786+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10809,7 +11144,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RPM.Miami LLC",
@@ -10822,9 +11158,9 @@
     "state": "FL",
     "postal_code": "33142-6541",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "7",
+    "years_in_business": 7,
     "business_started": "2018-11-09T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10860,6 +11196,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/rpmmiami-llc-0633-92035311",
     "scraped_at": "2026-09-03T00:27:50.009757+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10881,7 +11218,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Car One Rental",
@@ -10894,9 +11232,9 @@
     "state": "FL",
     "postal_code": "33145",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "10",
+    "years_in_business": 10,
     "business_started": "2016-07-21T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -10925,6 +11263,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/car-one-rental-0633-90020748/addressId/44031",
     "scraped_at": "2026-09-03T00:27:50.021094+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -10946,7 +11285,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Wells Fargo",
@@ -10959,9 +11299,9 @@
     "state": "FL",
     "postal_code": "33133-5472",
     "rating": "D-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "174",
+    "years_in_business": 174,
     "business_started": "1852-01-01T00:00:00",
     "primary_category_name": "Bank",
     "categories": [
@@ -11018,6 +11358,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/bank/wells-fargo-0633-90584637/addressId/124642",
     "scraped_at": "2026-09-03T00:27:50.033634+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11039,7 +11380,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Best of Miami Quality Cars Inc.",
@@ -11052,9 +11394,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "17",
+    "years_in_business": 17,
     "business_started": "2008-12-03T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -11083,6 +11425,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/the-best-of-miami-quality-cars-inc-0633-92019908",
     "scraped_at": "2026-09-03T00:27:50.044667+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11104,7 +11447,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Gio's Auto Paint & Body Shop, Corp",
@@ -11117,9 +11461,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11140,6 +11484,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/gios-auto-paint-body-shop-corp-0633-92069836",
     "scraped_at": "2026-09-03T00:27:50.056060+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11161,7 +11506,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Market Auto Export LLC",
@@ -11174,9 +11520,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11197,6 +11543,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/market-auto-export-llc-0633-92070180",
     "scraped_at": "2026-09-03T00:27:50.084969+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11218,7 +11565,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "111 Auto Financed LLC",
@@ -11231,9 +11579,9 @@
     "state": "FL",
     "postal_code": "33142-5040",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "2",
+    "years_in_business": 2,
     "business_started": "2024-01-10T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11262,6 +11610,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/111-auto-financed-llc-0633-92037709",
     "scraped_at": "2026-09-03T00:27:50.096710+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11283,7 +11632,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Ramirez Super Motor, Inc.",
@@ -11296,9 +11646,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "42",
+    "years_in_business": 42,
     "business_started": "1984-01-01T00:00:00",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -11334,6 +11684,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/ramirez-super-motor-inc-0633-27003913/addressId/32892",
     "scraped_at": "2026-09-03T00:27:50.107890+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11355,7 +11706,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "36 ST Mechanic and Tires Shops Inc",
@@ -11368,9 +11720,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11391,6 +11743,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/36-st-mechanic-and-tires-shops-inc-0633-92069152",
     "scraped_at": "2026-09-03T00:27:50.118603+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11412,7 +11765,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Barroso Auto Brokers, Inc",
@@ -11425,9 +11779,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11448,6 +11802,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/barroso-auto-brokers-inc-0633-92069393",
     "scraped_at": "2026-09-03T00:27:50.129383+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11469,7 +11824,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami Automotive Retail, Inc.",
@@ -11482,9 +11838,9 @@
     "state": "FL",
     "postal_code": "33130-3308",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -11510,6 +11866,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/miami-automotive-retail-inc-0633-90599312",
     "scraped_at": "2026-09-03T00:27:50.141449+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11531,7 +11888,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "P J Auto Wholesale Inc",
@@ -11544,9 +11902,9 @@
     "state": "FL",
     "postal_code": "33142-5204",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11575,6 +11933,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/p-j-auto-wholesale-inc-0633-90293092",
     "scraped_at": "2026-09-03T00:27:50.155581+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11596,7 +11955,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "AutoNation Nissan Miami",
@@ -11609,9 +11969,9 @@
     "state": "FL",
     "postal_code": "33135-2606",
     "rating": "D-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "26",
+    "years_in_business": 26,
     "business_started": "1999-10-18T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -11645,6 +12005,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/autonation-nissan-miami-0633-92033131",
     "scraped_at": "2026-09-03T00:27:50.167612+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11666,7 +12027,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Barroso Auto Sales Inc",
@@ -11679,9 +12041,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "F",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "16",
+    "years_in_business": 16,
     "business_started": "2010-08-23T00:00:00",
     "primary_category_name": "Car Dealers",
     "categories": [
@@ -11711,6 +12073,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/car-dealers/barroso-auto-sales-inc-0633-90047125",
     "scraped_at": "2026-09-03T00:27:50.178965+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11732,7 +12095,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "AutoSmart",
@@ -11745,9 +12109,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "C-",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11790,6 +12154,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/autosmart-0633-92048712",
     "scraped_at": "2026-09-03T00:27:50.189791+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11811,7 +12176,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Motorink LLC",
@@ -11824,9 +12190,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11847,6 +12213,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/motorink-llc-0633-92069034",
     "scraped_at": "2026-09-03T00:27:50.201854+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11868,7 +12235,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Economic Auto Sales",
@@ -11881,9 +12249,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11912,6 +12280,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/economic-auto-sales-0633-92017245",
     "scraped_at": "2026-09-03T00:27:50.225324+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11933,7 +12302,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "B & H Motors Sports Corp",
@@ -11946,9 +12316,9 @@
     "state": "FL",
     "postal_code": "33125",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -11969,6 +12339,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/b-h-motors-sports-corp-0633-92069374",
     "scraped_at": "2026-09-03T00:27:50.236076+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -11990,7 +12361,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Andino's Auto Sales LLC",
@@ -12003,9 +12375,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12026,6 +12398,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/andinos-auto-sales-llc-0633-92069288",
     "scraped_at": "2026-09-03T00:27:50.247848+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12047,7 +12420,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Florida Auto One Corp",
@@ -12060,9 +12434,9 @@
     "state": "FL",
     "postal_code": "33142-5360",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "9",
+    "years_in_business": 9,
     "business_started": "2017-03-17T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12105,6 +12479,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/florida-auto-one-corp-0633-90504245",
     "scraped_at": "2026-09-03T00:27:50.259603+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12126,7 +12501,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "AA Asap Automotive & Transport, LLC",
@@ -12139,9 +12515,9 @@
     "state": "FL",
     "postal_code": "33142-7435",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "5",
+    "years_in_business": 5,
     "business_started": "2020-12-08T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12162,6 +12538,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/aa-asap-automotive-transport-llc-0633-90611615",
     "scraped_at": "2026-09-03T00:27:50.271266+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12183,7 +12560,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Used Auto Discount",
@@ -12196,9 +12574,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12219,6 +12597,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/used-auto-discount-0633-92010032",
     "scraped_at": "2026-09-03T00:27:50.281894+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12240,7 +12619,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Miami Builders Auto Sales",
@@ -12253,9 +12633,9 @@
     "state": "FL",
     "postal_code": "33127-3013",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12284,6 +12664,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/miami-builders-auto-sales-0633-92032063",
     "scraped_at": "2026-09-03T00:27:50.305884+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12305,7 +12686,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "City Image Auto Sales LLC",
@@ -12318,9 +12700,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12341,6 +12723,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/city-image-auto-sales-llc-0633-92069547",
     "scraped_at": "2026-09-03T00:27:50.317414+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12362,7 +12745,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "AA Auto Sales, Inc",
@@ -12375,9 +12759,9 @@
     "state": "FL",
     "postal_code": "33142",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12398,6 +12782,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/aa-auto-sales-inc-0633-92069199",
     "scraped_at": "2026-09-03T00:27:50.328259+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12419,7 +12804,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Mr. Car Luxury & Quality Motors LLC",
@@ -12432,9 +12818,9 @@
     "state": "FL",
     "postal_code": "33127-2232",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Imported Car Dealers",
     "categories": [
@@ -12470,6 +12856,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/imported-car-dealers/mr-car-luxury-quality-motors-llc-0633-90101269",
     "scraped_at": "2026-09-03T00:27:50.352256+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12491,7 +12878,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "BCG International Corp",
@@ -12504,9 +12892,9 @@
     "state": "FL",
     "postal_code": "33142-5245",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "12",
+    "years_in_business": 12,
     "business_started": "2014-06-04T00:00:00",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12559,6 +12947,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/bcg-international-corp-0633-90114506/addressId/67525",
     "scraped_at": "2026-09-03T00:27:50.364580+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12580,7 +12969,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Buying Fast Auto Sales LLC",
@@ -12593,9 +12983,9 @@
     "state": "FL",
     "postal_code": "33168-0298",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12624,6 +13014,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/buying-fast-auto-sales-llc-0633-90348323/addressId/155007",
     "scraped_at": "2026-09-03T00:27:50.375894+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12645,7 +13036,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Velare Motorcycles Inc",
@@ -12658,9 +13050,9 @@
     "state": "FL",
     "postal_code": "33127",
     "rating": "A",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "New Car Dealers",
     "categories": [
@@ -12681,6 +13073,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/new-car-dealers/velare-motorcycles-inc-0633-92068947",
     "scraped_at": "2026-09-03T00:27:50.388261+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12702,7 +13095,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "SR Top Equipment LLC",
@@ -12715,9 +13109,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "C+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Classic Car Dealers",
     "categories": [
@@ -12746,6 +13140,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/classic-car-dealers/sr-top-equipment-llc-0633-92034807/addressId/177825",
     "scraped_at": "2026-09-03T00:27:50.399977+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12767,7 +13162,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Singer Auto Sales Corp",
@@ -12780,9 +13176,9 @@
     "state": "FL",
     "postal_code": "33142-5432",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12811,6 +13207,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/singer-auto-sales-corp-0633-90202762",
     "scraped_at": "2026-09-03T00:27:50.411448+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12832,7 +13229,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A1 Solutions Car Inc",
@@ -12845,9 +13243,9 @@
     "state": "FL",
     "postal_code": "33135",
     "rating": "A+",
-    "accredited": "False",
+    "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "0",
+    "years_in_business": 0,
     "business_started": "",
     "primary_category_name": "Used Car Dealers",
     "categories": [
@@ -12868,6 +13266,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/fl/miami/profile/used-car-dealers/a1-solutions-car-inc-0633-92069196",
     "scraped_at": "2026-09-03T00:27:50.422917+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-03",
     "on_yelp": false,
     "yelp_name": "",
@@ -12889,6 +13288,7 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   }
 ]

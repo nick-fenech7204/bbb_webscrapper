@@ -82,6 +82,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/outdoor-living/integrated-outdoor-designs-0825-1000210666",
     "scraped_at": "2026-09-14T02:39:06.238216+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Integrated Outdoor Designs",
@@ -103,7 +104,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "San Antonio Landscaping Concepts",
@@ -160,6 +162,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/san-antonio-landscaping-concepts-0825-1000112659",
     "scraped_at": "2026-09-14T02:40:07.339028+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "San Antonio Landscaping Concepts",
@@ -181,7 +184,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Pro Scape LLC",
@@ -230,6 +234,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/windcrest/profile/landscape-contractors/pro-scape-llc-0825-1000104885",
     "scraped_at": "2026-09-14T02:41:10.232842+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Pro Scape",
@@ -251,7 +256,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Landscape Irrigation Inc",
@@ -295,6 +301,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/irrigation-installation/landscape-irrigation-inc-0825-1000190008",
     "scraped_at": "2026-09-14T02:40:19.213827+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Landscape Irrigation",
@@ -316,7 +323,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Burgess Services",
@@ -360,6 +368,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/burgess-services-0825-1000143734",
     "scraped_at": "2026-09-14T02:40:31.832570+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Burgess Services",
@@ -381,7 +390,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A Woman\u2019s Touch Lawn Care",
@@ -430,6 +440,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/a-womans-touch-lawn-care-0825-1000132650",
     "scraped_at": "2026-09-14T02:41:15.684257+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "A Woman's Touch Lawn Care",
@@ -451,7 +462,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rialto Studio, Inc.",
@@ -495,6 +507,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-architect/rialto-studio-inc-0825-1000213583",
     "scraped_at": "2026-09-14T02:39:43.924350+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Rialto Studio",
@@ -516,7 +529,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "J Ponce & Son Landscaping",
@@ -560,6 +574,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/j-ponce-son-landscaping-0825-1000215864",
     "scraped_at": "2026-09-14T02:38:58.344138+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "J. Ponce and Son Landscaping",
@@ -581,7 +596,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Grenstone Landscaping & Masonry",
@@ -625,6 +641,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/grenstone-landscaping-masonry-0825-1000171919",
     "scraped_at": "2026-09-14T02:38:50.745751+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Grenstone Landscaping & Masonry",
@@ -646,7 +663,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Magnolia Landscape-Design-Irrigation",
@@ -682,6 +700,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/not-elsewhere-classified/magnolia-landscape-design-irrigation-0825-1000257189",
     "scraped_at": "2026-09-14T02:39:23.453578+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Magnolia Landscape-Design-Irrigation",
@@ -703,7 +722,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Francos tree services",
@@ -747,6 +767,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/castle-hills/profile/landscape-contractors/francos-tree-services-0825-1000261082",
     "scraped_at": "2026-09-14T02:39:49.543471+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Francos tree services",
@@ -768,7 +789,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lone Star Landscaping & Tree Service",
@@ -840,6 +862,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/lone-star-landscaping-tree-service-0825-1000146893",
     "scraped_at": "2026-09-14T02:40:15.792231+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Lone Star Landscape and Tree Services",
@@ -861,7 +884,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Briones ProScapes",
@@ -910,6 +934,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/briones-proscapes-0825-1000181990",
     "scraped_at": "2026-09-14T02:40:33.953083+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Briones ProScapes",
@@ -931,7 +956,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "M & H Landscapes and Irrigation",
@@ -975,6 +1001,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/live-oak/profile/landscape-contractors/m-h-landscapes-and-irrigation-0825-1000149217",
     "scraped_at": "2026-09-14T02:40:56.091044+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "M & H Landscapes and Irrigation",
@@ -996,7 +1023,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kelly's Tree and Landscaping Service",
@@ -1047,6 +1075,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/kellys-tree-and-landscaping-service-0825-90120383",
     "scraped_at": "2026-09-14T02:40:00.670980+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Boerjan'S Landscaping & Design",
@@ -1068,7 +1097,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "USA Construction Landscaping Services",
@@ -1117,6 +1147,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/usa-construction-landscaping-services-0825-1000131969",
     "scraped_at": "2026-09-14T02:41:20.184374+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Texas Landscaping Services",
@@ -1138,7 +1169,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Amor's Landscape and Tree Services",
@@ -1182,6 +1214,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/amors-landscape-and-tree-services-0825-1000102083",
     "scraped_at": "2026-09-14T02:40:54.694517+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Brayan Perez Landscape Tree Service & More",
@@ -1203,7 +1236,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Green Pro's Landscape & Irrigation",
@@ -1254,6 +1288,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/green-pros-landscape-irrigation-0825-90028911",
     "scraped_at": "2026-09-14T02:39:28.569567+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Gnome Lawn & Landscape",
@@ -1275,7 +1310,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Greenleaf Landscaping",
@@ -1319,6 +1355,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/greenleaf-landscaping-0825-90021828",
     "scraped_at": "2026-09-14T02:40:03.022149+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": true,
     "yelp_name": "Jesse's Landscaping & Junk Removal",
@@ -1340,7 +1377,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Flores Landscaping SVC",
@@ -1389,6 +1427,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/flores-landscaping-svc-0825-1000200288",
     "scraped_at": "2026-09-14T02:38:49.413466+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1410,7 +1449,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Paloma Blanca Enterprises Inc",
@@ -1472,6 +1512,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/land-clearing/paloma-blanca-enterprises-inc-0825-90025123",
     "scraped_at": "2026-09-14T02:38:50.123841+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1493,7 +1534,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Andy's Sprinkler, Drainage, & Lighting",
@@ -1562,6 +1604,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/irrigation-equipment/andys-sprinkler-drainage-lighting-0825-1000177403/addressId/213813",
     "scraped_at": "2026-09-14T02:38:51.398530+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1583,7 +1626,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lawn and Tree Service",
@@ -1627,6 +1671,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/lawn-and-tree-service-0825-1000144047",
     "scraped_at": "2026-09-14T02:38:52.103080+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1648,7 +1693,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "AleXochipilli Landscaping and Tree Services LLC",
@@ -1699,6 +1745,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/alexochipilli-landscaping-and-tree-services-llc-0825-1000106691",
     "scraped_at": "2026-09-14T02:38:52.890653+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1720,7 +1767,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "First Choice Landscaping & Lawn Service",
@@ -1764,6 +1812,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/first-choice-landscaping-lawn-service-0825-1000185409",
     "scraped_at": "2026-09-14T02:38:53.641155+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1785,7 +1834,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Dominion Landscaping & Lawn Care Maintenance",
@@ -1829,6 +1879,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/dominion-landscaping-lawn-care-maintenance-0825-90058727",
     "scraped_at": "2026-09-14T02:38:54.319598+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1850,7 +1901,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Argo, Lawn Care & Landscape",
@@ -1894,6 +1946,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/argo-lawn-care-landscape-0825-1000182846",
     "scraped_at": "2026-09-14T02:38:54.958397+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1915,7 +1968,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Cowboys Tree Service",
@@ -1974,6 +2028,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/lawn-care/cowboys-tree-service-0825-1000136585",
     "scraped_at": "2026-09-14T02:38:55.619618+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -1995,7 +2050,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Papa Marcs Lawn & Landscaping",
@@ -2044,6 +2100,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/papa-marcs-lawn-landscaping-0825-1000141866",
     "scraped_at": "2026-09-14T02:38:56.199265+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2065,7 +2122,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lost Creek Landscapes",
@@ -2109,6 +2167,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/lost-creek-landscapes-0825-1000235567",
     "scraped_at": "2026-09-14T02:38:56.787612+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2130,7 +2189,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Landscape Cooperative",
@@ -2174,6 +2234,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/the-landscape-cooperative-0825-1000217481",
     "scraped_at": "2026-09-14T02:38:57.459328+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2195,7 +2256,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Noon Systems Corporation",
@@ -2239,6 +2301,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/noon-systems-corporation--0825-1000262477",
     "scraped_at": "2026-09-14T02:38:59.266567+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2260,7 +2323,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Outlaw Biochar LLC",
@@ -2304,6 +2368,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-supply/outlaw-biochar-llc-0825-1000240554",
     "scraped_at": "2026-09-14T02:38:59.942490+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2325,7 +2390,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "NAMEK",
@@ -2374,6 +2440,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-landscape-contractors/namek-0825-1000218493",
     "scraped_at": "2026-09-14T02:39:00.630357+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2395,7 +2462,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Melbeck Designs, LLC.",
@@ -2459,6 +2527,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/alamo-heights/profile/landscape-contractors/melbeck-designs-llc-0825-1000197068",
     "scraped_at": "2026-09-14T02:39:01.363478+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2480,7 +2549,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Obregon's L&I",
@@ -2536,6 +2606,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/irrigation-equipment/obregons-li-0825-1000110990",
     "scraped_at": "2026-09-14T02:39:02.517760+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2557,7 +2628,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "DNS Landscaping",
@@ -2640,6 +2712,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/dns-landscaping-0825-1000139107",
     "scraped_at": "2026-09-14T02:39:03.441310+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2661,7 +2734,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Trejo Landscaping",
@@ -2705,6 +2779,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/trejo-landscaping-0825-1000190521",
     "scraped_at": "2026-09-14T02:39:04.155607+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2726,7 +2801,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Garcia Tree Service",
@@ -2774,6 +2850,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-service/garcia-tree-service-0825-33402",
     "scraped_at": "2026-09-14T02:39:05.221168+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2795,7 +2872,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A Cut Above Landscapers",
@@ -2831,6 +2909,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/a-cut-above-landscapers--0825-1000235432",
     "scraped_at": "2026-09-14T02:39:07.134513+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2852,7 +2931,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Dynamic Landscape & Property Improvement",
@@ -2911,6 +2991,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/dynamic-landscape-property-improvement-0825-1000225626",
     "scraped_at": "2026-09-14T02:39:07.732631+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2932,7 +3013,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Castillo Landscaping & Tree Service",
@@ -2976,6 +3058,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/castillo-landscaping-tree-service-0825-1000239462",
     "scraped_at": "2026-09-14T02:39:14.548044+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -2997,7 +3080,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Fine Landscaping LLC",
@@ -3046,6 +3130,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/fine-landscaping-llc-0825-1000184366",
     "scraped_at": "2026-09-14T02:39:15.257205+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3067,7 +3152,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Silva Landscaping",
@@ -3111,6 +3197,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/silva-landscaping-0825-1000197546",
     "scraped_at": "2026-09-14T02:39:15.913470+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3132,7 +3219,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Campos Pros Landscaping & Concrete",
@@ -3176,6 +3264,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/campos-pros-landscaping-concrete-0825-1000217554",
     "scraped_at": "2026-09-14T02:39:16.565325+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3197,7 +3286,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "True Texas Outdoors & Remodeling LLC",
@@ -3261,6 +3351,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/remodel-contractors/true-texas-outdoors-remodeling-llc-0825-1000257980",
     "scraped_at": "2026-09-14T02:39:18.471810+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3282,7 +3373,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Cowboy Lawn Care",
@@ -3331,6 +3423,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/cowboy-lawn-care-0825-1000223035",
     "scraped_at": "2026-09-14T02:39:19.164708+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3352,7 +3445,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Traeger Landscaping, LLC",
@@ -3396,6 +3490,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/traeger-landscaping-llc-0825-1000261690",
     "scraped_at": "2026-09-14T02:39:19.727586+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3417,7 +3512,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lawnscaping LLC",
@@ -3461,6 +3557,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/lawnscaping-llc-0825-1000221091/addressId/398879",
     "scraped_at": "2026-09-14T02:39:20.338919+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3482,7 +3579,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Nation's Multi-Service LLC",
@@ -3526,6 +3624,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/nations-multi-service-llc-0825-1000214504",
     "scraped_at": "2026-09-14T02:39:20.966445+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3547,7 +3646,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sanders & Co. Contracting Group, LLC",
@@ -3633,6 +3733,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/roofing-contractors/sanders-co-contracting-group-llc-0825-1000261578",
     "scraped_at": "2026-09-14T02:39:21.592594+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3654,7 +3755,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "D.A. Martinez Tree Service",
@@ -3725,6 +3827,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-service/da-martinez-tree-service-0825-1000240421",
     "scraped_at": "2026-09-14T02:39:22.206578+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3746,7 +3849,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Diaz Landscaping & Maintenance",
@@ -3790,6 +3894,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/diaz-landscaping-maintenance-0825-1000193156",
     "scraped_at": "2026-09-14T02:39:22.792280+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3811,7 +3916,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Four Seasons Botanical, LLC",
@@ -3871,6 +3977,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/four-seasons-botanical-llc-0825-1000135336",
     "scraped_at": "2026-09-14T02:39:24.096600+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3892,7 +3999,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Green Landscapes",
@@ -3936,6 +4044,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-landscape-contractors/green-landscapes-0825-1000185513",
     "scraped_at": "2026-09-14T02:39:24.658392+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -3957,7 +4066,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Hacienda Landscape Co.",
@@ -4001,6 +4111,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/hacienda-landscape-co-0825-90093370/addressId/373525",
     "scraped_at": "2026-09-14T02:39:25.335429+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4022,7 +4133,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Horton Horticulture, Inc.",
@@ -4075,6 +4187,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/horton-horticulture-inc-0825-22276",
     "scraped_at": "2026-09-14T02:39:25.927198+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4096,7 +4209,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RBC General Contractors Inc",
@@ -4182,6 +4296,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/general-contractor/rbc-general-contractors-inc-0825-32952",
     "scraped_at": "2026-09-14T02:39:26.523691+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4203,7 +4318,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Adamah Landscape Design and Home Improvements",
@@ -4252,6 +4368,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/adamah-landscape-design-and-home-improvements-0825-1000162958",
     "scraped_at": "2026-09-14T02:39:27.885440+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4273,7 +4390,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sarah Lake WestKaemper Landscape Design",
@@ -4317,6 +4435,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-architect/sarah-lake-westkaemper-landscape-design-0825-62086",
     "scraped_at": "2026-09-14T02:39:29.193186+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4338,7 +4457,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Home Depot",
@@ -4400,6 +4520,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/building-materials/the-home-depot-0825-1000180256/addressId/214805",
     "scraped_at": "2026-09-14T02:39:29.897083+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4421,7 +4542,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Elite Lawn & Landscaping, LLC",
@@ -4532,6 +4654,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/elite-lawn-landscaping-llc-0825-90012504",
     "scraped_at": "2026-09-14T02:39:30.624540+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4553,7 +4676,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RP Landscaping",
@@ -4597,6 +4721,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/rp-landscaping-0825-90112154",
     "scraped_at": "2026-09-14T02:39:31.170510+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4618,7 +4743,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Leo's Lawncare and Tree Service",
@@ -4667,6 +4793,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/leos-lawncare-and-tree-service-0825-1000135342",
     "scraped_at": "2026-09-14T02:39:31.787206+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4688,7 +4815,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "God is Good Landscaping Services",
@@ -4739,6 +4867,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/god-is-good-landscaping-services-0825-1000165776",
     "scraped_at": "2026-09-14T02:39:32.354688+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4760,7 +4889,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "South Texas Landscaping",
@@ -4804,6 +4934,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/south-texas-landscaping-0825-1000102115",
     "scraped_at": "2026-09-14T02:39:33.016084+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4825,7 +4956,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Little Profit Sprinkler Co",
@@ -4876,6 +5008,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/sprinkler-system/little-profit-sprinkler-co-0825-10737",
     "scraped_at": "2026-09-14T02:39:33.659378+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4897,7 +5030,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Valley H&C Lawns LLC",
@@ -4946,6 +5080,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/valley-hc-lawns-llc-0825-1000187894",
     "scraped_at": "2026-09-14T02:39:34.328467+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -4967,7 +5102,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "V Lawn Care Services",
@@ -5011,6 +5147,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/castle-hills/profile/landscape-contractors/v-lawn-care-services-0825-1000109434",
     "scraped_at": "2026-09-14T02:39:36.067814+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5032,7 +5169,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "In Good Hands Lawns",
@@ -5076,6 +5214,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/castle-hills/profile/landscape-maintenance/in-good-hands-lawns-0825-1000139506",
     "scraped_at": "2026-09-14T02:39:36.819964+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5097,7 +5236,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Alonso Landscaping and Tree Service",
@@ -5141,6 +5281,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/alonso-landscaping-and-tree-service-0825-1000182518",
     "scraped_at": "2026-09-14T02:39:37.393580+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5162,7 +5303,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Matt W. Stevens Landscape Architect LLC",
@@ -5206,6 +5348,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/matt-w-stevens-landscape-architect-llc-0825-1000111266",
     "scraped_at": "2026-09-14T02:39:37.979207+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5227,7 +5370,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Texas Roots Landscape & Irrigation, LLC",
@@ -5278,6 +5422,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/texas-roots-landscape-irrigation-llc-0825-1000163831",
     "scraped_at": "2026-09-14T02:39:38.901440+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5299,7 +5444,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Legacy Landscape",
@@ -5343,6 +5489,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/legacy-landscape-0825-1000131757",
     "scraped_at": "2026-09-14T02:39:39.535216+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5364,7 +5511,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Botanical Designs",
@@ -5408,6 +5556,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/botanical-designs-0825-90014486/addressId/51575",
     "scraped_at": "2026-09-14T02:39:40.132411+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5429,7 +5578,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "John S. Troy, Landscape Architect Inc.",
@@ -5473,6 +5623,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-architect/john-s-troy-landscape-architect-inc-0825-1000170718",
     "scraped_at": "2026-09-14T02:39:40.824801+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5494,7 +5645,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Woodland Company",
@@ -5538,6 +5690,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/the-woodland-company-0825-90090598",
     "scraped_at": "2026-09-14T02:39:41.425098+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5559,7 +5712,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "E&S Lawn and Landscape, LLC",
@@ -5603,6 +5757,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/es-lawn-and-landscape-llc-0825-1000231224",
     "scraped_at": "2026-09-14T02:39:41.914702+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5624,7 +5779,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Life of Green Landscaping and Tree Service",
@@ -5660,6 +5816,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/life-of-green-landscaping-and-tree-service--0825-1000249598",
     "scraped_at": "2026-09-14T02:39:42.698707+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5681,7 +5838,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Bautista Tree & Landscape Service",
@@ -5730,6 +5888,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-service/bautista-tree-landscape-service-0825-1000225162",
     "scraped_at": "2026-09-14T02:39:43.255768+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5751,7 +5910,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Weber Murphy Fox Inc",
@@ -5821,6 +5981,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/architectural-designer/weber-murphy-fox-inc-0825-1000218474",
     "scraped_at": "2026-09-14T02:39:44.641401+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5842,7 +6003,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Suarez Tree Service",
@@ -5907,6 +6069,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-service/suarez-tree-service-0825-90033149",
     "scraped_at": "2026-09-14T02:39:45.587553+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5928,7 +6091,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Earth System Services",
@@ -5972,6 +6136,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/earth-system-services-0825-34883",
     "scraped_at": "2026-09-14T02:39:46.218552+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -5993,7 +6158,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lowe's Home Improvement",
@@ -6066,6 +6232,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/home-improvement/lowes-home-improvement-0825-1000179502/addressId/59973",
     "scraped_at": "2026-09-14T02:39:47.192211+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6087,7 +6254,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Leifeste Landscape Design",
@@ -6131,6 +6299,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/castle-hills/profile/landscape-contractors/leifeste-landscape-design-0825-1000204524",
     "scraped_at": "2026-09-14T02:39:47.786778+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6152,7 +6321,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "JF TURNER ROOFING & CONSTRUCTION",
@@ -6207,6 +6377,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/roofing-contractors/jf-turner-roofing-construction-0825-1000219199",
     "scraped_at": "2026-09-14T02:39:48.425667+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6228,7 +6399,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A/G Lawn Maintenance",
@@ -6272,6 +6444,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/castle-hills/profile/landscape-contractors/ag-lawn-maintenance-0825-1000260615",
     "scraped_at": "2026-09-14T02:39:49.029769+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6293,7 +6466,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Vizta Landscapes, LLC",
@@ -6329,6 +6503,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-landscape-contractors/vizta-landscapes-llc-0825-1000236263",
     "scraped_at": "2026-09-14T02:39:50.296267+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6350,7 +6525,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Wise Water Solutions",
@@ -6394,6 +6570,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/wise-water-solutions-0825-1000240743",
     "scraped_at": "2026-09-14T02:39:50.954919+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6415,7 +6592,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Camacho's Sprinkler Systems",
@@ -6459,6 +6637,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/camachos-sprinkler-systems-0825-1000237522",
     "scraped_at": "2026-09-14T02:39:51.604626+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6480,7 +6659,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tyler Landscaping LLC",
@@ -6524,6 +6704,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/tyler-landscaping-llc-0825-90039258",
     "scraped_at": "2026-09-14T02:39:52.189712+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6545,7 +6726,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lowe's Home Improvement",
@@ -6618,6 +6800,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/home-improvement/lowes-home-improvement-0825-1000179528/addressId/53533",
     "scraped_at": "2026-09-14T02:39:53.240721+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6639,7 +6822,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lowe's Home Centers, Inc",
@@ -6712,6 +6896,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/home-improvement/lowes-home-centers-inc-0825-1000205811/addressId/371542",
     "scraped_at": "2026-09-14T02:39:54.232363+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6733,7 +6918,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "House Techs Home Improvement",
@@ -6818,6 +7004,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/painting-contractors/house-techs-home-improvement-0825-1000111411",
     "scraped_at": "2026-09-14T02:39:55.150027+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6839,7 +7026,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "New Earth",
@@ -6890,6 +7078,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/new-earth-0825-33143/addressId/45145",
     "scraped_at": "2026-09-14T02:39:55.747101+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6911,7 +7100,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Four-Sight Landscape and Design",
@@ -6955,6 +7145,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/four-sight-landscape-and-design-0825-1000200025",
     "scraped_at": "2026-09-14T02:39:56.410401+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -6976,7 +7167,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Modern Designs of Texas",
@@ -7025,6 +7217,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/modern-designs-of-texas-0825-1000191667",
     "scraped_at": "2026-09-14T02:39:56.959833+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7046,7 +7239,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "He Who Creates Landscape LLC",
@@ -7101,6 +7295,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/he-who-creates-landscape-llc-0825-1000212154",
     "scraped_at": "2026-09-14T02:39:57.639174+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7122,7 +7317,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "EC Landscaping & Lawn Service",
@@ -7173,6 +7369,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/castle-hills/profile/landscape-contractors/ec-landscaping-lawn-service-0825-1000143073",
     "scraped_at": "2026-09-14T02:39:58.433992+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7194,7 +7391,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Clean and Green Landscaping",
@@ -7238,6 +7436,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-supply/clean-and-green-landscaping-0825-90120268",
     "scraped_at": "2026-09-14T02:39:59.357824+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7259,7 +7458,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "ABM Industries, Inc.",
@@ -7299,6 +7499,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/facility-maintenance/abm-industries-inc-0121-108903/addressId/171715",
     "scraped_at": "2026-09-14T02:40:00.044496+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7320,7 +7521,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Extra Mile Landscapes",
@@ -7369,6 +7571,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/extra-mile-landscapes-0825-1000200812",
     "scraped_at": "2026-09-14T02:40:01.178466+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7390,7 +7593,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Texas Landscape Care Inc.",
@@ -7434,6 +7638,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/texas-landscape-care-inc-0825-1000195163",
     "scraped_at": "2026-09-14T02:40:01.814187+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7455,7 +7660,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Buchek Landscape & Irrigation, LLC",
@@ -7499,6 +7705,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/buchek-landscape-irrigation-llc-0825-1000150171",
     "scraped_at": "2026-09-14T02:40:02.409251+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7520,7 +7727,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A-Plus Landscaping and Irrigation",
@@ -7564,6 +7772,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/a-plus-landscaping-and-irrigation-0825-90109258",
     "scraped_at": "2026-09-14T02:40:04.755862+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7585,7 +7794,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Pinnacle Outdoor Design",
@@ -7634,6 +7844,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/pinnacle-outdoor-design-0825-1000200860",
     "scraped_at": "2026-09-14T02:40:05.288525+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7655,7 +7866,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Grimms Landscape and Designs",
@@ -7699,6 +7911,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/plant-nursery/grimms-landscape-and-designs-0825-10583",
     "scraped_at": "2026-09-14T02:40:05.928436+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7720,7 +7933,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ron's Landscape & More",
@@ -7771,6 +7985,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/rons-landscape-more-0825-90094699",
     "scraped_at": "2026-09-14T02:40:06.671849+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7792,7 +8007,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Quick Mow Lawns, Landscapes & More",
@@ -7836,6 +8052,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/lawn-maintenance/quick-mow-lawns-landscapes-more-0825-90011657",
     "scraped_at": "2026-09-14T02:40:09.232331+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7857,7 +8074,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Keith Creels Garden Concepts",
@@ -7901,6 +8119,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/keith-creels-garden-concepts-0825-90012001",
     "scraped_at": "2026-09-14T02:40:09.826298+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7922,7 +8141,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Best Laid Plants",
@@ -7969,6 +8189,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/best-laid-plants-0825-90021433",
     "scraped_at": "2026-09-14T02:40:10.414328+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -7990,7 +8211,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Texas Lawn Care & Services",
@@ -8039,6 +8261,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/texas-lawn-care-services-0825-1000201853",
     "scraped_at": "2026-09-14T02:40:10.953579+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8060,7 +8283,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Long Enterprises",
@@ -8104,6 +8328,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/long-enterprises-0825-15432",
     "scraped_at": "2026-09-14T02:40:11.607873+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8125,7 +8350,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Newsome Systems",
@@ -8174,6 +8400,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/sprinkler-system/newsome-systems-0825-34148",
     "scraped_at": "2026-09-14T02:40:12.235398+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8195,7 +8422,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "JV Electric LLC",
@@ -8255,6 +8483,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/electrical-contractors/jv-electric-llc-0825-90023048",
     "scraped_at": "2026-09-14T02:40:12.885035+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8276,7 +8505,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "MKR Designs, Llc",
@@ -8320,6 +8550,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/mkr-designs-llc-0825-1000170984",
     "scraped_at": "2026-09-14T02:40:13.531984+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8341,7 +8572,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Yard by Design",
@@ -8392,6 +8624,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-service/yard-by-design-0825-1000174418",
     "scraped_at": "2026-09-14T02:40:14.146730+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8413,7 +8646,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rollins & Company Landscapes, LLC",
@@ -8470,6 +8704,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/rollins-company-landscapes-llc-0825-1000209105",
     "scraped_at": "2026-09-14T02:40:14.679164+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8491,7 +8726,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Bonita Landscapes",
@@ -8535,6 +8771,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/lawn-maintenance/bonita-landscapes-0825-1000175857",
     "scraped_at": "2026-09-14T02:40:15.154422+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8556,7 +8793,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Huggy Bear's Lawn Service",
@@ -8600,6 +8838,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/huggy-bears-lawn-service-0825-1000200026",
     "scraped_at": "2026-09-14T02:40:16.347154+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8621,7 +8860,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "E3 Landscape",
@@ -8670,6 +8910,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-pruning-service/e3-landscape-0825-1000212641",
     "scraped_at": "2026-09-14T02:40:16.905208+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8691,7 +8932,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ambitionz Lawn & Landscaping",
@@ -8735,6 +8977,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/ambitionz-lawn-landscaping-0825-1000166190",
     "scraped_at": "2026-09-14T02:40:17.511793+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8756,7 +8999,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "David Elwell, LLC",
@@ -8800,6 +9044,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/david-elwell-llc-0825-90113012",
     "scraped_at": "2026-09-14T02:40:18.123577+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8821,7 +9066,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tru-Matrix Contracting Services, LLC",
@@ -8891,6 +9137,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/electrician/tru-matrix-contracting-services-llc-0825-1000261288",
     "scraped_at": "2026-09-14T02:40:18.703287+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8912,7 +9159,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Homestead Development",
@@ -8963,6 +9211,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/homestead-development-0825-1000166106",
     "scraped_at": "2026-09-14T02:40:19.806131+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -8984,7 +9233,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "George's Gardens",
@@ -9028,6 +9278,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/georges-gardens-0825-1000143064",
     "scraped_at": "2026-09-14T02:40:20.619103+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9049,7 +9300,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "ABM Parking Service",
@@ -9097,6 +9349,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/facility-maintenance/abm-parking-service-0825-1000107072/addressId/281229",
     "scraped_at": "2026-09-14T02:40:21.514554+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9118,7 +9371,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Q Electric",
@@ -9181,6 +9435,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/electrician/q-electric-0825-1000239177",
     "scraped_at": "2026-09-14T02:40:22.687253+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9202,7 +9457,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "JBR Landscapes",
@@ -9238,6 +9494,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/jbr-landscapes-0825-1000252466",
     "scraped_at": "2026-09-14T02:40:23.301283+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9259,7 +9516,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "The Home Depot",
@@ -9321,6 +9579,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/building-materials/the-home-depot-0825-1000180260/addressId/214806",
     "scraped_at": "2026-09-14T02:40:24.063152+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9342,7 +9601,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "On The Go Services",
@@ -9378,6 +9638,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/on-the-go-services-0825-1000148515",
     "scraped_at": "2026-09-14T02:40:24.574774+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9399,7 +9660,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Viverdi Landscape",
@@ -9443,6 +9705,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/viverdi-landscape--0825-1000112213",
     "scraped_at": "2026-09-14T02:40:25.429404+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9464,7 +9727,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "No direct contact info",
-    "contact_readiness_score": 0
+    "contact_readiness_score": 0,
+    "website_dead_flag": 0
   },
   {
     "name": "The Raindance Co",
@@ -9508,6 +9772,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/the-raindance-co-0825-30885/addressId/14555",
     "scraped_at": "2026-09-14T02:40:26.000920+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9529,7 +9794,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "No direct contact info",
-    "contact_readiness_score": 0
+    "contact_readiness_score": 0,
+    "website_dead_flag": 0
   },
   {
     "name": "Fertile Crest",
@@ -9573,6 +9839,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/fertile-crest-0825-1000145749",
     "scraped_at": "2026-09-14T02:40:26.781608+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9594,7 +9861,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ladybug Landscaping",
@@ -9643,6 +9911,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/ladybug-landscaping-0825-1000162677",
     "scraped_at": "2026-09-14T02:40:28.068254+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9664,7 +9933,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Mission City Remodeling",
@@ -9762,6 +10032,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-general-contractor/mission-city-remodeling-0825-1000240532",
     "scraped_at": "2026-09-14T02:40:28.881698+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9783,7 +10054,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Siller Contracting",
@@ -9869,6 +10141,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-contractors/siller-contracting-0825-1000206702",
     "scraped_at": "2026-09-14T02:40:29.419511+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9890,7 +10163,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Eagle Landscaping & Sprinkler Company",
@@ -9934,6 +10208,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/eagle-landscaping-sprinkler-company-0825-25053/addressId/40005",
     "scraped_at": "2026-09-14T02:40:29.883601+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -9955,7 +10230,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Texas Total Landscape",
@@ -10006,6 +10282,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscaping-clean-up/texas-total-landscape-0825-1000137694",
     "scraped_at": "2026-09-14T02:40:30.546235+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10027,7 +10304,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Blue Heron Designs, Inc.",
@@ -10071,6 +10349,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/blue-heron-designs-inc-0825-14502/addressId/3103",
     "scraped_at": "2026-09-14T02:40:31.323764+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10092,7 +10371,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Morris Co",
@@ -10136,6 +10416,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-supply/morris-co-0825-1000195311",
     "scraped_at": "2026-09-14T02:40:32.550118+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10157,7 +10438,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A Cut Above Landscaping & Maintenance / Irrigation",
@@ -10208,6 +10490,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/a-cut-above-landscaping-maintenance-irrigation-0825-1000107603",
     "scraped_at": "2026-09-14T02:40:33.177625+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10229,7 +10512,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "MP Studio Landscape Architecture, LLC",
@@ -10273,6 +10557,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-architect/mp-studio-landscape-architecture-llc-0825-1000148680",
     "scraped_at": "2026-09-14T02:40:34.467521+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10294,7 +10579,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sunrise Landscape Services",
@@ -10330,6 +10616,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/sunrise-landscape-services-0825-1000251940",
     "scraped_at": "2026-09-14T02:40:35.150038+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10351,7 +10638,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Steve's Lawn & Landscaping Services",
@@ -10400,6 +10688,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/steves-lawn-landscaping-services-0825-1000113435",
     "scraped_at": "2026-09-14T02:40:35.763316+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10421,7 +10710,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Mia B. Landscaping",
@@ -10465,6 +10755,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-landscape-contractors/mia-b-landscaping-0825-1000101061",
     "scraped_at": "2026-09-14T02:40:36.464437+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10486,7 +10777,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Spirit Of Texas Landscaping",
@@ -10530,6 +10822,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/spirit-of-texas-landscaping-0825-21722",
     "scraped_at": "2026-09-14T02:40:36.993581+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10551,7 +10844,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Heavenly Lawn Care Service",
@@ -10592,6 +10886,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/heavenly-lawn-care-service-0825-1000243237",
     "scraped_at": "2026-09-14T02:40:37.544846+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10613,7 +10908,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "The Landshaper",
@@ -10657,6 +10953,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/the-landshaper-0825-33554",
     "scraped_at": "2026-09-14T02:40:38.040186+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10678,7 +10975,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "AAA Landscape",
@@ -10761,6 +11059,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/aaa-landscape-0825-90112504/addressId/144417",
     "scraped_at": "2026-09-14T02:40:38.728362+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10782,7 +11081,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Saylee Greer Landscape Architecture",
@@ -10831,6 +11131,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/saylee-greer-landscape-architecture-0825-1000143388",
     "scraped_at": "2026-09-14T02:40:39.463546+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10852,7 +11153,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Pioneer Texas, LLC",
@@ -10921,6 +11223,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/commercial-cleaning-services/pioneer-texas-llc-0825-1000175843",
     "scraped_at": "2026-09-14T02:40:40.067710+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -10942,7 +11245,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "CK Outdoor Advantage LLC",
@@ -11035,6 +11339,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/fence-contractors/ck-outdoor-advantage-llc-0825-1000141467/addressId/355878",
     "scraped_at": "2026-09-14T02:40:41.012936+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11056,7 +11361,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Manuel Cortez Landscaping",
@@ -11100,6 +11406,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/manuel-cortez-landscaping-0825-1000219868",
     "scraped_at": "2026-09-14T02:40:41.537801+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11121,7 +11428,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "D & M Landscaping, LLC",
@@ -11177,6 +11485,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/d-m-landscaping-llc-0825-1000148300",
     "scraped_at": "2026-09-14T02:40:42.048528+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11198,7 +11507,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Alejandro's Landscaping & Maintenance",
@@ -11242,6 +11552,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/alejandros-landscaping-maintenance-0825-1000193666",
     "scraped_at": "2026-09-14T02:40:42.593698+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11263,7 +11574,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Top Tier Enhancements LLC",
@@ -11307,6 +11619,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/top-tier-enhancements-llc-0825-1000239377",
     "scraped_at": "2026-09-14T02:40:43.163774+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11328,7 +11641,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Green Skapes",
@@ -11377,6 +11691,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/green-skapes-0825-1000163362",
     "scraped_at": "2026-09-14T02:40:43.724263+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11398,7 +11713,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Fairway Lawn and Landscape",
@@ -11442,6 +11758,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/fairway-lawn-and-landscape-0825-90063410",
     "scraped_at": "2026-09-14T02:40:44.275944+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11463,7 +11780,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Efrain Hernandez House & Yard Tree Trimming",
@@ -11510,6 +11828,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/efrain-hernandez-house-yard-tree-trimming-0825-90079264",
     "scraped_at": "2026-09-14T02:40:44.958081+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11531,7 +11850,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "PJ Landscape & Design",
@@ -11575,6 +11895,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/pj-landscape-design-0825-1000100709",
     "scraped_at": "2026-09-14T02:40:45.543147+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11596,7 +11917,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Orellana Landscaping Services",
@@ -11652,6 +11974,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/orellana-landscaping-services-0825-1000198180",
     "scraped_at": "2026-09-14T02:40:46.153772+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11673,7 +11996,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Santa Fe Landscape & Construction",
@@ -11717,6 +12041,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/construction-services/santa-fe-landscape-construction-0825-90016549",
     "scraped_at": "2026-09-14T02:40:46.657756+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11738,7 +12063,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Texas Landscape Nursery",
@@ -11782,6 +12108,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/texas-landscape-nursery-0825-16867",
     "scraped_at": "2026-09-14T02:40:47.289845+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11803,7 +12130,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Triple J Landscape Contractors, LLC",
@@ -11847,6 +12175,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/triple-j-landscape-contractors-llc--0825-1000196025",
     "scraped_at": "2026-09-14T02:40:48.137686+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11868,7 +12197,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Pardo Landscape & Sprinklers",
@@ -11912,6 +12242,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/pardo-landscape-sprinklers-0825-1000136240",
     "scraped_at": "2026-09-14T02:40:48.678282+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -11933,7 +12264,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Extreme Landscaping Services",
@@ -11982,6 +12314,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/extreme-landscaping-services-0825-1000145951",
     "scraped_at": "2026-09-14T02:40:49.250268+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12003,7 +12336,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "AJC Landscaping",
@@ -12052,6 +12386,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/ajc-landscaping--0825-1000217897",
     "scraped_at": "2026-09-14T02:40:50.079928+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12073,7 +12408,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Northern Hills Curb Appeal",
@@ -12129,6 +12465,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/northern-hills-curb-appeal-0825-1000223757",
     "scraped_at": "2026-09-14T02:40:50.651857+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12150,7 +12487,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Harvest Landscaping & Lawn Care Services",
@@ -12194,6 +12532,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/harvest-landscaping-lawn-care-services-0825-90067406",
     "scraped_at": "2026-09-14T02:40:51.911265+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12215,7 +12554,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sentinel Lawn & Landscape LLC",
@@ -12274,6 +12614,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/lawn-maintenance/sentinel-lawn-landscape-llc-0825-1000222024",
     "scraped_at": "2026-09-14T02:40:52.679441+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12295,7 +12636,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "B&T Dependable Services, LLC",
@@ -12349,6 +12691,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/lawn-care/bt-dependable-services-llc-0825-1000132019",
     "scraped_at": "2026-09-14T02:40:53.525991+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12370,7 +12713,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Flores Irrigation & Landscape",
@@ -12414,6 +12758,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/irrigation-design/flores-irrigation-landscape-0825-1000132181",
     "scraped_at": "2026-09-14T02:40:54.102295+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12435,7 +12780,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Heritage Landscape Supply San Antonio North",
@@ -12486,6 +12832,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-supply/heritage-landscape-supply-san-antonio-north-0825-1000225000/addressId/407504",
     "scraped_at": "2026-09-14T02:40:55.423492+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12507,7 +12854,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Home Depot Home Services Installation Division",
@@ -12569,6 +12917,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/building-materials/home-depot-home-services-installation-division-0825-1000230839/addressId/415786",
     "scraped_at": "2026-09-14T02:40:56.641362+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12590,7 +12939,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Big Boy Roofing and Construction",
@@ -12676,6 +13026,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/roofing-contractors/big-boy-roofing-and-construction-0825-1000237232",
     "scraped_at": "2026-09-14T02:40:57.228016+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12697,7 +13048,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Mister Sparky of San Antonio",
@@ -12781,6 +13133,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/electrician/mister-sparky-of-san-antonio-0825-90042971",
     "scraped_at": "2026-09-14T02:40:57.795008+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12802,7 +13155,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "C & M Services, C&M Landscaping LLC",
@@ -12846,6 +13200,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/c-m-services-cm-landscaping-llc--0825-1000233744",
     "scraped_at": "2026-09-14T02:40:58.614714+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12867,7 +13222,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Banxu Landscape Professional Services",
@@ -12918,6 +13274,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/banxu-landscape-professional-services-0825-1000146260",
     "scraped_at": "2026-09-14T02:40:59.110341+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -12939,7 +13296,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Greener Grasses",
@@ -12983,6 +13341,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/greener-grasses--0825-1000162656",
     "scraped_at": "2026-09-14T02:41:00.016313+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13004,7 +13363,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Big Dog\u2019s Landscaping & More LLC",
@@ -13048,6 +13408,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio-/profile/landscape-contractors/big-dogs-landscaping-more-llc-0825-1000238747",
     "scraped_at": "2026-09-14T02:41:01.238568+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13069,7 +13430,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Oak Valley Tree Service",
@@ -13123,6 +13485,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/tree-service/oak-valley-tree-service-0825-1000138896/addressId/308675",
     "scraped_at": "2026-09-14T02:41:01.828765+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13144,7 +13507,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Cribley Enterprises, Inc.",
@@ -13200,6 +13564,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/construction-estimate/cribley-enterprises-inc-0825-90031678",
     "scraped_at": "2026-09-14T02:41:02.412391+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13221,7 +13586,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "San Antonio Lawn & Landscape",
@@ -13272,6 +13638,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/shavano-park/profile/lawn-maintenance/san-antonio-lawn-landscape-0825-90006144",
     "scraped_at": "2026-09-14T02:41:03.054749+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13293,7 +13660,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Arocha Lawn Care and Landscape",
@@ -13337,6 +13705,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/arocha-lawn-care-and-landscape-0825-1000167010",
     "scraped_at": "2026-09-14T02:41:03.539881+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13358,7 +13727,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Alamo Landscaping & Design",
@@ -13402,6 +13772,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/alamo-landscaping-design-0825-1000134437",
     "scraped_at": "2026-09-14T02:41:04.075641+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13423,7 +13794,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sunshine Landscape Management",
@@ -13459,6 +13831,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-design/sunshine-landscape-management-0825-1000101959",
     "scraped_at": "2026-09-14T02:41:04.740188+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13480,7 +13853,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "SADE Home and Industry LLC",
@@ -13529,6 +13903,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/shavano-park/profile/landscape-contractors/sade-home-and-industry-llc-0825-1000205996",
     "scraped_at": "2026-09-14T02:41:05.354504+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13550,7 +13925,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Chemstar Landscaping",
@@ -13594,6 +13970,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/chemstar-landscaping-0825-1000143173",
     "scraped_at": "2026-09-14T02:41:06.011076+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13615,7 +13992,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Fast Flipz Plus Kutz",
@@ -13659,6 +14037,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/fast-flipz-plus-kutz-0825-1000207746",
     "scraped_at": "2026-09-14T02:41:06.647823+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13680,7 +14059,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ugarte & Sons Service",
@@ -13724,6 +14104,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-supply/ugarte-sons-service-0825-90081003",
     "scraped_at": "2026-09-14T02:41:07.882686+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13745,7 +14126,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Alex Medellin Landscaping",
@@ -13789,6 +14171,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/alex-medellin-landscaping-0825-1000112485",
     "scraped_at": "2026-09-14T02:41:08.511547+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13810,7 +14193,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Ford Landscape & Lawn Care",
@@ -13869,6 +14253,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/ford-landscape-lawn-care-0825-1000133807/addressId/259970",
     "scraped_at": "2026-09-14T02:41:09.062967+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13890,7 +14275,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Zavala's Home Services",
@@ -13944,6 +14330,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/remodel-contractors/zavalas-home-services-0825-1000240272",
     "scraped_at": "2026-09-14T02:41:09.642382+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -13965,7 +14352,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Olympia Landscape Irrigation Inc",
@@ -14021,6 +14409,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/live-oak/profile/landscape-design/olympia-landscape-irrigation-inc-0825-90012020/addressId/341300",
     "scraped_at": "2026-09-14T02:41:10.820958+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14042,7 +14431,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Christians Home Services",
@@ -14086,6 +14476,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/christians-home-services-0825-1000207966",
     "scraped_at": "2026-09-14T02:41:11.361759+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14107,7 +14498,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Dreamscapes Custom Homes",
@@ -14163,6 +14555,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/dreamscapes-custom-homes-0825-90049647",
     "scraped_at": "2026-09-14T02:41:12.504765+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14184,7 +14577,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "San Antonio Irrigation Repair",
@@ -14228,6 +14622,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/san-antonio-irrigation-repair-0825-1000101950",
     "scraped_at": "2026-09-14T02:41:13.295923+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14249,7 +14644,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Chandler Landscapes",
@@ -14293,6 +14689,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/chandler-landscapes-0825-1000140573",
     "scraped_at": "2026-09-14T02:41:14.384303+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14314,7 +14711,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Budding Concepts Landscaping",
@@ -14358,6 +14756,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/budding-concepts-landscaping-0825-1000199677",
     "scraped_at": "2026-09-14T02:41:14.946449+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14379,7 +14778,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Fortis Landscaping Fence & Deck",
@@ -14446,6 +14846,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/fence-contractors/fortis-landscaping-fence-deck-0825-1000138835",
     "scraped_at": "2026-09-14T02:41:17.196614+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14467,7 +14868,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "English Lawn Service",
@@ -14511,6 +14913,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-maintenance/english-lawn-service-0825-1000140347",
     "scraped_at": "2026-09-14T02:41:17.729336+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14532,7 +14935,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lone Star Turf And Landscapes LLC, DBA Green Star Yardscapes",
@@ -14568,6 +14972,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio-/profile/landscaping-clean-up/lone-star-turf-and-landscapes-llc-dba-green-star-yardscapes-0825-1000136519",
     "scraped_at": "2026-09-14T02:41:18.703302+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14589,7 +14994,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "The Home Depot",
@@ -14651,6 +15057,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/building-materials/the-home-depot-0825-1000180223/addressId/214808",
     "scraped_at": "2026-09-14T02:41:19.489743+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14672,7 +15079,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RH Land Designs Inc",
@@ -14728,6 +15136,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/rh-land-designs-inc-0825-90029100/addressId/186111",
     "scraped_at": "2026-09-14T02:41:20.739665+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14749,7 +15158,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Texas Pools & Patios",
@@ -14849,6 +15259,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/pool-contractors/texas-pools-patios-0825-90009305/addressId/165525",
     "scraped_at": "2026-09-14T02:41:21.360869+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14870,7 +15281,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Donnie & Dad's Landscaping",
@@ -14919,6 +15331,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/donnie-dads-landscaping-0825-1000143811",
     "scraped_at": "2026-09-14T02:41:21.870949+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -14940,7 +15353,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Green Grass Inc.",
@@ -14984,6 +15398,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/green-grass-inc-0825-19323",
     "scraped_at": "2026-09-14T02:41:22.488659+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15005,7 +15420,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A&V Landscaping & Design LLC",
@@ -15054,6 +15470,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/av-landscaping-design-llc-0825-1000206731",
     "scraped_at": "2026-09-14T02:41:23.147890+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15075,7 +15492,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "C&R Lawn Care And Landscaping Inc",
@@ -15126,6 +15544,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/cr-lawn-care-and-landscaping-inc-0825-31335",
     "scraped_at": "2026-09-14T02:41:23.607701+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15147,7 +15566,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "General Landscaping Service and Tree Maintenance",
@@ -15191,6 +15611,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/general-landscaping-service-and-tree-maintenance-0825-1000147782",
     "scraped_at": "2026-09-14T02:41:24.148013+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15212,7 +15633,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "C & K Lawn Services, LLC",
@@ -15301,6 +15723,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/c-k-lawn-services-llc-0825-90012856",
     "scraped_at": "2026-09-14T02:41:24.794074+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15322,7 +15745,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Briskey Landscape",
@@ -15366,6 +15790,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/briskey-landscape-0825-12605",
     "scraped_at": "2026-09-14T02:41:25.344088+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15387,7 +15812,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Home Depot",
@@ -15402,7 +15828,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -15420,6 +15846,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/building-materials/the-home-depot-0825-1000180256/addressId/214805",
     "scraped_at": "2026-09-14T02:38:43.223948+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15441,7 +15868,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "AAA Landscape",
@@ -15456,7 +15884,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -15474,6 +15902,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-contractors/aaa-landscape-0825-90112504/addressId/144417",
     "scraped_at": "2026-09-14T02:38:46.803593+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15495,7 +15924,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Heritage Landscape Supply San Antonio North",
@@ -15510,7 +15940,7 @@
     "rating": "A+",
     "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -15525,6 +15955,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/tx/san-antonio/profile/landscape-supply/heritage-landscape-supply-san-antonio-north-0825-1000225000/addressId/407504",
     "scraped_at": "2026-09-14T02:38:47.306343+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-14",
     "on_yelp": false,
     "yelp_name": "",
@@ -15546,6 +15977,7 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   }
 ]

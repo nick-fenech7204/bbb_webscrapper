@@ -61,6 +61,27 @@ _PUBLIC_FIELDS = [
 
 _JSON_FIELDS = {"categories", "contacts", "socials", "reviews_complaints"}
 
+# Fields that must come out as a real JSON bool/number, not whatever string
+# type a CSV round-trip left them as -- publish_master_csv/publish_dataset
+# both read rows via csv.DictReader, which stringifies *everything*
+# (a Python `False` becomes the literal text "False"). The in-memory paths
+# (publish_records/publish_master_rows called straight out of a scrape)
+# never had this problem since nothing touched a CSV; --master/--csv-path
+# reads off disk did, silently, until this was caught in a real diff review
+# (accredited: false -> "False", years_in_business: 13 -> "13") -- same
+# TRUEISH semantics as site/js/app.js's isTrue() so pipeline and client
+# agree on what counts as true.
+_BOOL_FIELDS = {"accredited"}
+_INT_FIELDS = {"years_in_business"}
+_TRUEISH = {"true", "1", "yes", "y", "t"}
+
+
+def _to_bool(v) -> bool:
+    if isinstance(v, bool):
+        return v
+    return str(v).strip().lower() in _TRUEISH
+
+
 # Matched Yelp fields carried onto the site (from the `yelp_` prefix of a
 # master-table row). Yelp's API terms want attribution + a link back --
 # the site footer does that and every matched record links to yelp_url.
@@ -142,6 +163,10 @@ def select_public_fields_from_master(row: dict) -> dict:
         value = row.get(f"bbb_{field}", "")
         if field in _JSON_FIELDS:
             result[field] = _decode_json_field(value, field)
+        elif field in _BOOL_FIELDS:
+            result[field] = _to_bool(value)
+        elif field in _INT_FIELDS:
+            result[field] = _num_or_none(value)
         else:
             result[field] = value if value not in (None,) else ""
     result["last_updated"] = _date_only(row.get("bbb_scraped_at"))

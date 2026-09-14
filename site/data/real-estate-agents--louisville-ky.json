@@ -81,6 +81,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/eagan-realty-group-0402-235911884",
     "scraped_at": "2026-09-13T23:21:18.436721+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Eagan Realty Group",
@@ -102,7 +103,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tracy Does Realty",
@@ -152,6 +154,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/tracy-does-realty-0402-159166570",
     "scraped_at": "2026-09-13T23:21:41.352907+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Tracy Does Realty",
@@ -173,7 +176,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Joe Hayden Real Estate Team",
@@ -235,6 +239,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/joe-hayden-real-estate-team-0402-159137740",
     "scraped_at": "2026-09-13T23:21:36.890269+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Joe Hayden Real Estate Team",
@@ -256,7 +261,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Chatman Management LLC",
@@ -292,6 +298,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/chatman-management-llc-0402-235913100",
     "scraped_at": "2026-09-13T23:21:11.572568+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Chatman Management",
@@ -313,7 +320,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kentucky Select Properties",
@@ -396,6 +404,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate/kentucky-select-properties-0402-11000309",
     "scraped_at": "2026-09-13T23:21:10.936318+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Kentucky Select Properties",
@@ -417,7 +426,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ryan Burkhead | Louisville Realtor\u00ae",
@@ -461,6 +471,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/ryan-burkhead---louisville-realtor%C2%AE-0402-235921318",
     "scraped_at": "2026-09-13T23:21:05.631947+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Ryan Burkhead - Breland Group Realtors",
@@ -482,7 +493,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ellen G. Shaikun, Broker Associate",
@@ -539,6 +551,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/ellen-g-shaikun-broker-associate-0402-159149379",
     "scraped_at": "2026-09-13T23:21:20.353839+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Ellen G Shaikun - Berkshire Hathaway HomeServices",
@@ -560,7 +573,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tre Pryor Realtor",
@@ -617,6 +631,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/tre-pryor-realtor-0402-159150233",
     "scraped_at": "2026-09-13T23:21:50.270693+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Tre Pryor - Remax Champions",
@@ -638,7 +653,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "May Team Realtors",
@@ -694,6 +710,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/may-team-realtors-0402-159144875",
     "scraped_at": "2026-09-13T23:22:00.467709+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "May Team Realtors",
@@ -715,7 +732,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Robyn Colly Realtor - Schuler Bauer",
@@ -765,6 +783,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/shepherdsville/profile/real-estate-agent/robyn-colly-realtor-schuler-bauer-0402-159158947",
     "scraped_at": "2026-09-13T23:22:06.949515+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Robyn Colly Realtor- Schuler Bauer",
@@ -786,7 +805,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "PML Real Estate Group",
@@ -839,6 +859,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/pml-real-estate-group-0402-159128847",
     "scraped_at": "2026-09-13T23:21:06.892305+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Property Management of Louisville",
@@ -860,7 +881,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Carlyle",
@@ -905,6 +927,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/the-carlyle-0402-159157528/addressId/122113",
     "scraped_at": "2026-09-13T23:20:57.885303+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -926,7 +949,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "No direct contact info",
-    "contact_readiness_score": 0
+    "contact_readiness_score": 0,
+    "website_dead_flag": 1
   },
   {
     "name": "Tristate Financial Network, Inc.",
@@ -1006,6 +1030,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/retirement-planning-services/tristate-financial-network-inc-0402-10003053",
     "scraped_at": "2026-09-13T23:20:58.500604+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1027,7 +1052,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Genesis Developments",
@@ -1063,6 +1089,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/genesis-developments-0402-235914497",
     "scraped_at": "2026-09-13T23:20:59.316752+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1084,7 +1111,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Sisters Who Buy Houses",
@@ -1149,6 +1177,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-services/sisters-who-buy-houses-0402-159147218",
     "scraped_at": "2026-09-13T23:20:59.947869+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1170,7 +1199,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Avenue In The Highlands",
@@ -1223,6 +1253,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/the-avenue-in-the-highlands-0402-159158462/addressId/123629",
     "scraped_at": "2026-09-13T23:21:00.724167+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1244,7 +1275,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Avenue Willow Apartments in Highlands",
@@ -1289,6 +1321,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/avenue-willow-apartments-in-highlands--0402-159159610/addressId/125392",
     "scraped_at": "2026-09-13T23:21:01.558688+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1310,7 +1343,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "The Clubhouse",
@@ -1362,6 +1396,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/apartments/the-clubhouse-0402-159150034/addressId/109514",
     "scraped_at": "2026-09-13T23:21:04.461698+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1383,7 +1418,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Perkins Realty Group LLC",
@@ -1432,6 +1468,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/perkins-realty-group-llc--0402-159158539",
     "scraped_at": "2026-09-13T23:21:05.183024+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1453,7 +1490,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Mark Church Real Estate",
@@ -1497,6 +1535,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/mark-church-real-estate--0402-159153535",
     "scraped_at": "2026-09-13T23:21:06.385116+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1518,7 +1557,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Fidelity Realty Group",
@@ -1554,6 +1594,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/watterson-pk/profile/real-estate-agent/fidelity-realty-group-0402-159139550",
     "scraped_at": "2026-09-13T23:21:07.457091+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1575,7 +1616,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Cash Offer Kentucky",
@@ -1654,6 +1696,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate/cash-offer-kentucky-0402-159162641",
     "scraped_at": "2026-09-13T23:21:07.964777+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1675,7 +1718,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Vue at 3rd Street, Brookside Properties",
@@ -1728,6 +1772,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/vue-at-3rd-street-brookside-properties-0402-159151098/addressId/111213",
     "scraped_at": "2026-09-13T23:21:08.752993+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1749,7 +1794,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "John Nitzken Realtors PLLC",
@@ -1793,6 +1839,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/john-nitzken-realtors-pllc-0402-159146911",
     "scraped_at": "2026-09-13T23:21:09.819927+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1814,7 +1861,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "BuyingHomes.com",
@@ -1867,6 +1915,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/kingsley/profile/house-flipping/buyinghomescom-0402-235912549",
     "scraped_at": "2026-09-13T23:21:10.269117+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1888,7 +1937,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Butchertown Flats",
@@ -1933,6 +1983,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/butchertown-flats-0402-159162354/addressId/127334",
     "scraped_at": "2026-09-13T23:21:13.175299+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1954,7 +2005,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Power House Real Estate LLC",
@@ -1998,6 +2050,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville-/profile/real-estate-agent/power-house-real-estate-llc-0402-159163693",
     "scraped_at": "2026-09-13T23:21:14.241586+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2019,7 +2072,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Noe Group LLC",
@@ -2063,6 +2117,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/the-noe-group-llc-0402-235916624",
     "scraped_at": "2026-09-13T23:21:14.756586+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2084,7 +2139,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sam Heine, Realtor",
@@ -2128,6 +2184,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/sam-heine-realtor-0402-159163942",
     "scraped_at": "2026-09-13T23:21:15.294379+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2149,7 +2206,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Elements",
@@ -2202,6 +2260,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/the-elements-0402-2025262/addressId/45377",
     "scraped_at": "2026-09-13T23:21:16.166456+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2223,7 +2282,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Kristen English Real Estate - Lenihan Sotheby's International Realty",
@@ -2264,6 +2324,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/kristen-english-real-estate-lenihan-sothebys-international-realty-0402-235912909",
     "scraped_at": "2026-09-13T23:21:16.681811+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2285,7 +2346,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Joe Homebuyer Kentucky",
@@ -2345,6 +2407,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/house-flipping/joe-homebuyer-kentucky-0402-235919585",
     "scraped_at": "2026-09-13T23:21:17.222665+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2366,7 +2429,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rudolfo Realty & Building Co",
@@ -2410,6 +2474,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/rudolfo-realty-building-co-0402-159136484",
     "scraped_at": "2026-09-13T23:21:17.753567+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2431,7 +2496,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kentucky Solutions, LLC",
@@ -2475,6 +2541,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/kentucky-solutions-llc--0402-159138335",
     "scraped_at": "2026-09-13T23:21:19.204347+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2496,7 +2563,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -2566,6 +2634,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/119892",
     "scraped_at": "2026-09-13T23:21:19.772655+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2587,7 +2656,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ledgewood Apartments",
@@ -2654,6 +2724,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/ledgewood-apartments-0402-2039467/addressId/55715",
     "scraped_at": "2026-09-13T23:21:21.071662+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2675,7 +2746,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "On The Move Realtors, Inc.",
@@ -2732,6 +2804,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/on-the-move-realtors-inc-0402-159132546",
     "scraped_at": "2026-09-13T23:21:24.119668+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2753,7 +2826,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "LST Properties LLC",
@@ -2809,6 +2883,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/lst-properties-llc-0402-159150617",
     "scraped_at": "2026-09-13T23:21:24.853661+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2830,7 +2905,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Flats at Hurstbourne",
@@ -2883,6 +2959,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/flats-at-hurstbourne-0402-159157349/addressId/121845",
     "scraped_at": "2026-09-13T23:21:25.619914+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2904,7 +2981,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Enclave at Breckenridge",
@@ -2960,6 +3038,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/property-management/enclave-at-breckenridge-0402-159146959/addressId/105131",
     "scraped_at": "2026-09-13T23:21:26.470457+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2981,7 +3060,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Metropolitan Apartments",
@@ -3034,6 +3114,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/hurstbrne-acr/profile/real-estate-agent/metropolitan-apartments-0402-159149752/addressId/109152",
     "scraped_at": "2026-09-13T23:21:27.137952+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3055,7 +3136,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Lisa Tucker",
@@ -3091,6 +3173,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/lisa-tucker-0402-235914317",
     "scraped_at": "2026-09-13T23:21:27.698025+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3112,7 +3195,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Schuler Bauer Real Estate Services, ERA Powered",
@@ -3148,6 +3232,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/schuler-bauer-real-estate-services-era-powered-0402-159158065",
     "scraped_at": "2026-09-13T23:21:28.186840+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3169,7 +3254,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Ryan Brown Home Services, LLC",
@@ -3213,6 +3299,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/ryan-brown-home-services-llc-0402-159164976",
     "scraped_at": "2026-09-13T23:21:28.762414+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3234,7 +3321,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Russ Gailor and Associates",
@@ -3270,6 +3358,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville-/profile/real-estate-agent/russ-gailor-and-associates--0402-159163257",
     "scraped_at": "2026-09-13T23:21:29.465298+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3291,7 +3380,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Legacy Apartments",
@@ -3336,6 +3426,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville-/profile/real-estate-agent/legacy-apartments-0402-159145671/addressId/103237",
     "scraped_at": "2026-09-13T23:21:30.163327+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3357,7 +3448,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Integrity Real Estate",
@@ -3401,6 +3493,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/integrity-real-estate-0402-159147921",
     "scraped_at": "2026-09-13T23:21:30.717884+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3422,7 +3515,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sceifers & Associates",
@@ -3458,6 +3552,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/new-albany/profile/real-estate-agent/sceifers-associates-0402-159142361",
     "scraped_at": "2026-09-13T23:21:31.212785+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3479,7 +3574,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Ken Ransdell, United Real Estate Louisville",
@@ -3520,6 +3616,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/ken-ransdell-united-real-estate-louisville-0402-235918895",
     "scraped_at": "2026-09-13T23:21:31.737340+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3541,7 +3638,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Julie Gamble Group- Keller Williams Realty Consultants",
@@ -3590,6 +3688,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/jeff/profile/real-estate-agent/julie-gamble-group-keller-williams-realty-consultants-0402-159150669",
     "scraped_at": "2026-09-13T23:21:32.180849+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3611,7 +3710,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Covenant Senior Transitions",
@@ -3663,6 +3763,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/property-management/covenant-senior-transitions-0402-235911583",
     "scraped_at": "2026-09-13T23:21:32.752939+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3684,7 +3785,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "REMAX FIRST",
@@ -3737,6 +3839,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/jeffersonville/profile/real-estate/remax-first-0402-17000032",
     "scraped_at": "2026-09-13T23:21:33.340031+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3758,7 +3861,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Aristocrat Title LLC",
@@ -3803,6 +3907,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/jeffersonville/profile/real-estate-services/aristocrat-title-llc-0402-159150379",
     "scraped_at": "2026-09-13T23:21:33.913335+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3824,7 +3929,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rankin LUXE Realty Group",
@@ -3873,6 +3979,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/rankin-luxe-realty-group-0402-235912110",
     "scraped_at": "2026-09-13T23:21:34.879101+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3894,7 +4001,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Dream Homes By Claudia",
@@ -3938,6 +4046,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/jeffersonville/profile/real-estate-agent/dream-homes-by-claudia-0402-159163972",
     "scraped_at": "2026-09-13T23:21:35.455196+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3959,7 +4068,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The KY Real Estate Lady LLC",
@@ -4003,6 +4113,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/the-ky-real-estate-lady-llc--0402-159167440",
     "scraped_at": "2026-09-13T23:21:36.178318+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4024,7 +4135,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Avista Realty LLC",
@@ -4077,6 +4189,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate/avista-realty-llc-0402-235915831",
     "scraped_at": "2026-09-13T23:21:37.353131+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4098,7 +4211,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "District at Hurstbourne",
@@ -4143,6 +4257,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/district-at-hurstbourne-0402-2032428/addressId/49835",
     "scraped_at": "2026-09-13T23:21:38.229199+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4164,7 +4279,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Derby City Real Estate Group LLC",
@@ -4208,6 +4324,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/derby-city-real-estate-group-llc-0402-159151810",
     "scraped_at": "2026-09-13T23:21:38.831529+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4229,7 +4346,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Sokoler Team",
@@ -4328,6 +4446,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/the-sokoler-team-0402-159144863",
     "scraped_at": "2026-09-13T23:21:39.363171+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4349,7 +4468,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "simpler.realestate",
@@ -4404,6 +4524,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate/simplerrealestate-0402-2026851",
     "scraped_at": "2026-09-13T23:21:39.887534+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4425,7 +4546,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Wes Jackson Homes",
@@ -4469,6 +4591,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/wes-jackson-homes-0402-235916037",
     "scraped_at": "2026-09-13T23:21:40.362490+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4490,7 +4613,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Nick Peskoe Real Estate Group",
@@ -4541,6 +4665,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/wildwood/profile/real-estate-agent/the-nick-peskoe-real-estate-group-0402-159147792",
     "scraped_at": "2026-09-13T23:21:40.817534+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4562,7 +4687,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Union at Jtown",
@@ -4607,6 +4733,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/union-at-jtown-0402-159163828/addressId/129371",
     "scraped_at": "2026-09-13T23:21:42.539199+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4628,7 +4755,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Stonewater Park Apartments",
@@ -4684,6 +4812,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/property-management/stonewater-park-apartments-0402-159152741/addressId/114131",
     "scraped_at": "2026-09-13T23:21:43.372186+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4705,7 +4834,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Station J Town by Arium",
@@ -4753,6 +4883,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/jeffersontown/profile/property-management/station-j-town-by-arium-0402-159165741/addressId/132262",
     "scraped_at": "2026-09-13T23:21:44.839978+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4774,7 +4905,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Keller Williams",
@@ -4818,6 +4950,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/clarksville/profile/real-estate-agent/keller-williams-0402-159167352",
     "scraped_at": "2026-09-13T23:21:45.374709+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4839,7 +4972,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Jay T. Pitts and Associates",
@@ -4883,6 +5017,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/jay-t-pitts-and-associates-0402-235913626",
     "scraped_at": "2026-09-13T23:21:45.866885+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4904,7 +5039,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Freedom Property Group, LLC",
@@ -4973,6 +5109,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-investing/freedom-property-group-llc-0402-159152728",
     "scraped_at": "2026-09-13T23:21:46.442132+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4994,7 +5131,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Linda LaPilusa, Realtor",
@@ -5038,6 +5176,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/new-albany/profile/real-estate-agent/linda-lapilusa-realtor-0402-235914882",
     "scraped_at": "2026-09-13T23:21:47.008504+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5059,7 +5198,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union | Blankenbaker",
@@ -5107,6 +5247,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-federal-credit-union---blankenbaker-0402-235914017/addressId/196920",
     "scraped_at": "2026-09-13T23:21:48.634264+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5128,7 +5269,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Acuity Title",
@@ -5200,6 +5342,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/title-agent/acuity-title-0402-159130964",
     "scraped_at": "2026-09-13T23:21:49.178326+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5221,7 +5364,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Landstar Realty Group, LLC",
@@ -5266,6 +5410,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/landstar-realty-group-llc-0402-159155945",
     "scraped_at": "2026-09-13T23:21:49.752164+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5287,7 +5432,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Presley Realty LLC",
@@ -5331,6 +5477,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/presley-realty-llc-0402-159145773",
     "scraped_at": "2026-09-13T23:21:50.934651+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5352,7 +5499,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Purple Door Realty",
@@ -5388,6 +5536,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville-/profile/real-estate-agent/purple-door-realty-0402-159161390",
     "scraped_at": "2026-09-13T23:21:51.445835+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5409,7 +5558,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Covenant Properties, LLC",
@@ -5466,6 +5616,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/covenant-properties-llc-0402-159155141",
     "scraped_at": "2026-09-13T23:21:51.946330+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5487,7 +5638,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "B&B Gibson Realty",
@@ -5536,6 +5688,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/bb-gibson-realty-0402-159161350",
     "scraped_at": "2026-09-13T23:21:52.502302+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5557,7 +5710,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Remax Properties East-Art Geissler",
@@ -5593,6 +5747,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/remax-properties-east-art-geissler-0402-159156581",
     "scraped_at": "2026-09-13T23:21:53.208811+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5614,7 +5769,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Bonnie Williams Realtor",
@@ -5655,6 +5811,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/bonnie-williams-realtor-0402-235914451",
     "scraped_at": "2026-09-13T23:21:53.716327+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5676,7 +5833,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Agent Leads",
@@ -5748,6 +5906,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/social-media-marketing/agent-leads-0463-90176665/addressId/75473",
     "scraped_at": "2026-09-13T23:21:54.254119+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5769,7 +5928,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Woodstone Realty, Inc.",
@@ -5823,6 +5983,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate/woodstone-realty-inc-0402-2015925",
     "scraped_at": "2026-09-13T23:21:54.740315+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5844,7 +6005,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "WSG Homes, LLC",
@@ -5905,6 +6067,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate/wsg-homes-llc-0402-159148790",
     "scraped_at": "2026-09-13T23:21:55.215184+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5926,7 +6089,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Evergreen Real Estate",
@@ -5970,6 +6134,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/evergreen-real-estate-0402-235921826",
     "scraped_at": "2026-09-13T23:21:56.266280+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5991,7 +6156,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Barrister Commercial Group",
@@ -6035,6 +6201,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/barrister-commercial-group-0402-2039861",
     "scraped_at": "2026-09-13T23:21:56.766032+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6056,7 +6223,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union | Brownsboro",
@@ -6104,6 +6272,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-federal-credit-union---brownsboro-0402-235914018/addressId/196921",
     "scraped_at": "2026-09-13T23:21:58.013882+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6125,7 +6294,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Sova Leasing",
@@ -6178,6 +6348,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/sova-leasing-0402-159161243/addressId/125604",
     "scraped_at": "2026-09-13T23:21:59.213796+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6199,7 +6370,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Jewell Realtors",
@@ -6243,6 +6415,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/jewell-realtors-0402-159152732",
     "scraped_at": "2026-09-13T23:22:01.015308+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6264,7 +6437,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Theresa Murphy Realtor",
@@ -6308,6 +6482,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/theresa-murphy-realtor-0402-235914637",
     "scraped_at": "2026-09-13T23:22:01.552694+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6329,7 +6504,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union",
@@ -6385,6 +6561,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-federal-credit-union-0402-235915825/addressId/199210",
     "scraped_at": "2026-09-13T23:22:02.698539+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6406,7 +6583,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Semonin REALTORS",
@@ -6484,6 +6662,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-services/semonin-realtors-0402-6582",
     "scraped_at": "2026-09-13T23:22:03.225695+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6505,7 +6684,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union | Crestwood",
@@ -6553,6 +6733,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/credit-union/liberty-federal-credit-union---crestwood-0402-235914019/addressId/196922",
     "scraped_at": "2026-09-13T23:22:04.556569+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6574,7 +6755,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Knob & Key Realty",
@@ -6630,6 +6812,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/mount-washington/profile/real-estate-agent/knob-key-realty-0402-159164860",
     "scraped_at": "2026-09-13T23:22:05.225512+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6651,7 +6834,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Brooke Viehmann Realtor",
@@ -6695,6 +6879,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/real-estate-agent/brooke-viehmann-realtor-0402-235914640",
     "scraped_at": "2026-09-13T23:22:05.752800+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6716,7 +6901,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Century 21 Advantage Plus",
@@ -6770,6 +6956,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/mount-washington/profile/real-estate/century-21-advantage-plus-0402-2031346/addressId/71895",
     "scraped_at": "2026-09-13T23:22:06.402681+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6791,7 +6978,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "New Vision Real Estate Services LLC",
@@ -6835,6 +7023,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/new-vision-real-estate-services-llc-0402-235916584",
     "scraped_at": "2026-09-13T23:22:08.002657+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6856,7 +7045,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Real Estate Service Corp",
@@ -6900,6 +7090,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/real-estate-agent/real-estate-service-corp-0402-159137483",
     "scraped_at": "2026-09-13T23:22:09.046637+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6921,7 +7112,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Keyed Up Properties LLC",
@@ -6965,6 +7157,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/la-grange/profile/real-estate-agent/keyed-up-properties-llc-0402-235918113",
     "scraped_at": "2026-09-13T23:22:09.571309+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6986,7 +7179,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Dream House Real Estate",
@@ -7032,6 +7226,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/radcliff/profile/real-estate/dream-house-real-estate-0402-159155919",
     "scraped_at": "2026-09-13T23:22:10.075438+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7053,7 +7248,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Coldwell Banker Rogers Realty",
@@ -7134,6 +7330,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/shelbyville/profile/real-estate/coldwell-banker-rogers-realty-0402-2026852",
     "scraped_at": "2026-09-13T23:22:10.600442+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7155,7 +7352,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "HOME|LAND Of Kentucky Real Estate Professionals",
@@ -7204,6 +7402,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/shelbyville/profile/real-estate-agent/home-land-of-kentucky-real-estate-professionals-0402-159152024",
     "scraped_at": "2026-09-13T23:22:11.223011+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7225,7 +7424,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Brian Chism, Realtor | Nexthome Chism Realty",
@@ -7266,6 +7466,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/brandenburg/profile/real-estate-agent/brian-chism-realtor---nexthome-chism-realty-0402-235918742",
     "scraped_at": "2026-09-13T23:22:11.776829+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7287,7 +7488,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "LenFitz LLC",
@@ -7323,6 +7525,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/eminence/profile/real-estate-agent/lenfitz-llc-0402-235919439",
     "scraped_at": "2026-09-13T23:22:12.271643+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7344,7 +7547,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "J&D Realty",
@@ -7380,6 +7584,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/bardstown/profile/real-estate-agent/jd-realty-0402-159167507",
     "scraped_at": "2026-09-13T23:22:12.875904+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7401,7 +7606,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Betty Seay Realty, LLC",
@@ -7450,6 +7656,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/bardstown/profile/real-estate-agent/betty-seay-realty-llc-0402-159136155",
     "scraped_at": "2026-09-13T23:22:13.385744+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7471,7 +7678,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Goldmark Realtors LLC",
@@ -7507,6 +7715,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/bardstown/profile/real-estate-agent/goldmark-realtors-llc-0402-159136132",
     "scraped_at": "2026-09-13T23:22:13.888306+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7528,7 +7737,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Mainstreet Realtors",
@@ -7614,6 +7824,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/salem/profile/real-estate-agent/mainstreet-realtors-0402-159132246",
     "scraped_at": "2026-09-13T23:22:15.400810+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7635,7 +7846,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "JANET Team, LLC Re/Max Executive Group",
@@ -7693,6 +7905,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate/janet-team-llc-remax-executive-group-0402-10003273",
     "scraped_at": "2026-09-13T23:22:16.331180+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7714,7 +7927,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Clinkenbeard eXtreme Real Estate Team",
@@ -7758,6 +7972,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-agent/clinkenbeard-extreme-real-estate-team--0402-159131901",
     "scraped_at": "2026-09-13T23:22:19.472257+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7779,7 +7994,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Debby Broughton Realty, Inc.",
@@ -7832,6 +8048,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/english/profile/real-estate/debby-broughton-realty-inc-0402-159144307",
     "scraped_at": "2026-09-13T23:22:19.938923+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7853,7 +8070,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ken and Karen Homes Team - United Real Estate Louisville",
@@ -7904,6 +8122,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-agent/ken-and-karen-homes-team-united-real-estate-louisville-0402-235916924",
     "scraped_at": "2026-09-13T23:22:20.444093+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7925,7 +8144,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "CWCC Properties",
@@ -7961,6 +8181,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/marengo/profile/real-estate-agent/cwcc-properties-0402-159161509",
     "scraped_at": "2026-09-13T23:22:21.129719+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7982,7 +8203,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Thompson Realty",
@@ -8018,6 +8240,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown-/profile/real-estate-agent/thompson-realty-0402-159131007",
     "scraped_at": "2026-09-13T23:22:21.662207+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8039,7 +8262,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Cora Curtis Realty, Inc",
@@ -8083,6 +8307,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-agent/cora-curtis-realty-inc-0402-159130849",
     "scraped_at": "2026-09-13T23:22:22.249451+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8104,7 +8329,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Melloan Real Estate",
@@ -8161,6 +8387,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate/melloan-real-estate-0402-2018024",
     "scraped_at": "2026-09-13T23:22:22.796939+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8182,7 +8409,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Real Estate KY - Harry McLain",
@@ -8226,6 +8454,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-agent/real-estate-ky-harry-mclain-0402-235922105",
     "scraped_at": "2026-09-13T23:22:23.375469+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8247,7 +8476,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Platinum Plus Realty LLC",
@@ -8298,6 +8528,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-services/platinum-plus-realty-llc-0402-159151761",
     "scraped_at": "2026-09-13T23:22:23.833043+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8319,7 +8550,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Reesor Auction & Realty Company, Inc",
@@ -8368,6 +8600,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-agent/reesor-auction-realty-company-inc-0402-159155012",
     "scraped_at": "2026-09-13T23:22:24.347458+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8389,7 +8622,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Gold Star Realty of Hardin County, LLC",
@@ -8444,6 +8678,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate/gold-star-realty-of-hardin-county-llc-0402-159132642",
     "scraped_at": "2026-09-13T23:22:24.891954+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8465,7 +8700,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Scott Lynch Realty, Inc.",
@@ -8509,6 +8745,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/madison/profile/real-estate-agent/scott-lynch-realty-inc-0402-159136718",
     "scraped_at": "2026-09-13T23:22:25.385995+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8530,7 +8767,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Affordable Investments LLC",
@@ -8566,6 +8804,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/elizabethtown/profile/real-estate-agent/affordable-investments-llc-0402-159159338",
     "scraped_at": "2026-09-13T23:22:25.899926+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8587,7 +8826,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Joan Roberts Realty",
@@ -8623,6 +8863,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/north-vernon/profile/real-estate-agent/joan-roberts-realty-0402-90012736",
     "scraped_at": "2026-09-13T23:22:26.419197+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8644,7 +8885,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Millman Realty Partners, Inc.",
@@ -8688,6 +8930,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/lutheran-lake/profile/real-estate-agent/millman-realty-partners-inc-0402-90046739",
     "scraped_at": "2026-09-13T23:22:26.951390+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8709,7 +8952,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "CNP Realty",
@@ -8745,6 +8989,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/seymour/profile/real-estate-agent/cnp-realty-0402-235916358",
     "scraped_at": "2026-09-13T23:22:27.497042+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8766,7 +9011,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Bush Realty",
@@ -8810,6 +9056,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owenton/profile/real-estate-agent/bush-realty-0402-235917665",
     "scraped_at": "2026-09-13T23:22:28.026440+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8831,7 +9078,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Key Associates Real Estate",
@@ -8875,6 +9123,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/french-lick/profile/real-estate-agent/key-associates-real-estate-0402-235919275",
     "scraped_at": "2026-09-13T23:22:28.521697+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8896,7 +9145,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Bleed Blue Group",
@@ -8937,6 +9187,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/versailles/profile/real-estate-agent/the-bleed-blue-group-0402-235918579",
     "scraped_at": "2026-09-13T23:22:29.058750+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8958,7 +9209,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "The Real Estate Co.- Kathryn Blackwell",
@@ -9002,6 +9254,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bedford/profile/real-estate-agent/the-real-estate-co-kathryn-blackwell-0382-90060319",
     "scraped_at": "2026-09-13T23:22:29.549368+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9023,7 +9276,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Indiana Real Estate Connection",
@@ -9068,6 +9322,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bedford/profile/real-estate-agent/indiana-real-estate-connection-0382-90033518",
     "scraped_at": "2026-09-13T23:22:30.072059+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9089,7 +9344,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Real Deal Realty",
@@ -9140,6 +9396,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/falls-of-rough/profile/real-estate-agent/real-deal-realty-0402-159146765",
     "scraped_at": "2026-09-13T23:22:30.656823+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9161,7 +9418,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Carpenter Realtors",
@@ -9216,6 +9474,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bedford/profile/real-estate-services/carpenter-realtors-0382-2124/addressId/668",
     "scraped_at": "2026-09-13T23:22:31.130968+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9237,7 +9496,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rector-Hayden Realtors",
@@ -9294,6 +9554,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/rector-hayden-realtors-0402-9107475",
     "scraped_at": "2026-09-13T23:22:31.691660+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9315,7 +9576,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "DIY Realty, LLC",
@@ -9377,6 +9639,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/diy-realty-llc-0402-235921373",
     "scraped_at": "2026-09-13T23:22:32.648388+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9398,7 +9661,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "GSP Homes",
@@ -9439,6 +9703,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/wilmore/profile/real-estate-agent/gsp-homes-0402-235919617",
     "scraped_at": "2026-09-13T23:22:33.318495+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9460,7 +9725,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Frank Mason, Realtor, Inc.",
@@ -9511,6 +9777,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/georgetown/profile/real-estate-agent/frank-mason-realtor-inc-0402-9106301",
     "scraped_at": "2026-09-13T23:22:33.870595+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9532,7 +9799,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Wilson Realty & Auction Co",
@@ -9573,6 +9841,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/danville/profile/real-estate-agent/wilson-realty-auction-co-0402-235918498",
     "scraped_at": "2026-09-13T23:22:34.435682+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9594,7 +9863,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "E & J Enterprises LLC",
@@ -9638,6 +9908,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/e-j-enterprises-llc-0402-235920685",
     "scraped_at": "2026-09-13T23:22:34.924812+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9659,7 +9930,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Barrel Creek Investments",
@@ -9712,6 +9984,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/property-management/barrel-creek-investments-0402-235914897",
     "scraped_at": "2026-09-13T23:22:35.589303+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9733,7 +10006,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Haas And Haas Properties, LLC",
@@ -9791,6 +10065,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/home-buyers/haas-and-haas-properties-llc-0402-9117032",
     "scraped_at": "2026-09-13T23:22:36.117082+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9812,7 +10087,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The VUE Lexington",
@@ -9857,6 +10133,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/the-vue-lexington-0402-235908194/addressId/189173",
     "scraped_at": "2026-09-13T23:22:36.900647+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9878,7 +10155,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Ted Durlacher eXp Realty",
@@ -9914,6 +10192,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate-agent/ted-durlacher-exp-realty-0382-90063911",
     "scraped_at": "2026-09-13T23:22:37.441826+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9935,7 +10214,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Amy Boone, Real Estate Agent",
@@ -9979,6 +10259,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/amy-boone-real-estate-agent-0402-9109947",
     "scraped_at": "2026-09-13T23:22:38.190966+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10000,7 +10281,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Deuce Kirk Real Estate Team",
@@ -10045,6 +10327,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/the-deuce-kirk-real-estate-team-0402-235918835",
     "scraped_at": "2026-09-13T23:22:38.891131+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10066,7 +10349,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "First Liberty Financial Mortgage, a Division of ETFCU",
@@ -10164,6 +10448,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/credit-union/first-liberty-financial-mortgage-a-division-of-etfcu-0402-204236498/addressId/186798",
     "scraped_at": "2026-09-13T23:22:40.144759+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10185,7 +10470,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "PeakMade Real Estate",
@@ -10251,6 +10537,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/apartments/peakmade-real-estate-0443-27416185/addressId/219422",
     "scraped_at": "2026-09-13T23:22:41.358380+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10272,7 +10559,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "B.C. Wood Properties, LLC",
@@ -10383,6 +10671,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/commercial-real-estate/bc-wood-properties-llc-0402-25000567",
     "scraped_at": "2026-09-13T23:22:41.913859+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10404,7 +10693,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "1 Percent Lists Indiana Real Estate",
@@ -10453,6 +10743,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate-agent/1-percent-lists-indiana-real-estate-0382-90062956",
     "scraped_at": "2026-09-13T23:22:42.517861+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10474,7 +10765,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Angie Emmitt Real Estate",
@@ -10523,6 +10815,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate-agent/angie-emmitt-real-estate-0382-90063008",
     "scraped_at": "2026-09-13T23:22:43.086054+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10544,7 +10837,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Key & Co. Real Estate Professionals L...",
@@ -10588,6 +10882,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate-agent/key-co-real-estate-professionals-l-0382-90063723",
     "scraped_at": "2026-09-13T23:22:44.018529+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10609,7 +10904,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union",
@@ -10721,6 +11017,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/jasper/profile/credit-union/liberty-federal-credit-union-0482-90485/addressId/53038",
     "scraped_at": "2026-09-13T23:22:44.526975+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10742,7 +11039,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Hoosier Brokers, Inc.",
@@ -10790,6 +11088,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate/hoosier-brokers-inc-0382-90034641",
     "scraped_at": "2026-09-13T23:22:45.028919+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10811,7 +11110,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Maggie Wells, Realtor | Live in Kentucky Homes",
@@ -10847,6 +11147,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/maggie-wells-realtor---live-in-kentucky-homes-0402-235919583",
     "scraped_at": "2026-09-13T23:22:45.615867+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10868,7 +11169,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Kentucky Real Estate Buyers",
@@ -10922,6 +11224,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/kentucky-real-estate-buyers-0402-9111382",
     "scraped_at": "2026-09-13T23:22:46.126039+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10943,7 +11246,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "F.C. Tucker/Real Estate Experts/Columbus",
@@ -10979,6 +11283,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus-in/profile/real-estate-agent/fc-tuckerreal-estate-expertscolumbus-0382-90056381",
     "scraped_at": "2026-09-13T23:22:46.627208+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11000,7 +11305,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Jeff Finke Realty Team, Inc",
@@ -11059,6 +11365,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate/jeff-finke-realty-team-inc-0382-90009118",
     "scraped_at": "2026-09-13T23:22:47.235883+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11080,7 +11387,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Re/Max Real Estate Professionals",
@@ -11135,6 +11443,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate/remax-real-estate-professionals-0382-90001707",
     "scraped_at": "2026-09-13T23:22:47.805566+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11156,7 +11465,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Dean Wagner LLC, Realtors",
@@ -11205,6 +11515,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/columbus/profile/real-estate-agent/dean-wagner-llc-realtors-0382-90063586",
     "scraped_at": "2026-09-13T23:22:48.428311+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11226,7 +11537,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Turf Town Properties, Inc.",
@@ -11295,6 +11607,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/turf-town-properties-inc-0402-1416",
     "scraped_at": "2026-09-13T23:22:48.991044+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11316,7 +11629,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Delaney Team at Rector Hayden Realtors",
@@ -11360,6 +11674,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/delaney-team-at-rector-hayden-realtors-0402-235916407",
     "scraped_at": "2026-09-13T23:22:49.646349+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11381,7 +11696,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Metropolitan",
@@ -11441,6 +11757,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/the-metropolitan-0402-184503372/addressId/183970",
     "scraped_at": "2026-09-13T23:22:50.440359+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11462,7 +11779,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "STAR ONE REALTORS",
@@ -11498,6 +11816,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/rising-sun/profile/real-estate-agent/star-one-realtors-0292-13005187",
     "scraped_at": "2026-09-13T23:22:50.960831+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11519,7 +11838,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Vanessa Vale Team, powered by LPT Realty",
@@ -11560,6 +11880,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/vanessa-vale-team-powered-by-lpt-realty-0402-235918841",
     "scraped_at": "2026-09-13T23:22:51.871981+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11581,7 +11902,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Christie's International Real Estate Bluegrass",
@@ -11665,6 +11987,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/christies-international-real-estate-bluegrass-0402-90003741",
     "scraped_at": "2026-09-13T23:22:52.411491+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11686,7 +12009,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Veridian Lexington",
@@ -11739,6 +12063,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/veridian-lexington-0402-9113196/addressId/152382",
     "scraped_at": "2026-09-13T23:22:53.223833+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11760,7 +12085,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Eagle Pointe Realty Corp",
@@ -11810,6 +12136,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate/eagle-pointe-realty-corp-0382-90033805",
     "scraped_at": "2026-09-13T23:22:53.673226+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11831,7 +12158,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Nick Ratliff Realty Team",
@@ -11875,6 +12203,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/nick-ratliff-realty-team-0402-235911426",
     "scraped_at": "2026-09-13T23:22:54.218043+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11896,7 +12225,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Josh Gunselman, 482HOME with Sell4Free Welsh Realty Corp.",
@@ -11940,6 +12270,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/jasper/profile/real-estate-agent/josh-gunselman-482home-with-sell4free-welsh-realty-corp-0482-90056125",
     "scraped_at": "2026-09-13T23:22:54.712774+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11961,7 +12292,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Carpenter Hills O' Brown",
@@ -12024,6 +12356,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/nashville/profile/real-estate-agent/carpenter-hills-o-brown-0382-90009163/addressId/44844",
     "scraped_at": "2026-09-13T23:22:55.230442+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12045,7 +12378,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Ruth Morton - Real Estate Agent",
@@ -12089,6 +12423,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate-agent/ruth-morton-real-estate-agent-0382-90046986",
     "scraped_at": "2026-09-13T23:22:55.774911+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12110,7 +12445,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Southern Nest Realty",
@@ -12146,6 +12482,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/columbia/profile/real-estate-agent/southern-nest-realty-0402-159167398",
     "scraped_at": "2026-09-13T23:22:56.329845+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12167,7 +12504,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "No direct contact info",
-    "contact_readiness_score": 0
+    "contact_readiness_score": 0,
+    "website_dead_flag": 0
   },
   {
     "name": "Johann Real Estate",
@@ -12207,6 +12545,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/nashville/profile/home-buyers/johann-real-estate-0382-90065712",
     "scraped_at": "2026-09-13T23:22:56.868591+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12228,7 +12567,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Diversified Property Services, Inc.",
@@ -12280,6 +12620,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/union/profile/real-estate-broker/diversified-property-services-inc-0292-11039829",
     "scraped_at": "2026-09-13T23:22:58.501857+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12301,7 +12642,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Weichert Realtors",
@@ -12345,6 +12687,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/weichert-realtors-0402-9100652/addressId/144863",
     "scraped_at": "2026-09-13T23:22:59.232108+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12366,7 +12709,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Millennium Real Estate Group",
@@ -12410,6 +12754,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/millennium-real-estate-group-0402-9105900",
     "scraped_at": "2026-09-13T23:23:00.885676+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12431,7 +12776,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Calumet Realty",
@@ -12475,6 +12821,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/calumet-realty-0402-9104090",
     "scraped_at": "2026-09-13T23:23:02.240769+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12496,7 +12843,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Commonwealth Real Estate Professionals",
@@ -12586,6 +12934,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/commonwealth-real-estate-professionals-0402-9102758",
     "scraped_at": "2026-09-13T23:23:02.860003+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12607,7 +12956,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Enclave Hartland",
@@ -12681,6 +13031,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/the-enclave-hartland-0402-18000392/addressId/162241",
     "scraped_at": "2026-09-13T23:23:03.582328+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12702,7 +13053,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Eco Realty Partners- Sheila Glore",
@@ -12746,6 +13098,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/nineveh/profile/real-estate-agent/eco-realty-partners-sheila-glore-0382-90027513",
     "scraped_at": "2026-09-13T23:23:04.630473+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12767,7 +13120,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Bright Side Homes",
@@ -12826,6 +13180,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/home-sales/bright-side-homes-0382-90037762",
     "scraped_at": "2026-09-13T23:23:05.178327+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12847,7 +13202,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Regional Realty",
@@ -12883,6 +13239,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/regional-realty-0292-90009890",
     "scraped_at": "2026-09-13T23:23:05.677247+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12904,7 +13261,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Home & Harvest Properties",
@@ -12948,6 +13306,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/odon/profile/real-estate-agent/home-harvest-properties-0482-90062282",
     "scraped_at": "2026-09-13T23:23:06.276897+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12969,7 +13328,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Premier Properties Real Estate",
@@ -13030,6 +13390,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greendale/profile/real-estate-agent/premier-properties-real-estate-0292-3007251",
     "scraped_at": "2026-09-13T23:23:06.880569+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13051,7 +13412,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Exodus Realty, LLC",
@@ -13114,6 +13476,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greensburg/profile/real-estate-agent/exodus-realty-llc-0382-90050761",
     "scraped_at": "2026-09-13T23:23:07.435879+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13135,7 +13498,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Northcut Realty",
@@ -13171,6 +13535,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/cynthiana/profile/real-estate-agent/northcut-realty-0402-142324615",
     "scraped_at": "2026-09-13T23:23:07.954504+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13192,7 +13557,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Bruce Storm Real Estate & Management, LLC",
@@ -13255,6 +13621,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate/bruce-storm-real-estate-management-llc-0382-90009872",
     "scraped_at": "2026-09-13T23:23:08.510013+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13276,7 +13643,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lesa Miller - Re/Max",
@@ -13325,6 +13693,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate-agent/lesa-miller-remax-0382-90064804",
     "scraped_at": "2026-09-13T23:23:09.072170+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13346,7 +13715,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The JuanSells.com Realty Co",
@@ -13387,6 +13757,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate-agent/the-juansellscom-realty-co-0382-90044475",
     "scraped_at": "2026-09-13T23:23:09.570853+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13408,7 +13779,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Wall to Wall Homes",
@@ -13452,6 +13824,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/wall-to-wall-homes-0292-90031862",
     "scraped_at": "2026-09-13T23:23:10.474512+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13473,7 +13846,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Thatcher Real Estate, LLC",
@@ -13517,6 +13891,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate-agent/thatcher-real-estate-llc-0382-90064839",
     "scraped_at": "2026-09-13T23:23:11.721562+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13538,7 +13913,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "MC Listing Service LLC",
@@ -13583,6 +13959,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate-broker/mc-listing-service-llc-0382-90018794",
     "scraped_at": "2026-09-13T23:23:13.010946+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13604,7 +13981,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -13649,6 +14027,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77004",
     "scraped_at": "2026-09-13T23:23:13.718810+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13670,7 +14049,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Lincoln Realty, Inc.",
@@ -13721,6 +14101,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greensburg/profile/real-estate-services/lincoln-realty-inc-0382-7001582",
     "scraped_at": "2026-09-13T23:23:14.919525+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13742,7 +14123,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lisa Kassinger Realtor/Broker",
@@ -13786,6 +14168,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/real-estate-agent/lisa-kassinger-realtorbroker-0402-235914636",
     "scraped_at": "2026-09-13T23:23:15.507107+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13807,7 +14190,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Next Level Realty, LLC",
@@ -13855,6 +14239,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate/next-level-realty-llc-0382-90034737",
     "scraped_at": "2026-09-13T23:23:16.043133+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13876,7 +14261,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Aurum Realty, LLC",
@@ -13928,6 +14314,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/lawrenceburg/profile/real-estate/aurum-realty-llc-0292-90027975",
     "scraped_at": "2026-09-13T23:23:16.686787+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13949,7 +14336,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "That Property Guy, LLC",
@@ -13993,6 +14381,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/trafalgar/profile/real-estate-agent/that-property-guy-llc-0382-90043810",
     "scraped_at": "2026-09-13T23:27:42.795652+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14014,7 +14403,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Millican Realty",
@@ -14062,6 +14452,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate/millican-realty-0382-90021723",
     "scraped_at": "2026-09-13T23:27:43.357882+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14083,7 +14474,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Susan Apple, Acup Team",
@@ -14127,6 +14519,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/nineveh/profile/real-estate-agent/susan-apple-acup-team-0382-90057664",
     "scraped_at": "2026-09-13T23:27:47.566361+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14148,7 +14541,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Apex Realty Group",
@@ -14192,6 +14586,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/apex-realty-group-0292-90007961",
     "scraped_at": "2026-09-13T23:27:49.949711+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14213,7 +14608,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union | East Owensboro",
@@ -14261,6 +14657,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/credit-union/liberty-federal-credit-union---east-owensboro-0402-235914013/addressId/196916",
     "scraped_at": "2026-09-13T23:29:57.768614+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14282,7 +14679,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Hays and Associates Real Estate LLC",
@@ -14326,6 +14724,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/bloomington/profile/real-estate-agent/hays-and-associates-real-estate-llc-0382-90059750",
     "scraped_at": "2026-09-13T23:29:59.507478+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14347,7 +14746,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Keystone Apartments",
@@ -14400,6 +14800,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/real-estate-agent/keystone-apartments-0402-2038579/addressId/54942",
     "scraped_at": "2026-09-13T23:30:02.040720+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14421,7 +14822,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Rachelle Johnson Realtor",
@@ -14457,6 +14859,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/real-estate-agent/rachelle-johnson-realtor-0402-235920923",
     "scraped_at": "2026-09-13T23:30:04.323895+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14478,7 +14881,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Enclave at Breckenridge",
@@ -14493,7 +14897,7 @@
     "rating": "F",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14511,6 +14915,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/property-management/enclave-at-breckenridge-0402-159146959/addressId/105131",
     "scraped_at": "2026-09-13T23:20:32.114805+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14532,7 +14937,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14547,7 +14953,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14565,6 +14971,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/75215",
     "scraped_at": "2026-09-13T23:20:33.049838+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14586,7 +14993,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14601,7 +15009,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14619,6 +15027,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/126044",
     "scraped_at": "2026-09-13T23:20:33.472691+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14640,7 +15049,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14655,7 +15065,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14673,6 +15083,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/127254",
     "scraped_at": "2026-09-13T23:20:33.939804+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14694,7 +15105,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14709,7 +15121,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14727,6 +15139,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/prospect/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/110974",
     "scraped_at": "2026-09-13T23:20:33.939822+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14748,7 +15161,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "First Liberty Financial Mortgage, a Division of ETFCU",
@@ -14763,7 +15177,7 @@
     "rating": "A+",
     "accredited": true,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14781,6 +15195,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/credit-union/first-liberty-financial-mortgage-a-division-of-etfcu-0402-204236498/addressId/186798",
     "scraped_at": "2026-09-13T23:20:35.715134+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14802,7 +15217,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14817,7 +15233,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14835,6 +15251,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/75216",
     "scraped_at": "2026-09-13T23:20:37.441426+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14856,7 +15273,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14871,7 +15289,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14889,6 +15307,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/127258",
     "scraped_at": "2026-09-13T23:20:57.132112+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14910,7 +15329,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -14925,7 +15345,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -14943,6 +15363,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owensboro/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/127259",
     "scraped_at": "2026-09-13T23:20:57.132278+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14964,6 +15385,7 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   }
 ]

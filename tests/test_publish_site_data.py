@@ -175,3 +175,41 @@ def test_dead_website_flag_and_status_reach_the_public_record():
 def test_no_webcheck_data_is_not_flagged():
     rec = _publish_one({"name": "Never Checked Co", "phone": "(305) 555-0100", "rating": "B"})
     assert rec["website_dead_flag"] == 0
+
+
+def test_accredited_and_years_in_business_are_real_types_not_csv_strings():
+    """Regression, caught in a real diff review 2026-09-14: publish_dataset/
+    publish_master_csv read rows through csv.DictReader, which stringifies
+    *everything* -- a Python False/13 in the source CSV becomes the literal
+    text "False"/"13". 14 already-published datasets got silently
+    re-shipped that way by a --master re-publish (backfilling the
+    dead-website check). Must come out correctly typed regardless of
+    whether the value arrived as a real bool/int (in-memory scrape path) or
+    already CSV-stringified (--master/csv_path path) -- both are real
+    inputs to this same function."""
+    from_strings = _publish_one({
+        "name": "String Co", "rating": "A+", "accredited": "False",
+        "years_in_business": "13", "scraped_at": "2026-09-11T00:00:00+00:00",
+    })
+    assert from_strings["accredited"] is False
+    assert from_strings["years_in_business"] == 13
+    assert isinstance(from_strings["years_in_business"], int)
+
+    accredited_string = _publish_one({
+        "name": "Accredited Co", "rating": "A+", "accredited": "True",
+        "scraped_at": "2026-09-11T00:00:00+00:00",
+    })
+    assert accredited_string["accredited"] is True
+
+    from_native = _publish_one({
+        "name": "Native Co", "rating": "A+", "accredited": True,
+        "years_in_business": 7, "scraped_at": "2026-09-11T00:00:00+00:00",
+    })
+    assert from_native["accredited"] is True
+    assert from_native["years_in_business"] == 7
+    assert isinstance(from_native["years_in_business"], int)
+
+
+def test_missing_years_in_business_is_null_not_blank_string():
+    rec = _publish_one({"name": "No Years Co", "rating": "NR", "scraped_at": "2026-09-11T00:00:00+00:00"})
+    assert rec["years_in_business"] is None

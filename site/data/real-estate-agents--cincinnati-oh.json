@@ -42,6 +42,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76999",
     "scraped_at": "2026-09-13T23:01:29.223785+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Kathy Lakeberg - Sibcy Cline",
@@ -63,7 +64,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Laura Benson, Real Estate Professional at Coldwell Banker - OH KY",
@@ -108,6 +110,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/laura-benson-real-estate-professional-at-coldwell-banker-oh-ky-0292-90048849",
     "scraped_at": "2026-09-13T23:01:09.511459+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Laura Benson - Coldwell Banker Realty",
@@ -129,7 +132,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Neyer Management",
@@ -173,6 +177,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/neyer-management-0292-90026331",
     "scraped_at": "2026-09-13T23:01:13.620291+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Neyer Management",
@@ -194,7 +199,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Cincinnati Living by Alison Moss",
@@ -243,6 +249,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/cincinnati-living-by-alison-moss-0292-90013051",
     "scraped_at": "2026-09-13T23:01:14.486427+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Cincinnati Living Real Estate",
@@ -264,7 +271,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Simple Fee Realty, LLC",
@@ -308,6 +316,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/hebron/profile/real-estate-agent/simple-fee-realty-llc-0292-90019124",
     "scraped_at": "2026-09-13T23:02:08.400777+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Simple Fee Realty",
@@ -329,7 +338,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -374,6 +384,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77002",
     "scraped_at": "2026-09-13T23:01:42.030259+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Kathie Norris - Sibcy Cline Realtor",
@@ -395,7 +406,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Remax United Associates",
@@ -447,6 +459,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-broker/remax-united-associates-0292-90009062",
     "scraped_at": "2026-09-13T23:01:53.351980+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Tyler Smith-RE/MAX United Associates",
@@ -468,7 +481,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Chabris Group",
@@ -512,6 +526,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/the-chabris-group-0292-90044788",
     "scraped_at": "2026-09-13T23:01:34.528718+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "The Chabris Group",
@@ -533,7 +548,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -578,6 +594,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76994",
     "scraped_at": "2026-09-13T23:01:06.219459+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Annette Dirksen - Sibcy Cline Realtors",
@@ -599,7 +616,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -644,6 +662,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/85783",
     "scraped_at": "2026-09-13T23:01:59.114653+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Jessica Reeves - Sibcy Cline",
@@ -665,7 +684,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "J+L Home Group at Re/max Preferred Group",
@@ -709,6 +729,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/mason/profile/real-estate-agent/jl-home-group-at-remax-preferred-group-0292-90026100",
     "scraped_at": "2026-09-13T23:02:20.565691+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": true,
     "yelp_name": "Laura Faz - J+L Home Group",
@@ -730,7 +751,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Mt Development",
@@ -766,6 +788,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/mt-development--0292-90017307",
     "scraped_at": "2026-09-13T23:01:05.564794+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -787,7 +810,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Morah On The Move, LLC",
@@ -840,6 +864,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/morah-on-the-move-llc-0292-90022550/addressId/164888",
     "scraped_at": "2026-09-13T23:01:06.875761+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -861,7 +886,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Maria Walley, Realtor Comey & Shepherd",
@@ -905,6 +931,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/maria-walley-realtor-comey-shepherd-0292-90044486",
     "scraped_at": "2026-09-13T23:01:07.545707+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -926,7 +953,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Oyler Hines of Coldwell Banker",
@@ -1007,6 +1035,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati-/profile/real-estate-agent/oyler-hines-of-coldwell-banker-0292-90043601",
     "scraped_at": "2026-09-13T23:01:08.353142+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1028,7 +1057,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Jeff Williamson, Realtor",
@@ -1077,6 +1107,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/jeff-williamson-realtor-0292-90026164/addressId/196982",
     "scraped_at": "2026-09-13T23:01:08.929615+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1098,7 +1129,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Homes By Kelli, Ltd.",
@@ -1148,6 +1180,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/homes-by-kelli-ltd-0292-90053782",
     "scraped_at": "2026-09-13T23:01:10.184328+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1169,7 +1202,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "We Buy NKY Houses",
@@ -1234,6 +1268,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/we-buy-nky-houses-0292-90026134",
     "scraped_at": "2026-09-13T23:01:10.914039+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1255,7 +1290,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Bobby Sells Cincy",
@@ -1300,6 +1336,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-consultant/bobby-sells-cincy-0292-90045392",
     "scraped_at": "2026-09-13T23:01:11.590448+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1321,7 +1358,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Drake & Madison Realty",
@@ -1362,6 +1400,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/drake-madison-realty-0292-90055606",
     "scraped_at": "2026-09-13T23:01:12.249254+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1383,7 +1422,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Erik Kuhn",
@@ -1427,6 +1467,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati-/profile/real-estate-agent/erik-kuhn-0292-10005597",
     "scraped_at": "2026-09-13T23:01:12.912155+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1448,7 +1489,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Deering Properties, Inc.",
@@ -1521,6 +1563,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/deering-properties-inc-0292-1189224",
     "scraped_at": "2026-09-13T23:01:15.136480+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1542,7 +1585,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Cincinnati Invests LLC",
@@ -1586,6 +1630,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/amberley/profile/real-estate-agent/cincinnati-invests-llc-0292-90035713",
     "scraped_at": "2026-09-13T23:01:15.775922+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1607,7 +1652,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "United Realty Co",
@@ -1643,6 +1689,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/united-realty-co-0292-11041166",
     "scraped_at": "2026-09-13T23:01:16.389821+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1664,7 +1711,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Southwest Financial Services, LTD.",
@@ -1711,6 +1759,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/insurance-companies/southwest-financial-services-ltd-0292-3001232",
     "scraped_at": "2026-09-13T23:01:17.440317+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1732,7 +1781,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "CB Richard Ellis",
@@ -1768,6 +1818,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/cb-richard-ellis-0292-11041081",
     "scraped_at": "2026-09-13T23:01:18.072085+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1789,7 +1840,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "G&J Mansions Inc.",
@@ -1825,6 +1877,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/gj-mansions-inc-0292-90011516",
     "scraped_at": "2026-09-13T23:01:18.755703+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1846,7 +1899,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Leugers Realty",
@@ -1890,6 +1944,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/covington/profile/real-estate-agent/leugers-realty--0292-90007960",
     "scraped_at": "2026-09-13T23:01:19.655168+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1911,7 +1966,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Jansen Realty",
@@ -1947,6 +2003,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/fort-thomas-/profile/real-estate-agent/jansen-realty-0292-90005378",
     "scraped_at": "2026-09-13T23:01:20.286900+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -1968,7 +2025,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Paulette King",
@@ -2013,6 +2071,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/paulette-king-0292-90023008",
     "scraped_at": "2026-09-13T23:01:20.911252+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2034,7 +2093,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Mike Harmon- Pivot Realty Group",
@@ -2078,6 +2138,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/mike-harmon-pivot-realty-group-0292-90053121",
     "scraped_at": "2026-09-13T23:01:21.517581+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2099,7 +2160,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Valley Solutions, Inc.",
@@ -2143,6 +2205,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/web-design/valley-solutions-inc-0292-3006681",
     "scraped_at": "2026-09-13T23:01:22.175118+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2164,7 +2227,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "William F Huwel",
@@ -2200,6 +2264,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/william-f-huwel-0292-11009314",
     "scraped_at": "2026-09-13T23:01:22.785763+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2221,7 +2286,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Remax All American",
@@ -2265,6 +2331,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/edgewood/profile/real-estate-agent/remax-all-american-0292-90008934",
     "scraped_at": "2026-09-13T23:01:23.482581+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2286,7 +2353,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Dee Bares Realty LLC",
@@ -2330,6 +2398,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/dee-bares-realty-llc-0292-90052561",
     "scraped_at": "2026-09-13T23:01:24.169061+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2351,7 +2420,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "US Commercial Real Estate",
@@ -2387,6 +2457,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/us-commercial-real-estate-0292-90010459",
     "scraped_at": "2026-09-13T23:01:25.405076+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2408,7 +2479,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "The Amy Houston Team, LLC",
@@ -2444,6 +2516,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/fort-thomas/profile/real-estate-agent/the-amy-houston-team-llc-0292-90039534",
     "scraped_at": "2026-09-13T23:01:26.525185+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2465,7 +2538,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "David S. Rawlings Realty & Auctions",
@@ -2509,6 +2583,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/fort-thomas/profile/real-estate-agent/david-s-rawlings-realty-auctions-0292-11026254",
     "scraped_at": "2026-09-13T23:01:27.254749+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2530,7 +2605,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Holley Properties",
@@ -2566,6 +2642,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/holley-properties-0292-90011050",
     "scraped_at": "2026-09-13T23:01:27.943911+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2587,7 +2664,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -2632,6 +2710,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76995",
     "scraped_at": "2026-09-13T23:01:28.574962+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2653,7 +2732,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -2698,6 +2778,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/714",
     "scraped_at": "2026-09-13T23:01:29.921208+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2719,7 +2800,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Johnny Hodge Realty Group, LLC",
@@ -2772,6 +2854,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/fort-mitchell/profile/real-estate-agent/johnny-hodge-realty-group-llc-0292-90051838",
     "scraped_at": "2026-09-13T23:01:30.565181+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2793,7 +2876,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Diversified Property Services, Inc.",
@@ -2845,6 +2929,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-broker/diversified-property-services-inc-0292-11039829/addressId/144438",
     "scraped_at": "2026-09-13T23:01:31.377115+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2866,7 +2951,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Ty Sells Cincy LLC",
@@ -2910,6 +2996,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/ty-sells-cincy-llc-0292-90051486",
     "scraped_at": "2026-09-13T23:01:32.953258+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -2931,7 +3018,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rapid Title, Inc.",
@@ -2991,6 +3079,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/montgomery/profile/title-companies/rapid-title-inc-0292-90043433",
     "scraped_at": "2026-09-13T23:01:36.346857+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3012,7 +3101,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "TREO Realtors",
@@ -3056,6 +3146,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/treo-realtors-0292-90005109",
     "scraped_at": "2026-09-13T23:01:36.933306+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3077,7 +3168,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "RALPH B GRIEME",
@@ -3113,6 +3205,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/covington/profile/real-estate-agent/ralph-b-grieme-0292-13000679",
     "scraped_at": "2026-09-13T23:01:37.557037+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3134,7 +3227,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "RE/MAX Preferred Group - Property Management",
@@ -3192,6 +3286,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/remax-preferred-group-property-management-0292-90007709",
     "scraped_at": "2026-09-13T23:01:38.187355+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3213,7 +3308,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Will Terra Properties LLC",
@@ -3249,6 +3345,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/will-terra-properties-llc-0292-1172440",
     "scraped_at": "2026-09-13T23:01:38.838755+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3270,7 +3367,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -3315,6 +3413,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/cold-spring/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77003",
     "scraped_at": "2026-09-13T23:01:40.123931+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3336,7 +3435,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "RE/MAX",
@@ -3372,6 +3472,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/fort-mitchell/profile/real-estate-agent/remax-0292-11038019",
     "scraped_at": "2026-09-13T23:01:40.802624+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3393,7 +3494,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -3438,6 +3540,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/fort-mitchell/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77005",
     "scraped_at": "2026-09-13T23:01:41.396113+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3459,7 +3562,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -3504,6 +3608,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76990",
     "scraped_at": "2026-09-13T23:01:42.640762+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3525,7 +3630,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -3570,6 +3676,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76997",
     "scraped_at": "2026-09-13T23:01:43.316188+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3591,7 +3698,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Servicemax Realty LLC",
@@ -3635,6 +3743,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/servicemax-realty-llc-0292-90007453",
     "scraped_at": "2026-09-13T23:01:44.613875+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3656,7 +3765,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "D&S Homes L.L.C.",
@@ -3692,6 +3802,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/ds-homes-llc-0292-90016634",
     "scraped_at": "2026-09-13T23:01:45.239199+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3713,7 +3824,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Trauth Property Group, Inc.",
@@ -3749,6 +3861,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crescent-springs/profile/real-estate-agent/trauth-property-group-inc-0292-90026456",
     "scraped_at": "2026-09-13T23:01:46.108630+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3770,7 +3883,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Lou Park Realty",
@@ -3814,6 +3928,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/montgomery/profile/real-estate-agent/lou-park-realty-0292-90016275",
     "scraped_at": "2026-09-13T23:01:46.780933+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3835,7 +3950,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Russell Home Services, LLC",
@@ -3894,6 +4010,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-services/russell-home-services-llc-0292-90040722",
     "scraped_at": "2026-09-13T23:01:47.419165+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3915,7 +4032,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "JPL Properties",
@@ -3959,6 +4077,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/jpl-properties-0292-90010707",
     "scraped_at": "2026-09-13T23:01:48.072265+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -3980,7 +4099,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -4025,6 +4145,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77000",
     "scraped_at": "2026-09-13T23:01:48.673123+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4046,7 +4167,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -4091,6 +4213,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76991",
     "scraped_at": "2026-09-13T23:01:49.314131+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4112,7 +4235,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Solutions For Your Real Estate",
@@ -4148,6 +4272,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/solutions-for-your-real-estate-0292-90007496",
     "scraped_at": "2026-09-13T23:01:49.912406+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4169,7 +4294,8 @@
     "has_named_contact": 0,
     "has_email": 1,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "RE/MAX ELITE",
@@ -4205,6 +4331,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/milford/profile/real-estate-agent/remax-elite-0292-13002183/addressId/100760",
     "scraped_at": "2026-09-13T23:01:50.741337+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4226,7 +4353,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Ameritas Life Insurance",
@@ -4316,6 +4444,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/insurance-companies/ameritas-life-insurance-0292-2777/addressId/939",
     "scraped_at": "2026-09-13T23:01:51.490071+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4337,7 +4466,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -4382,6 +4512,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77006",
     "scraped_at": "2026-09-13T23:01:52.703935+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4403,7 +4534,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "ERA Real Solutions Realty",
@@ -4447,6 +4579,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/era-real-solutions-realty-0292-90006934/addressId/198933",
     "scraped_at": "2026-09-13T23:01:54.032150+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4468,7 +4601,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Boulder Development Co",
@@ -4504,6 +4638,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/boulder-development-co--0292-11031813",
     "scraped_at": "2026-09-13T23:01:55.125321+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4525,7 +4660,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Marcia Sweeney LTD",
@@ -4561,6 +4697,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/marcia-sweeney-ltd-0292-11011234/addressId/88334",
     "scraped_at": "2026-09-13T23:01:55.816382+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4582,7 +4719,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -4627,6 +4765,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76992",
     "scraped_at": "2026-09-13T23:01:57.191873+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4648,7 +4787,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "WEBMLS Inc",
@@ -4684,6 +4824,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/loveland/profile/real-estate-agent/webmls-inc-0292-11023718",
     "scraped_at": "2026-09-13T23:01:57.810027+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4705,7 +4846,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -4750,6 +4892,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/milford/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76996",
     "scraped_at": "2026-09-13T23:01:58.427339+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4771,7 +4914,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Valley Wide Home Team",
@@ -4815,6 +4959,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/valley-wide-home-team-0292-90009063",
     "scraped_at": "2026-09-13T23:02:00.308632+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4836,7 +4981,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Reliable Property Services, LLC",
@@ -4887,6 +5033,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/janitor-service/reliable-property-services-llc-0292-90013391",
     "scraped_at": "2026-09-13T23:02:01.352241+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4908,7 +5055,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "C&A Home Team",
@@ -4949,6 +5097,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/ca-home-team-0292-90055763",
     "scraped_at": "2026-09-13T23:02:02.027232+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -4970,7 +5119,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "Denise Gifford - Coldwell Banker West Shell",
@@ -5014,6 +5164,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/denise-gifford-coldwell-banker-west-shell-0292-90009580",
     "scraped_at": "2026-09-13T23:02:02.658998+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5035,7 +5186,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "SCOTT AVERY ENTERPRISES INC",
@@ -5079,6 +5231,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/scott-avery-enterprises-inc-0292-11037389",
     "scraped_at": "2026-09-13T23:02:03.292194+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5100,7 +5253,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Apex Realty Group",
@@ -5144,6 +5298,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/apex-realty-group-0292-90007961",
     "scraped_at": "2026-09-13T23:02:03.928922+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5165,7 +5320,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Community Realtors",
@@ -5209,6 +5365,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/milford/profile/real-estate-agent/community-realtors-0292-90002044",
     "scraped_at": "2026-09-13T23:02:05.191186+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5230,7 +5387,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "St. Leon Realty, LLC",
@@ -5274,6 +5432,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cleves/profile/real-estate-agent/st-leon-realty-llc-0292-90015618",
     "scraped_at": "2026-09-13T23:02:05.780551+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5295,7 +5454,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -5340,6 +5500,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76998",
     "scraped_at": "2026-09-13T23:02:06.487942+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5361,7 +5522,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Camelot Homes & Services",
@@ -5410,6 +5572,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/milford/profile/construction-services/camelot-homes-services-0292-90005116",
     "scraped_at": "2026-09-13T23:02:07.148010+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5431,7 +5594,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -5476,6 +5640,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/fairfield/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/76993",
     "scraped_at": "2026-09-13T23:02:09.189877+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5497,7 +5662,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -5542,6 +5708,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77004",
     "scraped_at": "2026-09-13T23:02:10.516155+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5563,7 +5730,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -5608,6 +5776,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/hamilton/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77007",
     "scraped_at": "2026-09-13T23:02:11.183948+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5629,7 +5798,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Wall to Wall Homes",
@@ -5673,6 +5843,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/wall-to-wall-homes-0292-90031862",
     "scraped_at": "2026-09-13T23:02:11.997512+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5694,7 +5865,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RE/MAX AFFILIATES INC",
@@ -5731,6 +5903,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/alexandria/profile/real-estate-agent/remax-affiliates-inc-0292-13000095",
     "scraped_at": "2026-09-13T23:02:13.872223+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5752,7 +5925,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Re/Max Unlimited",
@@ -5788,6 +5962,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/remax-unlimited-0292-11022722",
     "scraped_at": "2026-09-13T23:02:14.518183+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5809,7 +5984,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Real Link Real Estate",
@@ -5858,6 +6034,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/mason/profile/real-estate-agent/real-link-real-estate-0292-90013061",
     "scraped_at": "2026-09-13T23:02:15.268243+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5879,7 +6056,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Thomas & Bland Homes",
@@ -5925,6 +6103,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/construction-services/thomas-bland-homes-0292-39000602",
     "scraped_at": "2026-09-13T23:02:15.891736+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -5946,7 +6125,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -5991,6 +6171,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77001",
     "scraped_at": "2026-09-13T23:02:16.565143+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6012,7 +6193,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -6057,6 +6239,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/116094",
     "scraped_at": "2026-09-13T23:02:17.189823+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6078,7 +6261,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Darlene Todd",
@@ -6114,6 +6298,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/darlene-todd-0292-11022869",
     "scraped_at": "2026-09-13T23:02:17.828418+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6135,7 +6320,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Regional Realty",
@@ -6171,6 +6357,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/florence/profile/real-estate-agent/regional-realty-0292-90009890",
     "scraped_at": "2026-09-13T23:02:18.502166+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6192,7 +6379,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "All Points Title & Closing, Inc.",
@@ -6246,6 +6434,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/hamilton/profile/title-agent/all-points-title-closing-inc-0292-11017317",
     "scraped_at": "2026-09-13T23:02:19.278999+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6267,7 +6456,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Houses By Vic LLC",
@@ -6311,6 +6501,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/mason/profile/real-estate-agent/houses-by-vic-llc-0292-90041404",
     "scraped_at": "2026-09-13T23:02:21.183939+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6332,7 +6523,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "The Liz Spear Team",
@@ -6384,6 +6576,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/mason/profile/real-estate-agent/the-liz-spear-team-0292-90004003",
     "scraped_at": "2026-09-13T23:02:21.870152+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6405,7 +6598,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "UCSB",
@@ -6442,6 +6636,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/liberty-twp/profile/real-estate-agent/ucsb-0292-11017513",
     "scraped_at": "2026-09-13T23:02:22.998438+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6463,7 +6658,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -6508,6 +6704,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/harrison/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77009",
     "scraped_at": "2026-09-13T23:02:24.271395+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6529,7 +6726,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Bright Horizons, Inc.",
@@ -6565,6 +6763,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/harrison/profile/real-estate-agent/bright-horizons-inc-0292-90002872",
     "scraped_at": "2026-09-13T23:02:24.942540+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6586,7 +6785,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Bischoff Realty, Inc.",
@@ -6652,6 +6852,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/harrison/profile/real-estate/bischoff-realty-inc-0292-2620",
     "scraped_at": "2026-09-13T23:02:29.278697+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6673,7 +6874,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kristi Murphy Realtor eXp Realtor",
@@ -6717,6 +6919,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/liberty-township/profile/real-estate-agent/kristi-murphy-realtor-exp-realtor-0292-90051494",
     "scraped_at": "2026-09-13T23:02:30.009301+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6738,7 +6941,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RE/MAX Incompass",
@@ -6774,6 +6978,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/remax-incompass-0292-90051818",
     "scraped_at": "2026-09-13T23:02:30.717404+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6795,7 +7000,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Real Estate Professionals LLC",
@@ -6840,6 +7046,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/real-estate-agent/real-estate-professionals-llc-0292-90003329",
     "scraped_at": "2026-09-13T23:02:31.379849+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6861,7 +7068,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "De Maria Homes",
@@ -6920,6 +7128,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-chester/profile/commercial-real-estate/de-maria-homes-0292-90043426",
     "scraped_at": "2026-09-13T23:02:32.023242+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -6941,7 +7150,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Premier Properties Real Estate",
@@ -7002,6 +7212,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greendale/profile/real-estate-agent/premier-properties-real-estate-0292-3007251",
     "scraped_at": "2026-09-13T23:02:32.788707+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7023,7 +7234,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Aurum Realty, LLC",
@@ -7075,6 +7287,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/lawrenceburg/profile/real-estate/aurum-realty-llc-0292-90027975",
     "scraped_at": "2026-09-13T23:02:33.632262+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7096,7 +7309,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -7141,6 +7355,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/monroe/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/160058",
     "scraped_at": "2026-09-13T23:02:34.305350+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7162,7 +7377,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "PARK REALTORS",
@@ -7198,6 +7414,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/morrow/profile/real-estate-agent/park-realtors-0292-11030843",
     "scraped_at": "2026-09-13T23:02:35.007966+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7219,7 +7436,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "HER Realtors",
@@ -7255,6 +7473,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/middletown/profile/real-estate-agent/her-realtors-0292-90025472",
     "scraped_at": "2026-09-13T23:02:35.694016+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7276,7 +7495,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "STAR ONE REALTORS",
@@ -7312,6 +7532,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/rising-sun/profile/real-estate-agent/star-one-realtors-0292-13005187",
     "scraped_at": "2026-09-13T23:02:36.326642+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7333,7 +7554,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Kathy Lakeberg , Sibcy Cline Realtor",
@@ -7378,6 +7600,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/lebanon/profile/real-estate-agent/kathy-lakeberg-sibcy-cline-realtor-0292-2034/addressId/77008",
     "scraped_at": "2026-09-13T23:02:36.986563+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7399,7 +7622,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Duff Brothers Realty Co",
@@ -7435,6 +7659,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/middletown/profile/real-estate-agent/duff-brothers-realty-co-0292-11020579",
     "scraped_at": "2026-09-13T23:02:37.660539+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7456,7 +7681,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Leap Associates, Inc.",
@@ -7507,6 +7733,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/middletown/profile/real-estate-agent/leap-associates-inc-0292-90009093",
     "scraped_at": "2026-09-13T23:02:38.416946+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7528,7 +7755,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Don Hawkins Realty",
@@ -7564,6 +7792,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/middletown-/profile/real-estate-agent/don-hawkins-realty-0292-90003450",
     "scraped_at": "2026-09-13T23:02:39.112979+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7585,7 +7814,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Hawks Landing",
@@ -7637,6 +7867,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/oxford/profile/apartments/hawks-landing-0292-90003900/addressId/117660",
     "scraped_at": "2026-09-13T23:02:40.376159+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7658,7 +7889,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Ragan McKinney Real Estate, LLC.",
@@ -7709,6 +7941,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/mount-orab/profile/real-estate-agent/ragan-mckinney-real-estate-llc-0292-90053503",
     "scraped_at": "2026-09-13T23:02:41.005464+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7730,7 +7963,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Ogden Group",
@@ -7774,6 +8008,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/mount-orab/profile/real-estate-agent/the-ogden-group-0292-90042465",
     "scraped_at": "2026-09-13T23:02:41.612927+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7795,7 +8030,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Harbor Real Estate Services, LLC",
@@ -7844,6 +8080,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/springboro/profile/real-estate-agent/harbor-real-estate-services-llc-0322-1440105562",
     "scraped_at": "2026-09-13T23:02:42.217055+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7865,7 +8102,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "DOUBLE O REALTY",
@@ -7901,6 +8139,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/clarksville/profile/real-estate-agent/double-o-realty-0292-11030800",
     "scraped_at": "2026-09-13T23:02:43.076012+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7922,7 +8161,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Keller Williams Community Partners",
@@ -7966,6 +8206,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/miamisburg/profile/real-estate-agent/keller-williams-community-partners-0322-1440106080",
     "scraped_at": "2026-09-13T23:02:43.725523+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -7987,7 +8228,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Michelle McBride, Berkshire Hathaway Home Services Professional Realty",
@@ -8036,6 +8278,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/germantown/profile/real-estate-agent/michelle-mcbride-berkshire-hathaway-home-services-professional-realty-0322-1440099346",
     "scraped_at": "2026-09-13T23:02:44.458810+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8057,7 +8300,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Ward Realty",
@@ -8093,6 +8337,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/brookville/profile/real-estate-agent/ward-realty-0292-90048741",
     "scraped_at": "2026-09-13T23:02:45.106039+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8114,7 +8359,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Stephen Payne Keller Williams Community Partners",
@@ -8165,6 +8411,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/miamisburg/profile/real-estate-services/stephen-payne-keller-williams-community-partners-0322-55374",
     "scraped_at": "2026-09-13T23:02:46.585745+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8186,7 +8433,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Home Imagined Group",
@@ -8230,6 +8478,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/miamisburg/profile/real-estate-agent/home-imagined-group-0322-49865",
     "scraped_at": "2026-09-13T23:02:47.198779+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8251,7 +8500,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "House Hustle, Inc.",
@@ -8304,6 +8554,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/house-hustle-inc-0322-51969",
     "scraped_at": "2026-09-13T23:02:47.824263+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8325,7 +8576,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Young Kim Realty, LLC",
@@ -8383,6 +8635,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-services/young-kim-realty-llc-0322-33040",
     "scraped_at": "2026-09-13T23:02:48.608259+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8404,7 +8657,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Swick Real Estate Group",
@@ -8462,6 +8716,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/centerville/profile/real-estate/the-swick-real-estate-group-0322-46621",
     "scraped_at": "2026-09-13T23:02:49.414629+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8483,7 +8738,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RH2L",
@@ -8534,6 +8790,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/centerville/profile/real-estate/rh2l-0322-38022",
     "scraped_at": "2026-09-13T23:02:50.327355+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8555,7 +8812,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Julie Suitts, Agent with Keller Williams Advisors",
@@ -8608,6 +8866,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/julie-suitts-agent-with-keller-williams-advisors-0322-1440101583",
     "scraped_at": "2026-09-13T23:02:51.055728+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8629,7 +8888,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Coldwell Banker Heritage",
@@ -8673,6 +8933,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/coldwell-banker-heritage-0322-1440105653",
     "scraped_at": "2026-09-13T23:02:51.761673+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8694,7 +8955,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Willis & Rofe Realty Group",
@@ -8730,6 +8992,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/kettering/profile/real-estate-agent/willis-rofe-realty-group-0322-52215",
     "scraped_at": "2026-09-13T23:02:52.445781+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8751,7 +9014,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Coldwell Banker Heritage Realtors",
@@ -8865,6 +9129,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate/coldwell-banker-heritage-realtors-0322-3178/addressId/3983",
     "scraped_at": "2026-09-13T23:02:53.135886+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8886,7 +9151,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Bridgestream Property Management",
@@ -8950,6 +9216,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate/bridgestream-property-management-0322-1440089283",
     "scraped_at": "2026-09-13T23:02:53.717740+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -8971,7 +9238,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "CFL Properties, LLC",
@@ -9022,6 +9290,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/commercial-real-estate/cfl-properties-llc-0322-407",
     "scraped_at": "2026-09-13T23:02:54.440002+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9043,7 +9312,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Bonita Powell & Steve Pemberton - RE/MAX Ultimate",
@@ -9087,6 +9357,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/oakwood/profile/real-estate-agent/bonita-powell-steve-pemberton-remax-ultimate-0322-46201",
     "scraped_at": "2026-09-13T23:02:55.120699+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9108,7 +9379,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "David Campbell, Realtor",
@@ -9152,6 +9424,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/david-campbell-realtor-0322-1440105882",
     "scraped_at": "2026-09-13T23:02:56.306236+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9173,7 +9446,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kunal Patel Group",
@@ -9225,6 +9499,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate/kunal-patel-group-0322-35548",
     "scraped_at": "2026-09-13T23:02:56.976666+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9246,7 +9521,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sales Pointe Realty",
@@ -9290,6 +9566,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/sales-pointe-realty-0322-33540",
     "scraped_at": "2026-09-13T23:02:57.670803+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9311,7 +9588,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Dayton Realtors",
@@ -9389,6 +9667,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/business-associations/dayton-realtors-0322-19001415",
     "scraped_at": "2026-09-13T23:02:58.385255+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9410,7 +9689,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The Hartman Group",
@@ -9454,6 +9734,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/the-hartman-group-0322-1440107911",
     "scraped_at": "2026-09-13T23:02:59.850231+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9475,7 +9756,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Comtech Realty, LLC",
@@ -9519,6 +9801,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/comtech-realty-llc-0322-8671",
     "scraped_at": "2026-09-13T23:03:00.731126+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9540,7 +9823,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Glasshouse Realty Group, LLC",
@@ -9610,6 +9894,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate/glasshouse-realty-group-llc-0322-51764",
     "scraped_at": "2026-09-13T23:03:01.423376+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9631,7 +9916,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Greater Dayton Real Estate Investors Association",
@@ -9706,6 +9992,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/beavercreek/profile/real-estate-investing/greater-dayton-real-estate-investors-association-0322-5433/addressId/6399",
     "scraped_at": "2026-09-13T23:03:02.152068+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9727,7 +10014,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Howard Hanna Real Estate Services",
@@ -9771,6 +10059,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/xenia/profile/real-estate-agent/howard-hanna-real-estate-services-0322-1440106442",
     "scraped_at": "2026-09-13T23:03:04.478947+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9792,7 +10081,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "H3 Homebuyers",
@@ -9865,6 +10155,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/xenia/profile/home-buyers/h3-homebuyers-0322-1440098251",
     "scraped_at": "2026-09-13T23:03:05.149900+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9886,7 +10177,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Chambers-Fite Realty Co",
@@ -9927,6 +10219,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/hillsboro/profile/real-estate-agent/chambers-fite-realty-co-0292-90055322",
     "scraped_at": "2026-09-13T23:03:06.030140+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -9948,7 +10241,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Bush Realty",
@@ -9992,6 +10286,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/owenton/profile/real-estate-agent/bush-realty-0402-235917665",
     "scraped_at": "2026-09-13T23:03:06.738642+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10013,7 +10308,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "PepZee Realty of Ohio, LLC",
@@ -10068,6 +10364,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/apartments/pepzee-realty-of-ohio-llc-0322-16741",
     "scraped_at": "2026-09-13T23:03:07.478766+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10089,7 +10386,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Shamrock Realty, LLC",
@@ -10148,6 +10446,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/connersville/profile/real-estate/shamrock-realty-llc-0382-90041225",
     "scraped_at": "2026-09-13T23:03:08.188137+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10169,7 +10468,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Grand Properties, LLC",
@@ -10228,6 +10528,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/connersville/profile/real-estate/grand-properties-llc-0382-90041591",
     "scraped_at": "2026-09-13T23:03:08.855563+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10249,7 +10550,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "C.A. Frank Realty, LLC",
@@ -10308,6 +10610,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/connersville/profile/real-estate/ca-frank-realty-llc-0382-90041748",
     "scraped_at": "2026-09-13T23:03:09.474383+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10329,7 +10632,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Johnson & Webb Realtors",
@@ -10373,6 +10677,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/xenia/profile/real-estate-agent/johnson-webb-realtors-0322-50241",
     "scraped_at": "2026-09-13T23:03:10.097842+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10394,7 +10699,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Wright-Patt Realty, Inc.",
@@ -10444,6 +10750,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/beavercreek/profile/real-estate/wright-patt-realty-inc-0322-7249",
     "scraped_at": "2026-09-13T23:03:11.456523+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10465,7 +10772,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sylvia Vance Realty, LLC",
@@ -10509,6 +10817,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/trotwood/profile/real-estate-agent/sylvia-vance-realty-llc-0322-55833",
     "scraped_at": "2026-09-13T23:03:12.239205+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10530,7 +10839,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Corder Properties, LLC",
@@ -10589,6 +10899,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/centerville/profile/real-estate/corder-properties-llc-0382-90041384",
     "scraped_at": "2026-09-13T23:03:13.399458+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10610,7 +10921,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kittyhawk Realty, Inc.",
@@ -10670,6 +10982,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/property-management/kittyhawk-realty-inc-0322-19376",
     "scraped_at": "2026-09-13T23:03:14.099333+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10691,7 +11004,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Northcut Realty",
@@ -10727,6 +11041,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/cynthiana/profile/real-estate-agent/northcut-realty-0402-142324615",
     "scraped_at": "2026-09-13T23:03:14.695412+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10748,7 +11063,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Better Homes and Gardens Real Estate",
@@ -10828,6 +11144,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/connersville/profile/real-estate/better-homes-and-gardens-real-estate-0382-90024569",
     "scraped_at": "2026-09-13T23:03:15.392621+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10849,7 +11166,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "TAH Property Group, LLC",
@@ -10913,6 +11231,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-investing/tah-property-group-llc-0322-50415",
     "scraped_at": "2026-09-13T23:03:16.143842+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -10934,7 +11253,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rhett Baumgartner Commercial Real Estate",
@@ -10993,6 +11313,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/rhett-baumgartner-commercial-real-estate-0382-18001935",
     "scraped_at": "2026-09-13T23:03:16.801873+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11014,7 +11335,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Leis Realty Co.",
@@ -11065,6 +11387,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/englewood/profile/real-estate-agent/leis-realty-co-0322-38896/addressId/25300",
     "scraped_at": "2026-09-13T23:03:17.546974+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11086,7 +11409,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Mark Brunton, Jr., Real Estate Services, LLC",
@@ -11131,6 +11455,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/mark-brunton-jr-real-estate-services-llc-0382-90041066",
     "scraped_at": "2026-09-13T23:03:18.629927+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11152,7 +11477,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "SFC Properties LLC",
@@ -11197,6 +11523,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/property-management/sfc-properties-llc-0382-90040910",
     "scraped_at": "2026-09-13T23:03:19.557764+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11218,7 +11545,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Scott Zula Rl Estate",
@@ -11269,6 +11597,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/scott-zula-rl-estate-0382-90041655",
     "scraped_at": "2026-09-13T23:03:21.257678+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11290,7 +11619,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Jetmore Properties, LLC",
@@ -11349,6 +11679,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/jetmore-properties-llc-0382-90041646",
     "scraped_at": "2026-09-13T23:03:22.356490+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11370,7 +11701,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Choice Realty One",
@@ -11429,6 +11761,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/choice-realty-one-0382-90041576",
     "scraped_at": "2026-09-13T23:03:23.678348+00:00",
+    "website_status": "blocked",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11450,7 +11783,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Lyons Insurance & Real Estate, Inc.",
@@ -11500,6 +11834,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/insurance-agency/lyons-insurance-real-estate-inc-0382-90046323",
     "scraped_at": "2026-09-13T23:03:24.528098+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11521,7 +11856,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Odis Slone Realty",
@@ -11565,6 +11901,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/dayton/profile/real-estate-agent/odis-slone-realty-0322-1440106544",
     "scraped_at": "2026-09-13T23:03:25.209312+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11586,7 +11923,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Keller Williams Home Town Realty",
@@ -11630,6 +11968,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/vandalia/profile/real-estate-agent/keller-williams-home-town-realty-0322-1440089293",
     "scraped_at": "2026-09-13T23:03:25.960363+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11651,7 +11990,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sibcy Cline Vandalia",
@@ -11709,6 +12049,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/vandalia/profile/real-estate-agent/sibcy-cline-vandalia-0322-32350",
     "scraped_at": "2026-09-13T23:03:26.760180+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11730,7 +12071,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RLA Realty, Inc.",
@@ -11775,6 +12117,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/rla-realty-inc-0382-90041094",
     "scraped_at": "2026-09-13T23:03:27.544278+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11796,7 +12139,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Contact/email only, no phone",
-    "contact_readiness_score": 30
+    "contact_readiness_score": 30,
+    "website_dead_flag": 0
   },
   {
     "name": "Wilson Realtors",
@@ -11850,6 +12194,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/west-union/profile/real-estate-broker/wilson-realtors-0292-90051867",
     "scraped_at": "2026-09-13T23:03:28.197493+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11871,7 +12216,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Exodus Realty, LLC",
@@ -11934,6 +12280,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greensburg/profile/real-estate-agent/exodus-realty-llc-0382-90050761",
     "scraped_at": "2026-09-13T23:03:28.924350+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -11955,7 +12302,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Lincoln Realty, Inc.",
@@ -12006,6 +12354,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greensburg/profile/real-estate-services/lincoln-realty-inc-0382-7001582",
     "scraped_at": "2026-09-13T23:03:29.587691+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12027,7 +12376,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Christopher Thompson Real Estate & Auctions",
@@ -12071,6 +12421,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond-/profile/real-estate-agent/christopher-thompson-real-estate-auctions-0382-90052745",
     "scraped_at": "2026-09-13T23:03:30.598374+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12092,7 +12443,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Luis Rodriguez Morales, LLC",
@@ -12143,6 +12495,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate-agent/luis-rodriguez-morales-llc-0382-90041742",
     "scraped_at": "2026-09-13T23:03:31.381157+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12164,7 +12517,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Industries",
@@ -12215,6 +12569,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/industries-0382-90041215",
     "scraped_at": "2026-09-13T23:03:31.994959+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12236,7 +12591,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Anderhous Properties, LLC",
@@ -12295,6 +12651,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/anderhous-properties-llc-0382-90041854",
     "scraped_at": "2026-09-13T23:03:32.705910+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12316,7 +12673,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tiemann Properties, LLC",
@@ -12375,6 +12733,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/tiemann-properties-llc-0382-90042130",
     "scraped_at": "2026-09-13T23:03:33.417308+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12396,7 +12755,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Richmond Community Real Estate, LLC",
@@ -12455,6 +12815,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/richmond-community-real-estate-llc-0382-90041637",
     "scraped_at": "2026-09-13T23:03:34.027062+00:00",
+    "website_status": "dead_404",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12476,7 +12837,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "AMD Property Group, LLC",
@@ -12535,6 +12897,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/richmond/profile/real-estate/amd-property-group-llc-0382-90041635",
     "scraped_at": "2026-09-13T23:03:34.684690+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12556,7 +12919,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Scott Lynch Realty, Inc.",
@@ -12600,6 +12964,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/madison/profile/real-estate-agent/scott-lynch-realty-inc-0402-159136718",
     "scraped_at": "2026-09-13T23:03:35.377438+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12621,7 +12986,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Sand Castle",
@@ -12672,6 +13038,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/greens-fork/profile/real-estate/sand-castle-0382-90041457",
     "scraped_at": "2026-09-13T23:03:36.099854+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12693,7 +13060,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Alverson Family Properties, LLC",
@@ -12752,6 +13120,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/rushville/profile/real-estate/alverson-family-properties-llc-0382-90041639",
     "scraped_at": "2026-09-13T23:03:36.729700+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12773,7 +13142,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Pro Market Real Estate Solutions, Inc",
@@ -12827,6 +13197,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/washington-court-house/profile/title-agent/pro-market-real-estate-solutions-inc-0302-70068803",
     "scraped_at": "2026-09-13T23:03:37.409666+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12848,7 +13219,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Tammy Myers",
@@ -12889,6 +13261,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/washington-court-house/profile/real-estate-agent/tammy-myers-0302-70163506",
     "scraped_at": "2026-09-13T23:03:38.169151+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12910,7 +13283,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Point Realty LLC",
@@ -12965,6 +13339,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/wshngtn-ct-hs/profile/real-estate-services/point-realty-llc-0302-70164523",
     "scraped_at": "2026-09-13T23:03:38.954767+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -12986,7 +13361,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Riddell Realty Group, LLC",
@@ -13045,6 +13421,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/rushville/profile/real-estate/riddell-realty-group-llc-0382-90041386",
     "scraped_at": "2026-09-13T23:03:39.593956+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13066,7 +13443,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Koohns Real Estate",
@@ -13125,6 +13503,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/rushville/profile/real-estate/koohns-real-estate-0382-90042097",
     "scraped_at": "2026-09-13T23:03:40.292405+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13146,7 +13525,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Yazel Group Real Estate",
@@ -13197,6 +13577,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/rushville/profile/real-estate-agent/yazel-group-real-estate-0382-90041011",
     "scraped_at": "2026-09-13T23:03:40.887715+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13218,7 +13599,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Frank Mason, Realtor, Inc.",
@@ -13269,6 +13651,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/georgetown/profile/real-estate-agent/frank-mason-realtor-inc-0402-9106301",
     "scraped_at": "2026-09-13T23:03:41.962734+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13290,7 +13673,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Joan Roberts Realty",
@@ -13326,6 +13710,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/north-vernon/profile/real-estate-agent/joan-roberts-realty-0402-90012736",
     "scraped_at": "2026-09-13T23:03:42.733698+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13347,7 +13732,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Ben Adams RE/MAX Alliance",
@@ -13383,6 +13769,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/troy/profile/real-estate-agent/ben-adams-remax-alliance-0322-53404",
     "scraped_at": "2026-09-13T23:03:43.395177+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13404,7 +13791,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "The Levine Realty Company",
@@ -13448,6 +13836,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/springfield/profile/real-estate-agent/the-levine-realty-company-0322-1440106535",
     "scraped_at": "2026-09-13T23:03:43.988020+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13469,7 +13858,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "LenFitz LLC",
@@ -13505,6 +13895,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/eminence/profile/real-estate-agent/lenfitz-llc-0402-235919439",
     "scraped_at": "2026-09-13T23:03:44.597507+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13526,7 +13917,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Thunder Castle Properties, LLC",
@@ -13585,6 +13977,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/hagerstown/profile/real-estate/thunder-castle-properties-llc-0382-90041693",
     "scraped_at": "2026-09-13T23:03:45.973729+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13606,7 +13999,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Keyed Up Properties LLC",
@@ -13650,6 +14044,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/la-grange/profile/real-estate-agent/keyed-up-properties-llc-0402-235918113",
     "scraped_at": "2026-09-13T23:03:47.034643+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13671,7 +14066,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "McVety Realty",
@@ -13715,6 +14111,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/piqua/profile/real-estate-agent/mcvety-realty-0322-28028",
     "scraped_at": "2026-09-13T23:03:47.605577+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13736,7 +14133,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "D.R. Indiana Realty, LLC",
@@ -13782,6 +14180,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/shelbyville/profile/real-estate-agent/dr-indiana-realty-llc-0382-90009242",
     "scraped_at": "2026-09-13T23:03:48.185664+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13803,7 +14202,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Top Notch Realty, LLC",
@@ -13848,6 +14248,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/new-castle/profile/real-estate/top-notch-realty-llc-0382-90025220",
     "scraped_at": "2026-09-13T23:03:48.928327+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13869,7 +14270,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "ERA Integrity Real Estate",
@@ -13914,6 +14316,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/new-castle/profile/real-estate-agent/era-integrity-real-estate-0382-4000545",
     "scraped_at": "2026-09-13T23:03:49.508734+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -13935,7 +14338,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Properties Unlimited, Inc.",
@@ -13979,6 +14383,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/new-castle/profile/real-estate-agent/properties-unlimited-inc--0382-90039873",
     "scraped_at": "2026-09-13T23:03:50.424233+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14000,7 +14405,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "A.M. Home Team LLC",
@@ -14044,6 +14450,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/shelbyville/profile/real-estate-agent/am-home-team-llc-0382-90058807",
     "scraped_at": "2026-09-13T23:03:51.165589+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14065,7 +14472,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Leading Edge Real Estate, LLC",
@@ -14152,6 +14560,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/london/profile/real-estate/leading-edge-real-estate-llc-0302-70153686",
     "scraped_at": "2026-09-13T23:03:51.829142+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14173,7 +14582,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RB Title Agency LLC",
@@ -14218,6 +14628,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/cincinnati/profile/title-agent/rb-title-agency-llc-0292-90014017",
     "scraped_at": "2026-09-13T23:04:18.500863+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14239,7 +14650,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Awesome Real Estate Inc.",
@@ -14295,6 +14707,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/washington-court-house/profile/real-estate-services/awesome-real-estate-inc-0302-70089206",
     "scraped_at": "2026-09-13T23:06:20.568720+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14316,7 +14729,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "HOME|LAND Of Kentucky Real Estate Professionals",
@@ -14365,6 +14779,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/shelbyville/profile/real-estate-agent/home-land-of-kentucky-real-estate-professionals-0402-159152024",
     "scraped_at": "2026-09-13T23:06:22.618724+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14386,7 +14801,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Real Estate Service Corp",
@@ -14430,6 +14846,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/real-estate-agent/real-estate-service-corp-0402-159137483",
     "scraped_at": "2026-09-13T23:06:23.452665+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14451,7 +14868,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Coldwell Banker Rogers Realty",
@@ -14532,6 +14950,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/shelbyville/profile/real-estate/coldwell-banker-rogers-realty-0402-2026852",
     "scraped_at": "2026-09-13T23:06:24.191699+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14553,7 +14972,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Kentucky Real Estate Buyers",
@@ -14607,6 +15027,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/kentucky-real-estate-buyers-0402-9111382",
     "scraped_at": "2026-09-13T23:06:25.604280+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14628,7 +15049,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Maggie Wells, Realtor | Live in Kentucky Homes",
@@ -14664,6 +15086,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/maggie-wells-realtor---live-in-kentucky-homes-0402-235919583",
     "scraped_at": "2026-09-13T23:06:26.328783+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14685,7 +15108,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "PeakMade Real Estate",
@@ -14751,6 +15175,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/apartments/peakmade-real-estate-0443-27416185/addressId/219422",
     "scraped_at": "2026-09-13T23:06:27.719226+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14772,7 +15197,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "B.C. Wood Properties, LLC",
@@ -14883,6 +15309,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/commercial-real-estate/bc-wood-properties-llc-0402-25000567",
     "scraped_at": "2026-09-13T23:06:28.444129+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14904,7 +15331,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "United Country Wagner Auctioneering & Real Estate",
@@ -14964,6 +15392,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/in/farmland/profile/auctioneer/united-country-wagner-auctioneering-real-estate-0382-90024097",
     "scraped_at": "2026-09-13T23:09:03.180597+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -14985,7 +15414,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "RE/MAX Alliance-The V. Patrick Hamilton Group",
@@ -15021,6 +15451,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/urbana/profile/real-estate-agent/remax-alliance-the-v-patrick-hamilton-group-0302-70151741",
     "scraped_at": "2026-09-13T23:09:04.607022+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15042,7 +15473,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Henderson Land Investment Company",
@@ -15086,6 +15518,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/urbana/profile/real-estate-agent/henderson-land-investment-company-0302-70151794",
     "scraped_at": "2026-09-13T23:09:05.333038+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15107,7 +15540,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "KYTE Insurance Agency Inc",
@@ -15182,6 +15616,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/urbana/profile/real-estate-broker/kyte-insurance-agency-inc-0302-70117779",
     "scraped_at": "2026-09-13T23:09:05.959882+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15203,7 +15638,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Dream Home Realty",
@@ -15247,6 +15683,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/urbana/profile/real-estate-agent/dream-home-realty-0302-70052237",
     "scraped_at": "2026-09-13T23:09:06.638370+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15268,7 +15705,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Thompson, Dunlap & Heydinger, Ltd.",
@@ -15397,6 +15835,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/urbana/profile/attorneys-lawyers/thompson-dunlap-heydinger-ltd-0302-70134299/addressId/182908",
     "scraped_at": "2026-09-13T23:09:07.408044+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15418,7 +15857,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Brooke Viehmann Realtor",
@@ -15462,6 +15902,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/real-estate-agent/brooke-viehmann-realtor-0402-235914640",
     "scraped_at": "2026-09-13T23:11:41.664355+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15483,7 +15924,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -15553,6 +15995,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/131779",
     "scraped_at": "2026-09-13T23:11:48.775633+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15574,7 +16017,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Liberty Federal Credit Union | Crestwood",
@@ -15622,6 +16066,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/credit-union/liberty-federal-credit-union---crestwood-0402-235914019/addressId/196922",
     "scraped_at": "2026-09-13T23:11:49.896348+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15643,7 +16088,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "New Vision Real Estate Services LLC",
@@ -15687,6 +16133,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/new-vision-real-estate-services-llc-0402-235916584",
     "scraped_at": "2026-09-13T23:11:50.608564+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15708,7 +16155,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "The VUE Lexington",
@@ -15753,6 +16201,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/the-vue-lexington-0402-235908194/addressId/189173",
     "scraped_at": "2026-09-13T23:11:51.722143+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15774,7 +16223,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 1
   },
   {
     "name": "DIY Realty, LLC",
@@ -15836,6 +16286,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate/diy-realty-llc-0402-235921373",
     "scraped_at": "2026-09-13T23:11:52.461036+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15857,7 +16308,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Theresa Murphy Realtor",
@@ -15901,6 +16353,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/louisville/profile/real-estate-agent/theresa-murphy-realtor-0402-235914637",
     "scraped_at": "2026-09-13T23:11:53.179906+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -15922,7 +16375,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Rector-Hayden Realtors",
@@ -15979,6 +16433,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/rector-hayden-realtors-0402-9107475",
     "scraped_at": "2026-09-13T23:11:53.974672+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16000,7 +16455,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Timothy E. Beathard & Associates",
@@ -16057,6 +16513,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/london/profile/real-estate-auction-services/timothy-e-beathard-associates-0302-70164928/addressId/251583",
     "scraped_at": "2026-09-13T23:14:31.981200+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16078,7 +16535,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Crager Real Estate",
@@ -16136,6 +16594,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/london/profile/real-estate-agent/crager-real-estate-0302-70090675",
     "scraped_at": "2026-09-13T23:14:32.636497+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16157,7 +16616,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "Buckeye Realty Group LTD",
@@ -16252,6 +16712,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/london/profile/real-estate-agent/buckeye-realty-group-ltd-0302-70119826",
     "scraped_at": "2026-09-13T23:14:33.394450+00:00",
+    "website_status": "ok",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16273,7 +16734,8 @@
     "has_named_contact": 1,
     "has_email": 0,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 0
   },
   {
     "name": "DarbyView Realty",
@@ -16309,6 +16771,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/london/profile/real-estate-agent/darbyview-realty-0302-70153591",
     "scraped_at": "2026-09-13T23:14:35.032293+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16330,7 +16793,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "Heart of it All",
@@ -16382,6 +16846,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/oh/london/profile/real-estate/heart-of-it-all-0302-70106037",
     "scraped_at": "2026-09-13T23:14:35.897231+00:00",
+    "website_status": "dead_unreachable",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16403,7 +16868,8 @@
     "has_named_contact": 1,
     "has_email": 1,
     "contact_readiness": "Phone + named contact",
-    "contact_readiness_score": 100
+    "contact_readiness_score": 100,
+    "website_dead_flag": 1
   },
   {
     "name": "Liberty Financial a Division of ETFCU",
@@ -16418,7 +16884,7 @@
     "rating": "A+",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -16436,6 +16902,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/crestwood/profile/credit-union/liberty-financial-a-division-of-etfcu-0402-32000131/addressId/131779",
     "scraped_at": "2026-09-13T23:00:39.146624+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16457,7 +16924,8 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   },
   {
     "name": "The VUE Lexington",
@@ -16472,7 +16940,7 @@
     "rating": "F",
     "accredited": false,
     "accreditation_status": "",
-    "years_in_business": "",
+    "years_in_business": null,
     "business_started": "",
     "primary_category_name": "",
     "categories": [
@@ -16487,6 +16955,7 @@
     "lon": "",
     "profile_url": "https://www.bbb.org/us/ky/lexington/profile/real-estate-agent/the-vue-lexington-0402-235908194/addressId/189173",
     "scraped_at": "2026-09-13T23:00:39.146651+00:00",
+    "website_status": "no_website",
     "last_updated": "2026-09-13",
     "on_yelp": false,
     "yelp_name": "",
@@ -16508,6 +16977,7 @@
     "has_named_contact": 0,
     "has_email": 0,
     "contact_readiness": "Phone only",
-    "contact_readiness_score": 75
+    "contact_readiness_score": 75,
+    "website_dead_flag": 0
   }
 ]

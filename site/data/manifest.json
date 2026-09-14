@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T16:15:40.659137+00:00",
+  "generated_at": "2026-09-14T19:14:00.566333+00:00",
   "datasets": [
     {
       "id": "real-estate-agents--atlanta-ga",
@@ -120,16 +120,6 @@
       "yelp_matched": 13,
       "top_lead_score": 84.0,
       "file": "real-estate-agents--new-york-ny.json"
-    },
-    {
-      "id": "car-dealers--providence-ri",
-      "industry": "Car Dealers",
-      "metro": "Providence, RI",
-      "record_count": 2002,
-      "has_yelp": false,
-      "yelp_matched": 0,
-      "top_lead_score": 65.0,
-      "file": "car-dealers--providence-ri.json"
     },
     {
       "id": "landscapers--sacramento-ca",
