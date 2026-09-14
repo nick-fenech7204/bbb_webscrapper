@@ -13,6 +13,32 @@ def test_load_from_real_categories_file():
     assert cpa.name == "CPA"
 
 
+def test_load_from_real_angi_categories_file():
+    """Same CategoryDirectory, a second real taxonomy -- Angi's companylist
+    categories (data/reference/README.md's angi_categories.json section:
+    167 entries, confirmed 2026-09-14, id/slug is the Angi URL slug)."""
+    directory = CategoryDirectory.load(Path("data/reference/angi_categories.json"))
+    all_categories = directory.all()
+    assert len(all_categories) == 167
+    assert len({c.id for c in all_categories}) == 167  # no duplicate slugs
+    assert len({c.name for c in all_categories}) == 167  # no duplicate names
+
+    hvac = directory.get("hvac")
+    assert hvac is not None
+    assert hvac.name == "HVAC Companies"
+    assert hvac.slug == "hvac"
+
+    # A real example of the "label isn't a simple slugification" gotcha
+    # (see the README) -- pins it so a bad re-fetch can't silently drift.
+    antenna = directory.get("tv-antenna")
+    assert antenna is not None
+    assert antenna.name == "Antenna Repair"
+
+    # Angi is home-services only -- confirmed absent, not just unchecked.
+    assert directory.search("Dentist") == []
+    assert directory.search("Car Dealer") == []
+
+
 def test_load_missing_file_returns_empty_directory(tmp_path):
     directory = CategoryDirectory.load(tmp_path / "does_not_exist.json")
     assert directory.all() == []

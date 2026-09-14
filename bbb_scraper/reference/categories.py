@@ -1,10 +1,12 @@
 """
-Category directory: loads BBB's industry/category taxonomy from a local JSON
-file and provides lookup/search over it.
-
-The taxonomy itself is data, not code -- it lives at
-data/reference/categories.json (see scripts/fetch_categories.py for how to
-populate it from BBB). This module just knows how to load and query it.
+Category directory: loads an industry/category taxonomy from a local JSON
+file and provides lookup/search over it. Generic over which taxonomy --
+BBB's own (data/reference/categories.json, see scripts/fetch_categories.py)
+and Angi's companylist taxonomy (data/reference/angi_categories.json, see
+scripts/fetch_angi_categories.py) are both just a `CategoryDirectory.load()`
+call away, same id/name/slug shape either way (see data/reference/README.md
+for each file's schema and how it was built). This module just knows how to
+load and query *a* taxonomy; it isn't BBB-specific.
 """
 from __future__ import annotations
 

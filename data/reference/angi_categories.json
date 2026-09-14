@@ -1,0 +1,837 @@
+[
+  {
+    "id": "air-duct-cleaning",
+    "name": "Air Duct Cleaning",
+    "slug": "air-duct-cleaning"
+  },
+  {
+    "id": "animal-removal",
+    "name": "Animal Removal",
+    "slug": "animal-removal"
+  },
+  {
+    "id": "tv-antenna",
+    "name": "Antenna Repair",
+    "slug": "tv-antenna"
+  },
+  {
+    "id": "appliance-repair",
+    "name": "Appliance Repair",
+    "slug": "appliance-repair"
+  },
+  {
+    "id": "architects",
+    "name": "Architect",
+    "slug": "architects"
+  },
+  {
+    "id": "asbestos-removal",
+    "name": "Asbestos Removal",
+    "slug": "asbestos-removal"
+  },
+  {
+    "id": "awnings",
+    "name": "Awnings",
+    "slug": "awnings"
+  },
+  {
+    "id": "remodeling-basements",
+    "name": "Basement Remodeling",
+    "slug": "remodeling-basements"
+  },
+  {
+    "id": "basement-waterproofing",
+    "name": "Basement Waterproofing",
+    "slug": "basement-waterproofing"
+  },
+  {
+    "id": "basketball-goals",
+    "name": "Basketball Hoop Installation",
+    "slug": "basketball-goals"
+  },
+  {
+    "id": "bathtub-refinishing",
+    "name": "Bathtub Refinishing",
+    "slug": "bathtub-refinishing"
+  },
+  {
+    "id": "biohazard-remediation",
+    "name": "Biohazard Cleanup",
+    "slug": "biohazard-remediation"
+  },
+  {
+    "id": "blind-cleaning",
+    "name": "Blind Cleaning",
+    "slug": "blind-cleaning"
+  },
+  {
+    "id": "cabinet-makers",
+    "name": "Cabinet Makers",
+    "slug": "cabinet-makers"
+  },
+  {
+    "id": "cabinet-refinishing",
+    "name": "Cabinet Refacing",
+    "slug": "cabinet-refinishing"
+  },
+  {
+    "id": "carpet-cleaning",
+    "name": "Carpet Cleaning",
+    "slug": "carpet-cleaning"
+  },
+  {
+    "id": "carpet",
+    "name": "Carpet Installation",
+    "slug": "carpet"
+  },
+  {
+    "id": "ceiling-fans",
+    "name": "Ceiling Fan Installation",
+    "slug": "ceiling-fans"
+  },
+  {
+    "id": "central-vacuum-cleaners",
+    "name": "Central Vacuum Cleaning",
+    "slug": "central-vacuum-cleaners"
+  },
+  {
+    "id": "childproofing",
+    "name": "Childproofing",
+    "slug": "childproofing"
+  },
+  {
+    "id": "chimney-caps",
+    "name": "Chimney Cap Repair",
+    "slug": "chimney-caps"
+  },
+  {
+    "id": "chimney-repair",
+    "name": "Chimney Repair",
+    "slug": "chimney-repair"
+  },
+  {
+    "id": "chimney-sweep",
+    "name": "Chimney Sweep",
+    "slug": "chimney-sweep"
+  },
+  {
+    "id": "cleaning",
+    "name": "Cleaning Services",
+    "slug": "cleaning"
+  },
+  {
+    "id": "closets",
+    "name": "Closet Design",
+    "slug": "closets"
+  },
+  {
+    "id": "computer-repair",
+    "name": "Computer Repair",
+    "slug": "computer-repair"
+  },
+  {
+    "id": "concrete-driveways",
+    "name": "Concrete Driveways",
+    "slug": "concrete-driveways"
+  },
+  {
+    "id": "concrete-repair",
+    "name": "Concrete Repair",
+    "slug": "concrete-repair"
+  },
+  {
+    "id": "countertops",
+    "name": "Countertop Installation",
+    "slug": "countertops"
+  },
+  {
+    "id": "deck-maintenance",
+    "name": "Deck Cleaning",
+    "slug": "deck-maintenance"
+  },
+  {
+    "id": "decks-and-porches",
+    "name": "Decks & Porches",
+    "slug": "decks-and-porches"
+  },
+  {
+    "id": "dock-building-repair",
+    "name": "Dock Building",
+    "slug": "dock-building-repair"
+  },
+  {
+    "id": "pet-fencing",
+    "name": "Dog Fencing",
+    "slug": "pet-fencing"
+  },
+  {
+    "id": "doors",
+    "name": "Door Installation",
+    "slug": "doors"
+  },
+  {
+    "id": "drain-cleaning",
+    "name": "Drain Cleaning",
+    "slug": "drain-cleaning"
+  },
+  {
+    "id": "drain-pipe-installation",
+    "name": "Drain Pipe Installation",
+    "slug": "drain-pipe-installation"
+  },
+  {
+    "id": "drapery-cleaning",
+    "name": "Drapery Cleaning",
+    "slug": "drapery-cleaning"
+  },
+  {
+    "id": "driveway-gates",
+    "name": "Driveway Gate Installation",
+    "slug": "driveway-gates"
+  },
+  {
+    "id": "driveways",
+    "name": "Driveway Pavers",
+    "slug": "driveways"
+  },
+  {
+    "id": "dryer-vent-cleaning",
+    "name": "Dryer Vent Cleaning",
+    "slug": "dryer-vent-cleaning"
+  },
+  {
+    "id": "drywall",
+    "name": "Drywall",
+    "slug": "drywall"
+  },
+  {
+    "id": "dumpster-rental",
+    "name": "Dumpster Rental",
+    "slug": "dumpster-rental"
+  },
+  {
+    "id": "earthquake-retrofit",
+    "name": "Earthquake Retrofitting",
+    "slug": "earthquake-retrofit"
+  },
+  {
+    "id": "egress",
+    "name": "Egress Window",
+    "slug": "egress"
+  },
+  {
+    "id": "electrical",
+    "name": "Electrician",
+    "slug": "electrical"
+  },
+  {
+    "id": "epoxy-flooring",
+    "name": "Epoxy Flooring",
+    "slug": "epoxy-flooring"
+  },
+  {
+    "id": "excavating",
+    "name": "Excavating",
+    "slug": "excavating"
+  },
+  {
+    "id": "fencing",
+    "name": "Fence Company",
+    "slug": "fencing"
+  },
+  {
+    "id": "fireplaces",
+    "name": "Fireplace Services",
+    "slug": "fireplaces"
+  },
+  {
+    "id": "firewood",
+    "name": "Firewood Company",
+    "slug": "firewood"
+  },
+  {
+    "id": "buffing-and-polishing",
+    "name": "Floor Buffing",
+    "slug": "buffing-and-polishing"
+  },
+  {
+    "id": "floor-cleaning",
+    "name": "Floor Cleaning",
+    "slug": "floor-cleaning"
+  },
+  {
+    "id": "flooring",
+    "name": "Flooring",
+    "slug": "flooring"
+  },
+  {
+    "id": "foundation-repair",
+    "name": "Foundation Repair",
+    "slug": "foundation-repair"
+  },
+  {
+    "id": "fountains",
+    "name": "Fountains",
+    "slug": "fountains"
+  },
+  {
+    "id": "furniture-refinishing",
+    "name": "Furniture Refinishing",
+    "slug": "furniture-refinishing"
+  },
+  {
+    "id": "garage-builders",
+    "name": "Garage Building",
+    "slug": "garage-builders"
+  },
+  {
+    "id": "garage-doors",
+    "name": "Garage Doors",
+    "slug": "garage-doors"
+  },
+  {
+    "id": "gas-logs",
+    "name": "Gas Fireplace Repair",
+    "slug": "gas-logs"
+  },
+  {
+    "id": "gas-leak-repair",
+    "name": "Gas Leak Repair",
+    "slug": "gas-leak-repair"
+  },
+  {
+    "id": "contractor",
+    "name": "General Contractors",
+    "slug": "contractor"
+  },
+  {
+    "id": "generator-installers",
+    "name": "Generator Service",
+    "slug": "generator-installers"
+  },
+  {
+    "id": "glass-block",
+    "name": "Glass Block",
+    "slug": "glass-block"
+  },
+  {
+    "id": "glass-and-mirrors",
+    "name": "Glass Repair",
+    "slug": "glass-and-mirrors"
+  },
+  {
+    "id": "gas-grill-repair",
+    "name": "Grill Repair",
+    "slug": "gas-grill-repair"
+  },
+  {
+    "id": "gutter-cleaning",
+    "name": "Gutter Cleaning",
+    "slug": "gutter-cleaning"
+  },
+  {
+    "id": "gutter-repair-replacement",
+    "name": "Gutter Repair",
+    "slug": "gutter-repair-replacement"
+  },
+  {
+    "id": "handyman-service",
+    "name": "Handyman",
+    "slug": "handyman-service"
+  },
+  {
+    "id": "landscaping-hardscaping-and-pavers",
+    "name": "Hardscaping",
+    "slug": "landscaping-hardscaping-and-pavers"
+  },
+  {
+    "id": "hardwood-flooring",
+    "name": "Hardwood Floors",
+    "slug": "hardwood-flooring"
+  },
+  {
+    "id": "hauling",
+    "name": "Hauling",
+    "slug": "hauling"
+  },
+  {
+    "id": "heating-oil-companies",
+    "name": "Heating Oil Company",
+    "slug": "heating-oil-companies"
+  },
+  {
+    "id": "holiday-decorating",
+    "name": "Holiday Decorating",
+    "slug": "holiday-decorating"
+  },
+  {
+    "id": "home-automation",
+    "name": "Home Automation",
+    "slug": "home-automation"
+  },
+  {
+    "id": "home-builders",
+    "name": "Home Builder",
+    "slug": "home-builders"
+  },
+  {
+    "id": "energy-audit",
+    "name": "Home Energy Audit",
+    "slug": "energy-audit"
+  },
+  {
+    "id": "home-inspection",
+    "name": "Home Inspection",
+    "slug": "home-inspection"
+  },
+  {
+    "id": "kitchen-and-bath-remodeling",
+    "name": "Home Remodeling",
+    "slug": "kitchen-and-bath-remodeling"
+  },
+  {
+    "id": "home-security-systems",
+    "name": "Home Security Systems",
+    "slug": "home-security-systems"
+  },
+  {
+    "id": "home-staging",
+    "name": "Home Staging",
+    "slug": "home-staging"
+  },
+  {
+    "id": "home-theater-systems",
+    "name": "Home Theater Installation",
+    "slug": "home-theater-systems"
+  },
+  {
+    "id": "home-warranty-companies",
+    "name": "Home Warranty",
+    "slug": "home-warranty-companies"
+  },
+  {
+    "id": "house-cleaning",
+    "name": "House Cleaning",
+    "slug": "house-cleaning"
+  },
+  {
+    "id": "exterior-painting",
+    "name": "House Painting",
+    "slug": "exterior-painting"
+  },
+  {
+    "id": "hurricane-shutters",
+    "name": "Hurricane Shutters",
+    "slug": "hurricane-shutters"
+  },
+  {
+    "id": "hvac",
+    "name": "HVAC Companies",
+    "slug": "hvac"
+  },
+  {
+    "id": "insulation",
+    "name": "Insulation",
+    "slug": "insulation"
+  },
+  {
+    "id": "interior-design",
+    "name": "Interior Decorators",
+    "slug": "interior-design"
+  },
+  {
+    "id": "interior-painting",
+    "name": "Interior Painting",
+    "slug": "interior-painting"
+  },
+  {
+    "id": "wrought-iron",
+    "name": "Iron Work",
+    "slug": "wrought-iron"
+  },
+  {
+    "id": "lawn-irrigation",
+    "name": "Irrigation System",
+    "slug": "lawn-irrigation"
+  },
+  {
+    "id": "appraisals",
+    "name": "Jewelry Appraising",
+    "slug": "appraisals"
+  },
+  {
+    "id": "land-surveying",
+    "name": "Land Surveyors",
+    "slug": "land-surveying"
+  },
+  {
+    "id": "landscaping-lighting",
+    "name": "Landscape Lighting",
+    "slug": "landscaping-lighting"
+  },
+  {
+    "id": "appliance-sales",
+    "name": "Large Appliances",
+    "slug": "appliance-sales"
+  },
+  {
+    "id": "landscaping",
+    "name": "Lawn & Landscaping",
+    "slug": "landscaping"
+  },
+  {
+    "id": "lawn-and-yard-work",
+    "name": "Lawn Care",
+    "slug": "lawn-and-yard-work"
+  },
+  {
+    "id": "lawn-mower-repair",
+    "name": "Lawn Mower Repair",
+    "slug": "lawn-mower-repair"
+  },
+  {
+    "id": "lawn-fertilization-and-treatment",
+    "name": "Lawn Treatment",
+    "slug": "lawn-fertilization-and-treatment"
+  },
+  {
+    "id": "lead-testing-and-removal",
+    "name": "Lead Paint Removal",
+    "slug": "lead-testing-and-removal"
+  },
+  {
+    "id": "leaf-removal",
+    "name": "Leaf Removal",
+    "slug": "leaf-removal"
+  },
+  {
+    "id": "leather-and-vinyl-repair",
+    "name": "Leather Repair",
+    "slug": "leather-and-vinyl-repair"
+  },
+  {
+    "id": "lighting",
+    "name": "Lighting",
+    "slug": "lighting"
+  },
+  {
+    "id": "locksmiths",
+    "name": "Locksmith",
+    "slug": "locksmiths"
+  },
+  {
+    "id": "mailbox-repair",
+    "name": "Mailbox Repair",
+    "slug": "mailbox-repair"
+  },
+  {
+    "id": "marble-and-granite",
+    "name": "Marble & Granite",
+    "slug": "marble-and-granite"
+  },
+  {
+    "id": "masonry",
+    "name": "Masonry",
+    "slug": "masonry"
+  },
+  {
+    "id": "metal-fabrication-and-restoration",
+    "name": "Metal Fabrication",
+    "slug": "metal-fabrication-and-restoration"
+  },
+  {
+    "id": "remodeling-modular-and-mobile-home",
+    "name": "Mobile Home Remodeling",
+    "slug": "remodeling-modular-and-mobile-home"
+  },
+  {
+    "id": "mold-testing-and-remediation",
+    "name": "Mold Removal",
+    "slug": "mold-testing-and-remediation"
+  },
+  {
+    "id": "moving",
+    "name": "Movers",
+    "slug": "moving"
+  },
+  {
+    "id": "concrete-leveling",
+    "name": "Mudjacking",
+    "slug": "concrete-leveling"
+  },
+  {
+    "id": "mulch-and-topsoil",
+    "name": "Mulch Delivering",
+    "slug": "mulch-and-topsoil"
+  },
+  {
+    "id": "plant-nurseries",
+    "name": "Nurseries",
+    "slug": "plant-nurseries"
+  },
+  {
+    "id": "oriental-rug-cleaning",
+    "name": "Oriental Rug Cleaning",
+    "slug": "oriental-rug-cleaning"
+  },
+  {
+    "id": "outdoor-kitchens",
+    "name": "Outdoor Kitchens",
+    "slug": "outdoor-kitchens"
+  },
+  {
+    "id": "sunroom-and-patio-remodeling",
+    "name": "Patio Enclosures",
+    "slug": "sunroom-and-patio-remodeling"
+  },
+  {
+    "id": "patios",
+    "name": "Patios",
+    "slug": "patios"
+  },
+  {
+    "id": "pest-control",
+    "name": "Pest Control",
+    "slug": "pest-control"
+  },
+  {
+    "id": "home-phone-service",
+    "name": "Phone Company",
+    "slug": "home-phone-service"
+  },
+  {
+    "id": "phone-repair",
+    "name": "Phone Repair",
+    "slug": "phone-repair"
+  },
+  {
+    "id": "piano-moving",
+    "name": "Piano Movers",
+    "slug": "piano-moving"
+  },
+  {
+    "id": "plaster-plaster-repair",
+    "name": "Plastering",
+    "slug": "plaster-plaster-repair"
+  },
+  {
+    "id": "playground-equipment",
+    "name": "Playground Equipment Installation",
+    "slug": "playground-equipment"
+  },
+  {
+    "id": "plumbing",
+    "name": "Plumbers",
+    "slug": "plumbing"
+  },
+  {
+    "id": "pool-and-spa-service",
+    "name": "Pool Cleaning",
+    "slug": "pool-and-spa-service"
+  },
+  {
+    "id": "swimming-pools",
+    "name": "Pool Installers",
+    "slug": "swimming-pools"
+  },
+  {
+    "id": "pressure-washing",
+    "name": "Pressure Washing",
+    "slug": "pressure-washing"
+  },
+  {
+    "id": "home-and-garage-organization",
+    "name": "Professional Organizers",
+    "slug": "home-and-garage-organization"
+  },
+  {
+    "id": "radon-testing",
+    "name": "Radon Mitigation",
+    "slug": "radon-testing"
+  },
+  {
+    "id": "real-estate-agents",
+    "name": "Real Estate Agent",
+    "slug": "real-estate-agents"
+  },
+  {
+    "id": "property-appraiser",
+    "name": "Real Estate Appraising",
+    "slug": "property-appraiser"
+  },
+  {
+    "id": "roof-cleaning",
+    "name": "Roof Cleaning",
+    "slug": "roof-cleaning"
+  },
+  {
+    "id": "roof-ice-and-snow-removal",
+    "name": "Roof Snow Removal",
+    "slug": "roof-ice-and-snow-removal"
+  },
+  {
+    "id": "roofing",
+    "name": "Roofing",
+    "slug": "roofing"
+  },
+  {
+    "id": "roto-tilling",
+    "name": "Rototilling",
+    "slug": "roto-tilling"
+  },
+  {
+    "id": "satellite-tv-service",
+    "name": "Satellite Tv",
+    "slug": "satellite-tv-service"
+  },
+  {
+    "id": "screen-repair",
+    "name": "Screen Repair",
+    "slug": "screen-repair"
+  },
+  {
+    "id": "septic-tank",
+    "name": "Septic Tank Service",
+    "slug": "septic-tank"
+  },
+  {
+    "id": "sewer-cleaning",
+    "name": "Sewer Cleaning",
+    "slug": "sewer-cleaning"
+  },
+  {
+    "id": "siding",
+    "name": "Siding Companies",
+    "slug": "siding"
+  },
+  {
+    "id": "skylights",
+    "name": "Skylight Installation",
+    "slug": "skylights"
+  },
+  {
+    "id": "small-appliance-repair",
+    "name": "Small Appliance Repair",
+    "slug": "small-appliance-repair"
+  },
+  {
+    "id": "snow-removal",
+    "name": "Snow Removal",
+    "slug": "snow-removal"
+  },
+  {
+    "id": "solar-panels",
+    "name": "Solar Companies",
+    "slug": "solar-panels"
+  },
+  {
+    "id": "concrete-stamped-decorative",
+    "name": "Stamped Concrete",
+    "slug": "concrete-stamped-decorative"
+  },
+  {
+    "id": "stone-and-gravel",
+    "name": "Stone & Gravel",
+    "slug": "stone-and-gravel"
+  },
+  {
+    "id": "structural-engineering",
+    "name": "Structural Engineering",
+    "slug": "structural-engineering"
+  },
+  {
+    "id": "stucco",
+    "name": "Stucco",
+    "slug": "stucco"
+  },
+  {
+    "id": "ceramic-tile",
+    "name": "Tile Installation",
+    "slug": "ceramic-tile"
+  },
+  {
+    "id": "garbage-collection",
+    "name": "Trash Removal",
+    "slug": "garbage-collection"
+  },
+  {
+    "id": "tree-service",
+    "name": "Tree Service",
+    "slug": "tree-service"
+  },
+  {
+    "id": "upholstering",
+    "name": "Upholstery",
+    "slug": "upholstering"
+  },
+  {
+    "id": "upholstery-cleaning",
+    "name": "Upholstery Cleaning",
+    "slug": "upholstery-cleaning"
+  },
+  {
+    "id": "wallpapering",
+    "name": "Wallpaper Hanger",
+    "slug": "wallpapering"
+  },
+  {
+    "id": "wallpaper-removal",
+    "name": "Wallpaper Removal",
+    "slug": "wallpaper-removal"
+  },
+  {
+    "id": "water-and-smoke-damage",
+    "name": "Water Damage Restoration",
+    "slug": "water-and-smoke-damage"
+  },
+  {
+    "id": "water-heaters",
+    "name": "Water Heaters",
+    "slug": "water-heaters"
+  },
+  {
+    "id": "water-softeners",
+    "name": "Water Softeners",
+    "slug": "water-softeners"
+  },
+  {
+    "id": "welding",
+    "name": "Welding",
+    "slug": "welding"
+  },
+  {
+    "id": "wells-and-pumps",
+    "name": "Well & Water Pump Repair",
+    "slug": "wells-and-pumps"
+  },
+  {
+    "id": "window-cleaning",
+    "name": "Window Cleaning",
+    "slug": "window-cleaning"
+  },
+  {
+    "id": "windows",
+    "name": "Window Replacement",
+    "slug": "windows"
+  },
+  {
+    "id": "hurricane-film",
+    "name": "Window Security Film",
+    "slug": "hurricane-film"
+  },
+  {
+    "id": "window-tinting",
+    "name": "Window Tinting",
+    "slug": "window-tinting"
+  },
+  {
+    "id": "window-treatments",
+    "name": "Window Treatment",
+    "slug": "window-treatments"
+  },
+  {
+    "id": "woodworking",
+    "name": "Woodworking",
+    "slug": "woodworking"
+  }
+]

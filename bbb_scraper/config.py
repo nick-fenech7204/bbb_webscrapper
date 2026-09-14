@@ -72,6 +72,14 @@ class Settings(BaseSettings):
     metros_file: Path = Field(
         default=Path("data/reference/metros.json"), alias="METROS_FILE"
     )
+    # Angi's own companylist category taxonomy (167 entries, confirmed
+    # 2026-09-14 global/canonical across cities) -- used to seed the
+    # Streamlit industry picker so a chosen category is guaranteed to also
+    # resolve on Angi. See data/reference/README.md and
+    # scripts/fetch_angi_categories.py.
+    angi_categories_file: Path = Field(
+        default=Path("data/reference/angi_categories.json"), alias="ANGI_CATEGORIES_FILE"
+    )
     # Only used by scripts/build_us_cities.py (a one-time reference-data build,
     # not the running app) -- free signup: https://api.census.gov/data/key_signup.html
     census_api_key: str = Field(default="", alias="CENSUS_API_KEY")

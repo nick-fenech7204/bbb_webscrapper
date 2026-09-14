@@ -67,6 +67,66 @@ even before `fetch_categories.py` exists.
   needs to be a phrase BBB actually recognizes -- not just a display label.
 - `slug` -- optional, informational only (not used in the request).
 
+# angi_categories.json
+
+Angi's full companylist category taxonomy -- **167 entries**, confirmed
+2026-09-14 by rendering a real city hub page (e.g.
+`https://www.angi.com/companylist/us/ny/albany/`) and reading its "Top
+categories" links. Loaded via the same `CategoryDirectory` class as
+`categories.json` above (`CategoryDirectory.load(settings.angi_categories_file)`)
+-- the schema is identical, so nothing new was needed to query it.
+
+Seeds the Streamlit batch app's industry picker (a dropdown of these 167
+names, `accept_new_options=True` so typing something else still works):
+picking one from the list guarantees it also resolves as a real Angi
+category once Angi matching is built, vs. typing free text, which is
+guaranteed to work for BBB (its search takes any phrase) but not
+necessarily for Angi.
+
+**Angi is a home-services marketplace, not a general local-business
+directory like BBB** -- confirmed by checking the raw category page
+directly: no "Dentist"/"Dental" entry, no "Car Deal(ers)"/"Auto Deal(ers)"
+entry, anywhere in the 167. "Real Estate Agent" is a real entry, most of
+the rest are home-improvement/home-maintenance trades (plumbing,
+electrical, roofing, landscaping, HVAC, cleaning, remodeling, ...). This
+list is not a substitute for BBB's own (much broader) taxonomy -- it's a
+second, narrower one for the categories where cross-referencing Angi is
+actually possible.
+
+**The label shown on the page is often not a simple slugification of the
+URL slug** -- confirmed on real examples, not assumed: "Antenna Repair" is
+`tv-antenna.htm`, "Basement Remodeling" is `remodeling-basements.htm`,
+"Garage Building" is `garage-builders.htm`, "HVAC Companies" is `hvac.htm`.
+That's why this file exists as harvested label/slug *pairs* rather than
+something a caller derives from the label at request time.
+
+Confirmed global/canonical, not per-city: the same label/slug pairs showed
+up on two unrelated cities' hub pages (Lansing, NY and Albany, NY) --
+there's one taxonomy, not one per city, so any real city's hub page is a
+valid source to (re-)harvest it from.
+
+Built by `python scripts/fetch_angi_categories.py` (no API key or proxy
+needed -- a single plain request, same as `metros.json`, not
+auto-regenerated; re-run by hand if Angi adds/renames/removes a category).
+Raw HTML for each fetch is captured under `data/raw/angi_categories/` first,
+same "save the raw payload before parsing" pattern as every other scraped
+page in this project.
+
+## Schema
+
+```json
+{ "id": "hvac", "name": "HVAC Companies", "slug": "hvac" }
+```
+
+- `id` -- the Angi URL slug, reused as the stable lookup key (unlike
+  `categories.json`, there's no separate internal id scheme here -- the
+  slug already is one).
+- `name` -- the display label shown on Angi's own category link. Not sent
+  in any request; what a person picks in the dropdown.
+- `slug` -- same value as `id`, kept as its own field because a caller
+  building a URL (`.../{slug}.htm`) wants it semantically, not because it
+  ever differs from `id` for this file.
+
 # us_cities.csv
 
 Every US incorporated place *and* census-designated place (CDP), with real
