@@ -377,6 +377,69 @@ derived scores -- every other raw Yelp field (phone, id, price, hours,
 site footer credits Yelp, and every matched record links back to its real
 Yelp page.
 
+## Dead-website check
+
+`bbb_scraper/webcheck/` -- a second, separate sales angle from reputation
+scoring: a business with a dead or parked website is a lead for "we'll
+build you a website", independent of whether their BBB/Yelp reputation
+also needs help. Checks the URL BBB has on file for each business, not
+BBB or Yelp themselves.
+
+Deliberately conservative about what it calls dead -- a false "your
+website is down" is worse than missing a real one, since it's the opening
+line of an actual pitch. Only three signals count:
+
+1. **Unreachable** -- DNS doesn't resolve, connection refused/times out,
+   or TLS fails. A real visitor gets nothing either.
+2. **HTTP 404 / 410** on the business's own listed URL.
+3. **Parked/for-sale domain** -- resolves and returns 200, but the page is
+   a registrar parking/marketplace page (GoDaddy, Sedo, HugeDomains, ...),
+   not the business's real site. A lapsed domain often lands here instead
+   of erroring outright, and it's just as sellable a signal as a 404.
+
+Everything else -- 401/403/429 ("blocked", plenty of real working sites
+block non-browser traffic), a 5xx (might be a transient blip) -- is
+recorded but **not** asserted dead. Uses `curl_cffi` with browser
+impersonation (like the BBB client) specifically so a small site's basic
+bot-check doesn't get misread as "the business's website is dead" -- not
+because these sites need bypassing. No proxy: one request per unique
+domain across many different hosts, not the repeated-single-host pattern
+that needs BBB's residential IP.
+
+`bbb_scraper/webcheck/checker.py` -- `check_website(url)`, one URL, never
+raises (an unexpected failure comes back `status="check_failed"`, not
+asserted dead -- fail open). `bbb_scraper/webcheck/enrich.py` --
+`check_websites(records)`: dedupes by URL (branch listings sharing one
+site get checked once), and a read-through disk cache
+(`data/raw/webcheck/cache.json`, 30-day TTL by default) so re-running
+doesn't re-check a URL confirmed recently. Bounded concurrency
+(`ThreadPoolExecutor`, default 10 workers) -- normal for a one-off sweep
+across many different hosts, not a burst against one site.
+
+**Standalone script**, not wired into the batch scraper (yet -- a
+deliberate choice, since it's a new, separate category of "who are we
+sending requests to" worth proving out on its own first):
+
+```bash
+# on a batch checkpoint (the useful target -- feeds straight back into publish)
+python scripts/check_dead_websites.py data/processed/batch/electricians--los-angeles-ca.csv \
+    --website-field bbb_website --in-place
+python scripts/publish_site_data.py --master data/processed/batch/electricians--los-angeles-ca.csv \
+    --industry "Electricians" --metro "Los Angeles, CA"
+
+# on a raw BBB CSV (bare `website` column, the default --website-field)
+python scripts/check_dead_websites.py data/processed/businesses.csv
+```
+
+Writes back `website_dead` / `website_status` / `website_checked_at`
+(bare or `bbb_`-prefixed to match whatever shape the input already is --
+see `derive_output_fields`). `merge.py`'s `_INTEL` picks up
+`bbb_website_dead` as `website_dead_flag` (0 when never checked, never
+guessed at), which reaches the public site as a **"No live website"**
+badge on the Flags column and a **"Website down"** badge in place of the
+normal link on the Website column -- hover either for the specific reason
+(404 / unreachable / parked).
+
 ## UI
 
 One [Streamlit](https://streamlit.io) page (`streamlit_app.py`): the **batch

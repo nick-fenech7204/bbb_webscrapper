@@ -9,6 +9,12 @@ Also covers `_write_progress` (2026-09-13) -- structured per-metro JSON
 progress for Streamlit's batch page to poll instead of tailing the raw
 log, opt-in via `--progress-file` (None -> no-op, a plain CLI run is
 unaffected).
+
+And `_check_metro_websites` (2026-09-14) -- the batch's wrapper around
+bbb_scraper.webcheck, wired in as a real per-metro step (Nick's ask: fully
+integrated, on by default, unproxied). Wrapped the same best-effort way as
+Yelp enrichment: a failure here must return the metro's records unchecked,
+never take the metro down.
 """
 from __future__ import annotations
 
@@ -181,3 +187,39 @@ def test_scrape_one_metro_details_mode_without_partial_path_does_not_require_it(
         fetch_details=True, stats=RunStats(),
     )
     assert len(result) == 1
+
+
+# --- _check_metro_websites ----------------------------------------------
+
+def test_check_metro_websites_reports_dead_count_and_returns_checked_records(monkeypatch, capsys):
+    def _fake_check_websites(records, **kwargs):
+        out = []
+        for i, r in enumerate(records):
+            out.append({**r, "website_dead": i == 0, "website_status": "dead_404" if i == 0 else "ok"})
+        return out
+
+    monkeypatch.setattr(bsm, "check_websites", _fake_check_websites)
+    records = [{"name": "A", "website": "http://a.example"}, {"name": "B", "website": "http://b.example"}]
+
+    result = bsm._check_metro_websites(records)
+
+    assert result[0]["website_dead"] is True
+    assert result[1]["website_dead"] is False
+    assert "1/2 dead/parked/unreachable" in capsys.readouterr().out
+
+
+def test_check_metro_websites_failure_returns_original_records_unchecked(monkeypatch, capsys):
+    """Same best-effort contract as Yelp enrichment: a failure in the check
+    itself must never take the metro down -- the caller gets its records
+    back exactly as they went in, not an exception."""
+    def _boom(records, **kwargs):
+        raise RuntimeError("simulated: e.g. the disk cache file couldn't be written")
+
+    monkeypatch.setattr(bsm, "check_websites", _boom)
+    records = [{"name": "A", "website": "http://a.example"}]
+
+    result = bsm._check_metro_websites(records)
+
+    assert result == records  # unchanged, not dropped or crashed
+    assert "website_dead" not in result[0]
+    assert "FAILED" in capsys.readouterr().out

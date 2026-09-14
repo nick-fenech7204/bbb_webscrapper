@@ -156,3 +156,22 @@ def test_cli_main_runs_end_to_end_without_crashing(tmp_path, monkeypatch, capsys
                                       "--industry", "Plumbers", "--metro", "Chicago, IL"])
     assert psd.main() == 0
     assert "Published 1 record" in capsys.readouterr().out
+
+
+def test_dead_website_flag_and_status_reach_the_public_record():
+    """bbb_scraper.webcheck's output survives the master-table round-trip
+    into what the site actually publishes -- website_status (the human-
+    readable reason) and website_dead_flag (the signal the site badges/
+    flags on)."""
+    rec = _publish_one({
+        "name": "Lapsed Domain Co", "phone": "(305) 555-0100", "rating": "B",
+        "website": "http://lapseddomainco.com",
+        "website_dead": True, "website_status": "dead_parked",
+    })
+    assert rec["website_status"] == "dead_parked"
+    assert rec["website_dead_flag"] == 1
+
+
+def test_no_webcheck_data_is_not_flagged():
+    rec = _publish_one({"name": "Never Checked Co", "phone": "(305) 555-0100", "rating": "B"})
+    assert rec["website_dead_flag"] == 0

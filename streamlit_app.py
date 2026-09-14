@@ -60,6 +60,13 @@ line per metro (waiting / running / done with its numbers / failed with why)
 via st.status(). The raw log still exists (nothing about logging itself was
 removed -- it's still the thing a real bug gets traced back through) but
 now lives inside a collapsed "Full log" expander, off by default.
+
+**Dead-website check wired in, 2026-09-14** (Nick's ask: fully integrated,
+on by default, unproxied). "Check for dead/parked websites" launches the
+batch with --check-websites (see bbb_scraper/webcheck and
+batch_scrape_metros.py's _check_metro_websites) -- a per-metro dead-website
+count shows up in both the aggregate metrics row and each metro's own
+status line, same best-effort/never-fatal treatment as Yelp enrichment.
 """
 from __future__ import annotations
 
@@ -234,12 +241,14 @@ def _render_progress(progress: dict) -> None:
 
     biz_total = sum(m.get("businesses") or 0 for m in metros if m["status"] == "done")
     yelp_total = sum(m.get("yelp_matched") or 0 for m in metros if m["status"] == "done")
+    dead_total = sum(m.get("websites_dead") or 0 for m in metros if m["status"] == "done")
     failed_total = sum(1 for m in metros if m["status"] == "failed")
-    c1, c2, c3, c4 = st.columns(4)
+    c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Metros", f"{settled}/{total}")
     c2.metric("Businesses scraped", f"{biz_total:,}")
     c3.metric("Matched to Yelp", f"{yelp_total:,}")
-    c4.metric("Failed", failed_total)
+    c4.metric("Dead websites", f"{dead_total:,}")
+    c5.metric("Failed", failed_total)
 
     for m in metros:
         status = m["status"]
@@ -248,21 +257,34 @@ def _render_progress(progress: dict) -> None:
         elif status == "skipped":
             st.markdown(f"⏭️ **{m['name']}** — already done, skipped")
         elif status == "running":
-            with st.status(f"{m['name']} — scraping...", state="running"):
-                st.write("Sweeping BBB, matching Yelp, fetching contact details...")
+            # NOT `with st.status(..., state="running"):` -- confirmed via
+            # Streamlit's own source (StatusContainer.__exit__) that a `with`
+            # block exiting normally force-flips state="running" to
+            # "complete" on its way out, every time, no exception needed.
+            # That's the right behavior for wrapping code that's actually
+            # executing inside the block; it's wrong here, where the state
+            # is just a snapshot read from progress.json -- it silently
+            # made every currently-running metro render with the same
+            # checkmark as a finished one. Calling st.status() as a plain
+            # object (no `with`) never triggers __exit__, so "running"
+            # actually stays running.
+            box = st.status(f"{m['name']} — scraping...", state="running")
+            box.write("Sweeping BBB, matching Yelp, fetching contact details...")
         elif status == "done":
             bits = [f"{m['businesses']} businesses"]
             if m.get("yelp_matched") is not None:
                 bits.append(f"{m['yelp_matched']} matched to Yelp")
+            if m.get("websites_dead") is not None:
+                bits.append(f"{m['websites_dead']} dead websites")
             if m.get("top_lead_score"):
                 bits.append(f"top lead {m['top_lead_score']}")
             if m.get("elapsed_s"):
                 bits.append(f"{round(m['elapsed_s'] / 60)}m")
-            with st.status(f"{m['name']} — done", state="complete"):
-                st.write(", ".join(bits))
+            box = st.status(f"{m['name']} — done", state="complete")
+            box.write(", ".join(bits))
         elif status == "failed":
-            with st.status(f"{m['name']} — failed", state="error", expanded=True):
-                st.write(m.get("error") or "See the full log below for details.")
+            box = st.status(f"{m['name']} — failed", state="error", expanded=True)
+            box.write(m.get("error") or "See the full log below for details.")
 
 
 def _is_running() -> bool:
@@ -302,6 +324,18 @@ with st.form("batch_form"):
              "columns to the checkpoint and to the site's Intelligence view. Best-effort: "
              "no API key, a low daily quota (free tier is 300/day), or a failed call just "
              "means BBB-only output for the rest of the batch -- never an error.",
+    )
+    check_websites = st.checkbox(
+        "Check for dead/parked websites",
+        value=True,
+        help="Visits each business's own listed website once (unproxied -- a normal "
+             "one-off request, a different host per business, nothing to evade) and flags "
+             "it if it's unreachable, 404s, or is a parked/for-sale domain -- a separate "
+             "\"we can sell you a website\" angle alongside reputation scoring. "
+             "Deliberately conservative: a site that just blocks non-browser traffic (403) "
+             "or has a transient server error is recorded but never asserted dead. "
+             "Best-effort, like Yelp above -- a failure just means unchecked records for "
+             "that metro, never fatal.",
     )
     fetch_details = st.checkbox(
         "Fetch full BBB contact details for every business",
@@ -353,6 +387,7 @@ if submitted and not _is_running():
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
     cmd.append("--yelp" if enrich_yelp else "--no-yelp")
+    cmd.append("--check-websites" if check_websites else "--no-check-websites")
     cmd.append("--deploy" if deploy_when_done else "--no-deploy")
     if fetch_details:
         cmd.append("--details")

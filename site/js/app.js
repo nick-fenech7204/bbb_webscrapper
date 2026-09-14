@@ -66,9 +66,23 @@
     const text = (r.city ?? "") + (r.state ? ", " + r.state : "");
     return text ? `<span title="${esc(text)}">${esc(text)}</span>` : "";
   }
+  // Human phrase per bbb_scraper.webcheck status -- see its docstring for
+  // why only these three ever set website_dead_flag (403/5xx/etc. are
+  // deliberately NOT asserted dead, so they never reach this map).
+  const WEBSITE_DEAD_REASON = {
+    dead_404: "Page not found (404)",
+    dead_unreachable: "Site doesn't load",
+    dead_parked: "Looks like a parked/for-sale domain",
+  };
   function websiteCell(r) {
     if (!r.website) return "";
     const label = r.website.replace(/^https?:\/\//, "");
+    if (isTrue(r.website_dead_flag)) {
+      const reason = WEBSITE_DEAD_REASON[r.website_status] || "Website appears down";
+      // Still a real link (a rep may want to double-check by hand) -- just
+      // badge-styled instead of looking like an ordinary working link.
+      return `<a href="${esc(r.website)}" target="_blank" rel="noopener" class="badge badge-flag" title="${esc(reason)} — ${esc(r.website)}">Website down</a>`;
+    }
     // A long URL just wraps onto another line like everything else in the
     // table now -- title="" is a minor bonus (the full URL on one line on
     // hover), not load-bearing the way it was when this truncated instead.
@@ -133,6 +147,11 @@
       out.push('<span class="badge badge-flag">Accredited, low-rated</span>');
     if (isTrue(r.low_review_volume_flag))
       out.push('<span class="badge badge-soft">Few reviews</span>');
+    // A separate sales angle from the reputation flags above: no working
+    // site at all is a website lead, independent of whether their
+    // reputation also needs help.
+    if (isTrue(r.website_dead_flag))
+      out.push('<span class="badge badge-flag" title="Their own website is down, 404ing, or a parked domain">No live website</span>');
     if (!out.length) return `<span class="muted">${dash}</span>`;
     // .badge-group gives real flex `gap` between badges, both between two
     // on the same line and between wrapped rows -- a plain text-node space

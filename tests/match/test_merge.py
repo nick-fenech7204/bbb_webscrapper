@@ -175,3 +175,33 @@ def test_lead_priority_peaks_in_the_salvageable_middle():
 
     assert sweet > great
     assert sweet > dumpster
+
+
+def test_website_dead_flag_reads_the_webcheck_column():
+    """website_dead_flag surfaces whatever bbb_scraper.webcheck already
+    decided (see its own tests for the actual liveness logic) -- this only
+    checks the plumbing: the flag reads bbb_website_dead correctly."""
+    out = MatchOutcome(bbb_only=[
+        {"name": "Dead Site Co", "website_dead": True, "website_status": "dead_404"},
+    ])
+    row = build_master_table(out)[0]
+    assert row["bbb_website_dead"] == True
+    assert row["bbb_website_status"] == "dead_404"
+    assert row["website_dead_flag"] == 1
+
+
+def test_website_dead_flag_defaults_to_0_when_never_checked():
+    """A record that never went through check_dead_websites.py has no
+    website_dead field at all -- must read as "not flagged", never crash
+    and never default to asserting a problem it has no evidence for."""
+    out = MatchOutcome(bbb_only=[{"name": "Never Checked Co"}])
+    row = build_master_table(out)[0]
+    assert row["website_dead_flag"] == 0
+
+
+def test_website_dead_flag_off_when_site_is_fine():
+    out = MatchOutcome(bbb_only=[
+        {"name": "Fine Co", "website_dead": False, "website_status": "ok"},
+    ])
+    row = build_master_table(out)[0]
+    assert row["website_dead_flag"] == 0

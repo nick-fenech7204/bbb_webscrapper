@@ -94,6 +94,18 @@ class Settings(BaseSettings):
     yelp_min_delay_seconds: float = Field(default=0.5, alias="YELP_MIN_DELAY_SECONDS")
     yelp_max_delay_seconds: float = Field(default=1.0, alias="YELP_MAX_DELAY_SECONDS")
 
+    # --- Dead-website check (bbb_scraper/webcheck, scripts/check_dead_websites.py) --
+    # Checks a business's own listed website, not BBB or Yelp -- a different
+    # host per business, so no proxy (nothing to evade) and a bigger, browser-
+    # realistic impersonated request (curl_cffi, like the BBB client) rather
+    # than plain `requests`, specifically so a small site's basic bot-check
+    # doesn't get misread as "dead" when it's just not a browser.
+    webcheck_timeout_seconds: float = Field(default=10.0, alias="WEBCHECK_TIMEOUT_SECONDS")
+    webcheck_max_workers: int = Field(default=10, alias="WEBCHECK_MAX_WORKERS")
+    # How long a cached result is trusted before a URL gets re-checked --
+    # sites don't flip dead/alive often enough to re-check every run.
+    webcheck_cache_ttl_days: int = Field(default=30, alias="WEBCHECK_CACHE_TTL_DAYS")
+
     # --- Static site deployment (scripts/deploy_site.py only) -----------------
     # Not used by the running app itself -- only by the deploy script, which
     # shells out to the AWS CLI (never handles credentials directly; the CLI

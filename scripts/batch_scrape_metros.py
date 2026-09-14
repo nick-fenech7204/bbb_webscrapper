@@ -21,26 +21,35 @@ from a plain terminal, background it yourself).
 Per metro:
   1. extract_search_metro_coverage (same as a single metro sweep) -> BBB
      records, transformed + deduped (+ optionally --details).
-  2. unless --no-yelp: one Yelp Fusion `search_area` for the metro (~5 API
+  2. unless --no-check-websites: bbb_scraper.webcheck checks every unique
+     website URL on those records for dead/404/parked (see
+     _check_metro_websites) -- unproxied on purpose (a normal one-off
+     visit to each business's own site, nothing to evade, and it's a
+     different host per business so there's no single site to go easy
+     on). Best-effort like Yelp below: a failure here is logged and this
+     metro's records just come out unchecked, never fatal to the metro.
+  3. unless --no-yelp: one Yelp Fusion `search_area` for the metro (~5 API
      calls), matched to the BBB records. Best-effort -- if the key is
      missing, the daily quota is nearly spent, or a call fails, Yelp is
      dropped for the rest of the batch and metros just come out BBB-only.
-  3. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
+  4. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
      BBB|Yelp master table (bbb_* / yelp_* columns + derived-intelligence
-     columns; yelp_* blank when there was no match). This file's existence
-     is the resume marker: a metro already checkpointed for this industry
-     is skipped on a re-run (--force to redo).
-  4. append the BBB records (not the wide table) into the shared
+     columns, website_dead/website_status included; yelp_* blank when
+     there was no match). This file's existence is the resume marker: a
+     metro already checkpointed for this industry is skipped on a re-run
+     (--force to redo).
+  5. append the BBB records (not the wide table) into the shared
      data/processed/businesses.csv sink, same as every other run.
-  5. unless --no-publish: publish that metro to site/data/ locally (BBB
+  6. unless --no-publish: publish that metro to site/data/ locally (BBB
      fields + the matched yelp_name/rating/review_count/url + our derived
-     intelligence columns -- raw Yelp beyond those four stays out).
-  6. unless --no-deploy: immediately push site/ live for this metro (S3
+     intelligence columns, website status included -- raw Yelp beyond
+     those four stays out).
+  7. unless --no-deploy: immediately push site/ live for this metro (S3
      sync + CloudFront invalidation, see scripts/deploy_site.py) -- right
      away, not batched up for the end, so a metro is live within seconds
      of finishing rather than sitting local-only for however long the
      rest of the batch takes.
-  Steps 3-6 are wrapped: a failure anywhere in there is logged and this
+  Steps 4-7 are wrapped: a failure anywhere in there is logged and this
   metro is skipped, the rest of the batch keeps going rather than the
   whole run dying (this used to be able to kill hours of already-
   finished, already-correct work over a bug in a print statement -- see
@@ -95,6 +104,7 @@ from bbb_scraper.reference.models import Category, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
 from bbb_scraper.utils.flatten import flatten_record
 from bbb_scraper.utils.stats import RunStats
+from bbb_scraper.webcheck.enrich import check_websites
 
 configure_logging()
 logger = get_logger(__name__)
@@ -209,6 +219,27 @@ def scrape_one_metro(
     return dedupe_by_phone(dedupe_records(detail_records + summary_records, stats=stats))
 
 
+def _check_metro_websites(records: list[dict]) -> list[dict]:
+    """Best-effort website-liveness check for one metro's BBB records (see
+    bbb_scraper.webcheck) -- unproxied (a normal one-off visit to each
+    business's own site; a different host per business, nothing to evade
+    or go easy on), deliberately conservative about what it calls dead
+    (see the module's own docstring). Wrapped the same way Yelp enrichment
+    is: any failure here is logged and this metro's records come back
+    unchecked (website_dead_flag reads 0, same as "never checked" always
+    has) rather than taking the metro down.
+    """
+    try:
+        checked = check_websites(records)
+    except Exception:
+        logger.exception("Website check failed -- continuing without it for this metro")
+        print("    website check FAILED (see log) -- continuing without it for this metro")
+        return records
+    dead = sum(1 for r in checked if r.get("website_dead"))
+    print(f"    website check: {dead}/{len(checked)} dead/parked/unreachable")
+    return checked
+
+
 def rebuild_all_metros_file(industry_slug: str) -> Path:
     checkpoint_files = sorted(BATCH_DIR.glob(f"{industry_slug}--*.csv"))
     all_rows: list[dict] = []
@@ -247,6 +278,13 @@ def main() -> int:
         help="Enrich each metro with a Yelp Fusion search (~5 API calls/metro) matched to "
         "the BBB rows (default: on). Best-effort: no key / low quota / a failed call just "
         "means BBB-only output for the rest of the batch, never an error.",
+    )
+    parser.add_argument(
+        "--check-websites", action=argparse.BooleanOptionalAction, default=True,
+        help="Check every business's own listed website for dead/404/parked (default: on) -- "
+        "see bbb_scraper/webcheck. Unproxied (a normal one-off visit per business, a "
+        "different host each time) and best-effort: a failure just means unchecked records "
+        "for that metro, never fatal.",
     )
     parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
@@ -299,6 +337,7 @@ def main() -> int:
             "id": metro.id, "name": metro.name,
             "status": "skipped" if (BATCH_DIR / f"{industry_slug}--{metro.id}.csv").exists() and not args.force else "pending",
             "businesses": None, "yelp_matched": None, "top_lead_score": None,
+            "websites_dead": None,
             "elapsed_s": None, "error": None,
         }
         for metro in metros
@@ -313,7 +352,8 @@ def main() -> int:
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
-          f"yelp={yelp_note}, publish={args.publish}, deploy={args.deploy}")
+          f"yelp={yelp_note}, check_websites={args.check_websites}, "
+          f"publish={args.publish}, deploy={args.deploy}")
     _write_progress(progress_path, _snapshot())
 
     done = 0
@@ -358,6 +398,11 @@ def main() -> int:
             _write_progress(progress_path, _snapshot())
             continue
 
+        websites_dead = None
+        if args.check_websites:
+            records = _check_metro_websites(records)
+            websites_dead = sum(1 for r in records if r.get("website_dead"))
+
         # Everything from here on (checkpoint, shared sinks, publish) is
         # wrapped: a batch runs unattended for hours across many metros, so
         # a bug in this post-scrape step (there was one -- see below) must
@@ -382,11 +427,13 @@ def main() -> int:
             elapsed = time.monotonic() - start
             matched = sum(r.get("match_status") == "matched" for r in master_rows)
             print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
-                  f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''} "
+                  f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''}"
+                  f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
             metro_states[i - 1].update({
                 "status": "done", "businesses": len(records),
                 "yelp_matched": matched if yelp_state.enabled else None,
+                "websites_dead": websites_dead,
                 "elapsed_s": round(elapsed),
             })
             _write_progress(progress_path, _snapshot())

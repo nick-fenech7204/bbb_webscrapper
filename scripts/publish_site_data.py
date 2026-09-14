@@ -56,6 +56,7 @@ _PUBLIC_FIELDS = [
     "contacts", "socials", "reviews_complaints",
     "organization_description", "entity_type",
     "lat", "lon", "profile_url", "scraped_at",
+    "website_status",
 ]
 
 _JSON_FIELDS = {"categories", "contacts", "socials", "reviews_complaints"}
@@ -85,6 +86,7 @@ _INTEL_SITE_FIELDS = [
     "has_email",
     "contact_readiness",
     "contact_readiness_score",
+    "website_dead_flag",
 ]
 
 
@@ -154,7 +156,7 @@ def select_public_fields_from_master(row: dict) -> dict:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0
     for flag in ("reputation_divergence_flag", "low_review_volume_flag", "accredited_but_low_rated",
-                 "has_phone", "has_named_contact", "has_email"):
+                 "has_phone", "has_named_contact", "has_email", "website_dead_flag"):
         if result.get(flag) is not None:
             result[flag] = int(result[flag])
     return result

@@ -36,6 +36,11 @@ BBB_FIELDS = [
     "principal_contact", "contacts", "socials",
     "reviews_complaints", "organization_description", "entity_type",
     "profile_url", "bbb_id", "scraped_at",
+    # From bbb_scraper.webcheck (scripts/check_dead_websites.py) -- absent
+    # (empty string) on a row that was never run through it, which every
+    # _INTEL reader below already treats as "not dead" / "not checked",
+    # never as a crash.
+    "website_dead", "website_status", "website_checked_at",
 ]
 YELP_FIELDS = [
     "name", "phone", "city", "state", "postal_code", "rating", "review_count",
@@ -285,6 +290,15 @@ def _contact_readiness_score(r):
     return 0
 
 
+def _website_dead_flag(r):
+    """1 if bbb_scraper.webcheck confirmed this business's own website is
+    dead/404/parked (see bbb_scraper/webcheck -- deliberately conservative,
+    only high-confidence signals count). 0 if it checked out fine OR was
+    never checked at all -- this only ever asserts a problem it's actually
+    confident about, never "unknown" as "dead"."""
+    return int(_truthy(r.get("bbb_website_dead")))
+
+
 def _lead_priority_score(r):
     """How good a sales lead this business is *for a firm that sells review
     / reputation-management services*. Not raw reputation weakness -- it
@@ -367,6 +381,7 @@ _INTEL: dict[str, Callable[[dict[str, Any]], Any]] = {
     "has_email": _has_email,
     "contact_readiness": _contact_readiness,
     "contact_readiness_score": _contact_readiness_score,
+    "website_dead_flag": _website_dead_flag,
 }
 
 
