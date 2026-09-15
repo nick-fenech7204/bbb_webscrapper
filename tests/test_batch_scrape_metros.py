@@ -438,7 +438,7 @@ def test_open_mapquest_disabled_returns_all_none():
 
 def test_open_mapquest_enabled_builds_client_and_directory(monkeypatch):
     fake_client, fake_directory = object(), object()
-    monkeypatch.setattr(bsm, "MapQuestClient", lambda: fake_client)
+    monkeypatch.setattr(bsm, "MapQuestClient", lambda **kw: fake_client)
     monkeypatch.setattr(bsm, "CityDirectory", SimpleNamespace(load=lambda: fake_directory))
 
     client, city_directory, reason = bsm._open_mapquest(True)
@@ -448,13 +448,53 @@ def test_open_mapquest_enabled_builds_client_and_directory(monkeypatch):
     assert reason is None
 
 
+def test_open_mapquest_defaults_to_unproxied(monkeypatch):
+    """Real incident, 2026-09-15: MapQuestClient's own default is
+    use_proxy=True, but the very first real batch run through this code
+    path (proxied) failed 100% of searches with Decodo's documented
+    sticky-session 407 (see MapQuestClient's own module docstring and
+    bbb_scraper/scraping/proxies.py) -- the identical failure Angi's own
+    batch integration already hit. _open_mapquest's own use_proxy default
+    must stay False regardless of what MapQuestClient's own constructor
+    default is, or this regresses right back to that incident."""
+    seen_kwargs: dict = {}
+
+    def _fake_client(**kwargs):
+        seen_kwargs.update(kwargs)
+        return object()
+
+    monkeypatch.setattr(bsm, "MapQuestClient", _fake_client)
+    monkeypatch.setattr(bsm, "CityDirectory", SimpleNamespace(load=lambda: object()))
+
+    bsm._open_mapquest(True)
+
+    assert seen_kwargs == {"use_proxy": False}
+
+
+def test_open_mapquest_use_proxy_true_passes_through(monkeypatch):
+    """--mapquest-use-proxy is still a real opt-in, for once/if Decodo's
+    sticky-session issue is confirmed resolved."""
+    seen_kwargs: dict = {}
+
+    def _fake_client(**kwargs):
+        seen_kwargs.update(kwargs)
+        return object()
+
+    monkeypatch.setattr(bsm, "MapQuestClient", _fake_client)
+    monkeypatch.setattr(bsm, "CityDirectory", SimpleNamespace(load=lambda: object()))
+
+    bsm._open_mapquest(True, use_proxy=True)
+
+    assert seen_kwargs == {"use_proxy": True}
+
+
 def test_open_mapquest_setup_failure_disables_it_rather_than_raising(monkeypatch):
     """Same contract as _resolve_angi_category returning None -- a setup
     problem (e.g. reference data genuinely broken) must disable MapQuest
     for the whole batch, never take the batch down. MapQuestClient's own
     __init__ only warns on missing proxy creds (never raises -- see its
     _rotate_proxy), so this mostly guards something further upstream."""
-    def _boom():
+    def _boom(**kw):
         raise RuntimeError("simulated: e.g. reference data genuinely broken")
 
     monkeypatch.setattr(bsm, "MapQuestClient", _boom)

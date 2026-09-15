@@ -49,6 +49,29 @@ own client already applies. A 429 here has never actually been observed
 rotating on one anyway, defensively, costs nothing and matches the
 existing precedent for how this project responds to a real rate-limit
 signal if one ever shows up.
+
+**That proxied rotation failed 100% of the time on the very first real
+batch run, 2026-09-15 (same day).** Every single search in a real "Home
+Inspection" / New York batch failed with `curl: (7) CONNECT tunnel
+failed, response 407` -- not intermittent, every request. Root cause: the
+exact Decodo sticky-session limitation already documented in
+bbb_scraper/scraping/proxies.py (found 2026-09-14 investigating Angi) --
+*any* proxy username with a `-session-{id}` suffix 407s on this account
+right now, and `_rotate_proxy` below always asks `get_proxies` for one.
+This is the identical failure bbb_scraper/angi/client.py's own batch
+integration already hit (see scripts/batch_scrape_metros.py's
+_scrape_metro_angi docstring) -- same fix applied here: the batch
+(scripts/batch_scrape_metros.py's _open_mapquest) now defaults MapQuest
+to unproxied, with a --mapquest-use-proxy opt-in for whenever Decodo's
+sticky-session issue is confirmed resolved. This class's own constructor
+default (use_proxy=True below) is deliberately left as-is -- same as
+AngiClient's own class default -- only the batch's call site overrides
+it; a caller outside the batch that actually wants proxied+rotated
+behavior (e.g. once Decodo's account-level issue clears) still gets it by
+just not passing use_proxy=False. The deliberate per-request delay this
+docstring argued against above was restored too (see config.py) -- that
+reasoning specifically depended on proxy IP rotation substituting for a
+delay, which doesn't hold once proxy is off by default.
 """
 from __future__ import annotations
 

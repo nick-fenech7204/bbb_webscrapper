@@ -142,21 +142,36 @@ class Settings(BaseSettings):
     #
     # 2026-09-15: proved out first at conservative pacing (100 real requests,
     # zero failures/429s -- see scripts/fetch_mapquest_reviews.py's real
-    # sample-metro run), then Nick's explicit call for the full batch
-    # integration: proxied + rotated (same shape as Angi's own client) instead
-    # of a deliberate delay between requests -- running one metro's businesses
-    # through this sequentially already spaces real requests out with real
-    # network latency, and spreading them across rotating exit IPs is the
-    # more useful politeness lever here than an *additional* sleep on top of
-    # that, the same reasoning bbb_scraper/angi/client.py already uses for
-    # its own rotation.
+    # sample-metro run, at the 1.5/3.0s delay below). Nick then asked for
+    # the full batch integration to be proxied + rotated instead of a
+    # deliberate delay (same shape as Angi's own client) -- but the very
+    # first real batch run through that code path hit a 100% failure rate,
+    # every single MapQuest search failing with the exact `curl: (7) CONNECT
+    # tunnel failed, response 407` already documented in
+    # bbb_scraper/scraping/proxies.py (2026-09-14): *any* proxy username
+    # with a `-session-{id}` suffix 407s on this Decodo account right now,
+    # confirmed independently of this project's code -- and
+    # MapQuestClient._rotate_proxy always requests a session id. This is
+    # the identical failure Angi's own batch integration already hit (see
+    # scripts/batch_scrape_metros.py's _scrape_metro_angi docstring) --
+    # same fix here: the batch defaults MapQuest to unproxied
+    # (--mapquest-use-proxy to opt back in once/if Decodo's sticky-session
+    # issue is resolved). Delay restored to its previously-proven-safe
+    # value rather than shipping an untested zero-delay+unproxied
+    # combination against a real site -- the "no delay" reasoning was
+    # specifically premised on proxy IP rotation substituting for it, which
+    # no longer holds once proxy is off by default; notably even Angi's own
+    # client keeps a real delay (1.5/3.0s) regardless of its own proxy
+    # setting, so an unproxied MapQuest client running at 0.0/0.0 was
+    # already the outlier among this project's real clients before this bug
+    # surfaced.
     mapquest_graphql_url: str = Field(
         default="https://graphql-42a6517.aws.mapquest.com/", alias="MAPQUEST_GRAPHQL_URL"
     )
     mapquest_timeout_seconds: float = Field(default=15.0, alias="MAPQUEST_TIMEOUT_SECONDS")
     mapquest_max_retries: int = Field(default=3, alias="MAPQUEST_MAX_RETRIES")
-    mapquest_min_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MIN_DELAY_SECONDS")
-    mapquest_max_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
+    mapquest_min_delay_seconds: float = Field(default=1.5, alias="MAPQUEST_MIN_DELAY_SECONDS")
+    mapquest_max_delay_seconds: float = Field(default=3.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
     mapquest_proxy_rotate_every: int = Field(default=15, alias="MAPQUEST_PROXY_ROTATE_EVERY")
 
     # --- Static site deployment (scripts/deploy_site.py only) -----------------

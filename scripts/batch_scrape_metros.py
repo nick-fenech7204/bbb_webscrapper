@@ -73,13 +73,16 @@ Per metro:
      Writes mapquest_url/mapquest_review_count/mapquest_reviews (JSON-in-
      cell, same convention as BBB's/Angi's own review columns) directly
      onto each row -- a post-hoc column addition like webcheck/Yelp above,
-     not baked into build_master_table. One shared, proxied+rotating
-     MapQuestClient for the whole batch (see that class's own docstring
-     for why proxied+rotated instead of a deliberate per-request delay --
-     same reasoning as Angi's own client). Best-effort like everything
-     else here: a client-setup failure disables MapQuest for the whole
-     batch, a single business's search/match failure just leaves that
-     row's columns empty, neither is ever fatal. Checkpoint/dataset only
+     not baked into build_master_table. One shared MapQuestClient for the
+     whole batch, unproxied by default with a real 1.5-3.0s delay between
+     requests (--mapquest-use-proxy to opt into proxied+rotated instead,
+     same shape as --angi-use-proxy -- see _open_mapquest's own docstring
+     for the real 100%-failure-rate incident, 2026-09-15, that's why
+     proxied isn't the default despite being the first thing tried).
+     Best-effort like everything else here: a client-setup failure
+     disables MapQuest for the whole batch, a single business's
+     search/match failure just leaves that row's columns empty, neither
+     is ever fatal. Checkpoint/dataset only
      for now -- these columns are deliberately absent from merge.py's
      scoring and publish_site_data.py's public site fields ("just in the
      dataset, nothing yet different for the website").
@@ -514,9 +517,11 @@ def _check_metro_websites(records: list[dict]) -> list[dict]:
     return checked
 
 
-def _open_mapquest(enabled: bool) -> tuple[MapQuestClient | None, CityDirectory | None, str | None]:
-    """One shared, proxied MapQuestClient + CityDirectory for the whole
-    batch (constructed once, not per metro/business) -- same "resolve once,
+def _open_mapquest(
+    enabled: bool, *, use_proxy: bool = False,
+) -> tuple[MapQuestClient | None, CityDirectory | None, str | None]:
+    """One shared MapQuestClient + CityDirectory for the whole batch
+    (constructed once, not per metro/business) -- same "resolve once,
     best-effort" shape as _resolve_angi_category. Returns (None, None,
     reason) when disabled or when setup itself fails (e.g. reference data
     missing) -- a setup failure disables MapQuest for the entire batch the
@@ -524,11 +529,22 @@ def _open_mapquest(enabled: bool) -> tuple[MapQuestClient | None, CityDirectory 
     MapQuestClient's own __init__ only warns (never raises) on missing
     proxy credentials -- see its _rotate_proxy -- so this mostly guards
     against something like a missing us_cities.csv.
+
+    `use_proxy` defaults to False here (unlike MapQuestClient's own
+    use_proxy=True default) -- confirmed live 2026-09-15, the very first
+    real batch run through this code path: every single MapQuest search
+    failed with Decodo's documented sticky-session 407 (see
+    bbb_scraper/mapquest/client.py's module docstring and
+    bbb_scraper/scraping/proxies.py) -- the identical failure Angi's own
+    batch integration already hit (see _scrape_metro_angi above, which
+    applies the exact same fix). --mapquest-use-proxy is still there to
+    opt back in once/if Decodo's sticky-session capacity issue is
+    confirmed resolved.
     """
     if not enabled:
         return None, None, None
     try:
-        client = MapQuestClient()
+        client = MapQuestClient(use_proxy=use_proxy)
         city_directory = CityDirectory.load()
     except Exception:
         logger.exception("MapQuest setup failed -- disabling MapQuest for this batch")
@@ -670,11 +686,19 @@ def main() -> int:
         "--mapquest", action=argparse.BooleanOptionalAction, default=True,
         help="Fetch real Yelp-sourced review text/rating/date for each business via MapQuest's "
         "own unauthenticated GraphQL search (default: on) -- matched by name+phone within the "
-        "business's own city (bbb_scraper/mapquest). Proxied + rotating, no deliberate delay "
-        "(see bbb_scraper/mapquest/client.py). Best-effort: a setup failure disables it for the "
-        "whole batch, a single business's search/match failure just leaves that row's mapquest_* "
-        "columns empty, neither is ever fatal. Checkpoint/dataset only -- not wired into scoring "
-        "or the public site yet.",
+        "business's own city (bbb_scraper/mapquest). Unproxied by default with a real "
+        "1.5-3.0s delay between requests -- see --mapquest-use-proxy below for why. "
+        "Best-effort: a setup failure disables it for the whole batch, a single business's "
+        "search/match failure just leaves that row's mapquest_* columns empty, neither is ever "
+        "fatal. Checkpoint/dataset only -- not wired into scoring or the public site yet.",
+    )
+    parser.add_argument(
+        "--mapquest-use-proxy", action=argparse.BooleanOptionalAction, default=False,
+        help="Route the MapQuest search through PROXY_* with rotating sessions (default: off). "
+        "Confirmed live 2026-09-15: the rotating-session proxy path hits Decodo's documented "
+        "sticky-session 407 (see bbb_scraper/scraping/proxies.py) -- the identical failure "
+        "--angi-use-proxy's own docstring describes, and the identical fix. Opt back in if "
+        "that's confirmed resolved on Decodo's side.",
     )
     parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
@@ -761,9 +785,12 @@ def main() -> int:
     yelp_state = open_yelp_enrichment(args.yelp)
     yelp_note = "on" if yelp_state.enabled else f"off ({yelp_state.reason_off})"
     angi_note = f"on ({angi_category_label})" if angi_enabled else f"off ({angi_reason_off or 'disabled'})"
-    mapquest_client, mapquest_city_directory, mapquest_reason_off = _open_mapquest(args.mapquest)
+    mapquest_client, mapquest_city_directory, mapquest_reason_off = _open_mapquest(
+        args.mapquest, use_proxy=args.mapquest_use_proxy,
+    )
     mapquest_enabled = mapquest_client is not None
-    mapquest_note = "on" if mapquest_enabled else f"off ({mapquest_reason_off or 'disabled'})"
+    mapquest_note = (f"on, proxy={'on' if args.mapquest_use_proxy else 'off'}" if mapquest_enabled
+                      else f"off ({mapquest_reason_off or 'disabled'})")
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
