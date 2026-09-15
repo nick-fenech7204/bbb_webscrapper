@@ -1,0 +1,129 @@
+{
+  "data": {
+    "search": {
+      "__typename": "SearchResultItemConnection",
+      "nodes": [
+        {
+          "id": "423145406",
+          "name": "Walsh Crawl Space and Structural Repair",
+          "url": "https://www.mapquest.com/us/north-carolina/walsh-crawl-space-and-structural-repair-423145406",
+          "location": {
+            "street": null,
+            "region": "NC",
+            "postcode": "28212",
+            "locality": "Charlotte",
+            "__typename": "Address"
+          },
+          "rating": {
+            "provider": "YELP",
+            "value": 3.5,
+            "__typename": "PlaceRating"
+          },
+          "reviews": {
+            "totalCount": 5,
+            "nodes": [
+              {
+                "body": "My wife and I purchased a 96 year old home in Charlotte NC in early 2022, which had extensive structural damage.  Walsh worked closely with the engineer* we hired, and did an extensive fix on the...",
+                "rating": 10,
+                "date": "2022-08-16",
+                "title": null,
+                "author": {
+                  "name": "Mark H.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "These guys came immediately and helped us. Got an estimate and even pointed out an additional concern in the area we hadn't brought up. Joe and Corwin handled it great and Corwin walked us through...",
+                "rating": 10,
+                "date": "2026-03-01",
+                "title": null,
+                "author": {
+                  "name": "Brian G.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "I scheduled an appointment with Walsh and the tech left voicemail stating \"We had a family of raccoons and copperheads living in the crawlspace.\" I'm not a ecologist but I'm certain someone would...",
+                "rating": 2,
+                "date": "2022-08-22",
+                "title": null,
+                "author": {
+                  "name": "LaTora L.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "Scheduled an appointment for them to give me an estimate for crawlspace repairs (floors sagging, doors sticking).  They never showed up - no phone call, no email, etc.  \n\nVery unprofessional.",
+                "rating": 2,
+                "date": "2022-08-16",
+                "title": null,
+                "author": {
+                  "name": "Mike P.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "What a wonderful experience it was working with Walsh. We had major structural issues in our historic home built in 1909. Aaron and Corwin the main crew members installed 14 helical piers that...",
+                "rating": 10,
+                "date": "2022-08-26",
+                "title": null,
+                "author": {
+                  "name": "Ashley L.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              }
+            ],
+            "__typename": "PlaceReviewConnection"
+          },
+          "__typename": "LocalBusiness",
+          "phone": "+19802233113",
+          "description": "Custom solutions for your home's structural repair needs. Full-service repair and prevention solutions for your crawl space or basement. Waterproofing and drainage services for your home. Reach out to us today to find out how foundation and crawl space services can keep your home standing strong for years to come. Call or Text us today!",
+          "categories": {
+            "nodes": [
+              {
+                "name": "Contractors",
+                "__typename": "PlaceCategory"
+              }
+            ],
+            "__typename": "PlaceCategoryConnection"
+          }
+        },
+        {
+          "id": "729458476",
+          "name": "Walsh Crawlspace & Structural Repair LLC",
+          "url": "https://www.mapquest.com/us/north-carolina/walsh-crawlspace-structural-repair-llc-729458476",
+          "location": {
+            "street": "7316 Wallace Rd",
+            "region": "NC",
+            "postcode": "28212-6034",
+            "locality": "Charlotte",
+            "__typename": "Address"
+          },
+          "rating": null,
+          "reviews": {
+            "totalCount": 0,
+            "nodes": null,
+            "__typename": "PlaceReviewConnection"
+          },
+          "__typename": "LocalBusiness",
+          "phone": "+17043027715",
+          "description": "<p>Walsh Crawlspace & Structural Repair LLC, located in Charlotte, NC, specializes in crawl space and foundation repair, waterproofing, and real estate inspections. They offer comprehensive services including moisture control, dehumidifier installation, and annual maintenance plans to ensure homes remain structurally sound and comfortable.</p> \n\n<p>The company emphasizes the importance of addressing crawl space issues early to improve indoor air quality and protect property investments. Their licensed professionals provide thorough inspections and tailored repair plans, aiming for reliable service and customer satisfaction.</p><p><i>Generated from the website</i></p>",
+          "categories": {
+            "nodes": [
+              {
+                "name": "Construction Companies",
+                "__typename": "PlaceCategory"
+              }
+            ],
+            "__typename": "PlaceCategoryConnection"
+          }
+        }
+      ]
+    }
+  }
+}

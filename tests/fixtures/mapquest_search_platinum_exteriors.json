@@ -1,0 +1,133 @@
+{
+  "data": {
+    "search": {
+      "__typename": "SearchResultItemConnection",
+      "nodes": [
+        {
+          "id": "424875185",
+          "name": "Platinum Exteriors",
+          "url": "https://www.mapquest.com/us/arizona/platinum-exteriors-424875185",
+          "location": {
+            "street": "5232 W Tonto Rd",
+            "region": "AZ",
+            "postcode": "85308",
+            "locality": "Glendale",
+            "__typename": "Address"
+          },
+          "rating": {
+            "provider": "YELP",
+            "value": 4,
+            "__typename": "PlaceRating"
+          },
+          "reviews": {
+            "totalCount": 35,
+            "nodes": [
+              {
+                "body": "I saw a company on Facebook that did retrofit wood slats on wrought iron side gates. Abe reached out, described the work, and we ultimately went with him. We had two gates done using Abe's...",
+                "rating": 10,
+                "date": "2026-08-18",
+                "title": null,
+                "author": {
+                  "name": "Tye L.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "I have explicit \"No Soliciting\" signs all around my front door and garage and this company ignored my signs and put their trash on my door.  They obviously cannot read or just want to trample my...",
+                "rating": 2,
+                "date": "2026-07-14",
+                "title": null,
+                "author": {
+                  "name": "Jennifer G.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "We lived with those peach garage doors for 4 1/2 years... so ready for an update! Kevin was quick to reply to my texts and scheduled us in so quick! The crew arrived early and only took 6 hours...",
+                "rating": 10,
+                "date": "2025-05-02",
+                "title": null,
+                "author": {
+                  "name": "A.M. S.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "My house was not looked at prior to the work day. This would have been helpful because I spent half a day moving furniture around where I thought it would be out of their way to only find out I...",
+                "rating": 6,
+                "date": "2025-11-09",
+                "title": null,
+                "author": {
+                  "name": "Fred H.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              },
+              {
+                "body": "DON'T!!!  DON'T!!!  DON'T TRUST THIS COMPANY.\nAt the very last minute they DOUBLED the estimate, and blamed their ignorance/mistake/laziness on me.\nI should have looked beyond the Google, Yelp,...",
+                "rating": 2,
+                "date": "2025-09-17",
+                "title": null,
+                "author": {
+                  "name": "Jerry S.",
+                  "__typename": "ReviewAuthor"
+                },
+                "__typename": "Review"
+              }
+            ],
+            "__typename": "PlaceReviewConnection"
+          },
+          "__typename": "LocalBusiness",
+          "phone": "+19283015529",
+          "description": "<p>Platinum Exteriors is a home improvement company based in Glendale, AZ, specializing in exterior renovation services.</p> <p>With a focus on quality craftsmanship and customer satisfaction, Platinum Exteriors offers a range of services to enhance the curb appeal and functionality of residential properties.</p>\n<p><i>Generated from their business information</i></p>",
+          "categories": {
+            "nodes": [
+              {
+                "name": "Contractors",
+                "__typename": "PlaceCategory"
+              }
+            ],
+            "__typename": "PlaceCategoryConnection"
+          }
+        },
+        {
+          "id": "275881820",
+          "name": "Platinum Exteriors Inc",
+          "url": "https://www.mapquest.com/us/virginia/platinum-exteriors-inc-275881820",
+          "location": {
+            "street": "43760 Trade Center Pl",
+            "region": "VA",
+            "postcode": "20166-2188",
+            "locality": "Sterling",
+            "__typename": "Address"
+          },
+          "rating": null,
+          "reviews": {
+            "totalCount": 0,
+            "nodes": null,
+            "__typename": "PlaceReviewConnection"
+          },
+          "__typename": "LocalBusiness",
+          "phone": "+17036652037",
+          "description": "<p>Platinum Exteriors Inc, located in Dulles, VA, specializes in roofing and exterior services for both commercial and residential clients in Northern Virginia, Maryland, and Washington, DC. Their offerings include roof replacement, roof repair, roof tune-ups, and gutter installation and maintenance.</p> \n\n<p>The company employs experienced roofers knowledgeable in various roofing systems, ensuring quality workmanship and customer satisfaction. Clients can request a no-obligation estimate to assess their roofing needs.</p><p><i>Generated from the website</i></p>",
+          "categories": {
+            "nodes": [
+              {
+                "name": "Contractors",
+                "__typename": "PlaceCategory"
+              },
+              {
+                "name": "Roofing",
+                "__typename": "PlaceCategory"
+              }
+            ],
+            "__typename": "PlaceCategoryConnection"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -69,6 +69,23 @@ class CityDirectory:
     def all(self) -> list[City]:
         return list(self._cities)
 
+    def get(self, name: str, state: str) -> City | None:
+        """Exact (case-insensitive) name+state lookup -- e.g. resolving a
+        BBB record's own bbb_city/bbb_state to an approximate coordinate
+        for a downstream search that only needs "the right metro area", not
+        a precise geocode (bbb_scraper/mapquest, 2026-09-15). None if this
+        exact place isn't in the reference data (a real possibility --
+        this file is every *incorporated* place + CDP, not literally every
+        address-bearing locality) -- callers needing a fallback should
+        decide that themselves rather than this silently guessing a
+        nearby city instead of the one actually asked for.
+        """
+        name_lower, state_upper = name.strip().lower(), state.strip().upper()
+        for city in self._cities:
+            if city.name.lower() == name_lower and city.state.upper() == state_upper:
+                return city
+        return None
+
     def within_radius(
         self,
         center_lat: float,

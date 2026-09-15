@@ -14,6 +14,18 @@ def test_load_missing_file_returns_empty_directory(tmp_path):
     assert directory.within_radius(25.77, -80.22, 40) == []
 
 
+def test_get_exact_name_and_state_is_case_insensitive():
+    directory = CityDirectory([_city("Charlotte", "NC", 35.2271, -80.8431, 900_000)])
+    found = directory.get("charlotte", "nc")
+    assert found is not None
+    assert found.lat == 35.2271
+
+
+def test_get_returns_none_for_a_place_not_in_the_reference_data():
+    directory = CityDirectory([_city("Charlotte", "NC", 35.2271, -80.8431, 900_000)])
+    assert directory.get("Nowhereville", "NC") is None
+
+
 def test_load_from_real_us_cities_file():
     """Confirms the actual built reference file (data/reference/
     us_cities.csv) has real, correct data -- not a placeholder. Kendall and
