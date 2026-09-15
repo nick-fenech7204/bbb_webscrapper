@@ -36,42 +36,28 @@ being relied on:
 
 **Proved out at real volume, then fully integrated, 2026-09-15.** A 100-
 request real sample metro (scripts/fetch_mapquest_reviews.py) ran clean --
-zero failures, zero 429s -- at a conservative between-request delay. Once
-that was confirmed, Nick asked for this to be a real batch-scraper step:
-proxied + rotated (see PROXY_* / MAPQUEST_PROXY_ROTATE_EVERY in .env,
-config.py), same shape as bbb_scraper.angi.client, instead of a deliberate
-per-request delay -- running a whole metro's businesses through this
-sequentially already spaces requests out with real network latency, and
-distributing them across rotating exit IPs is the more useful politeness
-lever on top of that than an *additional* sleep, the same reasoning Angi's
-own client already applies. A 429 here has never actually been observed
-(unlike Angi, which drew a real one at its original faster pacing) --
-rotating on one anyway, defensively, costs nothing and matches the
-existing precedent for how this project responds to a real rate-limit
-signal if one ever shows up.
+zero failures, zero 429s -- at a conservative between-request delay.
 
-**That proxied rotation failed 100% of the time on the very first real
-batch run, 2026-09-15 (same day).** Every single search in a real "Home
-Inspection" / New York batch failed with `curl: (7) CONNECT tunnel
-failed, response 407` -- not intermittent, every request. Root cause: the
-exact Decodo sticky-session limitation already documented in
-bbb_scraper/scraping/proxies.py (found 2026-09-14 investigating Angi) --
-*any* proxy username with a `-session-{id}` suffix 407s on this account
-right now, and `_rotate_proxy` below always asks `get_proxies` for one.
-This is the identical failure bbb_scraper/angi/client.py's own batch
-integration already hit (see scripts/batch_scrape_metros.py's
-_scrape_metro_angi docstring) -- same fix applied here: the batch
-(scripts/batch_scrape_metros.py's _open_mapquest) now defaults MapQuest
-to unproxied, with a --mapquest-use-proxy opt-in for whenever Decodo's
-sticky-session issue is confirmed resolved. This class's own constructor
-default (use_proxy=True below) is deliberately left as-is -- same as
-AngiClient's own class default -- only the batch's call site overrides
-it; a caller outside the batch that actually wants proxied+rotated
-behavior (e.g. once Decodo's account-level issue clears) still gets it by
-just not passing use_proxy=False. The deliberate per-request delay this
-docstring argued against above was restored too (see config.py) -- that
-reasoning specifically depended on proxy IP rotation substituting for a
-delay, which doesn't hold once proxy is off by default.
+**Proxy went through two real, live-tested iterations the same day before
+landing correctly -- see bbb_scraper/angi/client.py's own module docstring
+for the fuller incident writeup (both clients hit and fixed the identical
+issue):**
+  1. First: proxied + periodic sticky-session rotation (same shape as
+     Angi's own original design) instead of a deliberate delay. Failed
+     100% of requests on the very first real batch run -- `curl: (7)
+     CONNECT tunnel failed, response 407`, every single search. Root
+     cause: a `-session-{id}` suffix is Decodo's *sticky*-session
+     mechanism (confirmed against Decodo's own docs), not "rotation" --
+     manufacturing a fresh one-off sticky session this often almost
+     certainly tripped a concurrent-sticky-session account limit.
+  2. Nick's call once this was traced down: no sticky sessions, ever --
+     go bare (Decodo's own "rotating" mode by default), and get a
+     genuinely fresh exit IP on every request, not just periodically.
+     Confirmed live that bare-but-reused doesn't actually rotate (Decodo
+     rotates per new *connection*, not per request over a kept-alive
+     one) -- `_new_session()` below builds a fresh Session (bare proxy)
+     on every single request for real per-request rotation, matching
+     "a new proxy per request" exactly.
 """
 from __future__ import annotations
 
@@ -86,7 +72,7 @@ from bbb_scraper.config import settings as default_settings
 from bbb_scraper.exceptions import RateLimitedError, ScrapeError
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.mapquest.models import MapQuestMatch, MapQuestReview
-from bbb_scraper.scraping.proxies import get_proxies, new_session_id
+from bbb_scraper.scraping.proxies import get_proxies
 from bbb_scraper.utils.rate_limit import RateLimiter
 
 logger = get_logger(__name__)
@@ -135,24 +121,28 @@ _DEFAULT_HEADERS = {
 
 
 class MapQuestClient:
-    def __init__(self, cfg: Settings | None = None, *, use_proxy: bool = True, rotate_every: int | None = None):
+    def __init__(self, cfg: Settings | None = None, *, use_proxy: bool = True):
         self.cfg = cfg or default_settings
         self.use_proxy = use_proxy
-        self.rotate_every = rotate_every if rotate_every is not None else self.cfg.mapquest_proxy_rotate_every
-        self._requests_since_rotation = 0
         self.rate_limiter = RateLimiter(self.cfg.mapquest_min_delay_seconds, self.cfg.mapquest_max_delay_seconds)
-        self.session = curl_requests.Session()
-        self.session.headers.update(_DEFAULT_HEADERS)
-        if self.use_proxy:
-            self._rotate_proxy()
+        self.session = self._new_session()
 
-    def _rotate_proxy(self) -> None:
-        proxies = get_proxies(self.cfg, session_id=new_session_id())
-        if proxies:
-            self.session.proxies.update(proxies)
-        else:
-            logger.warning("mapquest: use_proxy=True but get_proxies() returned nothing -- check PROXY_* in .env")
-        self._requests_since_rotation = 0
+    def _new_session(self) -> curl_requests.Session:
+        """A brand-new Session -- and therefore, when proxied, a brand-new
+        connection to the proxy gateway, which is what actually earns a
+        fresh exit IP (see module docstring; changing .proxies on a
+        *reused* Session does not). Bare proxy username, no session_id --
+        Decodo's own "rotating" mode, never sticky. Mirrors
+        bbb_scraper.angi.client.AngiClient._new_session exactly."""
+        session = curl_requests.Session()
+        session.headers.update(_DEFAULT_HEADERS)
+        if self.use_proxy:
+            proxies = get_proxies(self.cfg)
+            if proxies:
+                session.proxies.update(proxies)
+            else:
+                logger.warning("mapquest: use_proxy=True but get_proxies() returned nothing -- check PROXY_* in .env")
+        return session
 
     def search(
         self, query_text: str, *, latitude: float, longitude: float, first: int = 5
@@ -175,20 +165,18 @@ class MapQuestClient:
                wait=wait_exponential(multiplier=1.5, min=1, max=15),
                retry=retry_if_exception_type((curl_requests.exceptions.RequestException, RateLimitedError)))
         def _do_request():
-            if self.use_proxy and self._requests_since_rotation >= self.rotate_every:
-                self._rotate_proxy()
+            # A fresh session (-> fresh proxy connection -> fresh exit IP,
+            # see module docstring) on every attempt, retries included.
+            self.session = self._new_session()
             self.rate_limiter.wait()
             response = self.session.post(
                 self.cfg.mapquest_graphql_url, json=payload, timeout=self.cfg.mapquest_timeout_seconds,
             )
-            self._requests_since_rotation += 1
             if response.status_code == 429:
                 logger.warning(
                     "mapquest: 429 for %r -- cooling down %.0fs before retrying",
                     query_text, _RATE_LIMIT_COOLDOWN_SECONDS,
                 )
-                if self.use_proxy:
-                    self._rotate_proxy()
                 time.sleep(_RATE_LIMIT_COOLDOWN_SECONDS)
                 raise RateLimitedError(f"MapQuest returned 429 for {query_text!r}")
             response.raise_for_status()

@@ -286,8 +286,24 @@ def _render_progress(progress: dict) -> None:
     """
     metros = progress.get("metros") or []
     total = progress.get("total_metros") or len(metros) or 1
+    active_steps = progress.get("active_steps") or []
     settled = sum(1 for m in metros if m["status"] in ("done", "skipped", "failed"))
-    st.progress(min(1.0, settled / total))
+
+    # Partial credit for whichever metro is currently running, based on how
+    # far through its own step checklist it's gotten -- without this the bar
+    # sits frozen at a whole-metro increment for however long that metro
+    # takes (a single metro in --details mode regularly runs 40+ minutes,
+    # confirmed live 2026-09-15) and then jumps, which is a poor "loading
+    # bar" for exactly the small batches this project runs most (2-3
+    # metros). Only one metro is ever "running" at a time.
+    running_credit = 0.0
+    for m in metros:
+        if m["status"] == "running":
+            step_idx = next((idx for idx, s in enumerate(active_steps) if s["key"] == m.get("step")), None)
+            if active_steps and step_idx is not None:
+                running_credit = (step_idx + 1) / len(active_steps)
+            break
+    st.progress(min(1.0, (settled + running_credit) / total))
 
     biz_total = sum(m.get("businesses") or 0 for m in metros if m["status"] == "done")
     yelp_total = sum(m.get("yelp_matched") or 0 for m in metros if m["status"] == "done")
@@ -323,7 +339,30 @@ def _render_progress(progress: dict) -> None:
             # object (no `with`) never triggers __exit__, so "running"
             # actually stays running.
             box = st.status(f"{m['name']} — scraping...", state="running")
-            box.write("BBB and Angi scraping concurrently, then matching Yelp, fetching contact details...")
+            step_idx = next((idx for idx, s in enumerate(active_steps) if s["key"] == m.get("step")), None)
+            if active_steps and step_idx is not None:
+                # A real per-stage checklist (2026-09-15, Nick's ask: "sections
+                # that are completed and a loading bar") -- what's actually
+                # done/current/pending in *this* metro's own run, not just a
+                # generic spinner message. "Scraping BBB + Angi" (the first
+                # step) is still one lump while it's current -- it's the real
+                # multi-request scrape loop itself, which doesn't report
+                # per-business progress back to this file; the checklist can
+                # only be as fine-grained as what batch_scrape_metros.py's
+                # main() loop actually reports between pipeline stages.
+                box.progress((step_idx + 1) / len(active_steps))
+                for idx, s in enumerate(active_steps):
+                    if idx < step_idx:
+                        box.markdown(f"✅ {s['label']}")
+                    elif idx == step_idx:
+                        box.markdown(f"🔄 **{s['label']}**")
+                    else:
+                        box.markdown(f"○ {s['label']}")
+            else:
+                # progress.json from before this field existed, or the brief
+                # instant before the first step lands -- same message this
+                # always showed.
+                box.write("BBB and Angi scraping concurrently, then matching Yelp, fetching contact details...")
         elif status == "done":
             bits = [f"{m['businesses']} businesses"]
             if m.get("yelp_matched") is not None:

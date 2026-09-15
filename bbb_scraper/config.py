@@ -126,10 +126,11 @@ class Settings(BaseSettings):
     angi_max_retries: int = Field(default=3, alias="ANGI_MAX_RETRIES")
     angi_min_delay_seconds: float = Field(default=1.5, alias="ANGI_MIN_DELAY_SECONDS")
     angi_max_delay_seconds: float = Field(default=3.0, alias="ANGI_MAX_DELAY_SECONDS")
-    # How many requests one proxy session (one exit IP) carries before
-    # AngiClient swaps in a fresh session id -- spreads a run's volume
-    # across several residential IPs rather than concentrating it on one.
-    angi_proxy_rotate_every: int = Field(default=15, alias="ANGI_PROXY_ROTATE_EVERY")
+    # No rotate-every-N setting -- 2026-09-15, AngiClient builds a fresh,
+    # bare (never sticky) proxy connection for every single request now,
+    # not periodically. See bbb_scraper/angi/client.py's own module
+    # docstring for the real incident (a 100% 407 failure rate) that a
+    # `-session-{id}`-based "rotate every N" design caused.
 
     # --- MapQuest search (bbb_scraper/mapquest) ---------------------------------
     # Not scraping mapquest.com's rendered pages -- this calls the same
@@ -142,29 +143,14 @@ class Settings(BaseSettings):
     #
     # 2026-09-15: proved out first at conservative pacing (100 real requests,
     # zero failures/429s -- see scripts/fetch_mapquest_reviews.py's real
-    # sample-metro run, at the 1.5/3.0s delay below). Nick then asked for
-    # the full batch integration to be proxied + rotated instead of a
-    # deliberate delay (same shape as Angi's own client) -- but the very
-    # first real batch run through that code path hit a 100% failure rate,
-    # every single MapQuest search failing with the exact `curl: (7) CONNECT
-    # tunnel failed, response 407` already documented in
-    # bbb_scraper/scraping/proxies.py (2026-09-14): *any* proxy username
-    # with a `-session-{id}` suffix 407s on this Decodo account right now,
-    # confirmed independently of this project's code -- and
-    # MapQuestClient._rotate_proxy always requests a session id. This is
-    # the identical failure Angi's own batch integration already hit (see
-    # scripts/batch_scrape_metros.py's _scrape_metro_angi docstring) --
-    # same fix here: the batch defaults MapQuest to unproxied
-    # (--mapquest-use-proxy to opt back in once/if Decodo's sticky-session
-    # issue is resolved). Delay restored to its previously-proven-safe
-    # value rather than shipping an untested zero-delay+unproxied
-    # combination against a real site -- the "no delay" reasoning was
-    # specifically premised on proxy IP rotation substituting for it, which
-    # no longer holds once proxy is off by default; notably even Angi's own
-    # client keeps a real delay (1.5/3.0s) regardless of its own proxy
-    # setting, so an unproxied MapQuest client running at 0.0/0.0 was
-    # already the outlier among this project's real clients before this bug
-    # surfaced.
+    # sample-metro run, at the delay below). Proxy went through two real,
+    # live-tested iterations the same day before landing correctly -- see
+    # bbb_scraper/mapquest/client.py's own module docstring for the full
+    # incident (a periodic sticky-session design 407'd 100% of requests on
+    # the first real batch run; fixed by going bare + a fresh connection
+    # per request, Decodo's own "rotating" mode, never sticky). No
+    # rotate-every-N setting -- every request gets its own fresh proxy
+    # connection now, not periodically.
     mapquest_graphql_url: str = Field(
         default="https://graphql-42a6517.aws.mapquest.com/", alias="MAPQUEST_GRAPHQL_URL"
     )
@@ -172,7 +158,6 @@ class Settings(BaseSettings):
     mapquest_max_retries: int = Field(default=3, alias="MAPQUEST_MAX_RETRIES")
     mapquest_min_delay_seconds: float = Field(default=1.5, alias="MAPQUEST_MIN_DELAY_SECONDS")
     mapquest_max_delay_seconds: float = Field(default=3.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
-    mapquest_proxy_rotate_every: int = Field(default=15, alias="MAPQUEST_PROXY_ROTATE_EVERY")
 
     # --- Static site deployment (scripts/deploy_site.py only) -----------------
     # Not used by the running app itself -- only by the deploy script, which

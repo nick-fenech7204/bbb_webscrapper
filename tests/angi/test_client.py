@@ -1,5 +1,12 @@
-"""AngiClient's proxy rotation and 429 handling -- no real network, no real
-sleeps (patches time.sleep in both this module and RateLimiter's)."""
+"""AngiClient's proxy handling and 429 cooldown -- no real network, no real
+sleeps (patches time.sleep in both this module and RateLimiter's).
+
+2026-09-15: rewritten for the fresh-session-per-request design that
+replaced periodic sticky-session rotation -- see client.py's own module
+docstring for the real incident (a 100% 407 failure rate on the first real
+batch run) this fixes. The old rotate_every/new_session_id-based tests are
+gone; what matters now is (1) every request gets its own fresh Session,
+(2) that Session's proxy is always bare -- no session_id, ever sticky."""
 from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
@@ -17,7 +24,6 @@ def _cfg(**overrides) -> Settings:
         "angi_max_retries": 3,
         "angi_min_delay_seconds": 0.0,
         "angi_max_delay_seconds": 0.0,
-        "angi_proxy_rotate_every": 2,
         "proxy_host": "gate.decodo.com",
         "proxy_port": 10000,
         "proxy_username": "user",
@@ -51,12 +57,32 @@ def _no_real_sleeps():
 @patch("bbb_scraper.angi.client.curl_requests.Session")
 @patch("bbb_scraper.angi.client.get_proxies")
 def test_proxied_by_default(mock_get_proxies, mock_session_cls):
-    mock_get_proxies.return_value = {"http": "http://user-session-x:pass@gate.decodo.com:10000"}
+    mock_get_proxies.return_value = {"http": "http://user:pass@gate.decodo.com:10000"}
     mock_session_cls.return_value.get.return_value = _ok_response()
 
     AngiClient(_cfg())
 
     mock_get_proxies.assert_called_once()
+
+
+@patch("bbb_scraper.angi.client.curl_requests.Session")
+@patch("bbb_scraper.angi.client.get_proxies")
+def test_proxy_is_always_bare_no_session_id_ever(mock_get_proxies, mock_session_cls):
+    """The actual point of the whole 2026-09-15 fix: a `-session-{id}`
+    suffix is Decodo's *sticky*-session mechanism (confirmed against
+    Decodo's own docs) -- get_proxies must never be called with a
+    session_id, at construction or on any later request, or this
+    regresses right back to the real 100%-407 incident."""
+    mock_get_proxies.return_value = {"http": "http://user:pass@gate.decodo.com:10000"}
+    mock_session_cls.return_value.get.return_value = _ok_response()
+
+    client = AngiClient(_cfg())
+    client.get("https://www.angi.com/1.htm")
+    client.get("https://www.angi.com/2.htm")
+
+    for call in mock_get_proxies.call_args_list:
+        assert "session_id" not in call.kwargs
+        assert len(call.args) <= 1  # only ever cfg, positionally -- never a second (session_id) positional arg
 
 
 @patch("bbb_scraper.angi.client.curl_requests.Session")
@@ -70,44 +96,45 @@ def test_use_proxy_false_never_calls_get_proxies(mock_get_proxies, mock_session_
     mock_get_proxies.assert_not_called()
 
 
-@patch("bbb_scraper.angi.client.new_session_id")
 @patch("bbb_scraper.angi.client.curl_requests.Session")
 @patch("bbb_scraper.angi.client.get_proxies")
-def test_rotates_after_configured_request_count(mock_get_proxies, mock_session_cls, mock_new_session_id):
-    mock_new_session_id.side_effect = [f"sess-{i}" for i in range(10)]
-    mock_get_proxies.return_value = {"http": "http://proxied"}
+def test_every_request_gets_a_fresh_session(mock_get_proxies, mock_session_cls):
+    """Confirmed live 2026-09-15: a *reused* Session keeps the same exit
+    IP regardless of proxy username (Decodo rotates per new connection,
+    not per HTTP request over a kept-alive one) -- so "a new proxy per
+    request" requires a genuinely new Session per request, not just a
+    changed .proxies value on the same one. One Session at construction +
+    one per .get() call."""
+    mock_get_proxies.return_value = {"http": "http://user:pass@gate.decodo.com:10000"}
     mock_session_cls.return_value.get.return_value = _ok_response()
 
-    client = AngiClient(_cfg(), rotate_every=2)
-    # one rotation happened in __init__ already
-    assert mock_get_proxies.call_count == 1
+    client = AngiClient(_cfg())
+    assert mock_session_cls.call_count == 1  # __init__ builds one
 
     client.get("https://www.angi.com/1.htm")
+    assert mock_session_cls.call_count == 2
+
     client.get("https://www.angi.com/2.htm")
-    # 2 requests made, rotate_every=2 -- the 3rd request should trigger a rotation first
-    assert mock_get_proxies.call_count == 1
-    client.get("https://www.angi.com/3.htm")
-    assert mock_get_proxies.call_count == 2
+    assert mock_session_cls.call_count == 3
 
 
-@patch("bbb_scraper.angi.client.new_session_id")
 @patch("bbb_scraper.angi.client.curl_requests.Session")
 @patch("bbb_scraper.angi.client.get_proxies")
-def test_429_triggers_immediate_rotation_and_cooldown(mock_get_proxies, mock_session_cls, mock_new_session_id):
-    mock_new_session_id.side_effect = [f"sess-{i}" for i in range(10)]
+def test_429_cooldown_then_a_retry_succeeds(mock_get_proxies, mock_session_cls):
     mock_get_proxies.return_value = {"http": "http://proxied"}
     session = mock_session_cls.return_value
     session.get.side_effect = [_rate_limited_response(), _ok_response()]
 
-    client = AngiClient(_cfg(), rotate_every=100)  # rotation from the count alone won't fire
-    calls_after_init = mock_get_proxies.call_count
+    client = AngiClient(_cfg())
+    sessions_after_init = mock_session_cls.call_count
 
     with patch("bbb_scraper.angi.client.time.sleep") as mock_sleep:
         text = client.get("https://www.angi.com/x.htm")
 
     assert text == "<html></html>"
-    # a 429-triggered rotation happened in addition to init's
-    assert mock_get_proxies.call_count == calls_after_init + 1
+    # the retry (tenacity, after the 429 raised RateLimitedError) got its
+    # own fresh session too, same as any other attempt
+    assert mock_session_cls.call_count == sessions_after_init + 2  # the 429 attempt + the retry
     # the 25s cooldown really was requested (tenacity's own exponential
     # backoff between attempts sleeps too -- that call is separate and
     # expected, not what this assertion is pinning)

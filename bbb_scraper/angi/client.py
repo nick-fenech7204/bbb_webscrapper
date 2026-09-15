@@ -1,8 +1,7 @@
 """HTTP fetching for angi.com -- no BBB-session machinery (irrelevant here,
 that's bbb.org-specific), but paced, retried, and (2026-09-14, since a real
-run drew real 429s) proxied and rotated by default, since unlike
-bbb_scraper/webcheck (one request per different host) this is repeated
-requests to *one* host.
+run drew real 429s) proxied by default, since unlike bbb_scraper/webcheck
+(one request per different host) this is repeated requests to *one* host.
 
 **A real gotcha, found by testing, not assumed:** Angi appears to run a
 server-side experiment that serves two different page compositions for
@@ -16,12 +15,43 @@ the normal way can get *permanently* stuck on the empty variant for its
 entire lifetime once it happens to land there once, confirmed by testing:
 4/4 repeat requests through one persistent, cookie-carrying session all
 came back empty, while 4 independent cookie-less requests to the identical
-URL flipped between variants (2 empty, 2 full). The fix here is to clear
-the session's cookies before every single request -- confirmed this
-restores real variance (5/8 full in one real run) rather than a permanent
-lock-in. Costs nothing (nothing here actually needs cross-request cookie
-continuity) and combines with scraper.py's own retry-on-empty-parse for a
-high effective success rate.
+URL flipped between variants (2 empty, 2 full). 2026-09-15's fresh-
+session-per-request change (below) makes this a non-issue for free -- a
+brand-new Session has no cookies to get stuck with in the first place, so
+the old explicit `session.cookies.clear()` workaround is gone; nothing
+here ever needed cross-request cookie continuity.
+
+**Proxy: bare/rotating, one fresh Session (and therefore one fresh
+connection) per request -- never a sticky session, 2026-09-15.** Two real
+incidents, same day, led here:
+  1. The original design rotated to a *new sticky session id* every
+     `rotate_every` requests (get_proxies(session_id=new_session_id())).
+     That's not "rotating" in Decodo's own terms -- a `-session-{id}`
+     suffix is specifically Decodo's *sticky*-session mechanism (pins one
+     exit IP for ~10min; see help.decodo.com's sticky-vs-rotating docs).
+     Manufacturing a brand-new one-off sticky session this often, for the
+     whole lifetime of a real batch, is almost certainly what tripped a
+     concurrent-sticky-session account limit: the very first real batch
+     run through bbb_scraper/mapquest's identical pattern failed 100% of
+     requests with `curl: (7) CONNECT tunnel failed, response 407` (see
+     that module's own docstring) -- and a live re-test the same day
+     confirmed Angi's original session-based rotation 407s exactly as
+     consistently. Nick's own call once this was traced down: no sticky
+     sessions at all, ever, for either client -- go bare, which Decodo's
+     own docs confirm is "rotating" by default.
+  2. Bare alone isn't enough, though -- confirmed live: 6 sequential
+     requests through one *reused* Session, bare proxy, came back with
+     the exact same exit IP all 6 times (even with a `Connection: close`
+     header forced, which didn't help either); 6 requests each through a
+     *fresh* Session came back with 6 different real IPs. Decodo rotates
+     per new connection to its gateway, not per HTTP request over an
+     already-open one -- so a client that builds one Session and reuses
+     it for its whole life (which is what every client here always did)
+     never actually rotates in bare mode, proxied or not. The fix is
+     _new_session() below, called at the top of every retried request
+     attempt (a retry gets a fresh IP too, not just a fresh backoff) --
+     "a new proxy per request," Nick's own words, confirmed to actually
+     require exactly this, not just dropping the session id.
 """
 from __future__ import annotations
 
@@ -34,7 +64,7 @@ from bbb_scraper.config import Settings
 from bbb_scraper.config import settings as default_settings
 from bbb_scraper.exceptions import RateLimitedError, ScrapeError
 from bbb_scraper.logging_setup import get_logger
-from bbb_scraper.scraping.proxies import get_proxies, new_session_id
+from bbb_scraper.scraping.proxies import get_proxies
 from bbb_scraper.utils.rate_limit import RateLimiter
 
 logger = get_logger(__name__)
@@ -49,7 +79,7 @@ _RATE_LIMIT_COOLDOWN_SECONDS = 25.0
 
 
 class AngiClient:
-    def __init__(self, cfg: Settings | None = None, *, use_proxy: bool = True, rotate_every: int | None = None):
+    def __init__(self, cfg: Settings | None = None, *, use_proxy: bool = True):
         """Proxied by default now -- a real, sustained run of 429s (3/3
         consecutive requests, no recovery even after a 25s cooldown each)
         showed up on a direct IP that had already made a lot of legitimate
@@ -57,32 +87,30 @@ class AngiClient:
         `use_proxy=False` remains available for local debugging without a
         proxy configured.
 
-        `rotate_every` (default cfg.angi_proxy_rotate_every) periodically
-        swaps in a fresh proxy session id -- and therefore, typically, a
-        fresh exit IP -- rather than one session/IP carrying an entire
-        run's request volume. This is the *opposite* of proxies.py's
-        city-targeting use (there, a stable session id across requests is
-        the point, so Decodo keeps routing to the same named city); here,
-        nothing needs geographic consistency, so spreading requests across
-        several residential IPs over a long run is strictly the more
-        polite choice -- the same total request volume, distributed rather
-        than concentrated on one IP."""
+        A fresh Session (see _new_session) is built for every single
+        request, bare/no-session-id -- "a new proxy per request", not
+        periodic rotation -- see the module docstring for why (both the
+        sticky-session 407 this replaces, and why bare-but-reused doesn't
+        actually rotate)."""
         self.cfg = cfg or default_settings
         self.use_proxy = use_proxy
-        self.rotate_every = rotate_every if rotate_every is not None else self.cfg.angi_proxy_rotate_every
-        self._requests_since_rotation = 0
         self.rate_limiter = RateLimiter(self.cfg.angi_min_delay_seconds, self.cfg.angi_max_delay_seconds)
-        self.session = curl_requests.Session(impersonate=self.cfg.http_impersonate or None)
-        if self.use_proxy:
-            self._rotate_proxy()
+        self.session = self._new_session()
 
-    def _rotate_proxy(self) -> None:
-        proxies = get_proxies(self.cfg, session_id=new_session_id())
-        if proxies:
-            self.session.proxies.update(proxies)
-        else:
-            logger.warning("angi: use_proxy=True but get_proxies() returned nothing -- check PROXY_* in .env")
-        self._requests_since_rotation = 0
+    def _new_session(self) -> curl_requests.Session:
+        """A brand-new Session -- and therefore, when proxied, a brand-new
+        connection to the proxy gateway, which is what actually earns a
+        fresh exit IP (see module docstring; changing .proxies on a
+        *reused* Session does not). Bare proxy username, no session_id --
+        Decodo's own "rotating" mode, never sticky."""
+        session = curl_requests.Session(impersonate=self.cfg.http_impersonate or None)
+        if self.use_proxy:
+            proxies = get_proxies(self.cfg)
+            if proxies:
+                session.proxies.update(proxies)
+            else:
+                logger.warning("angi: use_proxy=True but get_proxies() returned nothing -- check PROXY_* in .env")
+        return session
 
     def get(self, path_or_url: str) -> str:
         """Returns the response body text. `path_or_url` may be a relative
@@ -97,20 +125,22 @@ class AngiClient:
             retry=retry_if_exception_type((curl_requests.exceptions.RequestException, RateLimitedError)),
         )
         def _do_request():
-            if self.use_proxy and self._requests_since_rotation >= self.rotate_every:
-                self._rotate_proxy()
+            # A fresh session (-> fresh proxy connection -> fresh exit IP,
+            # see module docstring) on every attempt, retries included --
+            # a retry riding a different IP than the one that just failed
+            # is strictly better odds, not just a slower version of the
+            # same attempt. Also incidentally sidesteps the page-variant
+            # cookie gotcha (module docstring) for free: a new Session has
+            # no cookies to get stuck with.
+            self.session = self._new_session()
             self.rate_limiter.wait()
-            self.session.cookies.clear()  # see module docstring -- avoids getting stuck on the empty variant
             logger.info("GET %s", url)
             response = self.session.get(url, timeout=cfg.angi_timeout_seconds)
-            self._requests_since_rotation += 1
             if response.status_code == 429:
                 logger.warning(
                     "angi: 429 for %s -- cooling down %.0fs before retrying (see client.py docstring)",
                     url, _RATE_LIMIT_COOLDOWN_SECONDS,
                 )
-                if self.use_proxy:
-                    self._rotate_proxy()  # a 429 is exactly what rotation exists to route around
                 time.sleep(_RATE_LIMIT_COOLDOWN_SECONDS)
                 raise RateLimitedError(f"Angi returned 429 for {url}")
             response.raise_for_status()

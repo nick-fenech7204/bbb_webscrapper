@@ -52,8 +52,8 @@ def main() -> int:
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
         "--use-proxy", action=argparse.BooleanOptionalAction, default=True,
-        help="Route through PROXY_* (.env), rotating sessions every "
-        "settings.angi_proxy_rotate_every requests (default: on -- a real run drew real 429s "
+        help="Route through PROXY_* (.env), bare/rotating with a fresh proxy connection for "
+        "every request -- never a sticky session (default: on -- a real run drew real 429s "
         "on a direct connection; pass --no-use-proxy only for local debugging).",
     )
     args = parser.parse_args()

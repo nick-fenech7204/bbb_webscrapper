@@ -74,12 +74,12 @@ Per metro:
      cell, same convention as BBB's/Angi's own review columns) directly
      onto each row -- a post-hoc column addition like webcheck/Yelp above,
      not baked into build_master_table. One shared MapQuestClient for the
-     whole batch, unproxied by default with a real 1.5-3.0s delay between
-     requests (--mapquest-use-proxy to opt into proxied+rotated instead,
-     same shape as --angi-use-proxy -- see _open_mapquest's own docstring
-     for the real 100%-failure-rate incident, 2026-09-15, that's why
-     proxied isn't the default despite being the first thing tried).
-     Best-effort like everything else here: a client-setup failure
+     whole batch, proxied by default -- bare/rotating, a fresh proxy
+     connection per request, never sticky (--no-mapquest-use-proxy to go
+     direct instead, same shape as --angi-use-proxy; see _open_mapquest's
+     own docstring for the real incident, 2026-09-15, that took two live-
+     tested iterations to land here). Best-effort like everything else
+     here: a client-setup failure
      disables MapQuest for the whole batch, a single business's
      search/match failure just leaves that row's columns empty, neither
      is ever fatal. Checkpoint/dataset only
@@ -326,7 +326,7 @@ def _angi_state_city(metro_id: str) -> tuple[str, str]:
 
 def _scrape_metro_angi(
     metro: Metro, category_slug: str, category_label: str, *,
-    max_businesses: int | None, use_proxy: bool = False,
+    max_businesses: int | None, use_proxy: bool = True,
 ) -> list[dict]:
     """Best-effort Angi scrape for one metro, run on its own thread
     concurrently with scrape_one_metro (see main()) -- Angi reads nothing
@@ -338,17 +338,15 @@ def _scrape_metro_angi(
     result down with it -- the two futures in main() are awaited
     independently.
 
-    `use_proxy` defaults to False here (unlike scrape_category's own
-    default of True) -- confirmed live 2026-09-15, re-running this exact
-    integration for the first time: AngiClient's default proxy rotation
-    hit the documented Decodo sticky-session 407 (see bbb_scraper/scraping/
-    proxies.py's 2026-09-14 note) on the very first real run through this
-    new code path. The earlier, now-retired scripts/run_batch_with_angi.py
-    already knew this and always passed --no-use-proxy; this integration
-    had briefly regressed that until this was caught by an actual live
-    smoke test, not just the mocked unit tests. --angi-use-proxy is still
-    there to opt back in once/if Decodo's sticky-session capacity issue is
-    confirmed resolved.
+    `use_proxy` defaults to True, matching AngiClient's own default --
+    briefly False here (2026-09-15) after a live smoke test caught
+    AngiClient's then-current sticky-session-based proxy rotation 407ing
+    100% of requests (see bbb_scraper/angi/client.py's own module
+    docstring). Fixed the same day by rebuilding proxy rotation around a
+    fresh, bare (never sticky) connection per request instead -- confirmed
+    live against real Angi listing pages, zero failures -- so this is back
+    to matching the default everywhere else. --no-angi-use-proxy remains
+    for local debugging without a proxy configured.
     """
     rows: list[dict] = []
     try:
@@ -518,7 +516,7 @@ def _check_metro_websites(records: list[dict]) -> list[dict]:
 
 
 def _open_mapquest(
-    enabled: bool, *, use_proxy: bool = False,
+    enabled: bool, *, use_proxy: bool = True,
 ) -> tuple[MapQuestClient | None, CityDirectory | None, str | None]:
     """One shared MapQuestClient + CityDirectory for the whole batch
     (constructed once, not per metro/business) -- same "resolve once,
@@ -527,19 +525,20 @@ def _open_mapquest(
     missing) -- a setup failure disables MapQuest for the entire batch the
     same way a missing Yelp key disables Yelp, never kills the run.
     MapQuestClient's own __init__ only warns (never raises) on missing
-    proxy credentials -- see its _rotate_proxy -- so this mostly guards
+    proxy credentials -- see its _new_session -- so this mostly guards
     against something like a missing us_cities.csv.
 
-    `use_proxy` defaults to False here (unlike MapQuestClient's own
-    use_proxy=True default) -- confirmed live 2026-09-15, the very first
-    real batch run through this code path: every single MapQuest search
-    failed with Decodo's documented sticky-session 407 (see
-    bbb_scraper/mapquest/client.py's module docstring and
-    bbb_scraper/scraping/proxies.py) -- the identical failure Angi's own
-    batch integration already hit (see _scrape_metro_angi above, which
-    applies the exact same fix). --mapquest-use-proxy is still there to
-    opt back in once/if Decodo's sticky-session capacity issue is
-    confirmed resolved.
+    `use_proxy` defaults to True, matching MapQuestClient's own default --
+    briefly False here (2026-09-15) after the very first real batch run
+    through this code path failed 100% of MapQuest searches with Decodo's
+    sticky-session 407 (see bbb_scraper/mapquest/client.py's module
+    docstring) -- the identical failure Angi's own batch integration hit
+    (see _scrape_metro_angi above). Fixed the same day, same way, for
+    both: a fresh, bare (never sticky) proxy connection per request
+    instead of periodic sticky-session rotation -- confirmed live against
+    real MapQuest searches, zero failures -- so this is back to matching
+    the default everywhere else. --no-mapquest-use-proxy remains for local
+    debugging without a proxy configured.
     """
     if not enabled:
         return None, None, None
@@ -627,6 +626,41 @@ def rebuild_all_metros_file(industry_slug: str) -> Path:
     return out_path
 
 
+# Ordered, human-labeled pipeline steps -- written into progress.json
+# (metro_states[i]["step"] + the top-level "active_steps" list) so a UI can
+# render a real per-metro checklist + fraction-complete bar while a metro is
+# "running", not just a generic spinner (2026-09-15, Nick's ask: "include
+# sections that are completed and a loading bar"). Single source of truth
+# for the labels -- Streamlit just renders whatever "active_steps" says
+# rather than keeping its own copy of this list in sync by hand.
+_STEP_LABELS = {
+    "scraping": "Scraping BBB + Angi",
+    "check_websites": "Checking websites",
+    "yelp": "Matching Yelp",
+    "angi_merge": "Merging Angi",
+    "mapquest": "Fetching MapQuest reviews",
+    "checkpoint": "Writing checkpoint",
+    "publish": "Publishing to site",
+    "deploy": "Deploying live",
+}
+_STEP_ORDER = list(_STEP_LABELS)
+
+
+def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: bool,
+                   publish: bool, deploy: bool) -> list[dict]:
+    """Which of _STEP_ORDER this particular batch actually runs, in order --
+    depends on which --no-X flags are set, so it's computed once per batch
+    (every metro in one batch shares the same flags) rather than assumed
+    fixed. "deploy" only appears when publish is also on, since a deploy
+    can't happen without a publish first (see main()'s own nesting)."""
+    enabled = {
+        "scraping": True, "check_websites": check_websites, "yelp": yelp,
+        "angi_merge": angi, "mapquest": mapquest, "checkpoint": True,
+        "publish": publish, "deploy": publish and deploy,
+    }
+    return [{"key": k, "label": _STEP_LABELS[k]} for k in _STEP_ORDER if enabled[k]]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--industry", required=True, help='e.g. "Car Dealers"')
@@ -675,30 +709,31 @@ def main() -> int:
         "order of magnitude of time as the BBB side, not an unbounded sweep.",
     )
     parser.add_argument(
-        "--angi-use-proxy", action=argparse.BooleanOptionalAction, default=False,
-        help="Route the Angi scrape through PROXY_* with rotating sessions (default: off). "
-        "Confirmed live 2026-09-15: the rotating-session proxy path hits Decodo's documented "
-        "sticky-session 407 (see bbb_scraper/scraping/proxies.py) -- direct is what's actually "
-        "worked in every real production Angi batch run so far. Opt back in if that's confirmed "
-        "resolved on Decodo's side.",
+        "--angi-use-proxy", action=argparse.BooleanOptionalAction, default=True,
+        help="Route the Angi scrape through PROXY_* (default: on). Bare/rotating -- a fresh "
+        "proxy connection for every single request, never a sticky session (see "
+        "bbb_scraper/angi/client.py's own module docstring: an earlier sticky-session-based "
+        "design 407'd 100%% of requests; fixed 2026-09-15, confirmed live). --no-angi-use-proxy "
+        "for local debugging without a proxy configured.",
     )
     parser.add_argument(
         "--mapquest", action=argparse.BooleanOptionalAction, default=True,
         help="Fetch real Yelp-sourced review text/rating/date for each business via MapQuest's "
         "own unauthenticated GraphQL search (default: on) -- matched by name+phone within the "
-        "business's own city (bbb_scraper/mapquest). Unproxied by default with a real "
-        "1.5-3.0s delay between requests -- see --mapquest-use-proxy below for why. "
-        "Best-effort: a setup failure disables it for the whole batch, a single business's "
-        "search/match failure just leaves that row's mapquest_* columns empty, neither is ever "
-        "fatal. Checkpoint/dataset only -- not wired into scoring or the public site yet.",
+        "business's own city (bbb_scraper/mapquest). Proxied by default (see "
+        "--mapquest-use-proxy below) with a real 1.5-3.0s delay between requests on top of "
+        "that. Best-effort: a setup failure disables it for the whole batch, a single "
+        "business's search/match failure just leaves that row's mapquest_* columns empty, "
+        "neither is ever fatal. Checkpoint/dataset only -- not wired into scoring or the "
+        "public site yet.",
     )
     parser.add_argument(
-        "--mapquest-use-proxy", action=argparse.BooleanOptionalAction, default=False,
-        help="Route the MapQuest search through PROXY_* with rotating sessions (default: off). "
-        "Confirmed live 2026-09-15: the rotating-session proxy path hits Decodo's documented "
-        "sticky-session 407 (see bbb_scraper/scraping/proxies.py) -- the identical failure "
-        "--angi-use-proxy's own docstring describes, and the identical fix. Opt back in if "
-        "that's confirmed resolved on Decodo's side.",
+        "--mapquest-use-proxy", action=argparse.BooleanOptionalAction, default=True,
+        help="Route the MapQuest search through PROXY_* (default: on). Bare/rotating -- a fresh "
+        "proxy connection for every single request, never a sticky session (see "
+        "bbb_scraper/mapquest/client.py's own module docstring for the same incident/fix "
+        "--angi-use-proxy's own docstring describes). --no-mapquest-use-proxy for local "
+        "debugging without a proxy configured.",
     )
     parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
@@ -770,6 +805,7 @@ def main() -> int:
         {
             "id": metro.id, "name": metro.name,
             "status": "skipped" if (BATCH_DIR / f"{industry_slug}--{metro.id}.csv").exists() and not args.force else "pending",
+            "step": None,
             "businesses": None, "yelp_matched": None, "angi_businesses": None, "angi_matched": None,
             "mapquest_matched": None, "mapquest_reviews": None,
             "top_lead_score": None, "websites_dead": None,
@@ -777,10 +813,6 @@ def main() -> int:
         }
         for metro in metros
     ]
-
-    def _snapshot(finished: bool = False) -> dict:
-        return {"industry": args.industry, "total_metros": len(metros), "metros": metro_states,
-                "finished": finished, "updated_at": time.time()}
 
     yelp_state = open_yelp_enrichment(args.yelp)
     yelp_note = "on" if yelp_state.enabled else f"off ({yelp_state.reason_off})"
@@ -791,6 +823,16 @@ def main() -> int:
     mapquest_enabled = mapquest_client is not None
     mapquest_note = (f"on, proxy={'on' if args.mapquest_use_proxy else 'off'}" if mapquest_enabled
                       else f"off ({mapquest_reason_off or 'disabled'})")
+
+    active_steps = _active_steps(
+        check_websites=args.check_websites, yelp=args.yelp, angi=angi_enabled,
+        mapquest=mapquest_enabled, publish=args.publish, deploy=args.deploy,
+    )
+
+    def _snapshot(finished: bool = False) -> dict:
+        return {"industry": args.industry, "total_metros": len(metros), "metros": metro_states,
+                "active_steps": active_steps, "finished": finished, "updated_at": time.time()}
+
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
@@ -822,6 +864,7 @@ def main() -> int:
         start = time.monotonic()
         print(f"[{i}/{len(metros)}] {metro.name}: starting...")
         metro_states[i - 1]["status"] = "running"
+        metro_states[i - 1]["step"] = "scraping"
         _write_progress(progress_path, _snapshot())
         stats = RunStats()
         try:
@@ -844,6 +887,8 @@ def main() -> int:
 
         websites_dead = None
         if args.check_websites:
+            metro_states[i - 1]["step"] = "check_websites"
+            _write_progress(progress_path, _snapshot())
             records = _check_metro_websites(records)
             websites_dead = sum(1 for r in records if r.get("website_dead"))
 
@@ -855,11 +900,15 @@ def main() -> int:
         # stays written either way; only this metro's `done` count and
         # summary line are skipped on failure.
         try:
+            metro_states[i - 1]["step"] = "yelp"
+            _write_progress(progress_path, _snapshot())
             master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
 
             angi_matched = None
             if angi_enabled:
                 if angi_rows:
+                    metro_states[i - 1]["step"] = "angi_merge"
+                    _write_progress(progress_path, _snapshot())
                     _write_angi_checkpoint(ANGI_DIR / f"{angi_category_slug}--{metro.id}.csv", angi_rows)
                     master_rows = enrich_with_angi(master_rows, angi_rows)
                     angi_matched = sum(1 for r in master_rows if r.get("on_angi"))
@@ -868,12 +917,16 @@ def main() -> int:
 
             mapquest_matched = mapquest_reviews_count = None
             if mapquest_enabled:
+                metro_states[i - 1]["step"] = "mapquest"
+                _write_progress(progress_path, _snapshot())
                 mapquest_matched, mapquest_reviews_count = _enrich_metro_with_mapquest(
                     master_rows, mapquest_client, mapquest_city_directory,
                 )
                 print(f"    MapQuest: {mapquest_matched}/{len(master_rows)} matched, "
                       f"{mapquest_reviews_count} reviews captured")
 
+            metro_states[i - 1]["step"] = "checkpoint"
+            _write_progress(progress_path, _snapshot())
             CSVSink(checkpoint_path).load(master_rows)
             # The real checkpoint just landed -- any partial snapshot from
             # this metro's detail loop is superseded, remove it so it can't
@@ -907,6 +960,8 @@ def main() -> int:
             _write_progress(progress_path, _snapshot())
 
             if args.publish:
+                metro_states[i - 1]["step"] = "publish"
+                _write_progress(progress_path, _snapshot())
                 # master_rows, not `records` -- so the site gets our derived
                 # intelligence columns too. publish_master_rows only carries
                 # the matched business's yelp_name/rating/review_count/url
@@ -929,6 +984,8 @@ def main() -> int:
                     # never undo the fact that this metro's scrape +
                     # checkpoint + local publish already succeeded, so it
                     # doesn't set off the outer except or skip `done += 1`.
+                    metro_states[i - 1]["step"] = "deploy"
+                    _write_progress(progress_path, _snapshot())
                     print("    deploying to the live site...")
                     try:
                         rc = deploy_site.main()

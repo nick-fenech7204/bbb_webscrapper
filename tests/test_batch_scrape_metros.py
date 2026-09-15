@@ -448,15 +448,16 @@ def test_open_mapquest_enabled_builds_client_and_directory(monkeypatch):
     assert reason is None
 
 
-def test_open_mapquest_defaults_to_unproxied(monkeypatch):
-    """Real incident, 2026-09-15: MapQuestClient's own default is
-    use_proxy=True, but the very first real batch run through this code
-    path (proxied) failed 100% of searches with Decodo's documented
-    sticky-session 407 (see MapQuestClient's own module docstring and
-    bbb_scraper/scraping/proxies.py) -- the identical failure Angi's own
-    batch integration already hit. _open_mapquest's own use_proxy default
-    must stay False regardless of what MapQuestClient's own constructor
-    default is, or this regresses right back to that incident."""
+def test_open_mapquest_defaults_to_proxied(monkeypatch):
+    """Real incident, 2026-09-15: a *sticky*-session-based proxy design
+    (a fresh random session id every rotation) failed 100% of searches
+    with Decodo's documented 407 on the first real batch run -- not a
+    proxy problem per se, but that specific design being mistaken for
+    "rotating" when it was actually manufacturing sticky sessions. Fixed
+    the same day (MapQuestClient now builds a fresh, bare connection per
+    request -- see its own module docstring), confirmed live against the
+    real endpoint with zero failures, so proxied is back to the default
+    here -- matching MapQuestClient's own constructor default again."""
     seen_kwargs: dict = {}
 
     def _fake_client(**kwargs):
@@ -468,12 +469,13 @@ def test_open_mapquest_defaults_to_unproxied(monkeypatch):
 
     bsm._open_mapquest(True)
 
-    assert seen_kwargs == {"use_proxy": False}
+    assert seen_kwargs == {"use_proxy": True}
 
 
 def test_open_mapquest_use_proxy_true_passes_through(monkeypatch):
-    """--mapquest-use-proxy is still a real opt-in, for once/if Decodo's
-    sticky-session issue is confirmed resolved."""
+    """Redundant with the default now that proxied is the default again,
+    but pins the explicit --mapquest-use-proxy path too, not just the
+    implicit default."""
     seen_kwargs: dict = {}
 
     def _fake_client(**kwargs):
@@ -488,12 +490,29 @@ def test_open_mapquest_use_proxy_true_passes_through(monkeypatch):
     assert seen_kwargs == {"use_proxy": True}
 
 
+def test_open_mapquest_use_proxy_false_passes_through(monkeypatch):
+    """--no-mapquest-use-proxy is still a real opt-out, for local
+    debugging without a proxy configured."""
+    seen_kwargs: dict = {}
+
+    def _fake_client(**kwargs):
+        seen_kwargs.update(kwargs)
+        return object()
+
+    monkeypatch.setattr(bsm, "MapQuestClient", _fake_client)
+    monkeypatch.setattr(bsm, "CityDirectory", SimpleNamespace(load=lambda: object()))
+
+    bsm._open_mapquest(True, use_proxy=False)
+
+    assert seen_kwargs == {"use_proxy": False}
+
+
 def test_open_mapquest_setup_failure_disables_it_rather_than_raising(monkeypatch):
     """Same contract as _resolve_angi_category returning None -- a setup
     problem (e.g. reference data genuinely broken) must disable MapQuest
     for the whole batch, never take the batch down. MapQuestClient's own
     __init__ only warns on missing proxy creds (never raises -- see its
-    _rotate_proxy), so this mostly guards something further upstream."""
+    _new_session), so this mostly guards something further upstream."""
     def _boom(**kw):
         raise RuntimeError("simulated: e.g. reference data genuinely broken")
 
@@ -655,3 +674,46 @@ def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypa
     except RuntimeError:
         raised = True
     assert raised
+
+
+# --- _active_steps: the per-metro checklist Streamlit renders ---------------
+
+def test_active_steps_everything_on_includes_every_step_in_order():
+    steps = bsm._active_steps(check_websites=True, yelp=True, angi=True, mapquest=True,
+                               publish=True, deploy=True)
+    assert [s["key"] for s in steps] == [
+        "scraping", "check_websites", "yelp", "angi_merge", "mapquest",
+        "checkpoint", "publish", "deploy",
+    ]
+    assert all(isinstance(s["label"], str) and s["label"] for s in steps)  # a real label, not blank
+
+
+def test_active_steps_scraping_and_checkpoint_always_present():
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False,
+                               publish=False, deploy=False)
+    assert [s["key"] for s in steps] == ["scraping", "checkpoint"]
+
+
+def test_active_steps_omits_each_disabled_feature():
+    steps = bsm._active_steps(check_websites=False, yelp=True, angi=True, mapquest=True,
+                               publish=True, deploy=True)
+    keys = [s["key"] for s in steps]
+    assert "check_websites" not in keys
+    assert "yelp" in keys and "angi_merge" in keys and "mapquest" in keys
+
+
+def test_active_steps_deploy_requires_publish_even_if_deploy_flag_is_true():
+    """main() only ever calls deploy_site nested inside `if args.publish:` --
+    deploy=True with publish=False can't actually happen, so the checklist
+    must not claim it will."""
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False,
+                               publish=False, deploy=True)
+    assert "deploy" not in [s["key"] for s in steps]
+
+
+def test_active_steps_publish_without_deploy():
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False,
+                               publish=True, deploy=False)
+    keys = [s["key"] for s in steps]
+    assert "publish" in keys
+    assert "deploy" not in keys
