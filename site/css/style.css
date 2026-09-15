@@ -740,6 +740,25 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
   gap: 5px 6px;
 }
 
+/* Specialties: collapsed preview + click-to-expand (2026-09-14) -- see
+   specialtiesCell()'s comment in app.js for why (real Angi profiles run up
+   to 200+ items, which was blowing row heights out and making the table
+   nearly unscrollable). The toggle is a plain inline button styled as a
+   text link, not a full .badge/.btn -- it's part of the sentence, not a
+   separate control. */
+.specialties-toggle {
+  display: inline;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.specialties-toggle:hover { color: var(--accent-hover); text-decoration: underline; }
+
 /* score bar */
 .score {
   position: relative;

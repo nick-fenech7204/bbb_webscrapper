@@ -176,6 +176,45 @@
     const v = r[key] ?? "";
     return v ? `<span title="${esc(v)}">${esc(v)}</span>` : "";
   };
+  // Specialties (Angi's "; "-joined services-offered list, see
+  // bbb_scraper/angi/parsing.py + scripts/scrape_angi_category.py) is
+  // unbounded -- real data runs from 1 item to 200+ for a business with a
+  // sprawling Angi profile (checked the actual batch CSVs: median ~8-11,
+  // one plumber had 173). Rendering that in full, wrapped, in a 160px
+  // column was blowing individual row heights out to several screens tall
+  // and making the whole table nearly unscrollable (2026-09-14 feedback).
+  // Collapse to a short preview + click-to-expand instead of a title=""
+  // hover -- consistent with th, td's own comment above about not relying
+  // on hover (no reveal on a real phone). Items stay "; "-joined even in
+  // the preview/expanded text (not ", ") because several category names
+  // already contain a literal comma of their own (e.g. "Faucets, Fixtures
+  // and Pipes - Repair or Replace") -- switching to comma-joins would make
+  // the boundary between items ambiguous.
+  const SPECIALTIES_PREVIEW_COUNT = 2;
+  function specialtiesCell(r) {
+    const raw = r.specialties ?? "";
+    if (!raw) return "";
+    const items = raw.split("; ").filter(Boolean);
+    // data-export-text carries the FULL list for cellText() (PDF/TXT
+    // export) to read regardless of the on-screen expand/collapse state --
+    // see its own comment below. CSV/XLSX exports don't go through this at
+    // all (exportableRows() reads r.specialties directly), so they're
+    // always complete either way.
+    if (items.length <= SPECIALTIES_PREVIEW_COUNT) {
+      return `<span data-export-text="${esc(raw)}">${esc(raw)}</span>`;
+    }
+    const preview = items.slice(0, SPECIALTIES_PREVIEW_COUNT).join("; ");
+    const full = items.join("; ");
+    const moreLabel = `+${items.length - SPECIALTIES_PREVIEW_COUNT} more`;
+    return (
+      `<span class="specialties-cell" data-export-text="${esc(full)}">` +
+      `<span class="specialties-text">${esc(preview)}</span> ` +
+      `<button type="button" class="specialties-toggle" aria-expanded="false" ` +
+      `data-preview="${esc(preview)}" data-full="${esc(full)}" ` +
+      `data-more="${esc(moreLabel)}" data-less="Show less">${esc(moreLabel)}</button>` +
+      `</span>`
+    );
+  }
 
   // One combined table now (2026-09-11 -- used to be separate Lead
   // records / Intelligence tabs with their own column sets; merged into
@@ -200,7 +239,7 @@
     { key: "rating", label: "BBB", w: 75, render: bbbCell },
     { key: "bbb_complaints_total", label: "BBB complaints", w: 105, cls: "num-cell", render: intCell("bbb_complaints_total") },
     { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
-    { key: "specialties", label: "Specialties", w: 160, render: plainTitled("specialties") },
+    { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
     { key: "reputation_score", label: "Reputation (of 100)", w: 110, render: scoreCell("reputation_score", 100) },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
@@ -507,6 +546,14 @@
   const scratchEl = document.createElement("div");
   function cellText(col, r) {
     scratchEl.innerHTML = col.render(r);
+    // A cell whose on-screen text is a truncated preview (specialtiesCell)
+    // marks its root with data-export-text carrying the full value -- read
+    // that instead of textContent so PDF/TXT export always gets the
+    // complete list regardless of whether it's currently expanded on
+    // screen. Every other column has no such attribute, so this is a no-op
+    // for them (falls through to the plain textContent read as before).
+    const exportText = scratchEl.firstElementChild?.dataset?.exportText;
+    if (exportText !== undefined) return exportText;
     return scratchEl.textContent.replace(/\s+/g, " ").trim();
   }
   function visibleRowsForExport() {
@@ -633,6 +680,19 @@
       if (!btn) return;
       closeExportPanel();
       EXPORTERS[btn.dataset.format]?.();
+    });
+    // Delegated (not per-cell) because renderTable() replaces
+    // tableBody.innerHTML wholesale on every sort/search -- any listener
+    // bound directly to a .specialties-toggle button would be gone the
+    // next re-render anyway, same reasoning as the export panel above.
+    tableBody.addEventListener("click", (e) => {
+      const btn = e.target.closest(".specialties-toggle");
+      if (!btn) return;
+      const textEl = btn.previousElementSibling;
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      textEl.textContent = expanded ? btn.dataset.preview : btn.dataset.full;
+      btn.textContent = expanded ? btn.dataset.more : btn.dataset.less;
+      btn.setAttribute("aria-expanded", String(!expanded));
     });
     document.addEventListener("click", (e) => {
       if (!exportPanel.hidden && !exportPanel.contains(e.target) && e.target !== exportToggle) closeExportPanel();
