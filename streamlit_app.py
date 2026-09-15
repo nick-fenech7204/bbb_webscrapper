@@ -292,15 +292,17 @@ def _render_progress(progress: dict) -> None:
     biz_total = sum(m.get("businesses") or 0 for m in metros if m["status"] == "done")
     yelp_total = sum(m.get("yelp_matched") or 0 for m in metros if m["status"] == "done")
     angi_total = sum(m.get("angi_matched") or 0 for m in metros if m["status"] == "done")
+    mapquest_reviews_total = sum(m.get("mapquest_reviews") or 0 for m in metros if m["status"] == "done")
     dead_total = sum(m.get("websites_dead") or 0 for m in metros if m["status"] == "done")
     failed_total = sum(1 for m in metros if m["status"] == "failed")
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1, c2, c3, c4, c5, c6, c7 = st.columns(7)
     c1.metric("Metros", f"{settled}/{total}")
     c2.metric("Businesses scraped", f"{biz_total:,}")
     c3.metric("Matched to Yelp", f"{yelp_total:,}")
     c4.metric("Matched to Angi", f"{angi_total:,}")
-    c5.metric("Dead websites", f"{dead_total:,}")
-    c6.metric("Failed", failed_total)
+    c5.metric("MapQuest reviews", f"{mapquest_reviews_total:,}")
+    c6.metric("Dead websites", f"{dead_total:,}")
+    c7.metric("Failed", failed_total)
 
     for m in metros:
         status = m["status"]
@@ -328,6 +330,8 @@ def _render_progress(progress: dict) -> None:
                 bits.append(f"{m['yelp_matched']} matched to Yelp")
             if m.get("angi_businesses") is not None:
                 bits.append(f"{m['angi_businesses']} Angi ({m.get('angi_matched') or 0} matched)")
+            if m.get("mapquest_matched") is not None:
+                bits.append(f"{m['mapquest_matched']} MapQuest ({m.get('mapquest_reviews') or 0} reviews)")
             if m.get("websites_dead") is not None:
                 bits.append(f"{m['websites_dead']} dead websites")
             if m.get("top_lead_score"):
@@ -380,6 +384,7 @@ with st.form("batch_form"):
         f"{ENFORCED_MIN_POPULATION:,}+ population, full contact details, "
         f"up to {ENFORCED_PAGES_PER_PLACE} pages/place (BBB's own max), "
         "Yelp enrichment, Angi enrichment (concurrent with BBB, matched by phone), "
+        "MapQuest review capture (real Yelp-sourced review text/rating/date per business), "
         "dead-website check, and live deploy as each metro "
         "finishes -- no longer per-run choices, see the Configuration section below."
     )
@@ -410,7 +415,7 @@ if submitted and not _is_running():
         "--industry", industry_text.strip(),
         "--radius", str(ENFORCED_RADIUS_MILES), "--min-population", str(ENFORCED_MIN_POPULATION),
         "--pages-per-place", str(ENFORCED_PAGES_PER_PLACE),
-        "--details", "--yelp", "--angi", "--check-websites", "--deploy",
+        "--details", "--yelp", "--angi", "--mapquest", "--check-websites", "--deploy",
         "--progress-file", str(progress_path),
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]

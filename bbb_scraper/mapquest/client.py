@@ -34,14 +34,25 @@ being relied on:
     count the API decides to return for a business is all that's
     available here, no further chasing.
 
-**Never tested at real volume.** Every check above was one-off, targeted,
-real requests (see this project's own ethical-scraping-boundary practice)
--- rate-limited/retried here the same conservative way Angi's client
-started (bbb_scraper.angi.client), not assumed safe to run hard just
-because it's unauthenticated.
+**Proved out at real volume, then fully integrated, 2026-09-15.** A 100-
+request real sample metro (scripts/fetch_mapquest_reviews.py) ran clean --
+zero failures, zero 429s -- at a conservative between-request delay. Once
+that was confirmed, Nick asked for this to be a real batch-scraper step:
+proxied + rotated (see PROXY_* / MAPQUEST_PROXY_ROTATE_EVERY in .env,
+config.py), same shape as bbb_scraper.angi.client, instead of a deliberate
+per-request delay -- running a whole metro's businesses through this
+sequentially already spaces requests out with real network latency, and
+distributing them across rotating exit IPs is the more useful politeness
+lever on top of that than an *additional* sleep, the same reasoning Angi's
+own client already applies. A 429 here has never actually been observed
+(unlike Angi, which drew a real one at its original faster pacing) --
+rotating on one anyway, defensively, costs nothing and matches the
+existing precedent for how this project responds to a real rate-limit
+signal if one ever shows up.
 """
 from __future__ import annotations
 
+import time
 from typing import Any
 
 from curl_cffi import requests as curl_requests
@@ -49,12 +60,19 @@ from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_ex
 
 from bbb_scraper.config import Settings
 from bbb_scraper.config import settings as default_settings
-from bbb_scraper.exceptions import ScrapeError
+from bbb_scraper.exceptions import RateLimitedError, ScrapeError
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.mapquest.models import MapQuestMatch, MapQuestReview
+from bbb_scraper.scraping.proxies import get_proxies, new_session_id
 from bbb_scraper.utils.rate_limit import RateLimiter
 
 logger = get_logger(__name__)
+
+# Never actually observed against this endpoint (unlike Angi's own real
+# 429) -- kept anyway as a defensive cooldown, same value/reasoning as
+# bbb_scraper/angi/client.py's own _RATE_LIMIT_COOLDOWN_SECONDS: respond to
+# an actual rate-limit signal with a real cooldown, not just a fast retry.
+_RATE_LIMIT_COOLDOWN_SECONDS = 25.0
 
 # Every field here was confirmed to actually resolve against the real API
 # (see the module docstring) -- nothing speculative left in.
@@ -94,11 +112,24 @@ _DEFAULT_HEADERS = {
 
 
 class MapQuestClient:
-    def __init__(self, cfg: Settings | None = None):
+    def __init__(self, cfg: Settings | None = None, *, use_proxy: bool = True, rotate_every: int | None = None):
         self.cfg = cfg or default_settings
+        self.use_proxy = use_proxy
+        self.rotate_every = rotate_every if rotate_every is not None else self.cfg.mapquest_proxy_rotate_every
+        self._requests_since_rotation = 0
         self.rate_limiter = RateLimiter(self.cfg.mapquest_min_delay_seconds, self.cfg.mapquest_max_delay_seconds)
         self.session = curl_requests.Session()
         self.session.headers.update(_DEFAULT_HEADERS)
+        if self.use_proxy:
+            self._rotate_proxy()
+
+    def _rotate_proxy(self) -> None:
+        proxies = get_proxies(self.cfg, session_id=new_session_id())
+        if proxies:
+            self.session.proxies.update(proxies)
+        else:
+            logger.warning("mapquest: use_proxy=True but get_proxies() returned nothing -- check PROXY_* in .env")
+        self._requests_since_rotation = 0
 
     def search(
         self, query_text: str, *, latitude: float, longitude: float, first: int = 5
@@ -119,18 +150,30 @@ class MapQuestClient:
 
         @retry(reraise=True, stop=stop_after_attempt(self.cfg.mapquest_max_retries),
                wait=wait_exponential(multiplier=1.5, min=1, max=15),
-               retry=retry_if_exception_type(curl_requests.exceptions.RequestException))
+               retry=retry_if_exception_type((curl_requests.exceptions.RequestException, RateLimitedError)))
         def _do_request():
+            if self.use_proxy and self._requests_since_rotation >= self.rotate_every:
+                self._rotate_proxy()
             self.rate_limiter.wait()
             response = self.session.post(
                 self.cfg.mapquest_graphql_url, json=payload, timeout=self.cfg.mapquest_timeout_seconds,
             )
+            self._requests_since_rotation += 1
+            if response.status_code == 429:
+                logger.warning(
+                    "mapquest: 429 for %r -- cooling down %.0fs before retrying",
+                    query_text, _RATE_LIMIT_COOLDOWN_SECONDS,
+                )
+                if self.use_proxy:
+                    self._rotate_proxy()
+                time.sleep(_RATE_LIMIT_COOLDOWN_SECONDS)
+                raise RateLimitedError(f"MapQuest returned 429 for {query_text!r}")
             response.raise_for_status()
             return response
 
         try:
             response = _do_request()
-        except curl_requests.exceptions.RequestException as exc:
+        except (curl_requests.exceptions.RequestException, RateLimitedError) as exc:
             raise ScrapeError(f"MapQuest search failed for {query_text!r}: {exc}") from exc
 
         data = response.json()

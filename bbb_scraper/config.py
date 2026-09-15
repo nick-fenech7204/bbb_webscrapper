@@ -138,16 +138,26 @@ class Settings(BaseSettings):
     # approximate coordinates straight to its MapQuest listing *and* its
     # Yelp-sourced reviews (real text, exact date, rating, reviewer) in one
     # response -- no separate page fetch needed, unlike BBB's own review
-    # sub-page. Never tested at any real volume yet, so paced conservatively
-    # (same starting numbers as Angi's own first-pass defaults) until a real
-    # run says otherwise -- see the ethical-scraping-boundary practice.
+    # sub-page.
+    #
+    # 2026-09-15: proved out first at conservative pacing (100 real requests,
+    # zero failures/429s -- see scripts/fetch_mapquest_reviews.py's real
+    # sample-metro run), then Nick's explicit call for the full batch
+    # integration: proxied + rotated (same shape as Angi's own client) instead
+    # of a deliberate delay between requests -- running one metro's businesses
+    # through this sequentially already spaces real requests out with real
+    # network latency, and spreading them across rotating exit IPs is the
+    # more useful politeness lever here than an *additional* sleep on top of
+    # that, the same reasoning bbb_scraper/angi/client.py already uses for
+    # its own rotation.
     mapquest_graphql_url: str = Field(
         default="https://graphql-42a6517.aws.mapquest.com/", alias="MAPQUEST_GRAPHQL_URL"
     )
     mapquest_timeout_seconds: float = Field(default=15.0, alias="MAPQUEST_TIMEOUT_SECONDS")
     mapquest_max_retries: int = Field(default=3, alias="MAPQUEST_MAX_RETRIES")
-    mapquest_min_delay_seconds: float = Field(default=1.5, alias="MAPQUEST_MIN_DELAY_SECONDS")
-    mapquest_max_delay_seconds: float = Field(default=3.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
+    mapquest_min_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MIN_DELAY_SECONDS")
+    mapquest_max_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
+    mapquest_proxy_rotate_every: int = Field(default=15, alias="MAPQUEST_PROXY_ROTATE_EVERY")
 
     # --- Static site deployment (scripts/deploy_site.py only) -----------------
     # Not used by the running app itself -- only by the deploy script, which

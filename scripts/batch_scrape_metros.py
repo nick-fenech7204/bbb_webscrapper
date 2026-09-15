@@ -59,32 +59,56 @@ Per metro:
      enrich.py) -- also recomputes every derived-intelligence column so
      reputation_score/lead_priority_score reflect the Angi match
      immediately.
-  5. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
-     BBB|Yelp(|Angi) master table (bbb_* / yelp_* / angi_* columns +
-     derived-intelligence columns; yelp_*/angi_* blank when there was no
-     match). This file's existence is the resume marker: a metro already
-     checkpointed for this industry is skipped on a re-run (--force to
-     redo). The raw Angi scrape also gets its own checkpoint, same as the
-     standalone script used to write: data/processed/angi/<angi-category-
-     slug>--<metro-id>.csv.
-  6. append the BBB records (not the wide table) into the shared
+  5. unless --no-mapquest: for every row in the wide table (needs
+     bbb_name/bbb_phone/bbb_city/bbb_state, which only exist once step 3
+     has built it), resolve an approximate coordinate for the business's
+     own BBB city (bbb_scraper.reference.cities.CityDirectory -- city-
+     level precision is enough, confirmed live) and search MapQuest's own
+     unauthenticated GraphQL API (bbb_scraper/mapquest) for real Yelp-
+     sourced reviews under that business -- see that module's own
+     docstring for how this endpoint was found and confirmed real. Every
+     row gets it (not a --top N curated subset like the standalone
+     scripts/fetch_mapquest_reviews.py -- Nick's explicit ask, 2026-09-15,
+     to integrate this "fully" so every batch run gets it automatically).
+     Writes mapquest_url/mapquest_review_count/mapquest_reviews (JSON-in-
+     cell, same convention as BBB's/Angi's own review columns) directly
+     onto each row -- a post-hoc column addition like webcheck/Yelp above,
+     not baked into build_master_table. One shared, proxied+rotating
+     MapQuestClient for the whole batch (see that class's own docstring
+     for why proxied+rotated instead of a deliberate per-request delay --
+     same reasoning as Angi's own client). Best-effort like everything
+     else here: a client-setup failure disables MapQuest for the whole
+     batch, a single business's search/match failure just leaves that
+     row's columns empty, neither is ever fatal. Checkpoint/dataset only
+     for now -- these columns are deliberately absent from merge.py's
+     scoring and publish_site_data.py's public site fields ("just in the
+     dataset, nothing yet different for the website").
+  6. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
+     BBB|Yelp(|Angi)(|MapQuest) master table (bbb_* / yelp_* / angi_* /
+     mapquest_* columns + derived-intelligence columns; yelp_*/angi_*
+     blank when there was no match). This file's existence is the resume
+     marker: a metro already checkpointed for this industry is skipped on
+     a re-run (--force to redo). The raw Angi scrape also gets its own
+     checkpoint, same as the standalone script used to write:
+     data/processed/angi/<angi-category-slug>--<metro-id>.csv.
+  7. append the BBB records (not the wide table) into the shared
      data/processed/businesses.csv sink, same as every other run.
-  7. unless --no-publish: publish that metro to site/data/ locally (BBB
+  8. unless --no-publish: publish that metro to site/data/ locally (BBB
      fields + the matched yelp_name/rating/review_count/url + Angi's
      rating/specialties/etc. + our derived intelligence columns -- raw
-     Yelp/Angi beyond those stays out).
-  8. unless --no-deploy: immediately push site/ live for this metro (S3
+     Yelp/Angi/MapQuest beyond those stays out).
+  9. unless --no-deploy: immediately push site/ live for this metro (S3
      sync + CloudFront invalidation, see scripts/deploy_site.py) -- right
      away, not batched up for the end, so a metro is live within seconds
      of finishing rather than sitting local-only for however long the
      rest of the batch takes.
-  Steps 5-8 are wrapped: a failure anywhere in there is logged and this
-  metro is skipped, the rest of the batch keeps going rather than the
-  whole run dying (this used to be able to kill hours of already-
-  finished, already-correct work over a bug in a print statement -- see
-  git history). A deploy failure specifically is caught on its own and
-  never undoes the fact that the scrape + checkpoint + local publish for
-  that metro already succeeded.
+  Steps 6-9 are wrapped: a failure anywhere in there (including step 5,
+  also inside the same try) is logged and this metro is skipped, the rest
+  of the batch keeps going rather than the whole run dying (this used to
+  be able to kill hours of already-finished, already-correct work over a
+  bug in a print statement -- see git history). A deploy failure
+  specifically is caught on its own and never undoes the fact that the
+  scrape + checkpoint + local publish for that metro already succeeded.
 
 In --details mode, step 1's BBB per-business detail loop can itself run
 well over an hour for a big metro (confirmed: 65-78 minutes, real
@@ -117,6 +141,7 @@ import queue
 import sys
 import threading
 import time
+from dataclasses import asdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -133,11 +158,14 @@ from bbb_scraper.etl.dedupe import dedupe_records
 from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail, transform_summary
 from bbb_scraper.logging_setup import configure_logging, get_logger
+from bbb_scraper.mapquest.client import MapQuestClient
+from bbb_scraper.mapquest.matcher import find_business
 from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
 from bbb_scraper.reference.categories import CategoryDirectory
+from bbb_scraper.reference.cities import CityDirectory
 from bbb_scraper.reference.metros import MetroDirectory
 from bbb_scraper.reference.models import Category, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
@@ -486,6 +514,85 @@ def _check_metro_websites(records: list[dict]) -> list[dict]:
     return checked
 
 
+def _open_mapquest(enabled: bool) -> tuple[MapQuestClient | None, CityDirectory | None, str | None]:
+    """One shared, proxied MapQuestClient + CityDirectory for the whole
+    batch (constructed once, not per metro/business) -- same "resolve once,
+    best-effort" shape as _resolve_angi_category. Returns (None, None,
+    reason) when disabled or when setup itself fails (e.g. reference data
+    missing) -- a setup failure disables MapQuest for the entire batch the
+    same way a missing Yelp key disables Yelp, never kills the run.
+    MapQuestClient's own __init__ only warns (never raises) on missing
+    proxy credentials -- see its _rotate_proxy -- so this mostly guards
+    against something like a missing us_cities.csv.
+    """
+    if not enabled:
+        return None, None, None
+    try:
+        client = MapQuestClient()
+        city_directory = CityDirectory.load()
+    except Exception:
+        logger.exception("MapQuest setup failed -- disabling MapQuest for this batch")
+        return None, None, "setup failed (see log)"
+    return client, city_directory, None
+
+
+def _enrich_metro_with_mapquest(
+    master_rows: list[dict], client: MapQuestClient, city_directory: CityDirectory,
+) -> tuple[int, int]:
+    """Best-effort MapQuest review enrichment for one metro's already-built
+    master rows -- writes mapquest_url/mapquest_review_count/mapquest_reviews
+    directly onto every row (post-hoc column addition, same pattern as
+    _check_metro_websites/webcheck above), not baked into build_master_table.
+    Same matching logic as the standalone scripts/fetch_mapquest_reviews.py,
+    just run for every row here instead of a --top N curated subset (this is
+    the "fully integrated" batch step; that script is still there for
+    enriching an existing checkpoint after the fact).
+
+    Returns (matched, total_reviews) for the caller's own progress line.
+    Never raises: a single business's search/match failure is logged and
+    just leaves that one row's columns empty (mapquest_reviews="[]" when a
+    search happened but nothing confidently matched, vs "" when the row
+    couldn't even be searched -- no name, no city in reference data, or the
+    search call itself failed) -- same never-fatal contract as every other
+    enrichment step in this file.
+    """
+    matched = 0
+    total_reviews = 0
+    for row in master_rows:
+        name = (row.get("bbb_name") or "").strip()
+        phone = row.get("bbb_phone") or None
+        city_name = (row.get("bbb_city") or "").strip()
+        state = (row.get("bbb_state") or "").strip()
+        row["mapquest_url"] = ""
+        row["mapquest_review_count"] = ""
+        row["mapquest_reviews"] = ""
+        if not name or not city_name or not state:
+            continue
+
+        city = city_directory.get(city_name, state)
+        if city is None:
+            continue
+
+        try:
+            candidates = client.search(name, latitude=city.lat, longitude=city.lon)
+            match = find_business(candidates, name=name, phone=phone)
+        except Exception:
+            logger.exception("MapQuest search failed for %r", name)
+            continue
+
+        if match is None:
+            row["mapquest_reviews"] = "[]"
+            continue
+
+        matched += 1
+        total_reviews += len(match.reviews)
+        row["mapquest_url"] = match.url or ""
+        row["mapquest_review_count"] = match.review_count
+        row["mapquest_reviews"] = json.dumps([asdict(r) for r in match.reviews], ensure_ascii=False)
+
+    return matched, total_reviews
+
+
 def rebuild_all_metros_file(industry_slug: str) -> Path:
     checkpoint_files = sorted(BATCH_DIR.glob(f"{industry_slug}--*.csv"))
     all_rows: list[dict] = []
@@ -560,6 +667,16 @@ def main() -> int:
         "resolved on Decodo's side.",
     )
     parser.add_argument(
+        "--mapquest", action=argparse.BooleanOptionalAction, default=True,
+        help="Fetch real Yelp-sourced review text/rating/date for each business via MapQuest's "
+        "own unauthenticated GraphQL search (default: on) -- matched by name+phone within the "
+        "business's own city (bbb_scraper/mapquest). Proxied + rotating, no deliberate delay "
+        "(see bbb_scraper/mapquest/client.py). Best-effort: a setup failure disables it for the "
+        "whole batch, a single business's search/match failure just leaves that row's mapquest_* "
+        "columns empty, neither is ever fatal. Checkpoint/dataset only -- not wired into scoring "
+        "or the public site yet.",
+    )
+    parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
         help="Publish each metro's BBB fields to site/ as soon as it's done (default: on)",
     )
@@ -630,6 +747,7 @@ def main() -> int:
             "id": metro.id, "name": metro.name,
             "status": "skipped" if (BATCH_DIR / f"{industry_slug}--{metro.id}.csv").exists() and not args.force else "pending",
             "businesses": None, "yelp_matched": None, "angi_businesses": None, "angi_matched": None,
+            "mapquest_matched": None, "mapquest_reviews": None,
             "top_lead_score": None, "websites_dead": None,
             "elapsed_s": None, "error": None,
         }
@@ -643,11 +761,14 @@ def main() -> int:
     yelp_state = open_yelp_enrichment(args.yelp)
     yelp_note = "on" if yelp_state.enabled else f"off ({yelp_state.reason_off})"
     angi_note = f"on ({angi_category_label})" if angi_enabled else f"off ({angi_reason_off or 'disabled'})"
+    mapquest_client, mapquest_city_directory, mapquest_reason_off = _open_mapquest(args.mapquest)
+    mapquest_enabled = mapquest_client is not None
+    mapquest_note = "on" if mapquest_enabled else f"off ({mapquest_reason_off or 'disabled'})"
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
-          f"yelp={yelp_note}, angi={angi_note}, check_websites={args.check_websites}, "
-          f"publish={args.publish}, deploy={args.deploy}")
+          f"yelp={yelp_note}, angi={angi_note}, mapquest={mapquest_note}, "
+          f"check_websites={args.check_websites}, publish={args.publish}, deploy={args.deploy}")
     _write_progress(progress_path, _snapshot())
 
     done = 0
@@ -718,6 +839,14 @@ def main() -> int:
                 else:
                     angi_matched = 0
 
+            mapquest_matched = mapquest_reviews_count = None
+            if mapquest_enabled:
+                mapquest_matched, mapquest_reviews_count = _enrich_metro_with_mapquest(
+                    master_rows, mapquest_client, mapquest_city_directory,
+                )
+                print(f"    MapQuest: {mapquest_matched}/{len(master_rows)} matched, "
+                      f"{mapquest_reviews_count} reviews captured")
+
             CSVSink(checkpoint_path).load(master_rows)
             # The real checkpoint just landed -- any partial snapshot from
             # this metro's detail loop is superseded, remove it so it can't
@@ -735,6 +864,7 @@ def main() -> int:
             print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
                   f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''}"
                   f"{f', {len(angi_rows)} Angi ({angi_matched} matched by phone)' if angi_enabled else ''}"
+                  f"{f', {mapquest_matched} MapQuest ({mapquest_reviews_count} reviews)' if mapquest_enabled else ''}"
                   f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
             metro_states[i - 1].update({
@@ -742,6 +872,8 @@ def main() -> int:
                 "yelp_matched": matched if yelp_state.enabled else None,
                 "angi_businesses": len(angi_rows) if angi_enabled else None,
                 "angi_matched": angi_matched,
+                "mapquest_matched": mapquest_matched,
+                "mapquest_reviews": mapquest_reviews_count,
                 "websites_dead": websites_dead,
                 "elapsed_s": round(elapsed),
             })
@@ -797,6 +929,8 @@ def main() -> int:
         print(f"Note: Yelp enrichment stopped partway -- {yelp_state.reason_off}")
     if angi_reason_off:
         print(f"Note: Angi enrichment was off for this whole batch -- {angi_reason_off}")
+    if mapquest_reason_off:
+        print(f"Note: MapQuest enrichment was off for this whole batch -- {mapquest_reason_off}")
     print(f"Compiled file: {all_metros_path}")
     _write_progress(progress_path, _snapshot(finished=True))
     return 0

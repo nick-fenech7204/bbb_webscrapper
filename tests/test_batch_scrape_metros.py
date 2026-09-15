@@ -39,7 +39,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 import batch_scrape_metros as bsm
 
 from bbb_scraper.angi.models import BusinessDetail
-from bbb_scraper.reference.models import Category, Metro
+from bbb_scraper.mapquest.models import MapQuestMatch, MapQuestReview
+from bbb_scraper.reference.models import Category, City, Metro
 from bbb_scraper.utils.stats import RunStats
 
 
@@ -426,6 +427,169 @@ def test_scrape_one_metro_bbb_and_angi_gives_up_on_a_truly_hung_angi_thread(monk
     assert records == [{"name": "BBB biz"}]  # BBB's real result still comes back
     assert angi_rows == []  # Angi gave up, not a crash and not BBB's data lost
     assert elapsed < 2.0  # returned promptly -- not the old behavior of blocking forever
+
+
+
+# --- MapQuest: setup (best-effort, mirrors _resolve_angi_category) ---------
+
+def test_open_mapquest_disabled_returns_all_none():
+    assert bsm._open_mapquest(False) == (None, None, None)
+
+
+def test_open_mapquest_enabled_builds_client_and_directory(monkeypatch):
+    fake_client, fake_directory = object(), object()
+    monkeypatch.setattr(bsm, "MapQuestClient", lambda: fake_client)
+    monkeypatch.setattr(bsm, "CityDirectory", SimpleNamespace(load=lambda: fake_directory))
+
+    client, city_directory, reason = bsm._open_mapquest(True)
+
+    assert client is fake_client
+    assert city_directory is fake_directory
+    assert reason is None
+
+
+def test_open_mapquest_setup_failure_disables_it_rather_than_raising(monkeypatch):
+    """Same contract as _resolve_angi_category returning None -- a setup
+    problem (e.g. reference data genuinely broken) must disable MapQuest
+    for the whole batch, never take the batch down. MapQuestClient's own
+    __init__ only warns on missing proxy creds (never raises -- see its
+    _rotate_proxy), so this mostly guards something further upstream."""
+    def _boom():
+        raise RuntimeError("simulated: e.g. reference data genuinely broken")
+
+    monkeypatch.setattr(bsm, "MapQuestClient", _boom)
+
+    client, city_directory, reason = bsm._open_mapquest(True)
+
+    assert client is None
+    assert city_directory is None
+    assert reason  # a non-empty reason string, for the batch-summary note
+
+
+# --- MapQuest: per-metro review enrichment (post-hoc, mirrors webcheck) ----
+
+class _FakeCityDirectory:
+    """Only Charlotte, NC resolves -- exercises both the found and
+    not-in-reference-data paths from one fixture."""
+
+    def get(self, name, state):
+        if name == "Charlotte" and state == "NC":
+            return City(name="Charlotte", state="NC", lat=35.2271, lon=-80.8431, population=1, geoid="x")
+        return None
+
+
+class _FakeMapQuestClient:
+    """Records every search() call (a spy) -- lets a test assert a row was
+    never even searched, without relying on an exception escaping
+    _enrich_metro_with_mapquest's own broad try/except (it wouldn't --
+    that except is the whole point of the function)."""
+
+    def __init__(self):
+        self.searched: list[tuple[str, float, float]] = []
+
+    def search(self, name, *, latitude, longitude, first=5):
+        self.searched.append((name, latitude, longitude))
+        return [MapQuestMatch(mapquest_id="1", name=name)]
+
+
+def _row(name="Acme A", phone="555-1111", city="Charlotte", state="NC") -> dict:
+    return {"bbb_name": name, "bbb_phone": phone, "bbb_city": city, "bbb_state": state}
+
+
+def test_enrich_metro_with_mapquest_writes_reviews_onto_a_matched_row(monkeypatch):
+    match = MapQuestMatch(
+        mapquest_id="423145406", name="Walsh Crawl Space and Structural Repair",
+        url="https://www.mapquest.com/us/x/423145406", review_count=2,
+        reviews=[
+            MapQuestReview(text="Great work", rating=5.0, date="2022-08-16", reviewer_name="Mark H."),
+            MapQuestReview(text="Not great", rating=1.0, date="2021-01-01", reviewer_name="LaTora L."),
+        ],
+    )
+    monkeypatch.setattr(bsm, "find_business", lambda candidates, *, name, phone: match)
+
+    rows = [_row()]
+    matched, total_reviews = bsm._enrich_metro_with_mapquest(rows, _FakeMapQuestClient(), _FakeCityDirectory())
+
+    assert matched == 1
+    assert total_reviews == 2
+    assert rows[0]["mapquest_url"] == match.url
+    assert rows[0]["mapquest_review_count"] == 2
+    reviews_back = json.loads(rows[0]["mapquest_reviews"])  # round-trips through JSON-in-cell, same as BBB/Angi
+    assert len(reviews_back) == 2
+    assert reviews_back[0]["reviewer_name"] == "Mark H."
+
+
+def test_enrich_metro_with_mapquest_no_confident_match_writes_empty_list_not_blank(monkeypatch):
+    """None from find_business (searched, nothing confident) has to read
+    differently downstream than a row that was never searchable at all --
+    "[]" vs "" -- same distinction the standalone fetch_mapquest_reviews.py
+    already makes."""
+    monkeypatch.setattr(bsm, "find_business", lambda candidates, *, name, phone: None)
+
+    rows = [_row()]
+    matched, total_reviews = bsm._enrich_metro_with_mapquest(rows, _FakeMapQuestClient(), _FakeCityDirectory())
+
+    assert matched == 0
+    assert total_reviews == 0
+    assert rows[0]["mapquest_url"] == ""
+    assert rows[0]["mapquest_reviews"] == "[]"
+
+
+def test_enrich_metro_with_mapquest_city_not_in_reference_data_skips_the_search():
+    client = _FakeMapQuestClient()
+    rows = [_row(city="Nowhereville", state="ZZ")]
+
+    matched, _total_reviews = bsm._enrich_metro_with_mapquest(rows, client, _FakeCityDirectory())
+
+    assert matched == 0
+    assert client.searched == []  # never even attempted
+    assert rows[0]["mapquest_url"] == ""
+    assert rows[0]["mapquest_reviews"] == ""  # blank -- distinguishes "never searched" from "searched, no match"
+
+
+def test_enrich_metro_with_mapquest_missing_name_skips_the_row():
+    client = _FakeMapQuestClient()
+    rows = [_row(name="")]
+
+    matched, _total_reviews = bsm._enrich_metro_with_mapquest(rows, client, _FakeCityDirectory())
+
+    assert matched == 0
+    assert client.searched == []
+    assert rows[0]["mapquest_reviews"] == ""
+
+
+def test_enrich_metro_with_mapquest_search_failure_is_never_fatal():
+    """Same never-fatal contract as every other enrichment step here: a
+    real network error on one business must not crash the metro or take
+    any other row down with it."""
+    class _BoomClient:
+        def search(self, *a, **k):
+            raise RuntimeError("simulated: e.g. a real network error")
+
+    rows = [_row(), _row(name="Acme B", phone="555-2222")]
+    matched, total_reviews = bsm._enrich_metro_with_mapquest(rows, _BoomClient(), _FakeCityDirectory())
+
+    assert matched == 0
+    assert total_reviews == 0
+    assert all(r["mapquest_url"] == "" and r["mapquest_reviews"] == "" for r in rows)  # never raised
+
+
+def test_enrich_metro_with_mapquest_processes_every_row_independently(monkeypatch):
+    """One row matches, one has no city in reference data, one searches
+    with no confident match -- each row's own outcome must not bleed into
+    any other row's columns."""
+    match = MapQuestMatch(mapquest_id="1", name="Acme A", url="https://mapquest.example/a",
+                           review_count=1, reviews=[MapQuestReview(text="Good", rating=4.0)])
+    monkeypatch.setattr(bsm, "find_business", lambda candidates, *, name, phone: match if name == "Acme A" else None)
+
+    rows = [_row(name="Acme A"), _row(name="Acme B", city="Nowhereville", state="ZZ"), _row(name="Acme C")]
+    matched, total_reviews = bsm._enrich_metro_with_mapquest(rows, _FakeMapQuestClient(), _FakeCityDirectory())
+
+    assert matched == 1
+    assert total_reviews == 1
+    assert rows[0]["mapquest_url"] == "https://mapquest.example/a"
+    assert rows[1]["mapquest_reviews"] == ""  # no city in reference data
+    assert rows[2]["mapquest_reviews"] == "[]"  # searched, no confident match
 
 
 def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypatch):
