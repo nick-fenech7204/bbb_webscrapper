@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T16:14:10.406905+00:00",
+  "generated_at": "2026-09-15T21:08:24.929925+00:00",
   "datasets": [
     {
       "id": "real-estate-agents--atlanta-ga",
@@ -164,6 +164,21 @@
         "chain_name": 166,
         "corporate_account": 0,
         "low_score": 652
+      }
+    },
+    {
+      "id": "home-inspection--detroit-mi",
+      "industry": "Home Inspection",
+      "metro": "Detroit, MI",
+      "record_count": 194,
+      "has_yelp": true,
+      "yelp_matched": 32,
+      "top_lead_score": 89.0,
+      "file": "home-inspection--detroit-mi.json",
+      "curated_out": {
+        "chain_name": 0,
+        "corporate_account": 0,
+        "low_score": 40
       }
     },
     {
@@ -389,6 +404,21 @@
         "chain_name": 12,
         "corporate_account": 0,
         "low_score": 44
+      }
+    },
+    {
+      "id": "home-inspection--portland-or",
+      "industry": "Home Inspection",
+      "metro": "Portland, OR",
+      "record_count": 225,
+      "has_yelp": true,
+      "yelp_matched": 57,
+      "top_lead_score": 87.3,
+      "file": "home-inspection--portland-or.json",
+      "curated_out": {
+        "chain_name": 0,
+        "corporate_account": 0,
+        "low_score": 5
       }
     },
     {
