@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T19:14:00.566333+00:00",
+  "generated_at": "2026-09-15T00:36:34.549831+00:00",
   "datasets": [
     {
       "id": "real-estate-agents--atlanta-ga",
@@ -32,6 +32,16 @@
       "file": "landscapers--baltimore-md.json"
     },
     {
+      "id": "fence-company--boston-ma",
+      "industry": "Fence Company",
+      "metro": "Boston, MA",
+      "record_count": 202,
+      "has_yelp": true,
+      "yelp_matched": 4,
+      "top_lead_score": 84.0,
+      "file": "fence-company--boston-ma.json"
+    },
+    {
       "id": "landscapers--boston-ma",
       "industry": "landscapers",
       "metro": "Boston, MA",
@@ -40,6 +50,16 @@
       "yelp_matched": 53,
       "top_lead_score": 101.7,
       "file": "landscapers--boston-ma.json"
+    },
+    {
+      "id": "fence-company--chicago-il",
+      "industry": "Fence Company",
+      "metro": "Chicago, IL",
+      "record_count": 207,
+      "has_yelp": true,
+      "yelp_matched": 6,
+      "top_lead_score": 90.0,
+      "file": "fence-company--chicago-il.json"
     },
     {
       "id": "plumbers--chicago-il",
@@ -112,6 +132,16 @@
       "file": "real-estate-agents--miami-fl.json"
     },
     {
+      "id": "roofing--nashville-tn",
+      "industry": "Roofing",
+      "metro": "Nashville, TN",
+      "record_count": 457,
+      "has_yelp": true,
+      "yelp_matched": 65,
+      "top_lead_score": 101.7,
+      "file": "roofing--nashville-tn.json"
+    },
+    {
       "id": "real-estate-agents--new-york-ny",
       "industry": "Real Estate Agents",
       "metro": "New York, NY",
@@ -120,6 +150,26 @@
       "yelp_matched": 13,
       "top_lead_score": 84.0,
       "file": "real-estate-agents--new-york-ny.json"
+    },
+    {
+      "id": "fence-company--philadelphia-pa",
+      "industry": "Fence Company",
+      "metro": "Philadelphia, PA",
+      "record_count": 201,
+      "has_yelp": true,
+      "yelp_matched": 7,
+      "top_lead_score": 93.7,
+      "file": "fence-company--philadelphia-pa.json"
+    },
+    {
+      "id": "roofing--phoenix-az",
+      "industry": "Roofing",
+      "metro": "Phoenix, AZ",
+      "record_count": 538,
+      "has_yelp": true,
+      "yelp_matched": 24,
+      "top_lead_score": 93.7,
+      "file": "roofing--phoenix-az.json"
     },
     {
       "id": "landscapers--sacramento-ca",

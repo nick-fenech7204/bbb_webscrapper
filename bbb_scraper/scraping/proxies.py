@@ -12,6 +12,29 @@ US exit node, `gate.decodo.com` is undirected/random-country. So for Decodo,
 just set PROXY_HOST to the country-specific hostname; no code here needs to
 change.
 
+**Sticky sessions can fail independently of the plain proxy, found
+2026-09-14 while checking the Angi scraper before a deploy.** A bare
+username (no `session-{id}` suffix at all -- what get_proxies(cfg) with no
+session_id/city produces, which is *every* real BBB call site's actual
+usage: HttpClient/Extractor are never constructed with a session_id
+anywhere in scripts/batch_scrape_metros.py or the rest of the pipeline)
+kept working fine (confirmed live, 200 from ip.decodo.com and bbb.org).
+But *any* username with a `-session-{id}` suffix -- with or without a
+city, a fixed id or a fresh uuid, didn't matter -- failed 3/3 with `curl:
+(7) CONNECT tunnel failed, response 407`, isolated with a minimal
+reproduction outside any of this project's scraping code. Read as
+Decodo's sticky-session feature specifically hitting some account-level
+limit (likely from a heavy day of exactly that feature: this session's own
+city-targeting verification plus a real Angi run that rotated sessions
+repeatedly), not a code bug and not a country/city/plan-wide outage --
+worth checking the Decodo dashboard for a sticky-session-specific quota
+before assuming the account is broken outright. Bottom line: BBB scraping
+was never at risk (it never uses a session id at all); anything that
+*does* rely on session/city targeting (bbb_scraper/angi/client.py's
+rotation, or a future find_loc city sweep) should have a fallback to
+plain, session-less proxying (or no proxy) ready for exactly this failure
+mode, not assume the sticky-session path is always available.
+
 **City targeting, confirmed working 2026-09-14** (from Decodo's own
 dashboard, then verified for real: `ip.decodo.com/json` self-report matched
 the requested city 6/6 times across Orlando/Chicago/Seattle/Miami, and

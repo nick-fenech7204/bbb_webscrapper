@@ -114,6 +114,23 @@ class Settings(BaseSettings):
     # sites don't flip dead/alive often enough to re-check every run.
     webcheck_cache_ttl_days: int = Field(default=30, alias="WEBCHECK_CACHE_TTL_DAYS")
 
+    # --- Angi scraping (bbb_scraper/angi) ---------------------------------------
+    # Unlike BBB, no bot-wall/challenge has been observed against angi.com --
+    # but real HTTP 429s did show up in a real run at 0.4-0.8s pacing combined
+    # with parsing.py's own up-to-3x-per-business retry (see client.py's
+    # module docstring for *why* multiple attempts per business are needed).
+    # Slowed down in response, not pushed through -- see the ethical-scraping-
+    # boundary practice this project holds to.
+    angi_base_url: str = Field(default="https://www.angi.com", alias="ANGI_BASE_URL")
+    angi_timeout_seconds: float = Field(default=20.0, alias="ANGI_TIMEOUT_SECONDS")
+    angi_max_retries: int = Field(default=3, alias="ANGI_MAX_RETRIES")
+    angi_min_delay_seconds: float = Field(default=1.5, alias="ANGI_MIN_DELAY_SECONDS")
+    angi_max_delay_seconds: float = Field(default=3.0, alias="ANGI_MAX_DELAY_SECONDS")
+    # How many requests one proxy session (one exit IP) carries before
+    # AngiClient swaps in a fresh session id -- spreads a run's volume
+    # across several residential IPs rather than concentrating it on one.
+    angi_proxy_rotate_every: int = Field(default=15, alias="ANGI_PROXY_ROTATE_EVERY")
+
     # --- Static site deployment (scripts/deploy_site.py only) -----------------
     # Not used by the running app itself -- only by the deploy script, which
     # shells out to the AWS CLI (never handles credentials directly; the CLI

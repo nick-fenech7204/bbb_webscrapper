@@ -205,3 +205,78 @@ def test_website_dead_flag_off_when_site_is_fine():
     ])
     row = build_master_table(out)[0]
     assert row["website_dead_flag"] == 0
+
+
+# --- Angi (bolt-on enrichment, see bbb_scraper/angi/enrich.py) --------------
+# These inject angi_* fields directly and call recompute_intel, the same way
+# enrich_with_angi does internally -- see tests/angi/test_enrich.py for the
+# phone-matching step itself.
+
+def test_on_angi_reflects_whether_an_angi_phone_is_present():
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    assert row["on_angi"] == 0  # nothing angi_* set yet
+
+    row["angi_phone"] = "3055550100"
+    row = recompute_intel(row)
+    assert row["on_angi"] == 1
+
+
+def test_unmatched_row_reputation_score_is_unaffected_by_angi_existing():
+    """The whole point of wsum-normalizing over *present* signals: adding
+    Angi as a signal must not move any row that isn't matched to Angi."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B"}])
+    before = build_master_table(out)[0]["reputation_score"]
+    row = recompute_intel(build_master_table(out)[0])  # angi_* still blank
+    assert row["reputation_score"] == before
+
+
+def test_angi_rating_pulls_reputation_score_toward_angis_opinion():
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    clean_score = row["reputation_score"]  # A+ alone -> a low weakness score
+
+    row["angi_phone"] = "3055550100"
+    row["angi_overall_rating"] = "1.2"
+    row["angi_review_count"] = "40"
+    row = recompute_intel(row)
+    assert row["reputation_score"] > clean_score  # a bad Angi rating should raise "weakness"
+
+
+def test_angi_rating_needs_enough_reviews_to_count():
+    """Same _MIN_REVIEWS_FOR_RATING gate as Yelp -- one review isn't a
+    rating yet, regardless of how it happened to land."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    clean_score = row["reputation_score"]
+
+    row["angi_phone"] = "3055550100"
+    row["angi_overall_rating"] = "1.0"
+    row["angi_review_count"] = "1"
+    row = recompute_intel(row)
+    assert row["reputation_score"] == clean_score  # too few reviews -> ignored
+
+
+def test_reputation_divergence_flag_fires_on_low_angi_rating_alone():
+    """Clean BBB grade + a bad Angi rating -- looks fine on paper, isn't."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    assert row["reputation_divergence_flag"] == 0
+
+    row["angi_phone"] = "3055550100"
+    row["angi_overall_rating"] = "2.0"
+    row["angi_review_count"] = "30"
+    row = recompute_intel(row)
+    assert row["reputation_divergence_flag"] == 1
+
+
+def test_lead_priority_score_responds_to_angi_signal():
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    baseline = row["lead_priority_score"]
+
+    row["angi_phone"] = "3055550100"
+    row["angi_overall_rating"] = "2.5"  # in the "82" band -- a strong lead signal
+    row["angi_review_count"] = "20"
+    row = recompute_intel(row)
+    assert row["lead_priority_score"] != baseline

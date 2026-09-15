@@ -46,6 +46,20 @@ YELP_FIELDS = [
     "name", "phone", "city", "state", "postal_code", "rating", "review_count",
     "price", "is_closed", "categories", "url", "id",
 ]
+# Angi enrichment (bbb_scraper/angi/enrich.py) -- bolt-on, not part of
+# match_datasets/build_master_table's own BBB<->Yelp matching. Angi records
+# are matched to an already-built master row by exact phone number only
+# (Nick's call: phone is decisive enough here on its own, no need for
+# Yelp's fuzzy name/geo scoring -- and Angi profiles don't carry lat/lon
+# anyway, so that signal wouldn't be available even if wanted). Field names
+# here match bbb_scraper.angi.models.BusinessDetail's own attribute names
+# (fed in via the flattened CSV scripts/scrape_angi_category.py writes).
+ANGI_FIELDS = [
+    "name", "phone", "website", "address", "city", "state", "zip_code",
+    "overall_rating", "review_count", "categories", "num_categories",
+    "about_us", "is_super_service_award_winner", "bonded", "insured",
+    "profile_url",
+]
 
 
 def _num(v: Any) -> float | None:
@@ -137,6 +151,21 @@ def _yelp_rating(r):
     return y
 
 
+def _angi_rating(r):
+    """Angi star rating, same "needs enough reviews behind it" gate as
+    _yelp_rating -- a business with 1 five-star review isn't rated, it's
+    lucky. None if unmatched to Angi or not rated yet."""
+    a = _num(r.get("angi_overall_rating"))
+    n = _num(r.get("angi_review_count"))
+    if a is None or n is None or n < _MIN_REVIEWS_FOR_RATING:
+        return None
+    return a
+
+
+def _on_angi(r):
+    return int(_has_value(r.get("angi_phone")))
+
+
 def _rating_gap(r):
     """BBB grade and Yelp stars, both put on 0-5, BBB minus Yelp.
     Positive = BBB looks kinder than Yelp does."""
@@ -151,8 +180,17 @@ def _reputation_score(r):
     """0-100 blended "how weak is this business's public reputation" --
     higher = weaker = better lead. Weighted mean over whichever signals are
     present: BBB letter grade (always), BBB's own review average + complaint
-    count (detail runs), Yelp rating + review volume (matched). None only if
-    there's no BBB grade and no Yelp rating at all.
+    count (detail runs), Yelp rating + review volume (matched), Angi rating
+    (matched by phone). None only if none of BBB grade / Yelp rating / Angi
+    rating are available at all.
+
+    Angi added 2026-09-14 at a smaller weight than Yelp's combined 0.40 --
+    same *kind* of signal (a homeowner review platform), but Angi coverage
+    is brand new here vs. Yelp's longer track record in this project, so a
+    lower weight until that's earned. Because the mean only divides by the
+    weights of signals actually *present* (see wsum below), adding this
+    changes nothing for the vast majority of rows with no Angi match yet --
+    it only ever adds a third opinion where one now exists.
 
     v1 weighting -- revisit after the metrics conversation.
     """
@@ -176,6 +214,10 @@ def _reputation_score(r):
     if yn is not None and r.get("match_status") == "matched":
         parts.append((0.15, 1.0 - min(yn, 150.0) / 150.0))
 
+    ar = _angi_rating(r)
+    if ar is not None:
+        parts.append((0.20, (5.0 - ar) / 5.0))
+
     if not parts:
         return None
     wsum = sum(w for w, _ in parts)
@@ -184,13 +226,16 @@ def _reputation_score(r):
 
 def _reputation_divergence_flag(r):
     """BBB grade looks clean (A- or better) but the actual feedback doesn't:
-    a reviewed Yelp rating under 3, OR BBB's own review average under 2.5,
-    OR 5+ BBB complaints. A prime reputation-work lead."""
+    a reviewed Yelp or Angi rating under 3, OR BBB's own review average
+    under 2.5, OR 5+ BBB complaints. A prime reputation-work lead."""
     g = letter_grade_to_num(r.get("bbb_rating"))
     if g is None or g < 3.67:
         return 0
     yr = _yelp_rating(r)
     if yr is not None and yr < 3.0:
+        return 1
+    ar = _angi_rating(r)
+    if ar is not None and ar < 3.0:
         return 1
     bavg = _bbb_review_avg(r)
     if bavg is not None and bavg < 2.5:
@@ -320,6 +365,20 @@ def _lead_priority_score(r):
     if yn is not None and r.get("match_status") == "matched":
         signals.append(40 if yn == 0 else 72 if yn <= 60 else 40 if yn <= 150 else 12)
 
+    # Angi, added 2026-09-14: same banding as Yelp above -- both are 5-star
+    # homeowner-review platforms, and there isn't yet enough Angi-specific
+    # data in this project to justify a different curve. Two signals (rating
+    # + volume), matching Yelp's weight-by-signal-count rather than Yelp's
+    # combined influence outright -- gives Angi real pull without letting a
+    # newer, thinner-coverage source outweigh Yelp's own two signals.
+    ar = _angi_rating(r)
+    if ar is not None:
+        signals.append(45 if ar <= 1.5 else 82 if ar < 3.7 else 34 if ar < 4.2 else 8)
+
+    an = _num(r.get("angi_review_count"))
+    if an is not None and _has_value(r.get("angi_phone")):
+        signals.append(40 if an == 0 else 72 if an <= 60 else 40 if an <= 150 else 12)
+
     g = letter_grade_to_num(r.get("bbb_rating"))
     if g is not None:
         signals.append(65 if 1.67 <= g <= 3.33 else 32 if g < 1.67 else 22)
@@ -365,6 +424,7 @@ _INTEL: dict[str, Callable[[dict[str, Any]], Any]] = {
     "present_bbb": _present_bbb,
     "present_yelp": _present_yelp,
     "present_both": lambda r: int(r["match_status"] == "matched"),
+    "on_angi": _on_angi,
     "bbb_grade_num": _bbb_grade_num,
     "bbb_review_avg": _bbb_review_avg,
     "bbb_reviews_total": _bbb_reviews_total,

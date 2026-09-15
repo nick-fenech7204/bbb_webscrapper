@@ -150,11 +150,12 @@
         <ul>
           <li><strong>BBB</strong> — the letter grade BBB gives the business, with a checkmark if they're BBB-accredited.</li>
           <li><strong>BBB complaints</strong> — the number of complaints filed with BBB (appears only for datasets scraped with full detail).</li>
-          <li><strong>Yelp</strong> — the matched Yelp listing's star rating and review count (links to Yelp).</li>
-          <li><strong>Reputation</strong> (0&ndash;100) — blended &ldquo;how weak is this business's public reputation&rdquo;: BBB grade, BBB review average + complaints, and Yelp rating + volume, weighted over whatever's available. Higher = weaker.</li>
+          <li><strong>Yelp / Angi</strong> — the matched Yelp and/or Angi listing's star rating and review count, each linking back to the source (Angi matched by phone number, not name — a listing under a slightly different name with the same number still counts).</li>
+          <li><strong>Specialties</strong> — services the business's Angi listing says it offers (only shown when there's an Angi match).</li>
+          <li><strong>Reputation</strong> (0&ndash;100) — blended &ldquo;how weak is this business's public reputation&rdquo;: BBB grade, BBB review average + complaints, Yelp rating + volume, and Angi rating, weighted over whatever's available. Higher = weaker.</li>
           <li><strong>Lead priority</strong> (0&ndash;130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower. A missing phone number pulls this down too: the best-fit lead is dead weight this week with no way to call it.</li>
           <li><strong>Reach</strong> — is there enough here to actually contact this business today: a phone number, and ideally a named contact (BBB's listed principal/manager) so the call lands on a real person instead of a front desk. Hover a badge for the full detail.</li>
-          <li><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A&minus; or better) but the actual feedback doesn't. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews. <em>No live website</em>: their own site is down, 404ing, or a parked/for-sale domain — a website lead, not just a reputation one.</li>
+          <li><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A&minus; or better) but the actual feedback (Yelp or Angi rating, BBB's own review average, or BBB complaints) doesn't. <em>Accredited, low-rated</em>. <em>Few reviews</em>: under 25 Yelp reviews. <em>No live website</em>: their own site is down, 404ing, or a parked/for-sale domain — a website lead, not just a reputation one.</li>
         </ul>
         <p class="legend-foot">Scoring is refined continuously as more market data comes in.</p>
       </details>

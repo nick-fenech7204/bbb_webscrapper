@@ -177,6 +177,48 @@ def test_no_webcheck_data_is_not_flagged():
     assert rec["website_dead_flag"] == 0
 
 
+# --- Angi (phone-matched by bbb_scraper/angi/enrich.py before this point) ---
+# Constructed as a master-table row directly (bbb_*/angi_*/match_status,
+# on_angi already computed) -- angi_* fields aren't BBB_FIELDS, so they
+# can't flow through _bbb_only_master/_publish_one's raw-BBB-record path;
+# same reason test_matched_master_row_carries_yelp_and_intel builds a row
+# by hand instead of using _publish_one.
+
+def test_angi_match_surfaces_rating_specialties_and_link():
+    row = {
+        "match_status": "bbb_only", "bbb_name": "Ace Plumbing", "bbb_rating": "A",
+        "bbb_phone": "(773) 561-0867", "bbb_scraped_at": "2026-09-14T00:00:00+00:00",
+        "on_angi": "1", "angi_name": "Ace Plumbing Co", "angi_overall_rating": "4.8",
+        "angi_review_count": "35", "angi_profile_url": "https://www.angi.com/companylist/us/il/x/ace.htm",
+        "angi_categories": "Drain Cleaning; Water Heater Install",
+        "angi_is_super_service_award_winner": "True",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["on_angi"] == 1
+    assert rec["angi_name"] == "Ace Plumbing Co"
+    assert rec["angi_rating"] == 4.8
+    assert rec["angi_review_count"] == 35
+    assert rec["angi_url"] == "https://www.angi.com/companylist/us/il/x/ace.htm"
+    assert rec["specialties"] == "Drain Cleaning; Water Heater Install"
+    assert rec["angi_super_service_award"] is True
+
+
+def test_no_angi_match_leaves_angi_fields_blank_not_stale():
+    row = {
+        "match_status": "bbb_only", "bbb_name": "No Angi Co", "bbb_rating": "B",
+        "bbb_scraped_at": "2026-09-14T00:00:00+00:00", "on_angi": "0",
+        # a stale angi_name could exist on an old row if a phone was ever
+        # reused -- must not surface once on_angi says "not matched"
+        "angi_name": "Stale Leftover Name",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["on_angi"] == 0
+    assert rec["angi_name"] == ""
+    assert rec["angi_rating"] is None
+    assert rec["specialties"] == ""
+    assert rec["angi_super_service_award"] is False
+
+
 def test_accredited_and_years_in_business_are_real_types_not_csv_strings():
     """Regression, caught in a real diff review 2026-09-14: publish_dataset/
     publish_master_csv read rows through csv.DictReader, which stringifies

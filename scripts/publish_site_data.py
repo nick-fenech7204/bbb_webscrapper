@@ -87,6 +87,19 @@ def _to_bool(v) -> bool:
 # the site footer does that and every matched record links to yelp_url.
 _YELP_SITE_FIELDS = ["yelp_name", "yelp_rating", "yelp_review_count", "yelp_url"]
 
+# Matched Angi fields (bbb_scraper/angi/enrich.py's phone-matched angi_*
+# columns), 2026-09-14: angi_name/angi_rating/angi_review_count/angi_url
+# (mirroring the Yelp fields above) plus specialties (angi_categories,
+# under the label it's actually shown as on the site -- Angi's services-
+# offered list reads as a specialties column, not a generic "categories"
+# one; BBB already has its own bbb_categories/primary_category_name, a
+# different taxonomy) and angi_super_service_award (a trust badge worth
+# surfacing on its own, not just folded into the rating number).
+_ANGI_SITE_FIELDS = [
+    "angi_name", "angi_rating", "angi_review_count", "angi_url",
+    "specialties", "angi_super_service_award",
+]
+
 # Our own derived-intelligence columns (read straight through from a
 # master-table row). These are available for every BBB record -- a Yelp
 # match just adds more signal, it isn't required.
@@ -108,6 +121,7 @@ _INTEL_SITE_FIELDS = [
     "contact_readiness",
     "contact_readiness_score",
     "website_dead_flag",
+    "on_angi",
 ]
 
 
@@ -177,11 +191,24 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["yelp_rating"] = _num_or_none(row.get("yelp_rating")) if matched else None
     result["yelp_review_count"] = _num_or_none(row.get("yelp_review_count")) if matched else None
     result["yelp_url"] = (row.get("yelp_url") or "") if matched else ""
+
+    # on_angi itself is set below via _INTEL_SITE_FIELDS (merge.py's own
+    # _on_angi computes it from angi_phone) -- read the same way here just
+    # to gate these other fields consistently with whatever that column
+    # actually says, rather than recomputing the same truthiness twice.
+    on_angi = _to_bool(row.get("on_angi"))
+    result["angi_name"] = (row.get("angi_name") or "") if on_angi else ""
+    result["angi_rating"] = _num_or_none(row.get("angi_overall_rating")) if on_angi else None
+    result["angi_review_count"] = _num_or_none(row.get("angi_review_count")) if on_angi else None
+    result["angi_url"] = (row.get("angi_profile_url") or "") if on_angi else ""
+    result["specialties"] = (row.get("angi_categories") or "") if on_angi else ""
+    result["angi_super_service_award"] = _to_bool(row.get("angi_is_super_service_award_winner")) if on_angi else False
+
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0
     for flag in ("reputation_divergence_flag", "low_review_volume_flag", "accredited_but_low_rated",
-                 "has_phone", "has_named_contact", "has_email", "website_dead_flag"):
+                 "has_phone", "has_named_contact", "has_email", "website_dead_flag", "on_angi"):
         if result.get(flag) is not None:
             result[flag] = int(result[flag])
     return result

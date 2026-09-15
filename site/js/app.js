@@ -96,14 +96,22 @@
       ? ' <span class="accredited-check" title="BBB accredited">&#10003;</span>' : "";
     return grade + check;
   }
-  // Yelp rating + review count combined into one cell (was two columns).
+  // Yelp + Angi ratings share one cell (2026-09-14: was Yelp-only, same
+  // "combine related cells" reasoning as bbbCell above -- a whole extra
+  // column per 3rd-party source doesn't fit real screen width, and these
+  // two are the same *kind* of signal: an outside homeowner-review
+  // platform, exactly like the reputation_score formula treats them).
+  function oneRatingLink(label, url, rating, count) {
+    const text = !count ? `on ${label}` : `${rating}★ (${count})`;
+    return url
+      ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)} ↗</a>` : esc(text);
+  }
   function yelpCell(r) {
-    if (!r.on_yelp) return `<span class="muted">${dash}</span>`;
-    const rating = num(r.yelp_rating);
-    const count = num(r.yelp_review_count);
-    const text = !count ? "on Yelp" : `${rating}★ (${count})`;
-    return r.yelp_url
-      ? `<a href="${esc(r.yelp_url)}" target="_blank" rel="noopener">${esc(text)} ↗</a>` : esc(text);
+    const parts = [];
+    if (r.on_yelp) parts.push(oneRatingLink("Yelp", r.yelp_url, num(r.yelp_rating), num(r.yelp_review_count)));
+    if (isTrue(r.on_angi)) parts.push(oneRatingLink("Angi", r.angi_url, num(r.angi_rating), num(r.angi_review_count)));
+    if (!parts.length) return `<span class="muted">${dash}</span>`;
+    return parts.join("<br>");
   }
   function intCell(key) {
     return (r) => {
@@ -179,12 +187,20 @@
   // export) as the least scan-critical field. `w` is a pixel width, not a
   // percentage -- see the big comment in style.css for how these columns
   // fit real screen widths without forcing horizontal scroll.
+  //
+  // 2026-09-14: Angi joined as a second 3rd-party source (phone-matched,
+  // see bbb_scraper/angi/enrich.py). Folded into the *same* rating cell as
+  // Yelp rather than adding a whole new column for it (yelpCell now shows
+  // either/both) -- but "Specialties" (Angi's services-offered list) is
+  // new information with no existing cell to share, so it's one genuinely
+  // new column, 14 total now.
   const COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", w: 200, render: nameCell },
     { key: "city", label: "City", w: 110, render: cityCell },
     { key: "rating", label: "BBB", w: 75, render: bbbCell },
     { key: "bbb_complaints_total", label: "BBB complaints", w: 105, cls: "num-cell", render: intCell("bbb_complaints_total") },
-    { key: "yelp_rating", label: "Yelp", w: 110, cls: "num-cell", render: yelpCell },
+    { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
+    { key: "specialties", label: "Specialties", w: 160, render: plainTitled("specialties") },
     { key: "reputation_score", label: "Reputation (of 100)", w: 110, render: scoreCell("reputation_score", 100) },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
