@@ -29,6 +29,7 @@ from __future__ import annotations
 import csv
 import json
 import sys
+import threading
 import time
 from pathlib import Path
 from types import SimpleNamespace
@@ -391,6 +392,40 @@ def test_scrape_one_metro_bbb_and_angi_runs_them_concurrently_not_sequentially(m
     assert angi_rows == [{"name": "Angi biz"}]
     assert abs(starts["bbb"] - starts["angi"]) < SLEEP_S / 2  # started together
     assert elapsed < SLEEP_S * 1.5  # ~SLEEP_S total, not ~2*SLEEP_S (which a sequential call would take)
+
+
+def test_scrape_one_metro_bbb_and_angi_gives_up_on_a_truly_hung_angi_thread(monkeypatch):
+    """Real incident, 2026-09-15: a machine sleep left an Angi request stuck
+    forever -- not raising (so _scrape_metro_angi's own try/except never
+    saw it), just never returning. The old code's bare
+    angi_future.result() would have blocked this function -- and therefore
+    the whole batch, metros queued behind it included -- forever. This is
+    the actual fix: an Angi thread that never returns must not be able to
+    hang the caller past ANGI_MAX_WAIT_SECONDS, ever."""
+    monkeypatch.setattr(bsm, "ANGI_MAX_WAIT_SECONDS", 0.2)  # real 45min ceiling, sped up for the test
+    monkeypatch.setattr(bsm, "scrape_one_metro", lambda *a, **k: [{"name": "BBB biz"}])
+
+    hang_forever = threading.Event()  # never set -- simulates a thread blocked on I/O that never returns
+
+    def _fake_angi_hangs(*a, **k):
+        hang_forever.wait()  # blocks for the life of the thread -- this is the point
+        return [{"name": "should never be reached"}]  # pragma: no cover
+
+    monkeypatch.setattr(bsm, "_scrape_metro_angi", _fake_angi_hangs)
+
+    began = time.monotonic()
+    records, angi_rows = bsm.scrape_one_metro_bbb_and_angi(
+        Category(id="plumbers", name="Plumbers"), _metro(),
+        radius_miles=10, min_population=0, max_pages_per_place=1,
+        fetch_details=False, stats=RunStats(), partial_checkpoint_path=None,
+        angi_enabled=True, angi_category_slug="plumbing", angi_category_label="Plumbers",
+        angi_max_businesses=50,
+    )
+    elapsed = time.monotonic() - began
+
+    assert records == [{"name": "BBB biz"}]  # BBB's real result still comes back
+    assert angi_rows == []  # Angi gave up, not a crash and not BBB's data lost
+    assert elapsed < 2.0  # returned promptly -- not the old behavior of blocking forever
 
 
 def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypatch):

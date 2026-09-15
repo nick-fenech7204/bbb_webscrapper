@@ -113,9 +113,10 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import queue
 import sys
+import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -149,6 +150,15 @@ logger = get_logger(__name__)
 
 BATCH_DIR = REPO_ROOT / "data" / "processed" / "batch"
 ANGI_DIR = REPO_ROOT / "data" / "processed" / "angi"
+
+# Ceiling on how long scrape_one_metro_bbb_and_angi will wait for the Angi
+# side before giving up on it as hung, see that function's docstring for the
+# real incident this exists for. Generous on purpose: a real, healthy Angi
+# run (the default --angi-max-businesses of 150, each needing its own
+# profile fetch, some needing the soft-retry for the dual-page-variant bug)
+# can legitimately take 20-30+ minutes on its own -- this needs to be well
+# above that so a merely-slow-but-working run is never mistaken for a hang.
+ANGI_MAX_WAIT_SECONDS = 45 * 60
 
 
 def _write_progress(path: Path | None, state: dict) -> None:
@@ -357,13 +367,45 @@ def scrape_one_metro_bbb_and_angi(
     CLI-parsing/state-tracking machinery.
 
     Returns (bbb_records, angi_rows) -- angi_rows is [] when angi_enabled is
-    False. A genuine BBB failure still raises out of here exactly as it did
-    pre-concurrency (the caller's try/except is unchanged); _scrape_metro_angi
-    never raises on its own (see its docstring), so angi_future.result()
-    realistically never does either -- but if it somehow did, that would
-    also raise here rather than being silently swallowed, on the theory that
-    a truly unexpected bug deserves the same visible "metro failed" handling
-    the BBB side already gets, not a silent partial result.
+    False, or when Angi blew its wait ceiling (see below). A genuine BBB
+    failure still raises out of here exactly as it did pre-concurrency (the
+    caller's try/except is unchanged) -- BBB is never given a timeout here;
+    a real metro can legitimately take hours in --details mode and that's
+    not a hang.
+
+    **Real incident, 2026-09-15: Angi's own thread can hang forever, not
+    just raise.** Confirmed live: an overnight batch survived the machine
+    being put to sleep on the BBB side (curl's own timeout fired on wake,
+    tenacity retried, scraping continued) but Angi's in-flight request never
+    recovered -- 9+ hours with zero Angi log activity while BBB kept
+    working fine, no exception ever raised (so _scrape_metro_angi's own
+    try/except never even saw it -- a hang isn't an exception). The first
+    fix attempt used ThreadPoolExecutor with `angi_future.result(timeout=
+    ...)` + `pool.shutdown(wait=False)` -- looked right, but testing it for
+    real (a throwaway script: submit a task that blocks on a never-set
+    Event, time out waiting on it, shut the pool down non-blocking, then
+    exit) proved the WHOLE PROCESS still hangs at interpreter exit anyway:
+    concurrent.futures' own atexit hook joins every worker thread it has
+    ever created, for every executor, regardless of that executor's own
+    shutdown(wait=...) -- `wait=False` only stops THIS function from
+    blocking, not the process from blocking later when it tries to exit.
+
+    The actual fix: plain `threading.Thread(daemon=True)` + a `queue.Queue`
+    for each side, not ThreadPoolExecutor. Confirmed with the same kind of
+    throwaway script that a daemon thread blocked forever does NOT stop the
+    process from exiting immediately once nothing else is waiting on it --
+    daemon threads are excluded from that atexit join by design. `.get()`
+    with no timeout on BBB's queue is equivalent to the old
+    `bbb_future.result()`; `ANGI_MAX_WAIT_SECONDS` bounds the wait on
+    Angi's queue (measured from this call's own start, not from when BBB
+    happens to finish, so a long BBB run doesn't also grant Angi extra
+    unearned time) -- `queue.Empty` there is treated as "no Angi data for
+    this metro," same shape as any other best-effort Angi failure. This
+    still doesn't (and can't) kill a truly hung thread -- Python has no API
+    to forcibly stop one blocked on a system call -- it's abandoned, not
+    terminated, and lingers harmlessly (blocked on I/O, not spinning CPU)
+    until the whole process eventually exits, at which point daemon status
+    is exactly what lets that exit actually happen.
     """
     if not angi_enabled:
         records = scrape_one_metro(
@@ -373,18 +415,54 @@ def scrape_one_metro_bbb_and_angi(
         )
         return records, []
 
-    with ThreadPoolExecutor(max_workers=2) as pool:
-        bbb_future = pool.submit(
-            scrape_one_metro, category, metro,
-            radius_miles=radius_miles, min_population=min_population,
-            max_pages_per_place=max_pages_per_place, fetch_details=fetch_details,
-            stats=stats, partial_checkpoint_path=partial_checkpoint_path,
-        )
-        angi_future = pool.submit(
-            _scrape_metro_angi, metro, angi_category_slug, angi_category_label,
+    started = time.monotonic()
+    bbb_outcome: queue.Queue = queue.Queue(maxsize=1)
+    angi_outcome: queue.Queue = queue.Queue(maxsize=1)
+
+    def _run_bbb() -> None:
+        try:
+            result = scrape_one_metro(
+                category, metro, radius_miles=radius_miles, min_population=min_population,
+                max_pages_per_place=max_pages_per_place, fetch_details=fetch_details,
+                stats=stats, partial_checkpoint_path=partial_checkpoint_path,
+            )
+        except Exception as exc:  # noqa: BLE001 -- re-raised on the caller's thread below, not swallowed
+            bbb_outcome.put(("error", exc))
+        else:
+            bbb_outcome.put(("ok", result))
+
+    def _run_angi() -> None:
+        # _scrape_metro_angi never raises on its own (see its docstring) --
+        # this thread exists so a HANG there (not an exception) can be
+        # abandoned via the timeout below instead of blocking forever.
+        result = _scrape_metro_angi(
+            metro, angi_category_slug, angi_category_label,
             max_businesses=angi_max_businesses, use_proxy=angi_use_proxy,
         )
-        return bbb_future.result(), angi_future.result()
+        angi_outcome.put(("ok", result))
+
+    threading.Thread(target=_run_bbb, daemon=True).start()
+    threading.Thread(target=_run_angi, daemon=True).start()
+
+    status, payload = bbb_outcome.get()  # no timeout -- a real multi-hour metro isn't a hang
+    if status == "error":
+        raise payload
+    records = payload
+
+    remaining = max(0.0, ANGI_MAX_WAIT_SECONDS - (time.monotonic() - started))
+    try:
+        _, angi_rows = angi_outcome.get(timeout=remaining)
+    except queue.Empty:
+        logger.warning(
+            "Angi scrape for %s exceeded its %.0f-minute ceiling and appears hung (e.g. a "
+            "request that survived a sleep/suspend in a bad state) -- continuing without "
+            "Angi for this metro. Its thread is abandoned (daemon), not killed -- see this "
+            "function's docstring.", metro.name, ANGI_MAX_WAIT_SECONDS / 60,
+        )
+        print(f"    Angi scrape for {metro.name} exceeded its {ANGI_MAX_WAIT_SECONDS / 60:.0f}"
+              f"min ceiling (likely hung) -- continuing without Angi for this metro")
+        angi_rows = []
+    return records, angi_rows
 
 
 def _check_metro_websites(records: list[dict]) -> list[dict]:
