@@ -208,8 +208,12 @@ def test_parse_business_page_raises_when_state_missing():
 
 
 def test_parse_business_page_raises_when_business_profile_missing():
+    # TypeError, not ValueError -- this is specifically a wrong-type failure
+    # (businessProfile isn't a dict), distinct from test_parse_business_page_
+    # raises_when_state_missing above (a genuinely different failure: no
+    # __PRELOADED_STATE__ found at all, still a real ValueError).
     html = '<script>window.__PRELOADED_STATE__ = {"user": {}, "page": {}};</script>'
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         parse_business_page(html)
 
 

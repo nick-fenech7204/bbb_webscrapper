@@ -2,6 +2,7 @@ import json
 from types import SimpleNamespace
 
 import pytest
+from curl_cffi import requests as curl_requests
 
 from bbb_scraper.yelp.client import YelpClient, YelpConfigError
 
@@ -48,3 +49,21 @@ def test_search_requires_location_or_latlng(tmp_path):
     client = YelpClient(_cfg(tmp_path))
     with pytest.raises(ValueError):
         client.search(term="car dealers")
+
+
+def test_close_and_context_manager(tmp_path):
+    """Real gap found 2026-09-15 during a live smoke-test pass: unlike
+    every other client in this codebase (HttpClient, AngiClient,
+    MapQuestClient, Extractor -- see each one's own test_*_context_manager
+    test), YelpClient had no close()/__enter__/__exit__ at all, even though
+    it holds the same kind of real curl_cffi Session those do. Never broke
+    anything in practice (every real call site just constructs it directly
+    and lets the process exit reclaim it -- see bbb_scraper/match/enrich.py,
+    bbb_scraper/yelp/extract.py), but it's a real inconsistency now closed,
+    same shape as HttpClient's own equivalent test."""
+    client = YelpClient(_cfg(tmp_path))
+    assert isinstance(client.session, curl_requests.Session)
+    client.close()  # must not raise
+
+    with YelpClient(_cfg(tmp_path)) as ctx_client:
+        assert isinstance(ctx_client.session, curl_requests.Session)

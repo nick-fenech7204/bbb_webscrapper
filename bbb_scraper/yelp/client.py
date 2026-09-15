@@ -205,6 +205,15 @@ class YelpClient:
                 found.get("limit"), found.get("remaining"), found.get("resettime"),
             )
 
+    def close(self) -> None:
+        self.session.close()
+
+    def __enter__(self) -> YelpClient:
+        return self
+
+    def __exit__(self, *exc_info) -> None:
+        self.close()
+
 
 def _maybe_int(value: str) -> Any:
     try:

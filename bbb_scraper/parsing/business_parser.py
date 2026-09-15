@@ -229,7 +229,7 @@ def _map_reviews_complaints(summary: dict[str, Any] | None) -> dict[str, Any]:
 def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> BusinessDetail:
     bp = state.get("businessProfile")
     if not isinstance(bp, dict):
-        raise ValueError("`__PRELOADED_STATE__` did not contain a `businessProfile` object")
+        raise TypeError("`__PRELOADED_STATE__` did not contain a `businessProfile` object")
 
     contact_info = bp.get("contactInformation") or {}
     location = bp.get("location") or {}
