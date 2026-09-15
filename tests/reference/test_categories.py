@@ -75,3 +75,32 @@ def test_get_by_id_or_slug(tmp_path):
     assert directory.get("1").name == "Plumbers"
     assert directory.get("plumbers").name == "Plumbers"
     assert directory.get("nope") is None
+
+
+# --- resolve_one (best-effort/non-interactive: batch_scrape_metros.py's
+# Angi integration -- a batch can't ask a human to pick between ambiguous
+# matches, so ambiguous collapses to None same as no match at all) --------
+
+def test_resolve_one_returns_the_single_exact_match(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "1", "name": "Plumbers"}, {"id": "2", "name": "Plumbing Supply Co"}]',
+                     encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    match = directory.resolve_one("Plumbers")
+    assert match is not None
+    assert match.id == "1"
+
+
+def test_resolve_one_returns_none_for_no_match(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "1", "name": "Plumbers"}]', encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    assert directory.resolve_one("Dentists") is None
+
+
+def test_resolve_one_returns_none_for_an_ambiguous_substring_match(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "1", "name": "Plumbers"}, {"id": "2", "name": "Plumbing Supply Co"}]',
+                     encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    assert directory.resolve_one("plumb") is None  # 2 substring matches, neither exact

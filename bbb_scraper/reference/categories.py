@@ -66,3 +66,14 @@ class CategoryDirectory:
             return exact
 
         return [c for c in self._categories if text_lower in c.name.lower()]
+
+    def resolve_one(self, text: str) -> Category | None:
+        """Like search(), but for a best-effort/non-interactive caller that
+        just wants "the one match, or nothing" -- no match and an ambiguous
+        multi-match both collapse to None (a batch run can't ask a human to
+        disambiguate mid-flight the way a CLI script can). Used by
+        scripts/batch_scrape_metros.py's Angi integration: an unresolvable
+        category just means Angi enrichment is skipped for the run, same
+        never-fatal contract as a missing Yelp key."""
+        matches = self.search(text)
+        return matches[0] if len(matches) == 1 else None

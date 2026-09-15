@@ -15,12 +15,21 @@ bbb_scraper.webcheck, wired in as a real per-metro step (Nick's ask: fully
 integrated, on by default, unproxied). Wrapped the same best-effort way as
 Yelp enrichment: a failure here must return the metro's records unchecked,
 never take the metro down.
+
+And Angi (2026-09-15) -- previously only reachable via a separate,
+now-retired script (scripts/run_batch_with_angi.py). `_resolve_angi_category`/
+`_scrape_metro_angi` are the same best-effort building blocks Yelp/webcheck
+already established; `scrape_one_metro_bbb_and_angi` is the concurrency
+itself, split out specifically so it's testable without standing up
+main()'s full CLI/state machinery -- see test_scrape_one_metro_bbb_and_angi_
+runs_them_concurrently_not_sequentially below for the actual timing proof.
 """
 from __future__ import annotations
 
 import csv
 import json
 import sys
+import time
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -28,6 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 import batch_scrape_metros as bsm
 
+from bbb_scraper.angi.models import BusinessDetail
 from bbb_scraper.reference.models import Category, Metro
 from bbb_scraper.utils.stats import RunStats
 
@@ -223,3 +233,186 @@ def test_check_metro_websites_failure_returns_original_records_unchecked(monkeyp
     assert result == records  # unchanged, not dropped or crashed
     assert "website_dead" not in result[0]
     assert "FAILED" in capsys.readouterr().out
+
+
+# --- Angi: category resolution -------------------------------------------
+
+def test_resolve_angi_category_matches_a_real_category_by_name():
+    # Real reference data, same "trust real fixtures over invented ones"
+    # precedent as tests/reference/test_categories.py's own real-file test.
+    result = bsm._resolve_angi_category("HVAC Companies")
+    assert result == ("hvac", "HVAC Companies")
+
+
+def test_resolve_angi_category_returns_none_for_no_match():
+    assert bsm._resolve_angi_category("Something Angi Has Never Heard Of") is None
+
+
+# --- Angi: per-metro scrape (best-effort, mirrors _check_metro_websites) -
+
+def _metro(mid="chicago-il", name="Chicago, IL") -> Metro:
+    return Metro(id=mid, name=name, seed_location=name)
+
+
+def test_scrape_metro_angi_flattens_every_named_business(monkeypatch, capsys):
+    details = [
+        BusinessDetail(profile_url="https://x/1", name="Acme A", phone="555-1111"),
+        BusinessDetail(profile_url="https://x/2", name="Acme B", phone="555-2222"),
+    ]
+    monkeypatch.setattr(bsm, "scrape_category", lambda *a, **k: iter(details))
+
+    rows = bsm._scrape_metro_angi(_metro(), "plumbing", "Plumbers", max_businesses=50)
+
+    assert [r["name"] for r in rows] == ["Acme A", "Acme B"]
+    assert "2 businesses" in capsys.readouterr().out
+
+
+def test_scrape_metro_angi_skips_businesses_that_never_got_full_data(monkeypatch):
+    # BusinessDetail.name is None when scrape_category exhausted its own
+    # retries without ever seeing the full page variant (see
+    # bbb_scraper/angi/scraper.py's _fetch_detail_with_soft_retry) -- a
+    # blank row would look like a data error, not "tried, didn't get it".
+    details = [
+        BusinessDetail(profile_url="https://x/1", name=None),
+        BusinessDetail(profile_url="https://x/2", name="Acme B", phone="555-2222"),
+    ]
+    monkeypatch.setattr(bsm, "scrape_category", lambda *a, **k: iter(details))
+
+    rows = bsm._scrape_metro_angi(_metro(), "plumbing", "Plumbers", max_businesses=None)
+
+    assert len(rows) == 1
+    assert rows[0]["name"] == "Acme B"
+
+
+def test_scrape_metro_angi_keeps_partial_results_on_a_mid_scrape_failure(monkeypatch, capsys):
+    def _partial_then_boom(*a, **k):
+        yield BusinessDetail(profile_url="https://x/1", name="Acme A", phone="555-1111")
+        raise RuntimeError("simulated: e.g. Angi blocked mid-run")
+
+    monkeypatch.setattr(bsm, "scrape_category", _partial_then_boom)
+
+    rows = bsm._scrape_metro_angi(_metro(), "plumbing", "Plumbers", max_businesses=None)
+
+    out = capsys.readouterr().out
+    assert len(rows) == 1  # the business already gathered before the failure isn't thrown away
+    assert rows[0]["name"] == "Acme A"
+    assert "FAILED partway" in out
+    assert "keeping 1" in out
+
+
+def test_scrape_metro_angi_never_raises_on_an_immediate_failure(monkeypatch):
+    def _boom(*a, **k):
+        raise RuntimeError("simulated: e.g. category/state/city resolution itself failed")
+        yield  # pragma: no cover -- makes this a generator function, never reached
+
+    monkeypatch.setattr(bsm, "scrape_category", _boom)
+
+    rows = bsm._scrape_metro_angi(_metro(), "plumbing", "Plumbers", max_businesses=None)
+    assert rows == []  # never raises -- caller's angi_future.result() must not blow up the metro
+
+
+# --- Angi: raw checkpoint --------------------------------------------------
+
+def test_write_angi_checkpoint_writes_every_declared_field(tmp_path):
+    from bbb_scraper.angi.scraper import ANGI_CSV_FIELDS
+
+    path = tmp_path / "plumbing--chicago-il.csv"
+    rows = [{f: "" for f in ANGI_CSV_FIELDS} | {"name": "Acme A", "phone": "555-1111"}]
+
+    bsm._write_angi_checkpoint(path, rows)
+
+    with path.open(newline="", encoding="utf-8") as f:
+        written = list(csv.DictReader(f))
+    assert len(written) == 1
+    assert written[0]["name"] == "Acme A"
+
+
+def test_write_angi_checkpoint_skips_when_no_rows(tmp_path):
+    path = tmp_path / "plumbing--chicago-il.csv"
+    bsm._write_angi_checkpoint(path, [])
+    assert not path.exists()  # nothing scraped -- no empty file to be mistaken for a real checkpoint
+
+
+# --- BBB + Angi concurrency -------------------------------------------------
+
+def test_scrape_one_metro_bbb_and_angi_skips_angi_entirely_when_disabled(monkeypatch):
+    monkeypatch.setattr(bsm, "scrape_one_metro", lambda *a, **k: [{"name": "BBB biz"}])
+
+    def _angi_should_never_run(*a, **k):
+        raise AssertionError("Angi must not be scraped at all when angi_enabled=False")
+
+    monkeypatch.setattr(bsm, "_scrape_metro_angi", _angi_should_never_run)
+
+    records, angi_rows = bsm.scrape_one_metro_bbb_and_angi(
+        Category(id="plumbers", name="Plumbers"), _metro(),
+        radius_miles=10, min_population=0, max_pages_per_place=1,
+        fetch_details=False, stats=RunStats(), partial_checkpoint_path=None,
+        angi_enabled=False, angi_category_slug=None, angi_category_label=None,
+        angi_max_businesses=None,
+    )
+
+    assert records == [{"name": "BBB biz"}]
+    assert angi_rows == []
+
+
+def test_scrape_one_metro_bbb_and_angi_runs_them_concurrently_not_sequentially(monkeypatch):
+    """The actual point of this whole refactor: BBB and Angi must not wait
+    on each other. Each fake sleeps briefly and stamps its own start time;
+    if they ran sequentially, Angi's start would land *after* BBB's sleep
+    finished (start gap >= SLEEP_S). Run concurrently, both start together
+    (gap ~0) and the whole call takes ~SLEEP_S, not ~2*SLEEP_S."""
+    SLEEP_S = 0.2
+    starts: dict[str, float] = {}
+
+    def _fake_bbb(*a, **k):
+        starts["bbb"] = time.monotonic()
+        time.sleep(SLEEP_S)
+        return [{"name": "BBB biz"}]
+
+    def _fake_angi(*a, **k):
+        starts["angi"] = time.monotonic()
+        time.sleep(SLEEP_S)
+        return [{"name": "Angi biz"}]
+
+    monkeypatch.setattr(bsm, "scrape_one_metro", _fake_bbb)
+    monkeypatch.setattr(bsm, "_scrape_metro_angi", _fake_angi)
+
+    began = time.monotonic()
+    records, angi_rows = bsm.scrape_one_metro_bbb_and_angi(
+        Category(id="plumbers", name="Plumbers"), _metro(),
+        radius_miles=10, min_population=0, max_pages_per_place=1,
+        fetch_details=False, stats=RunStats(), partial_checkpoint_path=None,
+        angi_enabled=True, angi_category_slug="plumbing", angi_category_label="Plumbers",
+        angi_max_businesses=50,
+    )
+    elapsed = time.monotonic() - began
+
+    assert records == [{"name": "BBB biz"}]
+    assert angi_rows == [{"name": "Angi biz"}]
+    assert abs(starts["bbb"] - starts["angi"]) < SLEEP_S / 2  # started together
+    assert elapsed < SLEEP_S * 1.5  # ~SLEEP_S total, not ~2*SLEEP_S (which a sequential call would take)
+
+
+def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypatch):
+    """A real BBB error must still surface to the caller exactly as it did
+    before this concurrency change -- main()'s own try/except is what marks
+    the metro failed and moves on; scrape_one_metro_bbb_and_angi itself
+    must not swallow it."""
+    def _fake_bbb(*a, **k):
+        raise RuntimeError("simulated real BBB failure")
+
+    monkeypatch.setattr(bsm, "scrape_one_metro", _fake_bbb)
+    monkeypatch.setattr(bsm, "_scrape_metro_angi", lambda *a, **k: [])
+
+    try:
+        bsm.scrape_one_metro_bbb_and_angi(
+            Category(id="plumbers", name="Plumbers"), _metro(),
+            radius_miles=10, min_population=0, max_pages_per_place=1,
+            fetch_details=False, stats=RunStats(), partial_checkpoint_path=None,
+            angi_enabled=True, angi_category_slug="plumbing", angi_category_label="Plumbers",
+            angi_max_businesses=50,
+        )
+        raised = False
+    except RuntimeError:
+        raised = True
+    assert raised

@@ -19,10 +19,21 @@ launched as a background process (the Streamlit page does this for you;
 from a plain terminal, background it yourself).
 
 Per metro:
-  1. extract_search_metro_coverage (same as a single metro sweep) -> BBB
-     records, transformed + deduped (+ optionally --details).
+  1. BBB and Angi scrape *concurrently* (2026-09-15 -- previously Angi only
+     existed as a separate script, scripts/run_batch_with_angi.py, now
+     retired in favor of this being the one real entry point):
+       - extract_search_metro_coverage (same as a single metro sweep) ->
+         BBB records, transformed + deduped (+ optionally --details).
+       - unless --no-angi: scrape_category over the resolved Angi category
+         for this metro's (state, city) -- see _scrape_metro_angi.
+     These two hit completely unrelated sites (bbb.org vs angi.com) and
+     neither reads anything the other produces, so there is no reason to
+     make one wait on the other -- they run on their own threads via
+     ThreadPoolExecutor and this step is done once BOTH finish. Each is
+     best-effort with respect to the other: an Angi failure never touches
+     the BBB result for this metro or vice versa (see _scrape_metro_angi).
   2. unless --no-check-websites: bbb_scraper.webcheck checks every unique
-     website URL on those records for dead/404/parked (see
+     website URL on the BBB records for dead/404/parked (see
      _check_metro_websites) -- unproxied on purpose (a normal one-off
      visit to each business's own site, nothing to evade, and it's a
      different host per business so there's no single site to go easy
@@ -32,24 +43,42 @@ Per metro:
      calls), matched to the BBB records. Best-effort -- if the key is
      missing, the daily quota is nearly spent, or a call fails, Yelp is
      dropped for the rest of the batch and metros just come out BBB-only.
-  4. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
-     BBB|Yelp master table (bbb_* / yelp_* columns + derived-intelligence
-     columns, website_dead/website_status included; yelp_* blank when
-     there was no match). This file's existence is the resume marker: a
-     metro already checkpointed for this industry is skipped on a re-run
-     (--force to redo).
-  5. append the BBB records (not the wide table) into the shared
+     **Steps 2 and 3 stay sequential, deliberately, not a second thread
+     pool**: build_master_table (used by step 3) reorders rows (matched
+     pairs first, then bbb_only) rather than preserving input order, so
+     merging a concurrently-computed webcheck pass back into it would need
+     a merge-by-key step, not a simple zip -- real complexity for close to
+     no benefit, since Yelp's ~5 calls take seconds while webcheck (already
+     internally parallel, ThreadPoolExecutor, see bbb_scraper/webcheck) is
+     the slow side of that pair regardless of ordering. Website-check runs
+     first specifically because build_master_table's BBB_FIELDS pulls
+     website_dead/website_status/website_checked_at onto the master row --
+     they have to already be on `records` before step 3 builds it.
+  4. unless --no-angi (and the Angi scrape above produced anything): merge
+     Angi into the wide table by exact phone match (bbb_scraper/angi/
+     enrich.py) -- also recomputes every derived-intelligence column so
+     reputation_score/lead_priority_score reflect the Angi match
+     immediately.
+  5. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
+     BBB|Yelp(|Angi) master table (bbb_* / yelp_* / angi_* columns +
+     derived-intelligence columns; yelp_*/angi_* blank when there was no
+     match). This file's existence is the resume marker: a metro already
+     checkpointed for this industry is skipped on a re-run (--force to
+     redo). The raw Angi scrape also gets its own checkpoint, same as the
+     standalone script used to write: data/processed/angi/<angi-category-
+     slug>--<metro-id>.csv.
+  6. append the BBB records (not the wide table) into the shared
      data/processed/businesses.csv sink, same as every other run.
-  6. unless --no-publish: publish that metro to site/data/ locally (BBB
-     fields + the matched yelp_name/rating/review_count/url + our derived
-     intelligence columns, website status included -- raw Yelp beyond
-     those four stays out).
-  7. unless --no-deploy: immediately push site/ live for this metro (S3
+  7. unless --no-publish: publish that metro to site/data/ locally (BBB
+     fields + the matched yelp_name/rating/review_count/url + Angi's
+     rating/specialties/etc. + our derived intelligence columns -- raw
+     Yelp/Angi beyond those stays out).
+  8. unless --no-deploy: immediately push site/ live for this metro (S3
      sync + CloudFront invalidation, see scripts/deploy_site.py) -- right
      away, not batched up for the end, so a metro is live within seconds
      of finishing rather than sitting local-only for however long the
      rest of the batch takes.
-  Steps 4-7 are wrapped: a failure anywhere in there is logged and this
+  Steps 5-8 are wrapped: a failure anywhere in there is logged and this
   metro is skipped, the rest of the batch keeps going rather than the
   whole run dying (this used to be able to kill hours of already-
   finished, already-correct work over a bug in a print statement -- see
@@ -57,14 +86,18 @@ Per metro:
   never undoes the fact that the scrape + checkpoint + local publish for
   that metro already succeeded.
 
-In --details mode, step 1's per-business detail loop can itself run well
-over an hour for a big metro (confirmed: 65-78 minutes, real 2026-09-11
-runs) -- a *hard* kill in there (closed terminal, sleeping laptop, killed
-process) previously lost the entire metro with zero trace, since nothing
-reached disk until the loop finished. It now writes a recoverable partial
-snapshot to data/processed/batch/_partial/ every 25 businesses (see
-_write_partial_checkpoint) -- insurance against a total loss, not resume
-logic (a re-run still re-scrapes the metro from scratch today).
+In --details mode, step 1's BBB per-business detail loop can itself run
+well over an hour for a big metro (confirmed: 65-78 minutes, real
+2026-09-11 runs) -- a *hard* kill in there (closed terminal, sleeping
+laptop, killed process) previously lost the entire metro with zero trace,
+since nothing reached disk until the loop finished. It now writes a
+recoverable partial snapshot to data/processed/batch/_partial/ every 25
+businesses (see _write_partial_checkpoint) -- insurance against a total
+loss, not resume logic (a re-run still re-scrapes the metro from scratch
+today). Angi's own scrape has no equivalent partial-checkpoint yet -- a
+hard kill mid-Angi loses that metro's Angi progress same as before this
+concurrency change; worth adding the same treatment if Angi runs grow as
+long as BBB's --details runs regularly do.
 
 After the whole batch: rebuilds data/processed/<industry-slug>_all_metros.csv
 -- every metro run for this industry so far, concatenated, as one file.
@@ -82,6 +115,7 @@ import csv
 import json
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -91,6 +125,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))  # for publish_site_dat
 import deploy_site
 from publish_site_data import publish_master_rows, slugify
 
+from bbb_scraper.angi.enrich import enrich_with_angi
+from bbb_scraper.angi.scraper import ANGI_CSV_FIELDS, business_detail_to_row, scrape_category
+from bbb_scraper.config import settings
 from bbb_scraper.etl.dedupe import dedupe_records
 from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail, transform_summary
@@ -99,6 +136,7 @@ from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
+from bbb_scraper.reference.categories import CategoryDirectory
 from bbb_scraper.reference.metros import MetroDirectory
 from bbb_scraper.reference.models import Category, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
@@ -110,6 +148,7 @@ configure_logging()
 logger = get_logger(__name__)
 
 BATCH_DIR = REPO_ROOT / "data" / "processed" / "batch"
+ANGI_DIR = REPO_ROOT / "data" / "processed" / "angi"
 
 
 def _write_progress(path: Path | None, state: dict) -> None:
@@ -219,6 +258,135 @@ def scrape_one_metro(
     return dedupe_by_phone(dedupe_records(detail_records + summary_records, stats=stats))
 
 
+def _resolve_angi_category(name: str) -> tuple[str, str] | None:
+    """Industry display name -> (slug, canonical Angi display name), or None
+    on no/ambiguous match. Best-effort/non-interactive on purpose (unlike
+    the old scripts/run_batch_with_angi.py, which sys.exit'd on a bad
+    match) -- this runs inside a long unattended batch, so an unresolvable
+    Angi category should disable Angi for the run the same way a missing
+    Yelp key disables Yelp, never kill the batch. See data/reference/
+    README.md -- Angi slugs aren't a guessable slugification of the label.
+    """
+    directory = CategoryDirectory.load(settings.angi_categories_file)
+    match = directory.resolve_one(name)
+    return (match.slug, match.name) if match else None
+
+
+def _angi_state_city(metro_id: str) -> tuple[str, str]:
+    """"phoenix-az" -> ("az", "phoenix"); "san-antonio-tx" -> ("tx", "san-antonio").
+    A metro id's last hyphen-separated segment is always the 2-letter state
+    (this project's own data/reference/metros.json convention) -- Angi's
+    own city slug is usually the same spelling, but isn't guaranteed to be
+    (confirm on a real 404 before assuming; see bbb_scraper/angi/scraper.py's
+    docstring)."""
+    city, _, state = metro_id.rpartition("-")
+    return state, city
+
+
+def _scrape_metro_angi(
+    metro: Metro, category_slug: str, category_label: str, *,
+    max_businesses: int | None, use_proxy: bool = False,
+) -> list[dict]:
+    """Best-effort Angi scrape for one metro, run on its own thread
+    concurrently with scrape_one_metro (see main()) -- Angi reads nothing
+    BBB produces, so there's no reason to wait on it or vice versa. Same
+    never-fatal contract as _check_metro_websites/Yelp: any failure here
+    (including one partway through, after some businesses were already
+    gathered) is logged and this metro just comes out with no/partial Angi
+    data, never a crashed batch and never taking scrape_one_metro's own
+    result down with it -- the two futures in main() are awaited
+    independently.
+
+    `use_proxy` defaults to False here (unlike scrape_category's own
+    default of True) -- confirmed live 2026-09-15, re-running this exact
+    integration for the first time: AngiClient's default proxy rotation
+    hit the documented Decodo sticky-session 407 (see bbb_scraper/scraping/
+    proxies.py's 2026-09-14 note) on the very first real run through this
+    new code path. The earlier, now-retired scripts/run_batch_with_angi.py
+    already knew this and always passed --no-use-proxy; this integration
+    had briefly regressed that until this was caught by an actual live
+    smoke test, not just the mocked unit tests. --angi-use-proxy is still
+    there to opt back in once/if Decodo's sticky-session capacity issue is
+    confirmed resolved.
+    """
+    rows: list[dict] = []
+    try:
+        state, city = _angi_state_city(metro.id)
+        for detail in scrape_category(
+            state, city, category_slug,
+            category_label=category_label, metro_label=metro.name,
+            max_businesses=max_businesses, use_proxy=use_proxy,
+        ):
+            if detail.name is not None:
+                rows.append(business_detail_to_row(detail))
+    except Exception:
+        logger.exception("Angi scrape failed partway for %s -- keeping %d business(es) already gathered",
+                          metro.name, len(rows))
+        print(f"    Angi scrape FAILED partway (see log) -- keeping {len(rows)} already gathered")
+        return rows
+    print(f"    Angi: {len(rows)} businesses ({category_label}, {metro.name})")
+    return rows
+
+
+def _write_angi_checkpoint(path: Path, rows: list[dict]) -> None:
+    """Raw Angi scrape output for one metro, same file shape/location
+    scripts/scrape_angi_category.py always wrote (data/processed/angi/) --
+    kept even though the batch also folds these rows into the wide master
+    table, so the raw Angi data is independently inspectable/reusable
+    (e.g. re-running just enrich_with_angi later) without re-scraping."""
+    if not rows:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ANGI_CSV_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def scrape_one_metro_bbb_and_angi(
+    category: Category, metro: Metro, *,
+    radius_miles: float, min_population: int, max_pages_per_place: int,
+    fetch_details: bool, stats: RunStats, partial_checkpoint_path: Path | None,
+    angi_enabled: bool, angi_category_slug: str | None, angi_category_label: str | None,
+    angi_max_businesses: int | None, angi_use_proxy: bool = False,
+) -> tuple[list[dict], list[dict]]:
+    """BBB and Angi for one metro, concurrently when angi_enabled -- see the
+    module docstring's step 1 for why (unrelated sites, neither reads the
+    other's output). Split out from main() specifically so the concurrency
+    itself is directly testable without also standing up main()'s full
+    CLI-parsing/state-tracking machinery.
+
+    Returns (bbb_records, angi_rows) -- angi_rows is [] when angi_enabled is
+    False. A genuine BBB failure still raises out of here exactly as it did
+    pre-concurrency (the caller's try/except is unchanged); _scrape_metro_angi
+    never raises on its own (see its docstring), so angi_future.result()
+    realistically never does either -- but if it somehow did, that would
+    also raise here rather than being silently swallowed, on the theory that
+    a truly unexpected bug deserves the same visible "metro failed" handling
+    the BBB side already gets, not a silent partial result.
+    """
+    if not angi_enabled:
+        records = scrape_one_metro(
+            category, metro, radius_miles=radius_miles, min_population=min_population,
+            max_pages_per_place=max_pages_per_place, fetch_details=fetch_details,
+            stats=stats, partial_checkpoint_path=partial_checkpoint_path,
+        )
+        return records, []
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        bbb_future = pool.submit(
+            scrape_one_metro, category, metro,
+            radius_miles=radius_miles, min_population=min_population,
+            max_pages_per_place=max_pages_per_place, fetch_details=fetch_details,
+            stats=stats, partial_checkpoint_path=partial_checkpoint_path,
+        )
+        angi_future = pool.submit(
+            _scrape_metro_angi, metro, angi_category_slug, angi_category_label,
+            max_businesses=angi_max_businesses, use_proxy=angi_use_proxy,
+        )
+        return bbb_future.result(), angi_future.result()
+
+
 def _check_metro_websites(records: list[dict]) -> list[dict]:
     """Best-effort website-liveness check for one metro's BBB records (see
     bbb_scraper.webcheck) -- unproxied (a normal one-off visit to each
@@ -287,6 +455,33 @@ def main() -> int:
         "for that metro, never fatal.",
     )
     parser.add_argument(
+        "--angi", action=argparse.BooleanOptionalAction, default=True,
+        help="Scrape Angi for the same industry+metro, concurrently with BBB (default: on) -- "
+        "matched into the wide table by exact phone number (bbb_scraper/angi/enrich.py). "
+        "Best-effort like Yelp: no matching Angi category / a scrape failure just means "
+        "no Angi columns for this batch, never fatal.",
+    )
+    parser.add_argument(
+        "--angi-category-name", default=None,
+        help="Angi category display name, if different from --industry (default: same as "
+        "--industry -- this already matches for anything picked from Streamlit's dropdown, "
+        "which is seeded from Angi's own category list). See data/reference/angi_categories.json.",
+    )
+    parser.add_argument(
+        "--angi-max-businesses", type=int, default=150,
+        help="Cap Angi businesses fetched per metro (default: 150) -- some categories run into "
+        "the thousands for one city; this bounds the concurrent Angi side to roughly the same "
+        "order of magnitude of time as the BBB side, not an unbounded sweep.",
+    )
+    parser.add_argument(
+        "--angi-use-proxy", action=argparse.BooleanOptionalAction, default=False,
+        help="Route the Angi scrape through PROXY_* with rotating sessions (default: off). "
+        "Confirmed live 2026-09-15: the rotating-session proxy path hits Decodo's documented "
+        "sticky-session 407 (see bbb_scraper/scraping/proxies.py) -- direct is what's actually "
+        "worked in every real production Angi batch run so far. Opt back in if that's confirmed "
+        "resolved on Decodo's side.",
+    )
+    parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
         help="Publish each metro's BBB fields to site/ as soon as it's done (default: on)",
     )
@@ -328,6 +523,26 @@ def main() -> int:
     industry_slug = slugify(args.industry)
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Resolved once for the whole batch, same shape as Yelp's open_yelp_
+    # enrichment below: a missing/ambiguous match just disables Angi for
+    # every metro (best-effort), never kills the batch. Every metro in one
+    # batch run shares one industry, so there's exactly one category to
+    # resolve, not one per metro.
+    angi_enabled = args.angi
+    angi_category_slug = angi_category_label = None
+    angi_reason_off = None
+    if angi_enabled:
+        resolved = _resolve_angi_category(args.angi_category_name or args.industry)
+        if resolved is None:
+            angi_enabled = False
+            angi_reason_off = (
+                f"no confident Angi category match for "
+                f"{args.angi_category_name or args.industry!r} -- see "
+                f"data/reference/angi_categories.json, or pass --angi-category-name"
+            )
+        else:
+            angi_category_slug, angi_category_label = resolved
+
     progress_path = Path(args.progress_file) if args.progress_file else None
     # One entry per metro, pre-built so a UI polling this file always sees
     # every metro (including ones not yet started) rather than a list that
@@ -336,8 +551,8 @@ def main() -> int:
         {
             "id": metro.id, "name": metro.name,
             "status": "skipped" if (BATCH_DIR / f"{industry_slug}--{metro.id}.csv").exists() and not args.force else "pending",
-            "businesses": None, "yelp_matched": None, "top_lead_score": None,
-            "websites_dead": None,
+            "businesses": None, "yelp_matched": None, "angi_businesses": None, "angi_matched": None,
+            "top_lead_score": None, "websites_dead": None,
             "elapsed_s": None, "error": None,
         }
         for metro in metros
@@ -349,10 +564,11 @@ def main() -> int:
 
     yelp_state = open_yelp_enrichment(args.yelp)
     yelp_note = "on" if yelp_state.enabled else f"off ({yelp_state.reason_off})"
+    angi_note = f"on ({angi_category_label})" if angi_enabled else f"off ({angi_reason_off or 'disabled'})"
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
-          f"yelp={yelp_note}, check_websites={args.check_websites}, "
+          f"yelp={yelp_note}, angi={angi_note}, check_websites={args.check_websites}, "
           f"publish={args.publish}, deploy={args.deploy}")
     _write_progress(progress_path, _snapshot())
 
@@ -383,12 +599,14 @@ def main() -> int:
         _write_progress(progress_path, _snapshot())
         stats = RunStats()
         try:
-            records = scrape_one_metro(
+            records, angi_rows = scrape_one_metro_bbb_and_angi(
                 category, metro,
                 radius_miles=args.radius, min_population=args.min_population,
                 max_pages_per_place=args.pages_per_place, fetch_details=args.details,
-                stats=stats,
-                partial_checkpoint_path=partial_path if args.details else None,
+                stats=stats, partial_checkpoint_path=partial_path if args.details else None,
+                angi_enabled=angi_enabled, angi_category_slug=angi_category_slug,
+                angi_category_label=angi_category_label, angi_max_businesses=args.angi_max_businesses,
+                angi_use_proxy=args.angi_use_proxy,
             )
         except Exception:
             logger.exception("Metro %r failed -- skipping to the next one", metro.name)
@@ -412,6 +630,16 @@ def main() -> int:
         # summary line are skipped on failure.
         try:
             master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
+
+            angi_matched = None
+            if angi_enabled:
+                if angi_rows:
+                    _write_angi_checkpoint(ANGI_DIR / f"{angi_category_slug}--{metro.id}.csv", angi_rows)
+                    master_rows = enrich_with_angi(master_rows, angi_rows)
+                    angi_matched = sum(1 for r in master_rows if r.get("on_angi"))
+                else:
+                    angi_matched = 0
+
             CSVSink(checkpoint_path).load(master_rows)
             # The real checkpoint just landed -- any partial snapshot from
             # this metro's detail loop is superseded, remove it so it can't
@@ -428,11 +656,14 @@ def main() -> int:
             matched = sum(r.get("match_status") == "matched" for r in master_rows)
             print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
                   f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''}"
+                  f"{f', {len(angi_rows)} Angi ({angi_matched} matched by phone)' if angi_enabled else ''}"
                   f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
             metro_states[i - 1].update({
                 "status": "done", "businesses": len(records),
                 "yelp_matched": matched if yelp_state.enabled else None,
+                "angi_businesses": len(angi_rows) if angi_enabled else None,
+                "angi_matched": angi_matched,
                 "websites_dead": websites_dead,
                 "elapsed_s": round(elapsed),
             })
@@ -486,6 +717,8 @@ def main() -> int:
     print(f"\nBatch complete: {done} metro(s) run, {skipped} skipped (already done).")
     if yelp_state.reason_off and args.yelp:
         print(f"Note: Yelp enrichment stopped partway -- {yelp_state.reason_off}")
+    if angi_reason_off:
+        print(f"Note: Angi enrichment was off for this whole batch -- {angi_reason_off}")
     print(f"Compiled file: {all_metros_path}")
     _write_progress(progress_path, _snapshot(finished=True))
     return 0

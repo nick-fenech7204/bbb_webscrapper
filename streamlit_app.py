@@ -93,6 +93,15 @@ the recommended settings). Two changes:
      exposed as choices here. The only remaining checkbox is "redo metros
      already run" -- a real per-run decision (whether to overwrite
      existing checkpoints), not a "which settings are best" question.
+
+**Angi wired into this same button, 2026-09-15** (previously only reachable
+via a separate standalone script, scripts/run_batch_with_angi.py, now
+retired). Same treatment as Yelp/webcheck: always on, best-effort, no new
+checkbox -- the industry field already doubles as the Angi category picker
+(it's seeded from Angi's own category list), so no new form field either.
+Runs concurrently with BBB inside batch_scrape_metros.py, not after it --
+see that script's module docstring for exactly which steps run in parallel
+and which stay sequential (and why).
 """
 from __future__ import annotations
 
@@ -235,10 +244,10 @@ def _read_run_state() -> dict | None:
 
 st.title("BBB Batch Scraper")
 st.caption(
-    "Run one industry across many metros in one sitting. Each metro is BBB-swept, "
-    "matched against a Yelp Fusion search, and checkpointed to "
-    "`data/processed/batch/` as it finishes -- a long batch is never all-or-nothing, "
-    "and re-running with an overlapping metro list skips whatever's already done."
+    "Run one industry across many metros in one sitting. Each metro is BBB-swept and "
+    "Angi-scraped concurrently, matched against a Yelp Fusion search and Angi by phone, "
+    "and checkpointed to `data/processed/batch/` as it finishes -- a long batch is never "
+    "all-or-nothing, and re-running with an overlapping metro list skips whatever's already done."
 )
 
 metro_directory = MetroDirectory.load()
@@ -282,14 +291,16 @@ def _render_progress(progress: dict) -> None:
 
     biz_total = sum(m.get("businesses") or 0 for m in metros if m["status"] == "done")
     yelp_total = sum(m.get("yelp_matched") or 0 for m in metros if m["status"] == "done")
+    angi_total = sum(m.get("angi_matched") or 0 for m in metros if m["status"] == "done")
     dead_total = sum(m.get("websites_dead") or 0 for m in metros if m["status"] == "done")
     failed_total = sum(1 for m in metros if m["status"] == "failed")
-    c1, c2, c3, c4, c5 = st.columns(5)
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
     c1.metric("Metros", f"{settled}/{total}")
     c2.metric("Businesses scraped", f"{biz_total:,}")
     c3.metric("Matched to Yelp", f"{yelp_total:,}")
-    c4.metric("Dead websites", f"{dead_total:,}")
-    c5.metric("Failed", failed_total)
+    c4.metric("Matched to Angi", f"{angi_total:,}")
+    c5.metric("Dead websites", f"{dead_total:,}")
+    c6.metric("Failed", failed_total)
 
     for m in metros:
         status = m["status"]
@@ -310,11 +321,13 @@ def _render_progress(progress: dict) -> None:
             # object (no `with`) never triggers __exit__, so "running"
             # actually stays running.
             box = st.status(f"{m['name']} — scraping...", state="running")
-            box.write("Sweeping BBB, matching Yelp, fetching contact details...")
+            box.write("BBB and Angi scraping concurrently, then matching Yelp, fetching contact details...")
         elif status == "done":
             bits = [f"{m['businesses']} businesses"]
             if m.get("yelp_matched") is not None:
                 bits.append(f"{m['yelp_matched']} matched to Yelp")
+            if m.get("angi_businesses") is not None:
+                bits.append(f"{m['angi_businesses']} Angi ({m.get('angi_matched') or 0} matched)")
             if m.get("websites_dead") is not None:
                 bits.append(f"{m['websites_dead']} dead websites")
             if m.get("top_lead_score"):
@@ -366,7 +379,8 @@ with st.form("batch_form"):
         f"Every run: {ENFORCED_RADIUS_MILES:g}mi radius, "
         f"{ENFORCED_MIN_POPULATION:,}+ population, full contact details, "
         f"up to {ENFORCED_PAGES_PER_PLACE} pages/place (BBB's own max), "
-        "Yelp enrichment, dead-website check, and live deploy as each metro "
+        "Yelp enrichment, Angi enrichment (concurrent with BBB, matched by phone), "
+        "dead-website check, and live deploy as each metro "
         "finishes -- no longer per-run choices, see the Configuration section below."
     )
 
@@ -396,7 +410,7 @@ if submitted and not _is_running():
         "--industry", industry_text.strip(),
         "--radius", str(ENFORCED_RADIUS_MILES), "--min-population", str(ENFORCED_MIN_POPULATION),
         "--pages-per-place", str(ENFORCED_PAGES_PER_PLACE),
-        "--details", "--yelp", "--check-websites", "--deploy",
+        "--details", "--yelp", "--angi", "--check-websites", "--deploy",
         "--progress-file", str(progress_path),
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]
@@ -429,8 +443,8 @@ with st.expander("Configuration"):
         f"**Search settings (fixed, not per-run):** {ENFORCED_RADIUS_MILES:g}mi radius, "
         f"{ENFORCED_MIN_POPULATION:,}+ minimum city population, full BBB contact details "
         f"always fetched, up to {ENFORCED_PAGES_PER_PLACE} pages per place (BBB's own cap, "
-        "not a choice below it), Yelp enrichment, dead-website check, and live deploy all "
-        "always on -- see the module docstring's 2026-09-14 entry."
+        "not a choice below it), Yelp enrichment, Angi enrichment, dead-website check, and "
+        "live deploy all always on -- see the module docstring's 2026-09-14/2026-09-15 entries."
     )
     st.write(f"**Proxy:** {'enabled' if settings.proxy_enabled else 'disabled'}"
              + (f" ({settings.proxy_host})" if settings.proxy_enabled else ""))
@@ -438,6 +452,12 @@ with st.expander("Configuration"):
     st.write(f"**BBB session file:** "
              f"{'found' if settings.bbb_session_file.exists() else 'not found (optional)'}")
     st.write(f"**Yelp API key:** {'set' if settings.yelp_api_key else 'not set (Yelp enrichment will be skipped)'}")
+    st.write(
+        "**Angi:** runs concurrently with BBB, matched by phone -- the industry field above "
+        "doubles as the Angi category (an exact match from the dropdown always resolves; "
+        "free text resolves only if it happens to match an Angi category name, otherwise "
+        "Angi enrichment is skipped for that run, same as a missing Yelp key)."
+    )
     st.write(f"**Output sinks:** {', '.join(settings.output_sink_names)}")
 
 st.divider()

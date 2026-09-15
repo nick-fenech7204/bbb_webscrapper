@@ -30,54 +30,12 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from bbb_scraper.angi.models import BusinessDetail
-from bbb_scraper.angi.scraper import scrape_category
+from bbb_scraper.angi.scraper import ANGI_CSV_FIELDS, business_detail_to_row, scrape_category
 from bbb_scraper.config import settings
 from bbb_scraper.logging_setup import configure_logging, get_logger
 from bbb_scraper.reference.categories import CategoryDirectory
 
 logger = get_logger(__name__)
-
-_CSV_FIELDS = [
-    "name", "phone", "website", "address", "street", "city", "state", "zip_code",
-    "overall_rating", "review_count",
-    "rating_5_star_pct", "rating_4_star_pct", "rating_3_star_pct", "rating_2_star_pct", "rating_1_star_pct",
-    "is_paid_pro", "is_corporate_account", "is_super_service_award_winner",
-    "bonded", "insured", "licenses",
-    "categories", "num_categories", "about_us", "highlights",
-    "searched_category", "searched_metro", "profile_url",
-]
-
-
-def _round_or_none(value: float | None, digits: int) -> float | None:
-    return round(value, digits) if value is not None else None
-
-
-def _row(d: BusinessDetail) -> dict:
-    breakdown_by_star = {b.star: b.percentage for b in d.rating_breakdown}
-    return {
-        "name": d.name, "phone": d.phone, "website": d.website,
-        "address": d.address, "street": d.street, "city": d.city,
-        "state": d.state, "zip_code": d.zip_code,
-        # Angi's own overallRating is a raw float division (e.g.
-        # 4.933734939759036) -- real precision, not a display value, so
-        # round it for a CSV a person actually reads.
-        "overall_rating": _round_or_none(d.overall_rating, 2),
-        "review_count": d.review_count,
-        "rating_5_star_pct": _round_or_none(breakdown_by_star.get(5), 1),
-        "rating_4_star_pct": _round_or_none(breakdown_by_star.get(4), 1),
-        "rating_3_star_pct": _round_or_none(breakdown_by_star.get(3), 1),
-        "rating_2_star_pct": _round_or_none(breakdown_by_star.get(2), 1),
-        "rating_1_star_pct": _round_or_none(breakdown_by_star.get(1), 1),
-        "is_paid_pro": d.is_paid_pro, "is_corporate_account": d.is_corporate_account,
-        "is_super_service_award_winner": d.is_super_service_award_winner,
-        "bonded": d.bonded, "insured": d.insured,
-        "licenses": "; ".join(d.licenses),
-        "categories": "; ".join(d.categories), "num_categories": len(d.categories),
-        "about_us": d.about_us, "highlights": "; ".join(d.highlights),
-        "searched_category": d.searched_category, "searched_metro": d.searched_metro,
-        "profile_url": d.profile_url,
-    }
 
 
 def main() -> int:
@@ -135,7 +93,7 @@ def main() -> int:
             print(f"  {done}" + (f"/{total}" if total else "") + " businesses fetched")
 
     with args.output.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=_CSV_FIELDS)
+        writer = csv.DictWriter(f, fieldnames=ANGI_CSV_FIELDS)
         writer.writeheader()
         for detail in scrape_category(
             args.state, args.city, category_slug,
@@ -149,7 +107,7 @@ def main() -> int:
                 # error, not the "tried, didn't get it" it actually is.
                 skipped_empty += 1
                 continue
-            writer.writerow(_row(detail))
+            writer.writerow(business_detail_to_row(detail))
             f.flush()  # a long run is worth being able to tail/interrupt safely, same reasoning as
             count += 1  # the batch scraper's periodic checkpoints -- see streamlit_app.py's module docstring
 

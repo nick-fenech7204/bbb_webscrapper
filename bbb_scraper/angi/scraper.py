@@ -27,6 +27,62 @@ logger = get_logger(__name__)
 
 OnProgress = Callable[[str, int, int | None], None]  # (stage, done, total)
 
+# Column order for a flattened BusinessDetail -- shared by
+# scripts/scrape_angi_category.py's CSV writer and
+# scripts/batch_scrape_metros.py's own Angi checkpoint, so the two never
+# drift apart (see business_detail_to_row's docstring).
+ANGI_CSV_FIELDS = [
+    "name", "phone", "website", "address", "street", "city", "state", "zip_code",
+    "overall_rating", "review_count",
+    "rating_5_star_pct", "rating_4_star_pct", "rating_3_star_pct", "rating_2_star_pct", "rating_1_star_pct",
+    "is_paid_pro", "is_corporate_account", "is_super_service_award_winner",
+    "bonded", "insured", "licenses",
+    "categories", "num_categories", "about_us", "highlights",
+    "searched_category", "searched_metro", "profile_url",
+]
+
+
+def _round_or_none(value: float | None, digits: int) -> float | None:
+    return round(value, digits) if value is not None else None
+
+
+def business_detail_to_row(d: BusinessDetail) -> dict:
+    """Flatten one BusinessDetail to a plain dict matching ANGI_CSV_FIELDS --
+    list fields "; "-joined (see bbb_scraper.match.merge's ANGI_FIELDS
+    docstring for why "; " and not ",": several category/license names
+    already contain a literal comma of their own). The single source of
+    truth for this shape -- both scripts/scrape_angi_category.py's CSV
+    writer and scripts/batch_scrape_metros.py's in-batch Angi scrape use
+    this, so there's only one place to update if BusinessDetail ever grows
+    a field (previously this logic was duplicated, exactly the "two call
+    sites, one gets updated" bug class this project has been bitten by
+    before -- see bbb-scraper-status memory, the has_intel incident).
+    """
+    breakdown_by_star = {b.star: b.percentage for b in d.rating_breakdown}
+    return {
+        "name": d.name, "phone": d.phone, "website": d.website,
+        "address": d.address, "street": d.street, "city": d.city,
+        "state": d.state, "zip_code": d.zip_code,
+        # Angi's own overallRating is a raw float division (e.g.
+        # 4.933734939759036) -- real precision, not a display value, so
+        # round it for a CSV a person actually reads.
+        "overall_rating": _round_or_none(d.overall_rating, 2),
+        "review_count": d.review_count,
+        "rating_5_star_pct": _round_or_none(breakdown_by_star.get(5), 1),
+        "rating_4_star_pct": _round_or_none(breakdown_by_star.get(4), 1),
+        "rating_3_star_pct": _round_or_none(breakdown_by_star.get(3), 1),
+        "rating_2_star_pct": _round_or_none(breakdown_by_star.get(2), 1),
+        "rating_1_star_pct": _round_or_none(breakdown_by_star.get(1), 1),
+        "is_paid_pro": d.is_paid_pro, "is_corporate_account": d.is_corporate_account,
+        "is_super_service_award_winner": d.is_super_service_award_winner,
+        "bonded": d.bonded, "insured": d.insured,
+        "licenses": "; ".join(d.licenses),
+        "categories": "; ".join(d.categories), "num_categories": len(d.categories),
+        "about_us": d.about_us, "highlights": "; ".join(d.highlights),
+        "searched_category": d.searched_category, "searched_metro": d.searched_metro,
+        "profile_url": d.profile_url,
+    }
+
 
 def _listing_url(state: str, city: str, category_slug: str, page: int) -> str:
     base = f"/companylist/us/{state}/{city}/{category_slug}.htm"
