@@ -177,6 +177,55 @@ def test_lead_priority_peaks_in_the_salvageable_middle():
     assert sweet > dumpster
 
 
+# --- BBB complaints as a base lead_priority_score signal (2026-09-15) ------
+# Real-data audit finding: 31.3% of every business scraped so far has an
+# NR (Not Rated) BBB grade and no Yelp/Angi match -- and lead_priority_score
+# returned None for every single one of them, even though 96.9% of those
+# rows DO have a real, independently-tracked bbb_complaints_total sitting
+# right there (it just wasn't wired in as a real base signal, only a
+# conditional bonus on top of an already-nonzero score). See
+# _bbb_complaints_signal's own docstring for the full finding.
+
+def test_nr_graded_business_with_complaint_history_gets_a_real_score_not_none():
+    """The actual bug being fixed: before this, an NR-graded, Yelp/Angi-
+    unmatched row with a real complaint history still scored None -- exactly
+    as unscoreable as one with zero data at all, which is wrong."""
+    out = MatchOutcome(bbb_only=[{
+        "name": "Never Rated Plumbing", "rating": "NR", "phone": "3055550100",
+        "reviews_complaints": '{"complaints_total": 4}',
+    }])
+    row = build_master_table(out)[0]
+    assert row["lead_priority_score"] is not None
+
+
+def test_still_none_when_truly_no_signal_at_all():
+    """The safety property this fix must not break: a row with NR grade,
+    no complaints data, and no Yelp/Angi match still correctly has nothing
+    to say -- None, not a fabricated score."""
+    out = MatchOutcome(bbb_only=[{"name": "Total Mystery Co", "rating": "NR"}])
+    row = build_master_table(out)[0]
+    assert row["lead_priority_score"] is None
+
+
+def test_bbb_complaints_signal_peaks_for_a_moderate_real_count():
+    """Same "salvageable middle" shape as every other signal -- a handful of
+    real complaints outscores both zero (nothing to fix) and a heavy volume
+    (likely beyond a reputation nudge), all else being equal (no grade, no
+    Yelp/Angi, so this signal is the only thing driving the score)."""
+    def score(complaints_total):
+        out = MatchOutcome(bbb_only=[{
+            "name": "X", "rating": "NR", "phone": "3055550100",
+            "reviews_complaints": f'{{"complaints_total": {complaints_total}}}',
+        }])
+        return build_master_table(out)[0]["lead_priority_score"]
+
+    zero = score(0)
+    moderate = score(5)
+    heavy = score(50)
+    assert moderate > zero
+    assert moderate > heavy
+
+
 def test_website_dead_flag_reads_the_webcheck_column():
     """website_dead_flag surfaces whatever bbb_scraper.webcheck already
     decided (see its own tests for the actual liveness logic) -- this only
@@ -211,6 +260,22 @@ def test_website_dead_flag_off_when_site_is_fine():
 # These inject angi_* fields directly and call recompute_intel, the same way
 # enrich_with_angi does internally -- see tests/angi/test_enrich.py for the
 # phone-matching step itself.
+
+def test_angi_corporate_account_reads_the_flag_and_defaults_off():
+    """Angi's own explicit franchise/corporate-account flag, wired into
+    ANGI_FIELDS 2026-09-15 (bbb_scraper/curate.py's chain/large-firm
+    filtering reads this column) -- checked against real data first: 23/874
+    real Angi-matched businesses across every batch scraped so far carry
+    this flag, and every sampled name is a recognizable national brand
+    (Groundworks, Erie Home, American Standard, Power Home Remodeling)."""
+    out = MatchOutcome(bbb_only=[{"name": "Independent Co", "rating": "B"}])
+    row = build_master_table(out)[0]
+    assert row["angi_corporate_account"] == 0  # nothing angi_* set yet, defaults off
+
+    row["angi_is_corporate_account"] = "True"
+    row = recompute_intel(row)
+    assert row["angi_corporate_account"] == 1
+
 
 def test_on_angi_reflects_whether_an_angi_phone_is_present():
     out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])

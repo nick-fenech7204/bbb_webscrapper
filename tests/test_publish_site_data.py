@@ -107,6 +107,13 @@ def test_publish_master_rows_refreshes_stale_intel_columns(tmp_path, monkeypatch
     stale_row = {
         "match_status": "bbb_only", "bbb_name": "Goode Plumbing", "bbb_rating": "NR",
         "bbb_phone": "(773) 930-3451", "bbb_scraped_at": "2026-09-11T00:00:00+00:00",
+        # a real complaint history (2026-09-15's complaints-based signal,
+        # see merge.py's _bbb_complaints_signal) so this NR-graded row has
+        # a genuine, non-null score and survives publish-time curation
+        # (bbb_scraper/curate.py) -- an all-null-signal row is exactly what
+        # curation is *supposed* to drop, which would be a false failure
+        # here, not a real one; this fixture should look like a real row.
+        "bbb_reviews_complaints": '{"complaints_total": 3}',
         # this dataset predates has_phone/contact_readiness entirely, and
         # carries an intentionally-wrong lead_priority_score to prove it
         # gets overwritten rather than trusted as-is

@@ -57,7 +57,7 @@ YELP_FIELDS = [
 ANGI_FIELDS = [
     "name", "phone", "website", "address", "city", "state", "zip_code",
     "overall_rating", "review_count", "categories", "num_categories",
-    "about_us", "is_super_service_award_winner", "bonded", "insured",
+    "about_us", "is_super_service_award_winner", "is_corporate_account", "bonded", "insured",
     "profile_url",
 ]
 
@@ -164,6 +164,18 @@ def _angi_rating(r):
 
 def _on_angi(r):
     return int(_has_value(r.get("angi_phone")))
+
+
+def _angi_corporate_account(r):
+    """Angi's own explicit franchise/corporate-account flag -- a direct
+    "this isn't an independent local operator" signal, not a proxy. Added
+    2026-09-15 alongside the curation pass (see bbb_scraper/curate.py):
+    checked against real data first -- 23/874 real Angi-matched businesses
+    across every batch so far carry this flag, and every sampled name
+    (Groundworks, Erie Home, American Standard, Power Home Remodeling, ...)
+    is a recognizable national home-services brand, not a false positive.
+    0/blank when unmatched to Angi, same as every other angi_* signal."""
+    return int(_truthy(r.get("angi_is_corporate_account")))
 
 
 def _rating_gap(r):
@@ -344,6 +356,43 @@ def _website_dead_flag(r):
     return int(_truthy(r.get("bbb_website_dead")))
 
 
+def _bbb_complaints_signal(r):
+    """How much BBB's complaint count alone points to a good lead -- same
+    "salvageable middle" shape as every other signal here (peaks for a
+    real, fixable amount of visible friction; dampens for zero and for a
+    heavy volume), but usable even when BBB never assigned a letter grade
+    at all.
+
+    Added 2026-09-15 after a real-data audit across every batch scraped so
+    far: BBB rates a business "NR" (Not Rated, no usable letter grade) for
+    31.9% of every real business scraped -- and for businesses with an NR
+    grade AND no Yelp/Angi match (31.3% of the whole dataset, ~4,158 real
+    rows), _lead_priority_score returned None outright, every time, with
+    zero exceptions -- not a low score, no score at all, silently dropped
+    from every list sorted or filtered by lead priority. The data to do
+    better was sitting right there unused: bbb_complaints_total is a real,
+    independently-tracked BBB field that doesn't require a letter grade or
+    a minimum review count -- present for 96.9% of exactly the rows that
+    had no other usable signal (4,027 of 4,158). It was already feeding
+    _reputation_score (which is why that field's own null rate is a much
+    healthier 1.0%, not 31%) and an existing +8 bonus here -- but a bonus
+    only ever adjusts an already-nonzero score, so it never rescued a row
+    that had nothing else to start from. This makes it a real base signal
+    instead, averaged in alongside whichever of grade/Yelp/Angi are
+    present, and available entirely on its own when none of them are.
+    """
+    bcomp = _bbb_complaints_total(r)
+    if bcomp is None:
+        return None
+    if bcomp == 0:
+        return 30  # no visible complaint history -- not itself a strong pull either way
+    if bcomp <= 10:
+        return 68  # a handful of real, fixable complaints at a business BBB still tracks
+    if bcomp <= 25:
+        return 50
+    return 25  # heavy complaint volume -- likely beyond what a reputation nudge fixes
+
+
 def _lead_priority_score(r):
     """How good a sales lead this business is *for a firm that sells review
     / reputation-management services*. Not raw reputation weakness -- it
@@ -351,7 +400,9 @@ def _lead_priority_score(r):
     mature enough to pay. Both extremes (already fine / beyond help) score
     lower. Reachability (phone / named contact) then scales the result --
     the best-fit lead in the world is dead weight this week if there's no
-    number to call. 0-130. Available for any BBB record.
+    number to call. 0-130. Available for any BBB record with *any* usable
+    signal -- including BBB complaint history alone now, see
+    _bbb_complaints_signal's docstring for why that matters.
 
     v1, hand-tuned -- revisit after the metrics conversation.
     """
@@ -386,6 +437,10 @@ def _lead_priority_score(r):
     bavg = _bbb_review_avg(r)
     if bavg is not None:
         signals.append(72 if bavg < 3.5 else 15)
+
+    bcomp_signal = _bbb_complaints_signal(r)
+    if bcomp_signal is not None:
+        signals.append(bcomp_signal)
 
     if not signals:
         return None
@@ -425,6 +480,7 @@ _INTEL: dict[str, Callable[[dict[str, Any]], Any]] = {
     "present_yelp": _present_yelp,
     "present_both": lambda r: int(r["match_status"] == "matched"),
     "on_angi": _on_angi,
+    "angi_corporate_account": _angi_corporate_account,
     "bbb_grade_num": _bbb_grade_num,
     "bbb_review_avg": _bbb_review_avg,
     "bbb_reviews_total": _bbb_reviews_total,

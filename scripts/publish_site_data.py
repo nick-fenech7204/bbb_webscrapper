@@ -40,6 +40,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from bbb_scraper.curate import curate_for_publish
 from bbb_scraper.match.matcher import MatchOutcome
 from bbb_scraper.match.merge import build_master_table, recompute_intel
 
@@ -220,7 +221,23 @@ def load_manifest() -> dict:
     return {"generated_at": None, "datasets": []}
 
 
-def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
+def _curate_and_select(master_rows: list[dict]) -> tuple[list[dict], dict[str, int]]:
+    """One shared choke point for every publish_* entry point below --
+    curate_for_publish (bbb_scraper/curate.py: drops detected chains/
+    corporate accounts and leads scoring under LOW_SCORE_CUTOFF) runs on
+    the full master row (bbb_/yelp_/angi_-prefixed, every intel column)
+    BEFORE select_public_fields_from_master narrows it down to the site's
+    public shape -- curation needs bbb_name/angi_corporate_account/
+    lead_priority_score exactly as build_master_table produces them, not
+    the renamed/subset public fields. Only ever applied at publish time;
+    the underlying checkpoint CSV a caller read from stays untouched."""
+    kept, removed = curate_for_publish(master_rows)
+    return [select_public_fields_from_master(r) for r in kept], removed
+
+
+def _write_dataset(
+    records: list[dict], industry: str, metro: str, *, curated_out: dict[str, int] | None = None
+) -> dict:
     dataset_id = f"{slugify(industry)}--{slugify(metro)}"
     filename = f"{dataset_id}.json"
 
@@ -248,6 +265,13 @@ def _write_dataset(records: list[dict], industry: str, metro: str) -> dict:
         "yelp_matched": sum(1 for r in records if r.get("on_yelp")),
         "top_lead_score": round(max((_lead(r) for r in records), default=0.0), 1),
         "file": filename,
+        # Curation transparency (2026-09-15, see bbb_scraper/curate.py) --
+        # every dataset publish reports exactly how many rows were dropped
+        # and why, rather than the reduction being invisible. Always
+        # present (zeros when nothing was curated out, e.g. an old dataset
+        # republished before this existed) so a UI/caller never needs a
+        # None-check.
+        "curated_out": curated_out or {"chain_name": 0, "corporate_account": 0, "low_score": 0},
     }
     manifest["datasets"].append(entry)
     manifest["datasets"].sort(key=lambda d: (d["metro"], d["industry"]))
@@ -261,13 +285,15 @@ def publish_dataset(csv_path: Path, industry: str, metro: str) -> dict:
     with csv_path.open(newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     master = _bbb_only_master(rows)
-    return _write_dataset([select_public_fields_from_master(r) for r in master], industry, metro)
+    public_rows, removed = _curate_and_select(master)
+    return _write_dataset(public_rows, industry, metro, curated_out=removed)
 
 
 def publish_records(records: list[dict], industry: str, metro: str) -> dict:
     """Publish in-memory BBB records (e.g. straight out of a scrape)."""
     master = _bbb_only_master(records)
-    return _write_dataset([select_public_fields_from_master(r) for r in master], industry, metro)
+    public_rows, removed = _curate_and_select(master)
+    return _write_dataset(public_rows, industry, metro, curated_out=removed)
 
 
 def publish_master_rows(rows: list[dict], industry: str, metro: str) -> dict:
@@ -282,9 +308,8 @@ def publish_master_rows(rows: list[dict], industry: str, metro: str) -> dict:
     """
     bbb_primary = [r for r in rows if str(r.get("match_status") or "") != "yelp_only"]
     bbb_primary = [recompute_intel(r) for r in bbb_primary]
-    return _write_dataset(
-        [select_public_fields_from_master(r) for r in bbb_primary], industry, metro
-    )
+    public_rows, removed = _curate_and_select(bbb_primary)
+    return _write_dataset(public_rows, industry, metro, curated_out=removed)
 
 
 def publish_master_csv(csv_path: Path, industry: str, metro: str) -> dict:
