@@ -58,6 +58,15 @@ ANGI_FIELDS = [
     "name", "phone", "website", "address", "city", "state", "zip_code",
     "overall_rating", "review_count", "categories", "num_categories",
     "about_us", "is_super_service_award_winner", "is_corporate_account", "bonded", "insured",
+    # Real written reviews (2026-09-15, see bbb_scraper/angi/scraper.py's
+    # business_detail_to_row) -- a JSON-string column (up to ~25 reviews,
+    # newest first), the same shape the planned local-sentiment pass (BBB's
+    # own scripts/fetch_bbb_reviews.py already produces) will read. Carried
+    # into the checkpoint/master table for that purpose -- deliberately
+    # NOT added to publish_site_data.py's _ANGI_SITE_FIELDS, that's a
+    # separate decision (a raw review dump isn't public-site-ready) from
+    # just getting the data flowing.
+    "reviews", "num_reviews_captured",
     "profile_url",
 ]
 

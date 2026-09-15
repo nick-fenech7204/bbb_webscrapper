@@ -22,6 +22,25 @@ class RatingBreakdown:
 
 
 @dataclass
+class Review:
+    """One written review off a business's own profile page -- comes free
+    with the same detail-page fetch that gets name/phone/categories/etc.
+    (embedded directly in the page's own flight data, up to whatever page
+    size Angi renders server-side, ~25 -- see parsing.py's docstring for
+    why pagination beyond that first page isn't chased: no confirmed link
+    pattern for it, and reviews already arrive newest-first, which is
+    exactly what matters most for a recency-weighted read anyway)."""
+
+    text: str | None = None
+    rating: int | None = None
+    reviewer_name: str | None = None
+    date_label: str | None = None  # Angi's own granularity: "April 2026", not an exact day
+    is_verified: bool | None = None
+    job_label: str | None = None  # what the review is actually about, e.g. "Roof Repair"
+    business_response_text: str | None = None
+
+
+@dataclass
 class BusinessDetail:
     """Everything pulled off one business's own Angi profile page. Fields
     are None/empty when a business simply hasn't filled that part of its
@@ -41,6 +60,7 @@ class BusinessDetail:
     overall_rating: float | None = None
     review_count: int | None = None
     rating_breakdown: list[RatingBreakdown] = field(default_factory=list)
+    reviews: list[Review] = field(default_factory=list)
 
     categories: list[str] = field(default_factory=list)  # services offered
     about_us: str | None = None

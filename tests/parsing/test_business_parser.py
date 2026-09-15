@@ -1,6 +1,6 @@
 import pytest
 
-from bbb_scraper.parsing.business_parser import parse_business_page
+from bbb_scraper.parsing.business_parser import parse_business_page, parse_business_reviews_page
 
 PROFILE_URL = (
     "https://www.bbb.org/us/fl/the-villages/profile/financial-services/"
@@ -211,3 +211,66 @@ def test_parse_business_page_raises_when_business_profile_missing():
     html = '<script>window.__PRELOADED_STATE__ = {"user": {}, "page": {}};</script>'
     with pytest.raises(ValueError):
         parse_business_page(html)
+
+
+# --- customer-reviews sub-page (2026-09-15, real review TEXT for the planned
+# local-sentiment pass -- see the module's own parse_business_reviews_page
+# docstring for why this is a genuinely separate fetch from the profile page) --
+
+def test_parse_business_reviews_page_against_real_fixture(load_fixture):
+    """Real captured page (a large franchise, DaBella -- picked specifically
+    because it had enough real reviews to be worth checking against)."""
+    html = load_fixture("business_reviews_page_sample.html")
+
+    page = parse_business_reviews_page(html)
+
+    assert len(page.reviews) == 10  # this fixture's own page_size
+    assert page.page == 1
+    assert page.page_size == 10
+    assert page.total_pages == 1000
+    assert page.num_found == 10000
+
+
+def test_parse_business_reviews_page_review_fields(load_fixture):
+    html = load_fixture("business_reviews_page_sample.html")
+    page = parse_business_reviews_page(html)
+
+    first = page.reviews[0]
+    assert first.reviewer_name == "Carol H"
+    assert first.rating == 5
+    assert first.date == "2026-09-10"  # ISO, built from BBB's own {day,month,year}
+    assert "wonderful" in first.text
+    assert first.business_response_text is None  # none of this real page's reviews had one
+
+
+def test_parse_business_reviews_page_reviews_are_newest_first(load_fixture):
+    """BBB's own default sort is "reviewDate desc, id desc" -- this
+    fixture's 10 reviews all happen to share one calendar day (date alone
+    doesn't prove ordering here), so check review_id order too, which BBB's
+    own tie-break confirms should also be descending."""
+    html = load_fixture("business_reviews_page_sample.html")
+    page = parse_business_reviews_page(html)
+    dates = [r.date for r in page.reviews if r.date]
+    assert dates == sorted(dates, reverse=True)
+    ids = [int(r.review_id.rsplit("_", 1)[-1]) for r in page.reviews]
+    assert ids == sorted(ids, reverse=True)
+
+
+def test_parse_business_reviews_page_missing_state_returns_empty_not_a_crash():
+    """Lower stakes than the profile page (best-effort, see
+    Extractor.extract_business_reviews) -- an empty result, not an
+    exception, so a caller paginating many pages can just stop cleanly."""
+    page = parse_business_reviews_page("<html><body>no preloaded state</body></html>")
+    assert page.reviews == []
+    assert page.total_pages is None
+
+
+def test_parse_business_reviews_page_zero_reviews_is_not_a_parse_failure():
+    html = (
+        '<script>window.__PRELOADED_STATE__ = {"businessProfile": '
+        '{"customerReviews": {"items": [], "page": 1, "pageSize": 10, '
+        '"totalPages": 0, "numFound": 0}}};</script>'
+    )
+    page = parse_business_reviews_page(html)
+    assert page.reviews == []
+    assert page.num_found == 0

@@ -17,10 +17,11 @@ real `dict`, not a pile of regexes that each have to be individually right.
 """
 from __future__ import annotations
 
+import html
 import json
 import re
 
-from bbb_scraper.angi.models import BusinessDetail, ListingPage, RatingBreakdown
+from bbb_scraper.angi.models import BusinessDetail, ListingPage, RatingBreakdown, Review
 
 # --- shared low-level JSON-object extraction --------------------------------
 
@@ -134,6 +135,19 @@ def _clean_str(v) -> str | None:
     return v
 
 
+def _clean_review_text(v) -> str | None:
+    """Same as _clean_str, plus HTML-entity decoding -- confirmed by
+    testing, not assumed: real review text comes through with literal
+    entities (`&#39;` for an apostrophe seen in a real captured review),
+    presumably whatever encoding step rendered the page's HTML doesn't get
+    reversed for free the way the rest of this parsing (real JSON values,
+    no markup) doesn't need it. Only applied to free-text review bodies --
+    every other field here is a controlled value (a name, a category, a
+    rating) with no realistic entity content."""
+    v = _clean_str(v)
+    return html.unescape(v) if v is not None else None
+
+
 def _split_address(raw: str) -> tuple[str | None, str | None, str | None, str | None]:
     """"22099 N Bertha Ln, Barrington, IL 60010" -> its 4 parts. Falls back
     to a street-less "City, ST 00000" form, then gives up (all None) rather
@@ -236,5 +250,30 @@ def parse_business_detail(blob: str, profile_url: str) -> BusinessDetail:
             detail.overall_rating = _clean_str(rating_block.get("averageRating"))
         if detail.review_count is None:
             detail.review_count = _clean_str(rating_block.get("reviewCount"))
+
+    # Real written reviews (2026-09-15) -- confirmed present in the exact
+    # same page already fetched for everything above, not a separate
+    # request: real captured fixtures (tests/fixtures/angi_business_detail_
+    # sample.txt) show up to `pageSize` (~25) reviews embedded directly,
+    # newest first (real dateLabel values descend month over month in the
+    # sample). Pagination beyond that first page isn't chased here -- the
+    # component's own `pageLinkQuery` came back "$undefined" on every real
+    # page seen so far, so there's no confirmed link pattern to a page 2,
+    # and newest-first already serves a recency-weighted read directly.
+    reviews_block = _component_props(blob, '"isShowVerifiedReview":true,"isShowRatings":true,"reviews":[')
+    if reviews_block:
+        detail.reviews = [
+            Review(
+                text=_clean_review_text(r.get("text")),
+                rating=_clean_str(r.get("rating")),
+                reviewer_name=_clean_str(r.get("reviewerName")),
+                date_label=_clean_str(r.get("dateLabel")),
+                is_verified=_clean_str(r.get("isVerified")),
+                job_label=_clean_str(r.get("jobLabel")),
+                business_response_text=_clean_review_text(r.get("responseText")),
+            )
+            for r in (reviews_block.get("reviews") or [])
+            if isinstance(r, dict)
+        ]
 
     return detail

@@ -5,7 +5,9 @@ docstring). No test existed for this before it was a real library function
 sitting only inline in the CLI script."""
 from __future__ import annotations
 
-from bbb_scraper.angi.models import BusinessDetail, RatingBreakdown
+import json
+
+from bbb_scraper.angi.models import BusinessDetail, RatingBreakdown, Review
 from bbb_scraper.angi.scraper import ANGI_CSV_FIELDS, business_detail_to_row
 
 
@@ -67,3 +69,36 @@ def test_none_rating_stays_none_not_rounded_to_a_number():
     row = business_detail_to_row(_detail(overall_rating=None, rating_breakdown=[]))
     assert row["overall_rating"] is None
     assert row["rating_5_star_pct"] is None
+
+
+# --- reviews (2026-09-15, real text captured for the planned local-sentiment pass) --
+
+def test_reviews_serialize_to_a_real_json_string_cell():
+    reviews = [
+        Review(text="Great work!", rating=5, reviewer_name="Carl S.", date_label="April 2026", is_verified=True),
+        Review(text="Not thrilled, took too long.", rating=2, reviewer_name="Katie J.", date_label="March 2026"),
+    ]
+    row = business_detail_to_row(_detail(reviews=reviews))
+    parsed = json.loads(row["reviews"])  # must round-trip -- a downstream sentiment pass reads this directly
+    assert len(parsed) == 2
+    assert parsed[0]["text"] == "Great work!"
+    assert parsed[0]["rating"] == 5
+    assert parsed[0]["date_label"] == "April 2026"
+    assert row["num_reviews_captured"] == 2
+
+
+def test_no_reviews_serializes_to_an_empty_json_array_not_blank():
+    row = business_detail_to_row(_detail())  # no reviews override -- default_factory=list
+    assert row["reviews"] == "[]"  # always parseable, never "" or None
+    assert json.loads(row["reviews"]) == []
+    assert row["num_reviews_captured"] == 0
+
+
+def test_review_text_with_embedded_delimiters_survives_the_json_round_trip():
+    """The whole reason this is JSON and not "; "-joined like the plain
+    list fields above -- a review's own text can contain a semicolon, a
+    comma, even a quote, and none of that should corrupt the record."""
+    tricky_text = 'Said "call back Tuesday"; never did, and the price - $1,200 - was a surprise.'
+    row = business_detail_to_row(_detail(reviews=[Review(text=tricky_text, rating=1)]))
+    parsed = json.loads(row["reviews"])
+    assert parsed[0]["text"] == tricky_text

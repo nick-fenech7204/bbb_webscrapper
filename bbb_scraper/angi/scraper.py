@@ -11,8 +11,10 @@ prove the pipeline or produce a genuinely useful dataset.
 """
 from __future__ import annotations
 
+import json
 import math
 from collections.abc import Callable, Iterator
+from dataclasses import asdict
 
 from bbb_scraper.angi.client import AngiClient
 from bbb_scraper.angi.flight_data import reassemble
@@ -38,6 +40,7 @@ ANGI_CSV_FIELDS = [
     "is_paid_pro", "is_corporate_account", "is_super_service_award_winner",
     "bonded", "insured", "licenses",
     "categories", "num_categories", "about_us", "highlights",
+    "reviews", "num_reviews_captured",
     "searched_category", "searched_metro", "profile_url",
 ]
 
@@ -79,6 +82,16 @@ def business_detail_to_row(d: BusinessDetail) -> dict:
         "licenses": "; ".join(d.licenses),
         "categories": "; ".join(d.categories), "num_categories": len(d.categories),
         "about_us": d.about_us, "highlights": "; ".join(d.highlights),
+        # A JSON string, not "; "-joined like the plain-text list fields
+        # above -- a review is a small record (text/rating/date/reviewer),
+        # not one string, so it needs real structure preserved for whatever
+        # reads this next (the planned local sentiment pass). One review's
+        # own text could itself contain "; " or a comma, which is exactly
+        # why those fields need real JSON escaping instead of another
+        # delimiter-joined string. Empty list -> "[]", never "" (so a
+        # consumer can always json.loads() this column unconditionally).
+        "reviews": json.dumps([asdict(r) for r in d.reviews], ensure_ascii=False),
+        "num_reviews_captured": len(d.reviews),
         "searched_category": d.searched_category, "searched_metro": d.searched_metro,
         "profile_url": d.profile_url,
     }

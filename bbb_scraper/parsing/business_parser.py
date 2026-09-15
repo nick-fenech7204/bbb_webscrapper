@@ -26,12 +26,13 @@ raw_extra so nothing is silently dropped.
 """
 from __future__ import annotations
 
+import html
 import re
 from typing import Any
 
 from bbb_scraper.logging_setup import get_logger
 from bbb_scraper.parsing.json_extract import extract_window_assignment
-from bbb_scraper.parsing.models import BusinessDetail
+from bbb_scraper.parsing.models import BBBReview, BBBReviewsPage, BusinessDetail
 from bbb_scraper.utils.stats import PAGES_PARSED, PARSE_FAILURES, RECORDS_EXTRACTED, RunStats
 
 logger = get_logger(__name__)
@@ -315,4 +316,95 @@ def _map_business_state(state: dict[str, Any], *, profile_url: str | None) -> Bu
         organization_description=org.get("organizationDescription"),
         entity_type=(org.get("typeOfEntity") or {}).get("name"),
         raw_extra=raw_extra,
+    )
+
+
+# --- customer-reviews sub-page (2026-09-15) ----------------------------------
+# A genuinely separate fetch from parse_business_page above -- the profile
+# page never embeds individual review text, only the aggregate counts
+# (reviews_complaints) and a link to /customer-reviews. That sub-page uses
+# the exact same window.__PRELOADED_STATE__ mechanism, just a different
+# businessProfile shape (customerReviews instead of the profile fields).
+
+
+def _clean_review_text(v: Any) -> str | None:
+    """HTML-entity-decode + strip. BBB's __PRELOADED_STATE__ is real parsed
+    JSON (no React-server-components "$undefined" sentinel the way Angi's
+    flight data has), but real review text still comes through with literal
+    HTML entities -- worth decoding for the same reason as Angi's own
+    review text (a sentiment model should read a real apostrophe, not
+    `&#39;`)."""
+    if not isinstance(v, str):
+        return v
+    v = html.unescape(v).strip()
+    return v or None
+
+
+def _review_date(d: Any) -> str | None:
+    """BBB's own {"day": "10", "month": "09", "year": "2026"} -> ISO
+    "2026-09-10". None for anything else (missing, partial, or a shape
+    that's never actually been observed) rather than guessing."""
+    if not isinstance(d, dict):
+        return None
+    try:
+        day, month, year = int(d["day"]), int(d["month"]), int(d["year"])
+        return f"{year:04d}-{month:02d}-{day:02d}"
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _map_review(item: dict[str, Any]) -> BBBReview:
+    response_date = item.get("businessResponseDate")
+    # Unconfirmed shape (see BBBReview.business_response_date's docstring)
+    # -- handle it the same way as `date` if it ever does turn out to be a
+    # dict, otherwise pass through whatever's there rather than discard it.
+    response_date = _review_date(response_date) if isinstance(response_date, dict) else response_date
+    return BBBReview(
+        review_id=item.get("id"),
+        reviewer_name=item.get("displayName"),
+        rating=item.get("reviewStarRating"),
+        text=_clean_review_text(item.get("text")),
+        date=_review_date(item.get("date")),
+        business_response_text=_clean_review_text(item.get("businessResponseText")),
+        business_response_date=response_date,
+    )
+
+
+def parse_business_reviews_page(html_text: str, *, stats: RunStats | None = None) -> BBBReviewsPage:
+    """One `/customer-reviews?page=N` page -> its reviews + pagination
+    metadata. Returns an empty BBBReviewsPage (not an exception) when the
+    state can't be found -- unlike parse_business_page's profile fetch,
+    a missing/changed reviews page is a lower-stakes, best-effort fetch
+    (see bbb_scraper.etl.extract.Extractor.extract_business_reviews), so a
+    caller paginating across many pages shouldn't have one bad page raise
+    and lose everything already collected.
+    """
+    stats = stats or RunStats()
+    state = extract_window_assignment(html_text, PRELOADED_STATE_VAR)
+    if state is None:
+        stats.incr(PARSE_FAILURES)
+        return BBBReviewsPage()
+
+    bp = state.get("businessProfile")
+    if not isinstance(bp, dict):
+        stats.incr(PARSE_FAILURES)
+        return BBBReviewsPage()
+
+    cr = bp.get("customerReviews")
+    if not isinstance(cr, dict):
+        # A business can genuinely have zero reviews -- an empty page, not
+        # a parse failure (doesn't count against PARSE_FAILURES).
+        return BBBReviewsPage()
+
+    items = cr.get("items") or []
+    reviews = [_map_review(item) for item in items if isinstance(item, dict)]
+
+    stats.incr(PAGES_PARSED)
+    stats.incr(RECORDS_EXTRACTED, len(reviews))
+    return BBBReviewsPage(
+        reviews=reviews,
+        page=cr.get("page"),
+        page_size=cr.get("pageSize"),
+        total_pages=cr.get("totalPages"),
+        num_found=cr.get("numFound"),
     )

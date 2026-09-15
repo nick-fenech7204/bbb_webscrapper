@@ -9,13 +9,14 @@ module involved either. This is where the two meet.
 """
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 
 from bbb_scraper.config import Settings
 from bbb_scraper.config import settings as default_settings
 from bbb_scraper.logging_setup import get_logger
-from bbb_scraper.parsing.business_parser import parse_business_page
-from bbb_scraper.parsing.models import BusinessDetail, BusinessSummary
+from bbb_scraper.parsing.business_parser import parse_business_page, parse_business_reviews_page
+from bbb_scraper.parsing.models import BBBReview, BusinessDetail, BusinessSummary
 from bbb_scraper.parsing.search_parser import parse_response_center, parse_search_results
 from bbb_scraper.reference.cities import CityDirectory
 from bbb_scraper.reference.geo import generate_coverage_points
@@ -27,6 +28,19 @@ from bbb_scraper.scraping.search import BBBSearchClient
 from bbb_scraper.utils.stats import RunStats
 
 logger = get_logger(__name__)
+
+
+_ADDRESS_ID_SUFFIX_RE = re.compile(r"/addressId/\d+/?$")
+
+
+def _strip_address_id(profile_url: str) -> str:
+    """"https://.../company-1126-1000031171/addressId/140070" ->
+    "https://.../company-1126-1000031171" -- see
+    Extractor.extract_business_reviews's own docstring for why this is
+    required (reviews are a company-level list, confirmed 404ing on the
+    address-suffixed URL for a real business). A no-op on a URL that
+    doesn't have the suffix at all (most single-location businesses)."""
+    return _ADDRESS_ID_SUFFIX_RE.sub("", profile_url)
 
 
 class Extractor:
@@ -335,6 +349,73 @@ class Extractor:
     def extract_business(self, profile_url: str, *, referer: str | None = None) -> BusinessDetail:
         result = self.business_client.fetch(profile_url, referer=referer)
         return parse_business_page(result.html, profile_url=profile_url, stats=self.stats)
+
+    def extract_business_reviews(
+        self, profile_url: str, *, max_reviews: int | None = 50, referer: str | None = None,
+    ) -> list[BBBReview]:
+        """Paginate a business's own `/customer-reviews?page=N` sub-page --
+        a genuinely separate fetch from extract_business above (confirmed
+        2026-09-15: the profile page never embeds review text, only a link
+        to this sub-page). Reviews come back newest-first (BBB's own
+        default sort), so a low `max_reviews` still gets the most currently
+        relevant ones for a recency-weighted read, not an arbitrary subset.
+
+        `max_reviews=50` by default, not unbounded -- a real captured page
+        (DaBella, a large national franchise) reported numFound=10000 /
+        totalPages=1000; fetching everything for an outlier like that would
+        be hundreds of real requests for one business, squarely against
+        this project's own ethical-scraping-boundary practice (minimum
+        real traffic that answers the question). Pass None for no cap if a
+        specific business genuinely needs its full history.
+
+        **Real bug, caught by an actual live smoke test against real
+        checkpoint URLs, not assumed to just work:** a `/addressId/N`-
+        suffixed profile_url (the majority case for a real BBB record --
+        see BusinessDetail.bbb_id's docstring elsewhere in this project)
+        404s if `/customer-reviews` is appended straight onto the end of
+        it. Confirmed by fetching the plain profile page for one of the
+        3/3 real businesses that 404d and reading its own real
+        `customer-reviews` link off the page: reviews live at the
+        addressId-stripped URL (`.../company-name-1126-1000031171/
+        customer-reviews`, not `.../addressId/140070/customer-reviews`) --
+        reviews are a company-level list, not tied to one physical branch
+        address. `_strip_address_id` below does that stripping before
+        every request here.
+
+        Best-effort per page, matching extract_search's own "stop cleanly,
+        don't raise" pagination style: a page that fails to fetch or parse
+        stops the loop and returns whatever was already collected, rather
+        than losing everything gathered so far over one bad page deep into
+        a long history.
+        """
+        referer = referer or profile_url
+        base_url = _strip_address_id(profile_url)
+        all_reviews: list[BBBReview] = []
+        page = 1
+        total_pages: int | None = None
+
+        while True:
+            if max_reviews is not None and len(all_reviews) >= max_reviews:
+                break
+            if total_pages is not None and page > total_pages:
+                break
+
+            url = f"{base_url}/customer-reviews?page={page}"
+            try:
+                result = self.business_client.fetch(url, referer=referer)
+            except Exception:  # noqa: BLE001 -- one bad page shouldn't lose reviews already gathered
+                logger.warning("Review page fetch failed for %s (page %d) -- stopping with %d review(s) already gathered",
+                                profile_url, page, len(all_reviews))
+                break
+
+            reviews_page = parse_business_reviews_page(result.html, stats=self.stats)
+            if not reviews_page.reviews:
+                break
+            all_reviews.extend(reviews_page.reviews)
+            total_pages = reviews_page.total_pages
+            page += 1
+
+        return all_reviews[:max_reviews] if max_reviews is not None else all_reviews
 
     def close(self) -> None:
         self.http.close()

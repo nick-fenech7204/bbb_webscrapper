@@ -74,6 +74,48 @@ class BusinessSummary(BaseModel):
     raw_extra: dict[str, Any] = Field(default_factory=dict)
 
 
+class BBBReview(BaseModel):
+    """One written review off a business's own `/customer-reviews` sub-page
+    -- a genuinely separate fetch from the profile page itself. Confirmed
+    2026-09-15: the profile page only ever links to this sub-page and
+    carries the aggregate counts (reviews_complaints below); it doesn't
+    embed any individual review anywhere, so getting real review text
+    needs this second request. See business_parser.parse_business_reviews_page.
+    """
+
+    review_id: str | None = None
+    reviewer_name: str | None = None
+    rating: int | None = None
+    text: str | None = None
+    date: str | None = None
+    """ISO "YYYY-MM-DD", built from BBB's own {"day","month","year"} object
+    -- an exact day, not just a month/year label (confirmed against a real
+    page: BBB's own review list is already sorted newest-first by this same
+    date, "reviewDate desc" per the page's own `sort` field)."""
+    business_response_text: str | None = None
+    business_response_date: str | None = None
+    """Unconfirmed shape -- every real review sampled so far (10, one real
+    business) had this null, so whether BBB uses the same {day,month,year}
+    object as `date` or a plain string here has never actually been
+    observed. Parsed defensively (see _map_review): a dict is formatted the
+    same way as `date`, anything else is passed through as a raw string
+    rather than guessed at."""
+
+
+class BBBReviewsPage(BaseModel):
+    """One page of a business's `/customer-reviews?page=N` sub-page --
+    pagination metadata plus that page's reviews. `total_pages`/`num_found`
+    read straight off BBB's own `customerReviews` block (its own `sort` is
+    "reviewDate desc, id desc" by default -- newest reviews come first,
+    confirmed against a real page, not assumed)."""
+
+    reviews: list[BBBReview] = Field(default_factory=list)
+    page: int | None = None
+    page_size: int | None = None
+    total_pages: int | None = None
+    num_found: int | None = None
+
+
 class BusinessDetail(BaseModel):
     """Full record from a BBB individual business-profile page.
 
@@ -143,9 +185,12 @@ class BusinessDetail(BaseModel):
     """[{"platform": "facebook", "url": "https://..."}, ...] from the
     page's social media links. Empty list if none listed."""
     reviews_complaints: dict[str, Any] = Field(default_factory=dict)
-    """Counts only, not the review/complaint text itself (not yet captured
-    anywhere): reviews_total, average_rating, complaints_total,
-    complaints_closed_past_3yr, complaints_closed_past_12mo."""
+    """Aggregate counts only: reviews_total, average_rating,
+    complaints_total, complaints_closed_past_3yr,
+    complaints_closed_past_12mo. Individual review TEXT is a separate
+    fetch entirely -- see BBBReview / business_parser.parse_business_reviews_page
+    (2026-09-15) -- the profile page itself never embeds it, only a link to
+    a `/customer-reviews` sub-page."""
     categories: list[str] = Field(default_factory=list)
     primary_category_name: str | None = None
     primary_category_id: str | None = None

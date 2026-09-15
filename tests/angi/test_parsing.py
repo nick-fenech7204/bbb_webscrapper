@@ -75,6 +75,38 @@ def test_detail_page_ratings_and_reviews():
     assert five_star.count == 156
 
 
+def test_detail_page_written_reviews():
+    """Real review text, embedded in the same page already fetched for
+    everything else -- confirmed 2026-09-15 while investigating review-text
+    availability for a planned local-sentiment pass. Newest first (real
+    dateLabel values descend month over month across the fixture)."""
+    detail = parse_business_detail(_load("angi_business_detail_sample.txt"), _DETAIL_URL)
+    assert len(detail.reviews) == 25  # this fixture's own pageSize
+    first = detail.reviews[0]
+    assert first.text == "Called to let me know he was on his way.  Was very polite."
+    assert first.rating == 5
+    assert first.reviewer_name == "Carl S."
+    assert first.date_label == "April 2026"
+    assert first.is_verified is True
+    assert first.job_label == "Sump Pump or Interior Foundation Drains - Install"
+
+
+def test_detail_page_review_text_decodes_html_entities():
+    """A real captured review's text contains a literal `&#39;` -- must come
+    through as a real apostrophe, not the raw entity, for a sentiment model
+    to read it naturally."""
+    detail = parse_business_detail(_load("angi_business_detail_sample.txt"), _DETAIL_URL)
+    decoded = [r for r in detail.reviews if r.text and "I've retained" in r.text]
+    assert decoded, "expected the real fixture review with an HTML-entity apostrophe to decode cleanly"
+
+
+def test_detail_page_review_business_response_is_captured():
+    detail = parse_business_detail(_load("angi_business_detail_sample.txt"), _DETAIL_URL)
+    with_response = [r for r in detail.reviews if r.business_response_text]
+    assert with_response
+    assert "Thanks for posting" in with_response[0].business_response_text
+
+
 def test_detail_page_categories_and_about_us():
     detail = parse_business_detail(_load("angi_business_detail_sample.txt"), _DETAIL_URL)
     assert len(detail.categories) == 26
@@ -164,3 +196,4 @@ def test_missing_components_leave_fields_none_not_a_crash():
     assert detail.name is None
     assert detail.categories == []
     assert detail.rating_breakdown == []
+    assert detail.reviews == []
