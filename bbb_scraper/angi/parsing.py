@@ -271,6 +271,9 @@ def parse_business_detail(blob: str, profile_url: str) -> BusinessDetail:
                 is_verified=_clean_str(r.get("isVerified")),
                 job_label=_clean_str(r.get("jobLabel")),
                 business_response_text=_clean_review_text(r.get("responseText")),
+                recommends=_clean_str(r.get("recommends")),
+                cost_label=_clean_str(r.get("costLabel")),
+                business_response_name=_clean_str(r.get("proResponseName")),
             )
             for r in (reviews_block.get("reviews") or [])
             if isinstance(r, dict)

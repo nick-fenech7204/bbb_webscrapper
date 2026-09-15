@@ -12,6 +12,17 @@ different scale, kept distinct on purpose.
 
 Confirmed 2026-09-10 against a real businesses/search response (see
 tests/fixtures/yelp_search_car_dealers_jacksonville.json).
+
+**Review text is not reachable on this project's API tier -- confirmed
+2026-09-15, don't retry this without a plan change.** `businesses/{id}/
+reviews` (up to 3 excerpts) 404s for real, valid, review-having businesses
+on the free Fusion key this project has (checked live against Yelp's own
+docs, docs.developer.yelp.com/reference/v3_business_reviews: "To access
+this endpoint, you require either the Enhanced Plan or Premium Plan
+permission" -- a hard paid-tier gate, not a bug here or a transient issue).
+BBB and Angi both give real, unrestricted review text on the current setup
+(see bbb_scraper.parsing.models.BBBReview / bbb_scraper.angi.models.Review)
+-- Yelp stays search/match/aggregate-rating only unless that plan changes.
 """
 from __future__ import annotations
 

@@ -107,6 +107,17 @@ def test_detail_page_review_business_response_is_captured():
     assert "Thanks for posting" in with_response[0].business_response_text
 
 
+def test_detail_page_review_recommends_and_cost_label():
+    """recommends is real, independent signal from the star rating -- a
+    real captured 5-star review in this fixture has recommends=False, so
+    this isn't redundant with `rating` and is worth keeping distinct."""
+    detail = parse_business_detail(_load("angi_business_detail_sample.txt"), _DETAIL_URL)
+    first = detail.reviews[0]
+    assert first.rating == 5
+    assert first.recommends is False
+    assert first.cost_label == "$$40,000"
+
+
 def test_detail_page_categories_and_about_us():
     detail = parse_business_detail(_load("angi_business_detail_sample.txt"), _DETAIL_URL)
     assert len(detail.categories) == 26

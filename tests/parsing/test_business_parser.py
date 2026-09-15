@@ -256,6 +256,34 @@ def test_parse_business_reviews_page_reviews_are_newest_first(load_fixture):
     assert ids == sorted(ids, reverse=True)
 
 
+def test_parse_business_reviews_page_captures_response_and_rebuttal_fields_when_present(load_fixture):
+    """None of these were populated on any of the 10 real reviews sampled
+    for the fixture -- captured anyway (see BBBReview's own docstring: free
+    once the object's already being parsed) via a small synthetic blob
+    matching the real key names, so the extraction logic itself is proven,
+    not just its all-null default."""
+    html = (
+        '<script>window.__PRELOADED_STATE__ = {"businessProfile": {"customerReviews": {"items": ['
+        '{"id": "r1", "displayName": "Jane D", "reviewStarRating": 2, "text": "Not great.", '
+        '"date": {"day": "5", "month": "6", "year": "2026"}, '
+        '"businessResponseText": "We are sorry.", "businessResponseDate": {"day": "6", "month": "6", "year": "2026"}, '
+        '"customerResponseText": "Still not resolved.", "customerResponseDate": {"day": "7", "month": "6", "year": "2026"}, '
+        '"businessRebuttalText": "We dispute this account.", "businessRebuttalDate": {"day": "8", "month": "6", "year": "2026"}, '
+        '"hasExtendedText": true, "extendedText": ["The rest of a longer review."]'
+        '}], "page": 1, "pageSize": 10, "totalPages": 1, "numFound": 1}}};</script>'
+    )
+    page = parse_business_reviews_page(html)
+    r = page.reviews[0]
+    assert r.business_response_text == "We are sorry."
+    assert r.business_response_date == "2026-06-06"
+    assert r.customer_response_text == "Still not resolved."
+    assert r.customer_response_date == "2026-06-07"
+    assert r.business_rebuttal_text == "We dispute this account."
+    assert r.business_rebuttal_date == "2026-06-08"
+    assert r.has_extended_text is True
+    assert r.extended_text == ["The rest of a longer review."]
+
+
 def test_parse_business_reviews_page_missing_state_returns_empty_not_a_crash():
     """Lower stakes than the profile page (best-effort, see
     Extractor.extract_business_reviews) -- an empty result, not an

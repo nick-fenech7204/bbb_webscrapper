@@ -205,10 +205,16 @@ def _map_socials(social_media_list: list[dict[str, Any]] | None) -> list[dict[st
 
 
 def _map_reviews_complaints(summary: dict[str, Any] | None) -> dict[str, Any]:
-    """Counts only -- BBB doesn't expose individual review/complaint text
-    anywhere we've found yet, just these aggregate numbers. Drops the
-    UI-display-control flags (suppressReviews, displayReviewStarRating, ...)
-    that live alongside the actual counts in the raw block.
+    """Counts only -- these are the aggregate numbers off the profile page
+    itself. Individual review TEXT is a separate fetch (see BBBReview /
+    parse_business_reviews_page, 2026-09-15); complaint text specifically
+    is still unconfirmed -- reviews_total and complaints_total are tracked
+    as genuinely separate BBB concepts (see the real 2026-09-15 finding
+    that an NR-graded business can still carry a real complaints_total
+    with zero reviews), and only the reviews side has been investigated so
+    far. Drops the UI-display-control flags (suppressReviews,
+    displayReviewStarRating, ...) that live alongside the actual counts in
+    the raw block.
     """
     summary = summary or {}
     return {
@@ -353,12 +359,14 @@ def _review_date(d: Any) -> str | None:
         return None
 
 
+def _maybe_dict_date(v: Any) -> Any:
+    """Same defensive handling as business_response_date: format it like
+    `date` if it's a {day,month,year} dict, otherwise pass through
+    whatever's actually there (a string, or None) rather than guess."""
+    return _review_date(v) if isinstance(v, dict) else v
+
+
 def _map_review(item: dict[str, Any]) -> BBBReview:
-    response_date = item.get("businessResponseDate")
-    # Unconfirmed shape (see BBBReview.business_response_date's docstring)
-    # -- handle it the same way as `date` if it ever does turn out to be a
-    # dict, otherwise pass through whatever's there rather than discard it.
-    response_date = _review_date(response_date) if isinstance(response_date, dict) else response_date
     return BBBReview(
         review_id=item.get("id"),
         reviewer_name=item.get("displayName"),
@@ -366,7 +374,13 @@ def _map_review(item: dict[str, Any]) -> BBBReview:
         text=_clean_review_text(item.get("text")),
         date=_review_date(item.get("date")),
         business_response_text=_clean_review_text(item.get("businessResponseText")),
-        business_response_date=response_date,
+        business_response_date=_maybe_dict_date(item.get("businessResponseDate")),
+        customer_response_text=_clean_review_text(item.get("customerResponseText")),
+        customer_response_date=_maybe_dict_date(item.get("customerResponseDate")),
+        business_rebuttal_text=_clean_review_text(item.get("businessRebuttalText")),
+        business_rebuttal_date=_maybe_dict_date(item.get("businessRebuttalDate")),
+        has_extended_text=item.get("hasExtendedText"),
+        extended_text=item.get("extendedText") or None,
     )
 
 

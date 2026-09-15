@@ -38,6 +38,12 @@ class Review:
     is_verified: bool | None = None
     job_label: str | None = None  # what the review is actually about, e.g. "Roof Repair"
     business_response_text: str | None = None
+    recommends: bool | None = None
+    """Confirmed real, independent of `rating` -- a real 5-star review in a
+    captured fixture had recommends=false, so this isn't redundant with the
+    star rating and is worth keeping distinct."""
+    cost_label: str | None = None  # e.g. "$$40,000" (Angi's own formatting, kept raw/verbatim)
+    business_response_name: str | None = None  # who at the business replied, e.g. an owner's name
 
 
 @dataclass

@@ -101,6 +101,31 @@ class BBBReview(BaseModel):
     same way as `date`, anything else is passed through as a raw string
     rather than guessed at."""
 
+    # Real fields on the raw review object, captured for completeness even
+    # though every one of them was also null across every real review
+    # sampled so far (10, one real business) -- costs nothing extra since
+    # they're already sitting in the same JSON object as everything above,
+    # and a rebuttal/back-and-forth thread is exactly the kind of thing
+    # worth having if a future fetch ever hits a business where it's
+    # populated. Same "parsed defensively, shape unconfirmed where it
+    # matters" treatment as business_response_date.
+    customer_response_text: str | None = None
+    """A customer's own follow-up after a business response -- distinct
+    from the review's own original `text` and from `business_response_text`."""
+    customer_response_date: str | None = None
+    business_rebuttal_text: str | None = None
+    """Distinct from business_response_text in BBB's own data -- likely
+    BBB's formal dispute/rebuttal process rather than a casual reply,
+    though unconfirmed (never observed populated)."""
+    business_rebuttal_date: str | None = None
+    has_extended_text: bool | None = None
+    """True would mean `text` is a truncated preview and the real full
+    review lives in `extended_text` instead -- never observed True in any
+    real review sampled so far (`text` itself ran as long as 1,110
+    characters unassisted), but capture is only 4 keys away for free from
+    what's already parsed here, so it's here for if that ever isn't true."""
+    extended_text: list[str] | None = None
+
 
 class BBBReviewsPage(BaseModel):
     """One page of a business's `/customer-reviews?page=N` sub-page --
