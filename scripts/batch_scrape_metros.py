@@ -558,13 +558,20 @@ def _enrich_metro_with_mapquest(
     master_rows: list[dict], client: MapQuestClient, city_directory: CityDirectory,
 ) -> tuple[int, int]:
     """Best-effort MapQuest review enrichment for one metro's already-built
-    master rows -- writes mapquest_url/mapquest_review_count/mapquest_reviews
-    directly onto every row (post-hoc column addition, same pattern as
-    _check_metro_websites/webcheck above), not baked into build_master_table.
-    Same matching logic as the standalone scripts/fetch_mapquest_reviews.py,
-    just run for every row here instead of a --top N curated subset (this is
-    the "fully integrated" batch step; that script is still there for
-    enriching an existing checkpoint after the fact).
+    master rows -- writes mapquest_url/mapquest_review_count/mapquest_reviews/
+    mapquest_rating_provider/mapquest_rating_value directly onto every row
+    (post-hoc column addition, same pattern as _check_metro_websites/webcheck
+    above), not baked into build_master_table. Same matching logic as the
+    standalone scripts/fetch_mapquest_reviews.py, just run for every row here
+    instead of a --top N curated subset (this is the "fully integrated"
+    batch step; that script is still there for enriching an existing
+    checkpoint after the fact).
+
+    mapquest_rating_provider/mapquest_rating_value carry MapQuestMatch's own
+    aggregate rating (e.g. "YELP", 4.5) -- these fields existed on the model
+    since the first MapQuest commit but were never actually written to a
+    column anywhere (caught 2026-09-15, real gap: the model captured it,
+    nothing wrote it out).
 
     Returns (matched, total_reviews) for the caller's own progress line.
     Never raises: a single business's search/match failure is logged and
@@ -584,6 +591,8 @@ def _enrich_metro_with_mapquest(
         row["mapquest_url"] = ""
         row["mapquest_review_count"] = ""
         row["mapquest_reviews"] = ""
+        row["mapquest_rating_provider"] = ""
+        row["mapquest_rating_value"] = ""
         if not name or not city_name or not state:
             continue
 
@@ -607,6 +616,8 @@ def _enrich_metro_with_mapquest(
         row["mapquest_url"] = match.url or ""
         row["mapquest_review_count"] = match.review_count
         row["mapquest_reviews"] = json.dumps([asdict(r) for r in match.reviews], ensure_ascii=False)
+        row["mapquest_rating_provider"] = match.rating_provider or ""
+        row["mapquest_rating_value"] = match.rating_value if match.rating_value is not None else ""
 
     return matched, total_reviews
 

@@ -167,6 +167,15 @@ class MapQuestClient:
         def _do_request():
             # A fresh session (-> fresh proxy connection -> fresh exit IP,
             # see module docstring) on every attempt, retries included.
+            # Real incident, 2026-09-15: closing the OLD session before
+            # replacing it is not optional -- curl_cffi wraps a real
+            # libcurl connection that doesn't get released just because
+            # the Python reference is dropped. Skipping this leaked one
+            # abandoned connection per request; over ~1,100 real
+            # businesses in a real production run it accumulated into a
+            # process that wedged solid (memory climbing, dead sockets
+            # stuck in CloseWait, CPU time barely moving) partway through.
+            self.session.close()
             self.session = self._new_session()
             self.rate_limiter.wait()
             response = self.session.post(

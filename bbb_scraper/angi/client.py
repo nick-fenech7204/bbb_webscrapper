@@ -132,6 +132,15 @@ class AngiClient:
             # same attempt. Also incidentally sidesteps the page-variant
             # cookie gotcha (module docstring) for free: a new Session has
             # no cookies to get stuck with.
+            # Real incident, 2026-09-15: closing the OLD session before
+            # replacing it is not optional -- curl_cffi wraps a real
+            # libcurl connection that doesn't get released just because
+            # the Python reference is dropped. The identical bug, same
+            # fix, as bbb_scraper/mapquest/client.py's own copy of this
+            # pattern -- see its docstring for the real incident (a
+            # production batch wedged solid partway through ~1,100
+            # businesses) this was caught by.
+            self.session.close()
             self.session = self._new_session()
             self.rate_limiter.wait()
             logger.info("GET %s", url)

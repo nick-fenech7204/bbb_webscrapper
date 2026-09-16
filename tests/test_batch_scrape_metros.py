@@ -560,6 +560,7 @@ def test_enrich_metro_with_mapquest_writes_reviews_onto_a_matched_row(monkeypatc
     match = MapQuestMatch(
         mapquest_id="423145406", name="Walsh Crawl Space and Structural Repair",
         url="https://www.mapquest.com/us/x/423145406", review_count=2,
+        rating_provider="YELP", rating_value=4.5,
         reviews=[
             MapQuestReview(text="Great work", rating=5.0, date="2022-08-16", reviewer_name="Mark H."),
             MapQuestReview(text="Not great", rating=1.0, date="2021-01-01", reviewer_name="LaTora L."),
@@ -577,6 +578,11 @@ def test_enrich_metro_with_mapquest_writes_reviews_onto_a_matched_row(monkeypatc
     reviews_back = json.loads(rows[0]["mapquest_reviews"])  # round-trips through JSON-in-cell, same as BBB/Angi
     assert len(reviews_back) == 2
     assert reviews_back[0]["reviewer_name"] == "Mark H."
+    # Real gap found 2026-09-15: MapQuestMatch.rating_provider/rating_value
+    # existed on the model since the first MapQuest commit but were never
+    # actually written to a column anywhere.
+    assert rows[0]["mapquest_rating_provider"] == "YELP"
+    assert rows[0]["mapquest_rating_value"] == 4.5
 
 
 def test_enrich_metro_with_mapquest_no_confident_match_writes_empty_list_not_blank(monkeypatch):
@@ -593,6 +599,8 @@ def test_enrich_metro_with_mapquest_no_confident_match_writes_empty_list_not_bla
     assert total_reviews == 0
     assert rows[0]["mapquest_url"] == ""
     assert rows[0]["mapquest_reviews"] == "[]"
+    assert rows[0]["mapquest_rating_provider"] == ""
+    assert rows[0]["mapquest_rating_value"] == ""
 
 
 def test_enrich_metro_with_mapquest_city_not_in_reference_data_skips_the_search():

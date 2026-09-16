@@ -132,6 +132,8 @@ def main() -> int:
                 row["mapquest_url"] = ""
                 row["mapquest_review_count"] = ""
                 row["mapquest_reviews"] = ""
+                row["mapquest_rating_provider"] = ""
+                row["mapquest_rating_value"] = ""
                 continue
 
             try:
@@ -143,6 +145,8 @@ def main() -> int:
                 row["mapquest_url"] = ""
                 row["mapquest_review_count"] = ""
                 row["mapquest_reviews"] = ""
+                row["mapquest_rating_provider"] = ""
+                row["mapquest_rating_value"] = ""
                 continue
 
             fetched += 1
@@ -151,6 +155,8 @@ def main() -> int:
                 row["mapquest_url"] = ""
                 row["mapquest_review_count"] = ""
                 row["mapquest_reviews"] = "[]"
+                row["mapquest_rating_provider"] = ""
+                row["mapquest_rating_value"] = ""
                 continue
 
             matched += 1
@@ -158,6 +164,8 @@ def main() -> int:
             row["mapquest_url"] = match.url or ""
             row["mapquest_review_count"] = match.review_count
             row["mapquest_reviews"] = json.dumps([asdict(r) for r in match.reviews], ensure_ascii=False)
+            row["mapquest_rating_provider"] = match.rating_provider or ""
+            row["mapquest_rating_value"] = match.rating_value if match.rating_value is not None else ""
 
             if i % 10 == 0 or i == len(selected):
                 elapsed = time.time() - started
@@ -169,6 +177,8 @@ def main() -> int:
             row.setdefault("mapquest_url", "")
             row.setdefault("mapquest_review_count", "")
             row.setdefault("mapquest_reviews", "")
+            row.setdefault("mapquest_rating_provider", "")
+            row.setdefault("mapquest_rating_value", "")
 
     if args.in_place:
         archive_dir = REPO_ROOT / "data" / "processed" / "archive"
@@ -182,7 +192,8 @@ def main() -> int:
         output_path = args.output or args.path.with_name(f"{args.path.stem}--mapquest{args.path.suffix}")
 
     out_fieldnames = list(fieldnames) + [
-        f for f in ("mapquest_url", "mapquest_review_count", "mapquest_reviews") if f not in fieldnames
+        f for f in ("mapquest_url", "mapquest_review_count", "mapquest_reviews",
+                     "mapquest_rating_provider", "mapquest_rating_value") if f not in fieldnames
     ]
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", newline="", encoding="utf-8") as f:

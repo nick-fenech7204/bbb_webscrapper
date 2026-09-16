@@ -120,6 +120,32 @@ def test_every_request_gets_a_fresh_session(mock_get_proxies, mock_session_cls):
 
 @patch("bbb_scraper.angi.client.curl_requests.Session")
 @patch("bbb_scraper.angi.client.get_proxies")
+def test_old_session_is_closed_before_being_replaced(mock_get_proxies, mock_session_cls):
+    """Real incident, 2026-09-15: skipping this leaked one abandoned
+    curl_cffi connection per request -- curl_cffi wraps a real libcurl
+    connection that isn't released just because the Python reference is
+    dropped. Over real volume this wedged a real production batch solid
+    (memory climbing, dead sockets stuck in CloseWait, CPU time barely
+    moving) -- the identical bug bbb_scraper/mapquest/client.py's own
+    copy of this pattern had, same fix. Every session but the current
+    one must have had .close() called on it."""
+    mock_get_proxies.return_value = {"http": "http://user:pass@gate.decodo.com:10000"}
+    sessions = [MagicMock() for _ in range(3)]
+    for s in sessions:
+        s.get.return_value = _ok_response()
+    mock_session_cls.side_effect = sessions
+
+    client = AngiClient(_cfg())  # consumes sessions[0]
+    client.get("https://www.angi.com/1.htm")  # closes sessions[0], moves to sessions[1]
+    client.get("https://www.angi.com/2.htm")  # closes sessions[1], moves to sessions[2]
+
+    sessions[0].close.assert_called_once()
+    sessions[1].close.assert_called_once()
+    sessions[2].close.assert_not_called()  # still the live one
+
+
+@patch("bbb_scraper.angi.client.curl_requests.Session")
+@patch("bbb_scraper.angi.client.get_proxies")
 def test_429_cooldown_then_a_retry_succeeds(mock_get_proxies, mock_session_cls):
     mock_get_proxies.return_value = {"http": "http://proxied"}
     session = mock_session_cls.return_value
