@@ -9,10 +9,14 @@ CSV), matched by exact phone number -- see bbb_scraper/angi/enrich.py.
         data/processed/angi/plumbers--chicago-il.csv \\
         --in-place
 
-Adds angi_<field> columns (name/phone/website/address/overall_rating/
-review_count/categories/about_us/is_super_service_award_winner/bonded/
-insured/profile_url) to every row, blank on a row with no matching Angi
-phone, and refreshes every derived-intelligence column (lead_priority_score,
+Adds angi_<field> columns for every field in bbb_scraper.match.merge.
+ANGI_FIELDS (name/phone/website/address/city/state/zip_code/
+overall_rating/review_count/categories/num_categories/about_us/
+is_super_service_award_winner/is_corporate_account/bonded/insured/
+reviews/num_reviews_captured/profile_url -- is_corporate_account in
+particular is what bbb_scraper/curate.py's corporate-account filtering
+reads) to every row, blank on a row with no matching Angi phone, and
+refreshes every derived-intelligence column (lead_priority_score,
 on_angi, ...) so they reflect the new signal immediately -- see merge.py's
 _lead_priority_score docstring for why this never changes the score of a
 row that isn't actually matched to Angi.

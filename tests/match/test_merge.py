@@ -532,3 +532,35 @@ def test_review_gap_flag_fires_only_for_a_real_outlier_vs_its_own_history():
 
     assert normal["review_gap_flag"] == 0
     assert quiet["review_gap_flag"] == 1
+
+
+# --- Regression: every captured field must actually reach the master table --
+
+def test_bbb_fields_carries_lat_lon_through_to_the_master_row():
+    """2026-09-16, found in a full-project audit: bbb_scraper.etl.transform
+    has always captured real lat/lon, and publish_site_data.py's
+    _PUBLIC_FIELDS has always tried to publish them (reading bbb_lat/
+    bbb_lon), but BBB_FIELDS never actually carried them onto the master
+    row -- so every published record's lat/lon silently came out blank no
+    matter what was really scraped. Locks in the fix rather than just the
+    docstring explaining it."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "lat": 25.77, "lon": -80.19}])
+    row = build_master_table(out)[0]
+    assert row["bbb_lat"] == 25.77
+    assert row["bbb_lon"] == -80.19
+
+
+def test_angi_fields_stays_in_sync_with_the_real_angi_csv_shape():
+    """ANGI_FIELDS is a hand-maintained subset of what
+    bbb_scraper.angi.scraper.ANGI_CSV_FIELDS actually captures (which is
+    itself guarded, see tests/angi/test_scraper.py::
+    test_row_has_every_declared_csv_field) -- 2026-09-16's audit found 11
+    real fields (street, all five rating_N_star_pct columns, is_paid_pro,
+    licenses, highlights, searched_category, searched_metro) that Angi's
+    scraper had captured all along but ANGI_FIELDS silently never carried
+    into the master table. This doesn't demand every CSV field end up here
+    forever (a future deliberate exclusion is fine) -- it demands that
+    dropping one be a conscious edit to this test, not silent drift."""
+    from bbb_scraper.angi.scraper import ANGI_CSV_FIELDS
+    from bbb_scraper.match.merge import ANGI_FIELDS
+    assert set(ANGI_FIELDS) == set(ANGI_CSV_FIELDS)

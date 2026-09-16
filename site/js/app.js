@@ -53,7 +53,20 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => (
     { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
   ));
-  const num = (v) => (v === null || v === undefined || v === "" ? null : Number(v));
+  // Returns null for anything that isn't genuinely numeric -- a plain
+  // `Number(v)` on a non-empty non-numeric string (a name, a phone number,
+  // an ISO date) produces NaN, not null, which used to sneak this straight
+  // into filteredRecords()'s numeric sort branch below instead of falling
+  // through to the string branch (NaN !== null is true). That made every
+  // text column's comparator always return NaN -- Array.prototype.sort
+  // treats NaN as "no order," so clicking any text column header (Business,
+  // City, Top complaint, Latest review, Phone, Contact, Website) silently
+  // left the row order unchanged. Caught 2026-09-16 in a full-project audit.
+  const num = (v) => {
+    if (v === null || v === undefined || v === "") return null;
+    const n = Number(v);
+    return Number.isNaN(n) ? null : n;
+  };
   const dash = "—";
 
   // ---------- cell renderers ----------
@@ -144,7 +157,13 @@
       const v = num(r[key]);
       if (v === null) return `<span class="muted">${dash}</span>`;
       const pct = Math.max(2, Math.min(100, (v / max) * 100));
-      return `<span class="score"><span class="score-bar" style="width:${pct}%"></span><span class="score-val">${v}</span></span>`;
+      // review_sentiment_signal (published, but otherwise shown nowhere --
+      // caught in a full-project audit, 2026-09-16) is one of the inputs
+      // averaged into lead_priority_score -- worth a hover on the one
+      // column reps actually sort/scan by, not its own column.
+      const sentiment = key === "lead_priority_score" ? num(r.review_sentiment_signal) : null;
+      const title = sentiment !== null ? ` title="Review-sentiment signal: ${sentiment}/100"` : "";
+      return `<span class="score"${title}><span class="score-bar" style="width:${pct}%"></span><span class="score-val">${v}</span></span>`;
     };
   }
   function flagsCell(r) {
@@ -182,6 +201,19 @@
     const v = r[key] ?? "";
     return v ? `<span title="${esc(v)}">${esc(v)}</span>` : "";
   };
+  // "Latest review" -- most_recent_review_date is the visible value, but
+  // most_recent_negative_review_date (published, 2026-09-16, but otherwise
+  // shown nowhere -- caught in a full-project audit) is real extra context
+  // worth a hover rather than its own column: "the latest review overall
+  // was positive, but the latest NEGATIVE one was more recently" is exactly
+  // the kind of thing a rep would want before opening a call.
+  function latestReviewCell(r) {
+    const v = r.most_recent_review_date ?? "";
+    if (!v) return "";
+    const negDate = r.most_recent_negative_review_date;
+    const title = negDate && negDate !== v ? `Latest negative review: ${negDate}` : "";
+    return title ? `<span title="${esc(title)}">${esc(v)}</span>` : esc(v);
+  }
   // Specialties (Angi's "; "-joined services-offered list, see
   // bbb_scraper/angi/parsing.py + scripts/scrape_angi_category.py) is
   // unbounded -- real data runs from 1 item to 200+ for a business with a
@@ -281,7 +313,7 @@
     { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
     { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
     { key: "top_complaint_summary", label: "Top complaint", w: 200, render: topComplaintCell },
-    { key: "most_recent_review_date", label: "Latest review", w: 100, render: plain("most_recent_review_date") },
+    { key: "most_recent_review_date", label: "Latest review", w: 100, render: latestReviewCell },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },

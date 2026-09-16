@@ -70,7 +70,7 @@ def main() -> None:
     slug = "-".join(filter(None, slug.split("-")))
     out = args.out or Path("data/processed") / f"bbb_yelp_master__{slug}.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames = list(rows[0].keys())
+    fieldnames = sorted({key for row in rows for key in row})
     with out.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
         w.writeheader()

@@ -28,9 +28,18 @@ from bbb_scraper.match.normalize import letter_grade_to_num
 # _PUBLIC_FIELDS all map to a `bbb_<field>` here). List/dict fields
 # (categories/contacts/socials/reviews_complaints) ride through as-is
 # in-memory, JSON-encoded once written to CSV.
+#
+# lat/lon added 2026-09-16 -- a real gap, caught in a full-project audit:
+# bbb_scraper.etl.transform has captured real lat/lon on every BBB record
+# since the original scaffold, and publish_site_data.py's _PUBLIC_FIELDS
+# has always tried to publish them (reading `bbb_lat`/`bbb_lon` off this
+# exact list), but they were never actually in BBB_FIELDS -- so every
+# published record's lat/lon silently came out "" no matter what was
+# really scraped, with nothing downstream (no test, no site JS) ever
+# reading them to notice.
 BBB_FIELDS = [
     "name", "phone", "email", "website",
-    "address", "city", "state", "postal_code",
+    "address", "city", "state", "postal_code", "lat", "lon",
     "rating", "rating_score", "accredited", "accreditation_status",
     "years_in_business", "business_started",
     "primary_category_name", "categories",
@@ -56,9 +65,23 @@ YELP_FIELDS = [
 # here match bbb_scraper.angi.models.BusinessDetail's own attribute names
 # (fed in via the flattened CSV scripts/scrape_angi_category.py writes).
 ANGI_FIELDS = [
-    "name", "phone", "website", "address", "city", "state", "zip_code",
-    "overall_rating", "review_count", "categories", "num_categories",
-    "about_us", "is_super_service_award_winner", "is_corporate_account", "bonded", "insured",
+    "name", "phone", "website", "address", "street", "city", "state", "zip_code",
+    "overall_rating", "review_count",
+    # 2026-09-16, found in a full-project audit: these five plus street/
+    # is_paid_pro/licenses/highlights/searched_category/searched_metro were
+    # in bbb_scraper.angi.scraper.ANGI_CSV_FIELDS (so real, already-scraped
+    # data) but never made it into ANGI_FIELDS -- silently dropped before
+    # ever reaching the master table, the exact "captured but never used"
+    # gap this file's own BBB_FIELDS lat/lon fix (right above) also
+    # addressed. Same "broad checkpoint, curate for the site separately"
+    # split as everywhere else here -- none of these are in
+    # publish_site_data.py's _ANGI_SITE_FIELDS, that's still a separate
+    # decision.
+    "rating_5_star_pct", "rating_4_star_pct", "rating_3_star_pct",
+    "rating_2_star_pct", "rating_1_star_pct",
+    "categories", "num_categories",
+    "about_us", "highlights", "is_paid_pro",
+    "is_super_service_award_winner", "is_corporate_account", "bonded", "insured", "licenses",
     # Real written reviews (2026-09-15, see bbb_scraper/angi/scraper.py's
     # business_detail_to_row) -- a JSON-string column (up to ~25 reviews,
     # newest first), the same shape the planned local-sentiment pass (BBB's
@@ -68,7 +91,7 @@ ANGI_FIELDS = [
     # separate decision (a raw review dump isn't public-site-ready) from
     # just getting the data flowing.
     "reviews", "num_reviews_captured",
-    "profile_url",
+    "searched_category", "searched_metro", "profile_url",
 ]
 
 

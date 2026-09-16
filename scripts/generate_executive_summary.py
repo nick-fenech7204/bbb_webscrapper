@@ -110,7 +110,7 @@ def build(pdf: Summary):
         pdf.cell(seg_w, 4, label, align="C")
     pdf.ln(9)
 
-    pdf.h2("Four real inputs, blended")
+    pdf.h2("Three signal groups, blended")
     pdf.bullet("BBB", "grade, review average, complaint history")
     pdf.bullet("Yelp & Angi", "star rating and review volume, treated as equivalent signals")
     pdf.bullet("Review sentiment", "a local AI model reads the actual review TEXT (not just the "

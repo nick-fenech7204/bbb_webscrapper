@@ -348,13 +348,13 @@ def build(pdf: Report, example: dict, dataset_label: str):
         ["Signal", "Condition", "Points"],
         [
             ["Yelp / Angi / BBB-avg rating", "<= 1.5 stars", "45"],
-            ["Yelp / Angi / BBB-avg rating", "1.5 - 3.7 stars", "82  (peak)"],
-            ["Yelp / Angi / BBB-avg rating", "3.7 - 4.2 stars", "34"],
-            ["Yelp / Angi / BBB-avg rating", "4.2+ stars", "8"],
+            ["Yelp / Angi / BBB-avg rating", "> 1.5, < 3.7 stars", "82  (peak)"],
+            ["Yelp / Angi / BBB-avg rating", "3.7 - 4.19 stars", "34"],
+            ["Yelp / Angi / BBB-avg rating", ">= 4.2 stars", "8"],
             ["Yelp / Angi volume", "0 reviews", "40"],
             ["Yelp / Angi volume", "1 - 60 reviews", "72  (peak)"],
             ["Yelp / Angi volume", "61 - 150 reviews", "40"],
-            ["Yelp / Angi volume", "150+ reviews", "12"],
+            ["Yelp / Angi volume", "151+ reviews", "12"],
             ["BBB grade", "B- to C- (1.67-3.33)", "65  (peak)"],
             ["BBB grade", "below C- (< 1.67)", "32"],
             ["BBB grade", "B and above (> 3.33)", "22"],
@@ -364,6 +364,7 @@ def build(pdf: Report, example: dict, dataset_label: str):
             ["BBB complaints", "26+", "25"],
             ["Review sentiment", "0 negative/mixed found", "18"],
             ["Review sentiment", "<= 60% negative, recent", "up to 89.7  (peak)"],
+            ["Review sentiment", "60-99% negative, recent", "up to 69.0"],
             ["Review sentiment", "100% negative (thin sample)", "up to 51.7"],
         ],
         [65, 68, 55],
@@ -383,7 +384,7 @@ def build(pdf: Report, example: dict, dataset_label: str):
                "rating is under 3.0, OR BBB's own review average is under 2.5, OR there are 5+ BBB "
                "complaints, OR most analyzed reviews read negative/mixed. The core \"your BBB page "
                "looks great but here's the real story\" pitch.")
-    pdf.bullet("+8  Accredited but low-rated: pays for BBB accreditation, yet Yelp rating or "
+    pdf.bullet("+8  Accredited but low-rated: pays for BBB accreditation, yet Yelp, Angi, or "
                "BBB review average is still under 3.0 -- already demonstrated willingness to pay "
                "for credibility, evidently not enough on its own.")
     pdf.bullet("+6  Gone quiet: reviews have gone notably quiet relative to this business's OWN "
@@ -430,7 +431,10 @@ def build(pdf: Report, example: dict, dataset_label: str):
     # ---- Flags ----
     pdf.add_page()
     pdf.h1("Flags")
-    pdf.p("Boolean callouts shown as badges on the Intelligence table -- the same conditions that drive the bonus points above, surfaced individually:")
+    pdf.p("Boolean callouts shown as badges on the Intelligence table. The first three (Reputation "
+          "gap, Accredited/low-rated, Gone quiet) are exactly the conditions that drive the bonus "
+          "points in Step 2 above, surfaced individually. Few reviews and No live website are "
+          "informational only -- real sales signals, but they don't add points to Lead priority.")
     pdf.spacer(1)
     pdf.flag_chip("Reputation gap")
     pdf.ln(9)
@@ -438,7 +442,7 @@ def build(pdf: Report, example: dict, dataset_label: str):
           "OR 5+ BBB complaints, OR most analyzed reviews read negative/mixed.")
     pdf.flag_chip("Accredited, low-rated")
     pdf.ln(9)
-    pdf.p("BBB-accredited, but Yelp rating or BBB review average under 3.0.")
+    pdf.p("BBB-accredited, but Yelp, Angi, or BBB review average under 3.0.")
     pdf.flag_chip("Gone quiet")
     pdf.ln(9)
     pdf.p("Reviews have gone notably quiet relative to this business's OWN normal cadence -- a "

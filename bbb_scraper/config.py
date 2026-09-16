@@ -192,7 +192,10 @@ class Settings(BaseSettings):
         default="https://www.bbb.org/api/search", alias="BBB_SEARCH_URL"
     )
     bbb_find_country: str = Field(default="USA", alias="BBB_FIND_COUNTRY")
-    # BBB caps search results at 300 (15 pages x 20) per (query, location).
+    # BBB's real pageSize (confirmed against captured responses, see
+    # bbb_scraper/parsing/search_parser.py) is 15, not a round 20 -- this
+    # caps a (query, location) search at 15 pages x its real page size
+    # (225 today), read dynamically off the response rather than assumed.
     # Getting more than that for a broad query is a later problem: overlap
     # multiple narrower searches and dedupe -- not handled here yet.
     bbb_max_search_pages: int = Field(default=15, alias="BBB_MAX_SEARCH_PAGES")

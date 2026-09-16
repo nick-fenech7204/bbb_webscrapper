@@ -41,6 +41,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from bbb_scraper.logging_setup import configure_logging, get_logger
+from bbb_scraper.match.merge import recompute_intel
 from bbb_scraper.sentiment.analyze import analyze_business_reviews
 from bbb_scraper.sentiment.client import OllamaClient, is_available
 
@@ -149,6 +150,18 @@ def main() -> int:
             row["review_sentiment"] = json.dumps([asdict(r) for r in results], ensure_ascii=False)
             for key, value in aggregate.items():
                 row[key] = value if value is not None else ""
+            # This row's lead_priority_score/review_sentiment_signal/
+            # review_gap_flag/etc. were computed by build_master_table
+            # before this sentiment data existed -- refresh them in place
+            # now that it does, same as batch_scrape_metros.py's own
+            # inline sentiment step (_enrich_metro_with_sentiment) and
+            # bbb_scraper.angi.enrich.enrich_with_angi both already do
+            # right after adding a signal that feeds scoring. Mutates
+            # `row` in place (via .update, not reassignment) rather than
+            # rebinding it to recompute_intel's return value -- `row` is
+            # the same object sitting in `all_rows`, and rebinding the
+            # local name here wouldn't update that shared reference.
+            row.update(recompute_intel(row))
 
             if i % 20 == 0 or i == len(selected):
                 elapsed = time.time() - started
@@ -172,7 +185,21 @@ def main() -> int:
     else:
         output_path = args.output or args.path.with_name(f"{args.path.stem}--sentiment{args.path.suffix}")
 
-    out_fieldnames = list(fieldnames) + [f for f in _NEW_COLUMNS if f not in fieldnames]
+    # A real union of every key actually on any row, not just the original
+    # CSV's own fieldnames + _NEW_COLUMNS -- the same bug this file's own
+    # _NEW_COLUMNS comment above describes (extrasaction="ignore" silently
+    # dropping a key missing from the writer's fieldnames) also applies to
+    # row.update(recompute_intel(row)) above: a checkpoint written before a
+    # newer _INTEL column existed (e.g. review_sentiment_signal/
+    # review_gap_flag, added 2026-09-15/16) won't have that column in
+    # `fieldnames`, so recompute_intel setting it in memory wouldn't be
+    # enough on its own -- it needs to actually reach the writer's fieldname
+    # list too. Matches batch_scrape_metros.py's own _write_partial_checkpoint/
+    # rebuild_all_metros_file, which build fieldnames the same dynamic way
+    # for the identical reason.
+    out_fieldnames = list(fieldnames) + sorted(
+        {key for row in all_rows for key in row} - set(fieldnames)
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=out_fieldnames, extrasaction="ignore")
