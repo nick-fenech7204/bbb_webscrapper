@@ -226,12 +226,17 @@
   // bbb_scraper.sentiment.analyze._top_complaint -- a real, already-
   // analyzed sentence, not a synthesized blurb. Theme (a short category)
   // as a lightweight prefix, full sentence after; title="" carries the
-  // whole thing for a summary long enough to truncate on-screen.
+  // whole thing (plus the negative/analyzed ratio -- "is this 1 bad review
+  // or 4 out of 5?", real context a rep would want before calling, added
+  // 2026-09-16) for a summary long enough to truncate on-screen.
   function topComplaintCell(r) {
     const summary = r.top_complaint_summary || "";
     if (!summary) return `<span class="muted">${dash}</span>`;
     const theme = r.top_complaint_theme || "";
-    const full = theme ? `${theme}: ${summary}` : summary;
+    const neg = r.review_sentiment_negative_count;
+    const analyzed = r.review_sentiment_analyzed_count;
+    const ratio = (neg != null && analyzed) ? ` (${neg}/${analyzed} reviews negative)` : "";
+    const full = (theme ? `${theme}: ${summary}` : summary) + ratio;
     return `<span class="top-complaint-cell" title="${esc(full)}">` +
       (theme ? `<span class="top-complaint-theme">${esc(theme)}</span> ` : "") +
       `${esc(summary)}</span>`;
@@ -264,7 +269,10 @@
   // complaint" added the same day (bbb_scraper.sentiment's own pick of the
   // single most representative negative/mixed review, mostly MapQuest-
   // sourced real review text -- see _top_complaint's docstring) so a rep
-  // has an actual thing to open the call with, not just a score, 14 again.
+  // has an actual thing to open the call with, not just a score, 14 again --
+  // then "Latest review" (most_recent_review_date already drove the score
+  // via _review_gap_flag / _review_sentiment_signal's recency multiplier,
+  // but was never actually visible on the published record until now), 15.
   const COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", w: 200, render: nameCell },
     { key: "city", label: "City", w: 110, render: cityCell },
@@ -273,6 +281,7 @@
     { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
     { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
     { key: "top_complaint_summary", label: "Top complaint", w: 200, render: topComplaintCell },
+    { key: "most_recent_review_date", label: "Latest review", w: 100, render: plain("most_recent_review_date") },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },

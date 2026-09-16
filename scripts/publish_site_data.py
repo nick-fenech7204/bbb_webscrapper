@@ -219,6 +219,18 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["top_complaint_theme"] = row.get("top_complaint_theme") or ""
     result["top_complaint_summary"] = row.get("top_complaint_summary") or ""
 
+    # Same raw-fact pass-through as top_complaint above -- both dates
+    # already drive lead_priority_score (most_recent_negative_review_date
+    # feeds _review_sentiment_signal's recency multiplier;
+    # most_recent_review_date feeds _review_gap_flag) but were never
+    # actually surfaced to the site itself (2026-09-16 gap, caught when
+    # Nick asked "are we taking it into account" -- the formula was, the
+    # published record wasn't).
+    result["most_recent_review_date"] = row.get("most_recent_review_date") or ""
+    result["most_recent_negative_review_date"] = row.get("most_recent_negative_review_date") or ""
+    result["review_sentiment_analyzed_count"] = _num_or_none(row.get("review_sentiment_analyzed_count"))
+    result["review_sentiment_negative_count"] = _num_or_none(row.get("review_sentiment_negative_count"))
+
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0

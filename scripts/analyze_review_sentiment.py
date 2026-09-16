@@ -4,10 +4,11 @@ Run local sentiment analysis (Ollama, zero-shot -- no training/fine-tuning,
 see bbb_scraper/sentiment/client.py's own module docstring) over every
 review already captured in a checkpoint CSV -- mapquest_reviews/
 bbb_reviews/angi_reviews, whichever are present -- writing review_sentiment
-(JSON-in-cell, one entry per analyzed review) plus five aggregate columns
-lead scoring reads: review_sentiment_analyzed_count,
+(JSON-in-cell, one entry per analyzed review) plus the aggregate columns
+lead scoring (and the published site) reads: review_sentiment_analyzed_count,
 review_sentiment_negative_count, most_recent_review_date,
-most_recent_negative_review_date, avg_review_gap_days.
+most_recent_negative_review_date, avg_review_gap_days, top_complaint_theme,
+top_complaint_summary.
 
 Unlike scripts/fetch_bbb_reviews.py / fetch_mapquest_reviews.py, this
 doesn't hit any external site -- it only reads data already sitting in
@@ -51,6 +52,15 @@ _REVIEW_COLUMNS = ("mapquest_reviews", "bbb_reviews", "angi_reviews")
 _NEW_COLUMNS = (
     "review_sentiment", "review_sentiment_analyzed_count", "review_sentiment_negative_count",
     "most_recent_review_date", "most_recent_negative_review_date", "avg_review_gap_days",
+    # 2026-09-16: added alongside bbb_scraper.sentiment.analyze._top_complaint
+    # -- real incident, caught live: these two were correctly computed and
+    # applied to `row` via the generic aggregate.items() loop below, but
+    # csv.DictWriter's extrasaction="ignore" silently drops any row key not
+    # listed here, so they never actually reached the written CSV until
+    # this list was updated to match. batch_scrape_metros.py's own inline
+    # enrichment was unaffected -- it writes a JSON file, not a fixed-
+    # fieldname CSV, so it never had this failure mode.
+    "top_complaint_theme", "top_complaint_summary",
 )
 
 

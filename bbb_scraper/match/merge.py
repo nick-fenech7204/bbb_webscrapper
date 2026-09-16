@@ -278,10 +278,19 @@ def _low_review_volume_flag(r):
 
 
 def _accredited_but_low_rated(r):
+    """2026-09-16: added the Angi check -- this predated Angi's 2026-09-14
+    integration and never got updated, so a BBB-accredited business with a
+    bad ANGI rating (and no Yelp match, or a fine one) silently missed this
+    flag/bonus even though _reputation_divergence_flag right above already
+    treats Angi as an equal-standing rating source. Same bar (< 3.0) as
+    the other two checks, for the same reason."""
     if not _truthy(r.get("bbb_accredited")):
         return 0
     yr = _yelp_rating(r)
     if yr is not None and yr < 3.0:
+        return 1
+    ar = _angi_rating(r)
+    if ar is not None and ar < 3.0:
         return 1
     bavg = _bbb_review_avg(r)
     if bavg is not None and bavg < 3.0:

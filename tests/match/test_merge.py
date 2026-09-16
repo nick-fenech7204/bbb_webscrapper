@@ -93,6 +93,66 @@ def test_divergence_flag_fires_on_bbb_complaints_alone():
     assert r["reputation_divergence_flag"] == 1
 
 
+# --- _accredited_but_low_rated (2026-09-16: no dedicated test existed at
+# all before this -- only an incidental accredited_but_low_rated == 0
+# assertion elsewhere) -------------------------------------------------------
+
+def test_accredited_but_low_rated_fires_on_low_yelp():
+    out = MatchOutcome(pairs=[_pair(
+        {"name": "X", "rating": "A+", "accredited": "True"},
+        {"name": "X", "rating": 2.0, "review_count": 30, "id": "i", "url": "u"},
+    )])
+    r = build_master_table(out)[0]
+    assert r["accredited_but_low_rated"] == 1
+
+
+def test_accredited_but_low_rated_fires_on_low_angi():
+    """2026-09-16 regression: this predated Angi's integration and never
+    checked it, even though _reputation_divergence_flag right above it
+    already treats Angi as an equal-standing rating source -- a BBB-
+    accredited business with a bad Angi rating (no Yelp match at all)
+    silently missed both the flag and its +8 bonus."""
+    out = MatchOutcome(bbb_only=[{
+        "name": "X", "rating": "A+", "accredited": "True", "phone": "3055550100",
+    }])
+    row = build_master_table(out)[0]
+    assert row["accredited_but_low_rated"] == 0  # no Angi match yet -- nothing to flag
+
+    row["angi_phone"] = "3055550100"
+    row["angi_overall_rating"] = "2.0"
+    row["angi_review_count"] = "20"
+    row = recompute_intel(row)
+    assert row["accredited_but_low_rated"] == 1
+
+
+def test_accredited_but_low_rated_fires_on_low_bbb_average():
+    out = MatchOutcome(bbb_only=[{
+        "name": "X", "rating": "A+", "accredited": "True",
+        "reviews_complaints": '{"reviews_total": 5, "average_rating": 2.0}',
+    }])
+    r = build_master_table(out)[0]
+    assert r["accredited_but_low_rated"] == 1
+
+
+def test_accredited_but_low_rated_off_when_not_accredited():
+    """Every rating here is low -- but accreditation is the gate, checked first."""
+    out = MatchOutcome(pairs=[_pair(
+        {"name": "X", "rating": "A+", "accredited": "False"},
+        {"name": "X", "rating": 1.5, "review_count": 30, "id": "i", "url": "u"},
+    )])
+    r = build_master_table(out)[0]
+    assert r["accredited_but_low_rated"] == 0
+
+
+def test_accredited_but_low_rated_off_when_ratings_are_all_fine():
+    out = MatchOutcome(pairs=[_pair(
+        {"name": "X", "rating": "A+", "accredited": "True"},
+        {"name": "X", "rating": 4.8, "review_count": 30, "id": "i", "url": "u"},
+    )])
+    r = build_master_table(out)[0]
+    assert r["accredited_but_low_rated"] == 0
+
+
 def test_contact_readiness_labels_and_scores():
     def readiness(phone="", contact="", email=""):
         out = MatchOutcome(bbb_only=[{
