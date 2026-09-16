@@ -165,6 +165,7 @@ from bbb_scraper.mapquest.client import MapQuestClient
 from bbb_scraper.mapquest.matcher import find_business
 from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
+from bbb_scraper.match.merge import recompute_intel
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
 from bbb_scraper.reference.categories import CategoryDirectory
@@ -172,6 +173,8 @@ from bbb_scraper.reference.cities import CityDirectory
 from bbb_scraper.reference.metros import MetroDirectory
 from bbb_scraper.reference.models import Category, Metro, parse_location
 from bbb_scraper.scraping.search import build_referer
+from bbb_scraper.sentiment.analyze import analyze_business_reviews
+from bbb_scraper.sentiment.client import OllamaClient, is_available
 from bbb_scraper.utils.flatten import flatten_record
 from bbb_scraper.utils.stats import RunStats
 from bbb_scraper.webcheck.enrich import check_websites
@@ -608,6 +611,82 @@ def _enrich_metro_with_mapquest(
     return matched, total_reviews
 
 
+def _open_sentiment(enabled: bool) -> tuple[OllamaClient | None, str | None]:
+    """One shared OllamaClient for the whole batch -- same "resolve once,
+    best-effort" shape as _open_mapquest. Checks is_available() first (a
+    cheap /api/tags call) rather than just trying to construct the client
+    and hoping -- Ollama not running is a completely normal state (it's a
+    local server on Nick's own machine, not always-on infrastructure),
+    and finding that out should never cost the ~44s cold-start penalty of
+    a real failed /api/generate call."""
+    if not enabled:
+        return None, None
+    if not is_available():
+        return None, "Ollama isn't reachable (checked its own /api/tags) -- is it running?"
+    try:
+        client = OllamaClient()
+    except Exception:
+        logger.exception("Sentiment analysis setup failed -- disabling it for this batch")
+        return None, "setup failed (see log)"
+    return client, None
+
+
+def _enrich_metro_with_sentiment(
+    master_rows: list[dict], client: OllamaClient,
+) -> tuple[list[dict], int, int, int]:
+    """Best-effort local sentiment analysis for one metro's already-built
+    master rows -- writes review_sentiment plus 5 aggregate columns
+    (review_sentiment_analyzed_count/_negative_count,
+    most_recent_review_date, most_recent_negative_review_date,
+    avg_review_gap_days) onto every row that has any already-captured
+    review text (mapquest_reviews/bbb_reviews/angi_reviews) -- a post-hoc
+    column addition like MapQuest above.
+
+    Unlike MapQuest, this DOES feed lead_priority_score (see
+    bbb_scraper/match/merge.py's _review_sentiment_signal and
+    _review_gap_flag) -- Nick's explicit ask, 2026-09-15 ("add into
+    score"), unlike MapQuest's "just in the dataset, nothing yet
+    different for the website." So every analyzed row is run back through
+    recompute_intel() to refresh every derived-intelligence column with
+    the new sentiment data actually in it -- same reason
+    bbb_scraper.angi.enrich.enrich_with_angi does this, and returns a NEW
+    list rather than mutating in place for the identical reason:
+    recompute_intel returns a new dict, it doesn't mutate the one you
+    pass it.
+
+    Returns (new_rows, businesses_with_reviews, total_reviews_analyzed,
+    total_negative) for the caller's own progress line. Never raises: a
+    single business's analysis failing (Ollama down mid-run, one bad
+    review) is logged and just leaves that row without sentiment columns,
+    never taking any other row -- or the rest of the metro -- down with it.
+    """
+    out: list[dict] = []
+    businesses_with_reviews = 0
+    total_reviews = 0
+    total_negative = 0
+    for row in master_rows:
+        row = dict(row)
+        has_reviews = any(
+            row.get(c) not in (None, "", "[]") for c in ("mapquest_reviews", "bbb_reviews", "angi_reviews")
+        )
+        if has_reviews:
+            try:
+                results, aggregate = analyze_business_reviews(row, client)
+            except Exception:
+                logger.exception("Sentiment analysis failed for %r", row.get("bbb_name"))
+                results = None
+            if results is not None:
+                row["review_sentiment"] = json.dumps([asdict(r) for r in results], ensure_ascii=False)
+                for key, value in aggregate.items():
+                    row[key] = value if value is not None else ""
+                businesses_with_reviews += 1
+                total_reviews += len(results)
+                total_negative += aggregate["review_sentiment_negative_count"]
+                row = recompute_intel(row)
+        out.append(row)
+    return out, businesses_with_reviews, total_reviews, total_negative
+
+
 def rebuild_all_metros_file(industry_slug: str) -> Path:
     checkpoint_files = sorted(BATCH_DIR.glob(f"{industry_slug}--*.csv"))
     all_rows: list[dict] = []
@@ -639,6 +718,7 @@ _STEP_LABELS = {
     "yelp": "Matching Yelp",
     "angi_merge": "Merging Angi",
     "mapquest": "Fetching MapQuest reviews",
+    "sentiment": "Analyzing review sentiment",
     "checkpoint": "Writing checkpoint",
     "publish": "Publishing to site",
     "deploy": "Deploying live",
@@ -646,7 +726,7 @@ _STEP_LABELS = {
 _STEP_ORDER = list(_STEP_LABELS)
 
 
-def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: bool,
+def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: bool, sentiment: bool,
                    publish: bool, deploy: bool) -> list[dict]:
     """Which of _STEP_ORDER this particular batch actually runs, in order --
     depends on which --no-X flags are set, so it's computed once per batch
@@ -655,7 +735,7 @@ def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: boo
     can't happen without a publish first (see main()'s own nesting)."""
     enabled = {
         "scraping": True, "check_websites": check_websites, "yelp": yelp,
-        "angi_merge": angi, "mapquest": mapquest, "checkpoint": True,
+        "angi_merge": angi, "mapquest": mapquest, "sentiment": sentiment, "checkpoint": True,
         "publish": publish, "deploy": publish and deploy,
     }
     return [{"key": k, "label": _STEP_LABELS[k]} for k in _STEP_ORDER if enabled[k]]
@@ -736,6 +816,17 @@ def main() -> int:
         "debugging without a proxy configured.",
     )
     parser.add_argument(
+        "--sentiment", action=argparse.BooleanOptionalAction, default=True,
+        help="Run local sentiment analysis (Ollama, zero-shot -- no training/fine-tuning) over "
+        "every review already captured (mapquest_reviews/bbb_reviews/angi_reviews) for each "
+        "business (default: on) -- writes review_sentiment plus 5 aggregate columns, and DOES "
+        "feed lead_priority_score (unlike MapQuest's raw columns). Best-effort: Ollama not "
+        "reachable disables this for the whole batch (checked once, up front, never fatal), a "
+        "single business's analysis failing just leaves that row's columns empty. See "
+        "bbb_scraper/sentiment/client.py's own module docstring and scripts/"
+        "analyze_review_sentiment.py for backfilling a checkpoint that predates this.",
+    )
+    parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
         help="Publish each metro's BBB fields to site/ as soon as it's done (default: on)",
     )
@@ -808,6 +899,7 @@ def main() -> int:
             "step": None,
             "businesses": None, "yelp_matched": None, "angi_businesses": None, "angi_matched": None,
             "mapquest_matched": None, "mapquest_reviews": None,
+            "sentiment_analyzed": None, "sentiment_negative": None,
             "top_lead_score": None, "websites_dead": None,
             "elapsed_s": None, "error": None,
         }
@@ -824,9 +916,13 @@ def main() -> int:
     mapquest_note = (f"on, proxy={'on' if args.mapquest_use_proxy else 'off'}" if mapquest_enabled
                       else f"off ({mapquest_reason_off or 'disabled'})")
 
+    sentiment_client, sentiment_reason_off = _open_sentiment(args.sentiment)
+    sentiment_enabled = sentiment_client is not None
+    sentiment_note = "on" if sentiment_enabled else f"off ({sentiment_reason_off or 'disabled'})"
+
     active_steps = _active_steps(
         check_websites=args.check_websites, yelp=args.yelp, angi=angi_enabled,
-        mapquest=mapquest_enabled, publish=args.publish, deploy=args.deploy,
+        mapquest=mapquest_enabled, sentiment=sentiment_enabled, publish=args.publish, deploy=args.deploy,
     )
 
     def _snapshot(finished: bool = False) -> dict:
@@ -836,7 +932,7 @@ def main() -> int:
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
-          f"yelp={yelp_note}, angi={angi_note}, mapquest={mapquest_note}, "
+          f"yelp={yelp_note}, angi={angi_note}, mapquest={mapquest_note}, sentiment={sentiment_note}, "
           f"check_websites={args.check_websites}, publish={args.publish}, deploy={args.deploy}")
     _write_progress(progress_path, _snapshot())
 
@@ -925,6 +1021,16 @@ def main() -> int:
                 print(f"    MapQuest: {mapquest_matched}/{len(master_rows)} matched, "
                       f"{mapquest_reviews_count} reviews captured")
 
+            sentiment_analyzed = sentiment_negative = None
+            if sentiment_enabled:
+                metro_states[i - 1]["step"] = "sentiment"
+                _write_progress(progress_path, _snapshot())
+                master_rows, sentiment_businesses, sentiment_analyzed, sentiment_negative = (
+                    _enrich_metro_with_sentiment(master_rows, sentiment_client)
+                )
+                print(f"    Sentiment: {sentiment_businesses} business(es) analyzed, "
+                      f"{sentiment_analyzed} reviews ({sentiment_negative} negative/mixed)")
+
             metro_states[i - 1]["step"] = "checkpoint"
             _write_progress(progress_path, _snapshot())
             CSVSink(checkpoint_path).load(master_rows)
@@ -945,6 +1051,7 @@ def main() -> int:
                   f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''}"
                   f"{f', {len(angi_rows)} Angi ({angi_matched} matched by phone)' if angi_enabled else ''}"
                   f"{f', {mapquest_matched} MapQuest ({mapquest_reviews_count} reviews)' if mapquest_enabled else ''}"
+                  f"{f', {sentiment_analyzed} sentiment ({sentiment_negative} negative)' if sentiment_enabled else ''}"
                   f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
             metro_states[i - 1].update({
@@ -954,6 +1061,8 @@ def main() -> int:
                 "angi_matched": angi_matched,
                 "mapquest_matched": mapquest_matched,
                 "mapquest_reviews": mapquest_reviews_count,
+                "sentiment_analyzed": sentiment_analyzed,
+                "sentiment_negative": sentiment_negative,
                 "websites_dead": websites_dead,
                 "elapsed_s": round(elapsed),
             })
@@ -1015,6 +1124,8 @@ def main() -> int:
         print(f"Note: Angi enrichment was off for this whole batch -- {angi_reason_off}")
     if mapquest_reason_off:
         print(f"Note: MapQuest enrichment was off for this whole batch -- {mapquest_reason_off}")
+    if sentiment_reason_off:
+        print(f"Note: Sentiment analysis was off for this whole batch -- {sentiment_reason_off}")
     print(f"Compiled file: {all_metros_path}")
     _write_progress(progress_path, _snapshot(finished=True))
     return 0

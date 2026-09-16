@@ -1,7 +1,13 @@
+from datetime import date, timedelta
+
 import pytest
 
 from bbb_scraper.match.matcher import MatchedPair, MatchOutcome
 from bbb_scraper.match.merge import build_master_table, recompute_intel
+
+
+def _days_ago(n: int) -> str:
+    return (date.today() - timedelta(days=n)).isoformat()  # noqa: DTZ011 -- calendar-date test fixture, no timezone concept applies
 
 
 def _pair(bbb, yelp, conf=0.95, band="confident"):
@@ -345,3 +351,86 @@ def test_lead_priority_score_responds_to_angi_signal():
     row["angi_review_count"] = "20"
     row = recompute_intel(row)
     assert row["lead_priority_score"] != baseline
+
+
+# --- Local review-sentiment analysis (bbb_scraper.sentiment, 2026-09-15) ----
+# These inject review_sentiment_*/most_recent_*/avg_review_gap_days fields
+# directly and call recompute_intel, same post-hoc-then-recompute pattern
+# as Angi above -- see bbb_scraper/sentiment/analyze.py for how those
+# columns actually get produced, and _review_sentiment_signal's own
+# docstring for the real-data audit these thresholds were tuned against.
+
+def _row_with(**sentiment_fields) -> dict:
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    row.update(sentiment_fields)
+    return recompute_intel(row)
+
+
+def test_review_sentiment_signal_none_until_anything_has_been_analyzed():
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B"}])
+    row = build_master_table(out)[0]
+    assert row["review_sentiment_signal"] is None
+
+
+def test_review_sentiment_signal_low_but_not_zero_with_no_negative_found():
+    row = _row_with(review_sentiment_analyzed_count=5, review_sentiment_negative_count=0)
+    assert row["review_sentiment_signal"] == 18
+
+
+def test_review_sentiment_signal_peaks_for_the_salvageable_middle():
+    """Same "salvageable middle" shape as every other signal here: some
+    real negative sentiment outscores both none and all-negative."""
+    none_negative = _row_with(review_sentiment_analyzed_count=5, review_sentiment_negative_count=0)
+    some_negative = _row_with(review_sentiment_analyzed_count=5, review_sentiment_negative_count=2,
+                               most_recent_negative_review_date="2020-01-01")  # old, so recency doesn't inflate this
+    all_negative = _row_with(review_sentiment_analyzed_count=5, review_sentiment_negative_count=5,
+                              most_recent_negative_review_date="2020-01-01")
+
+    assert some_negative["review_sentiment_signal"] > none_negative["review_sentiment_signal"]
+    assert some_negative["review_sentiment_signal"] > all_negative["review_sentiment_signal"]
+    assert all_negative["review_sentiment_signal"] > none_negative["review_sentiment_signal"]  # still real signal, not erased
+
+
+def test_review_sentiment_signal_recent_negative_scores_higher_than_old():
+    """Recency is a smooth multiplier, not a hard gate -- real data audit
+    (see the function's own docstring) found most real negative sentiment
+    is actually 1-2+ years old, so old-but-real friction still scores
+    meaningfully, just lower than an active, current problem."""
+    recent = _row_with(review_sentiment_analyzed_count=5, review_sentiment_negative_count=1,
+                        most_recent_negative_review_date=date.today().isoformat())  # noqa: DTZ011
+    old = _row_with(review_sentiment_analyzed_count=5, review_sentiment_negative_count=1,
+                     most_recent_negative_review_date="2015-01-01")
+
+    assert recent["review_sentiment_signal"] > old["review_sentiment_signal"]
+    assert old["review_sentiment_signal"] > 0  # still real signal, not erased by age
+
+
+def test_lead_priority_score_responds_to_sentiment_signal():
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B"}])
+    row = build_master_table(out)[0]
+    baseline = row["lead_priority_score"]
+
+    row["review_sentiment_analyzed_count"] = 5
+    row["review_sentiment_negative_count"] = 2
+    row["most_recent_negative_review_date"] = date.today().isoformat()  # noqa: DTZ011
+    row = recompute_intel(row)
+
+    assert row["lead_priority_score"] != baseline
+
+
+def test_review_gap_flag_off_without_a_computable_gap():
+    row = _row_with(most_recent_review_date="2024-01-01")  # no avg_review_gap_days at all
+    assert row["review_gap_flag"] == 0
+
+
+def test_review_gap_flag_fires_only_for_a_real_outlier_vs_its_own_history():
+    """Relative to the business's OWN average gap, not a fixed day count --
+    real data spans 3-3890 days between reviews (median 384), so a
+    universal threshold wouldn't mean anything (see the function's own
+    docstring)."""
+    normal = _row_with(avg_review_gap_days=60, most_recent_review_date=_days_ago(90))
+    quiet = _row_with(avg_review_gap_days=60, most_recent_review_date=_days_ago(400))  # ~6.5x its own average
+
+    assert normal["review_gap_flag"] == 0
+    assert quiet["review_gap_flag"] == 1

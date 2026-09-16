@@ -41,6 +41,7 @@ import batch_scrape_metros as bsm
 from bbb_scraper.angi.models import BusinessDetail
 from bbb_scraper.mapquest.models import MapQuestMatch, MapQuestReview
 from bbb_scraper.reference.models import Category, City, Metro
+from bbb_scraper.sentiment.models import ReviewSentiment
 from bbb_scraper.utils.stats import RunStats
 
 
@@ -679,41 +680,197 @@ def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypa
 # --- _active_steps: the per-metro checklist Streamlit renders ---------------
 
 def test_active_steps_everything_on_includes_every_step_in_order():
-    steps = bsm._active_steps(check_websites=True, yelp=True, angi=True, mapquest=True,
+    steps = bsm._active_steps(check_websites=True, yelp=True, angi=True, mapquest=True, sentiment=True,
                                publish=True, deploy=True)
     assert [s["key"] for s in steps] == [
-        "scraping", "check_websites", "yelp", "angi_merge", "mapquest",
+        "scraping", "check_websites", "yelp", "angi_merge", "mapquest", "sentiment",
         "checkpoint", "publish", "deploy",
     ]
     assert all(isinstance(s["label"], str) and s["label"] for s in steps)  # a real label, not blank
 
 
 def test_active_steps_scraping_and_checkpoint_always_present():
-    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False,
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, sentiment=False,
                                publish=False, deploy=False)
     assert [s["key"] for s in steps] == ["scraping", "checkpoint"]
 
 
 def test_active_steps_omits_each_disabled_feature():
-    steps = bsm._active_steps(check_websites=False, yelp=True, angi=True, mapquest=True,
+    steps = bsm._active_steps(check_websites=False, yelp=True, angi=True, mapquest=True, sentiment=True,
                                publish=True, deploy=True)
     keys = [s["key"] for s in steps]
     assert "check_websites" not in keys
-    assert "yelp" in keys and "angi_merge" in keys and "mapquest" in keys
+    assert "yelp" in keys and "angi_merge" in keys and "mapquest" in keys and "sentiment" in keys
 
 
 def test_active_steps_deploy_requires_publish_even_if_deploy_flag_is_true():
     """main() only ever calls deploy_site nested inside `if args.publish:` --
     deploy=True with publish=False can't actually happen, so the checklist
     must not claim it will."""
-    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False,
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, sentiment=False,
                                publish=False, deploy=True)
     assert "deploy" not in [s["key"] for s in steps]
 
 
 def test_active_steps_publish_without_deploy():
-    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False,
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, sentiment=False,
                                publish=True, deploy=False)
     keys = [s["key"] for s in steps]
     assert "publish" in keys
     assert "deploy" not in keys
+
+
+# --- Sentiment: setup (best-effort, mirrors _open_mapquest) -----------------
+
+def test_open_sentiment_disabled_returns_none_none():
+    assert bsm._open_sentiment(False) == (None, None)
+
+
+def test_open_sentiment_ollama_unreachable_disables_it(monkeypatch):
+    monkeypatch.setattr(bsm, "is_available", lambda: False)
+
+    client, reason = bsm._open_sentiment(True)
+
+    assert client is None
+    assert reason  # a real, non-empty reason for the batch-summary note
+
+
+def test_open_sentiment_builds_a_client_when_available(monkeypatch):
+    fake_client = object()
+    monkeypatch.setattr(bsm, "is_available", lambda: True)
+    monkeypatch.setattr(bsm, "OllamaClient", lambda: fake_client)
+
+    client, reason = bsm._open_sentiment(True)
+
+    assert client is fake_client
+    assert reason is None
+
+
+def test_open_sentiment_setup_failure_disables_it_rather_than_raising(monkeypatch):
+    """Same never-fatal contract as _open_mapquest: a setup problem must
+    disable sentiment analysis for the whole batch, never take the batch
+    down."""
+    monkeypatch.setattr(bsm, "is_available", lambda: True)
+
+    def _boom():
+        raise RuntimeError("simulated: e.g. something genuinely broken in construction")
+
+    monkeypatch.setattr(bsm, "OllamaClient", _boom)
+
+    client, reason = bsm._open_sentiment(True)
+
+    assert client is None
+    assert reason
+
+
+# --- Sentiment: per-metro enrichment (post-hoc, mirrors MapQuest) -----------
+
+def _sentiment_row(name="Acme A", **overrides) -> dict:
+    row = {"bbb_name": name, "mapquest_reviews": "", "bbb_reviews": "", "angi_reviews": "",
+           "bbb_rating": "B", "match_status": "bbb_only"}
+    row.update(overrides)
+    return row
+
+
+class _FakeSentimentClient:
+    pass  # analyze_business_reviews is monkeypatched directly in these tests, never really called
+
+
+def test_enrich_metro_with_sentiment_skips_rows_with_no_review_text(monkeypatch):
+    def _should_never_be_called(row, client):
+        raise AssertionError("must not analyze a row with no review columns at all")
+    monkeypatch.setattr(bsm, "analyze_business_reviews", _should_never_be_called)
+
+    rows = [_sentiment_row()]
+    new_rows, businesses, reviews, negative = bsm._enrich_metro_with_sentiment(rows, _FakeSentimentClient())
+
+    assert businesses == 0
+    assert reviews == 0
+    assert negative == 0
+    assert "review_sentiment" not in new_rows[0]
+
+
+def test_enrich_metro_with_sentiment_writes_columns_and_recomputes_score(monkeypatch):
+    results = [ReviewSentiment(source="mapquest", text_hash="abc123", date="2024-01-01", rating=1.0,
+                                sentiment="negative", severity=5, theme="quality of work",
+                                actionable_for_pitch=True, summary="bad")]
+    aggregate = {
+        "review_sentiment_analyzed_count": 1, "review_sentiment_negative_count": 1,
+        "most_recent_review_date": "2024-01-01", "most_recent_negative_review_date": "2024-01-01",
+        "avg_review_gap_days": None,
+    }
+    monkeypatch.setattr(bsm, "analyze_business_reviews", lambda row, client: (results, aggregate))
+
+    rows = [_sentiment_row(mapquest_reviews='[{"text": "bad", "rating": 1.0, "date": "2024-01-01"}]')]
+    baseline_score = bsm.recompute_intel(rows[0])["lead_priority_score"]
+
+    new_rows, businesses, reviews, negative = bsm._enrich_metro_with_sentiment(rows, _FakeSentimentClient())
+
+    assert businesses == 1
+    assert reviews == 1
+    assert negative == 1
+    assert json.loads(new_rows[0]["review_sentiment"])[0]["sentiment"] == "negative"
+    assert new_rows[0]["review_sentiment_negative_count"] == 1
+    assert new_rows[0]["lead_priority_score"] != baseline_score  # recompute_intel actually ran
+
+
+def test_enrich_metro_with_sentiment_does_not_mutate_the_input_rows(monkeypatch):
+    """Same reason bbb_scraper.angi.enrich.enrich_with_angi returns a new
+    list instead of mutating in place: recompute_intel itself returns a
+    new dict, so the caller must use the returned list, not trust the one
+    it passed in."""
+    results = [ReviewSentiment(source="mapquest", text_hash="x", date="2024-01-01", rating=5.0,
+                                sentiment="positive", severity=1, theme="x",
+                                actionable_for_pitch=False, summary="s")]
+    aggregate = {"review_sentiment_analyzed_count": 1, "review_sentiment_negative_count": 0,
+                 "most_recent_review_date": "2024-01-01", "most_recent_negative_review_date": None,
+                 "avg_review_gap_days": None}
+    monkeypatch.setattr(bsm, "analyze_business_reviews", lambda row, client: (results, aggregate))
+
+    original_row = _sentiment_row(mapquest_reviews='[{"text": "good", "rating": 5.0, "date": "2024-01-01"}]')
+    rows = [original_row]
+
+    new_rows, *_ = bsm._enrich_metro_with_sentiment(rows, _FakeSentimentClient())
+
+    assert "review_sentiment" not in original_row  # the input dict itself is untouched
+    assert "review_sentiment" in new_rows[0]
+
+
+def test_enrich_metro_with_sentiment_one_business_failure_does_not_lose_others(monkeypatch):
+    def _fake_analyze(row, client):
+        if row["bbb_name"] == "Boom Co":
+            raise RuntimeError("simulated: e.g. Ollama went down mid-metro")
+        return (
+            [ReviewSentiment(source="mapquest", text_hash="x", date="2024-01-01", rating=5.0,
+                              sentiment="positive", severity=1, theme="x",
+                              actionable_for_pitch=False, summary="s")],
+            {"review_sentiment_analyzed_count": 1, "review_sentiment_negative_count": 0,
+             "most_recent_review_date": "2024-01-01", "most_recent_negative_review_date": None,
+             "avg_review_gap_days": None},
+        )
+    monkeypatch.setattr(bsm, "analyze_business_reviews", _fake_analyze)
+
+    rows = [
+        _sentiment_row(name="Boom Co", mapquest_reviews='[{"text": "x", "rating": 1.0, "date": "2024-01-01"}]'),
+        _sentiment_row(name="Fine Co", mapquest_reviews='[{"text": "good", "rating": 5.0, "date": "2024-01-01"}]'),
+    ]
+
+    new_rows, businesses, _reviews, _negative = bsm._enrich_metro_with_sentiment(rows, _FakeSentimentClient())
+
+    assert businesses == 1  # only Fine Co succeeded
+    assert "review_sentiment" not in new_rows[0]  # Boom Co's row is untouched, not half-written
+    assert "review_sentiment" in new_rows[1]
+
+
+def test_enrich_metro_with_sentiment_bbb_reviews_column_also_triggers_analysis(monkeypatch):
+    """has_reviews checks all three source columns, not just mapquest_reviews."""
+    monkeypatch.setattr(bsm, "analyze_business_reviews", lambda row, client: ([], {
+        "review_sentiment_analyzed_count": 0, "review_sentiment_negative_count": 0,
+        "most_recent_review_date": None, "most_recent_negative_review_date": None,
+        "avg_review_gap_days": None,
+    }))
+
+    rows = [_sentiment_row(bbb_reviews='[{"text": "x", "rating": 3, "date": "2024-01-01"}]')]
+    _, businesses, _, _ = bsm._enrich_metro_with_sentiment(rows, _FakeSentimentClient())
+
+    assert businesses == 1

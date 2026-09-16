@@ -159,6 +159,21 @@ class Settings(BaseSettings):
     mapquest_min_delay_seconds: float = Field(default=1.5, alias="MAPQUEST_MIN_DELAY_SECONDS")
     mapquest_max_delay_seconds: float = Field(default=3.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
 
+    # --- Local sentiment analysis (bbb_scraper/sentiment, Ollama) ---------------
+    # A local model on Nick's own machine, not a hosted API -- no key, no
+    # proxy (nothing to evade, it's a loopback call), no per-request cost.
+    # Zero-shot prompting against an already-installed instruction-tuned
+    # model (llama3.2, confirmed live 2026-09-15) -- no training/fine-tuning
+    # involved; see bbb_scraper/sentiment/client.py's own module docstring.
+    ollama_base_url: str = Field(default="http://localhost:11434", alias="OLLAMA_BASE_URL")
+    ollama_model: str = Field(default="llama3.2:latest", alias="OLLAMA_MODEL")
+    # Generous on purpose: a cold model load measured ~44s in real testing;
+    # once warm, real calls run ~2-4s regardless of review length. This
+    # timeout has to cover the worst case (a cold first call), not the
+    # typical case.
+    ollama_timeout_seconds: float = Field(default=90.0, alias="OLLAMA_TIMEOUT_SECONDS")
+    ollama_max_retries: int = Field(default=2, alias="OLLAMA_MAX_RETRIES")
+
     # --- Static site deployment (scripts/deploy_site.py only) -----------------
     # Not used by the running app itself -- only by the deploy script, which
     # shells out to the AWS CLI (never handles credentials directly; the CLI

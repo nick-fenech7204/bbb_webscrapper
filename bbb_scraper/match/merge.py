@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import math
 from collections.abc import Callable
+from datetime import date
 from typing import Any
 
 from bbb_scraper.match.matcher import MatchOutcome
@@ -402,6 +403,108 @@ def _bbb_complaints_signal(r):
     return 25  # heavy complaint volume -- likely beyond what a reputation nudge fixes
 
 
+def _days_since(iso_date: str | None) -> int | None:
+    """iso_date must already be "YYYY-MM-DD" -- bbb_scraper.sentiment.analyze
+    stores stable facts (a date, a count, a historical average), never a
+    pre-computed "days since", specifically so this can compute it fresh
+    against *today* rather than trusting a snapshot that goes stale the
+    moment the clock moves past when the row was written -- same reason
+    recompute_intel exists at all rather than trusting frozen columns."""
+    if not iso_date:
+        return None
+    try:
+        return (date.today() - date.fromisoformat(iso_date)).days  # noqa: DTZ011 -- calendar-date arithmetic, no real timezone concept applies
+    except ValueError:
+        return None
+
+
+def _review_sentiment_signal(r):
+    """0-100, "how much recent, real negative review sentiment points to a
+    good lead" -- local Ollama analysis of mapquest_reviews/bbb_reviews/
+    angi_reviews text (bbb_scraper.sentiment), not a fixed-vocabulary
+    keyword match. None when nothing's been analyzed yet (most rows,
+    until scripts/analyze_review_sentiment.py or the batch's --sentiment
+    step runs on them).
+
+    v1 thresholds -- hand-tuned against a real audit, 2026-09-15, of every
+    review analyzed so far (134 businesses, 699 reviews, 3 real metros):
+      - 44% of analyzed businesses (59/134) had ZERO negative/mixed
+        sentiment -- a real, common case, not an edge case; scored low
+        but not zero, same as _bbb_complaints_signal's bcomp==0 case.
+      - Negative ratio bands follow the same "salvageable middle" shape
+        as every other signal here: some real friction (<=60% negative)
+        is the clearest pitch, not none and not total -- but 100%
+        negative (12/134, 9%) is real signal too (often a thin sample,
+        1-2 reviews, but still a real documented complaint) and stays
+        meaningfully high, just not the peak.
+      - Recency is a smooth multiplier, deliberately NOT a hard gate: of
+        the 75 businesses with a dated negative review, only 13 (17%)
+        were within 6 months -- the real majority (44, 59%) were 2+
+        years old. Gating hard on recency would have thrown out most of
+        this project's real complaint signal; old-but-real friction
+        still says something, just less urgently than a live problem.
+      - severity is deliberately NOT weighted here: real data shows the
+        model calls 109/143 (76%) of negative/mixed reviews severity 5 --
+        it's tracking sentiment more than it's discriminating severity in
+        practice with the current prompt, so treating it as an
+        independent driver would just double-count the sentiment label
+        under a different name. Revisit if the prompt is tuned to spread
+        severity out more.
+    """
+    analyzed = _int_or_none(r.get("review_sentiment_analyzed_count"))
+    if not analyzed:
+        return None
+    negative = _int_or_none(r.get("review_sentiment_negative_count")) or 0
+
+    if negative == 0:
+        return 18  # real reviews analyzed, no negative/mixed sentiment found -- not a pull either way
+
+    ratio = negative / analyzed
+    if ratio <= 0.6:
+        base = 78  # the salvageable middle -- real, fixable-looking friction, not the whole story
+    elif ratio < 1.0:
+        base = 60
+    else:
+        base = 45  # every analyzed review negative -- often a thin sample; real, but a harder pitch to frame as "a quick fix"
+
+    days_since = _days_since(r.get("most_recent_negative_review_date"))
+    if days_since is None:
+        recency_mult = 0.85  # negative sentiment exists but its date didn't parse
+    elif days_since <= 180:
+        recency_mult = 1.15  # an active, current problem
+    elif days_since <= 365:
+        recency_mult = 1.0
+    elif days_since <= 730:
+        recency_mult = 0.85
+    else:
+        recency_mult = 0.7  # old history -- real, but not urgent
+
+    return round(min(base * recency_mult, 100), 1)
+
+
+def _review_gap_flag(r):
+    """1 if this business has gone notably quiet relative to its OWN
+    historical review cadence. Deliberately relative, not a fixed day
+    count: real data (2026-09-15, 107 businesses with a computable gap)
+    spans 3 to 3890 days between reviews (median 384) -- how often a
+    business normally gets reviewed varies far too much across
+    businesses for one universal threshold to mean anything, so this
+    only fires for a multi-x outlier against that same business's own
+    baseline.
+
+    Deliberately ambiguous on its own -- a real quiet period could mean
+    the problem got fixed and reviews naturally slowed, or it could mean
+    a reputation bad enough that people stopped engaging at all -- so
+    this is a small bonus in _lead_priority_score, not an independent
+    averaged signal the way _review_sentiment_signal is.
+    """
+    avg_gap = _num(r.get("avg_review_gap_days"))
+    days_since = _days_since(r.get("most_recent_review_date"))
+    if avg_gap is None or avg_gap <= 0 or days_since is None:
+        return 0
+    return int(days_since > avg_gap * 3)
+
+
 def _lead_priority_score(r):
     """How good a sales lead this business is *for a firm that sells review
     / reputation-management services*. Not raw reputation weakness -- it
@@ -451,6 +554,15 @@ def _lead_priority_score(r):
     if bcomp_signal is not None:
         signals.append(bcomp_signal)
 
+    # Local review-sentiment analysis, added 2026-09-15 (bbb_scraper.sentiment)
+    # -- None for the vast majority of rows until analyze_review_sentiment.py
+    # or the batch's --sentiment step has actually run on them, same
+    # "additive, never subtracts a signal that isn't there yet" shape as
+    # every other optional signal here.
+    sentiment_signal = _review_sentiment_signal(r)
+    if sentiment_signal is not None:
+        signals.append(sentiment_signal)
+
     if not signals:
         return None
     score = sum(signals) / len(signals)
@@ -459,6 +571,8 @@ def _lead_priority_score(r):
         score += 12  # looks fine on paper, isn't -- a wake-up-call pitch
     if _accredited_but_low_rated(r):
         score += 8
+    if _review_gap_flag(r):
+        score += 6  # gone notably quiet vs. its own history -- ambiguous alone, so a small nudge, not a driver
     bcomp = _bbb_complaints_total(r)
     if bcomp is not None and 1 <= bcomp <= 25:
         score += 8  # active pain, not a lost cause
@@ -500,6 +614,8 @@ _INTEL: dict[str, Callable[[dict[str, Any]], Any]] = {
     "review_need_score": _review_need_score,
     "low_review_volume_flag": _low_review_volume_flag,
     "accredited_but_low_rated": _accredited_but_low_rated,
+    "review_sentiment_signal": _review_sentiment_signal,
+    "review_gap_flag": _review_gap_flag,
     "lead_priority_score": _lead_priority_score,
     "has_phone": _has_phone,
     "has_named_contact": _has_named_contact,
