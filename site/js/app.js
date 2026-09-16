@@ -222,6 +222,21 @@
     );
   }
 
+  // The single most representative negative/mixed review, picked by
+  // bbb_scraper.sentiment.analyze._top_complaint -- a real, already-
+  // analyzed sentence, not a synthesized blurb. Theme (a short category)
+  // as a lightweight prefix, full sentence after; title="" carries the
+  // whole thing for a summary long enough to truncate on-screen.
+  function topComplaintCell(r) {
+    const summary = r.top_complaint_summary || "";
+    if (!summary) return `<span class="muted">${dash}</span>`;
+    const theme = r.top_complaint_theme || "";
+    const full = theme ? `${theme}: ${summary}` : summary;
+    return `<span class="top-complaint-cell" title="${esc(full)}">` +
+      (theme ? `<span class="top-complaint-theme">${esc(theme)}</span> ` : "") +
+      `${esc(summary)}</span>`;
+  }
+
   // One combined table now (2026-09-11 -- used to be separate Lead
   // records / Intelligence tabs with their own column sets; merged into
   // one so everything is visible without switching views). Trimmed and
@@ -245,7 +260,11 @@
   // _lead_priority_score docstring). Lead priority already answered the
   // question that mattered ("is this worth calling"); showing a second,
   // differently-scaled number next to it just asked the reader to reconcile
-  // two opinions instead of acting on one, 13 columns now.
+  // two opinions instead of acting on one, down to 13 columns -- then "Top
+  // complaint" added the same day (bbb_scraper.sentiment's own pick of the
+  // single most representative negative/mixed review, mostly MapQuest-
+  // sourced real review text -- see _top_complaint's docstring) so a rep
+  // has an actual thing to open the call with, not just a score, 14 again.
   const COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", w: 200, render: nameCell },
     { key: "city", label: "City", w: 110, render: cityCell },
@@ -253,6 +272,7 @@
     { key: "bbb_complaints_total", label: "BBB complaints", w: 105, cls: "num-cell", render: intCell("bbb_complaints_total") },
     { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
     { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
+    { key: "top_complaint_summary", label: "Top complaint", w: 200, render: topComplaintCell },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },

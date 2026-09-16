@@ -759,6 +759,14 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
 }
 .specialties-toggle:hover { color: var(--accent-hover); text-decoration: underline; }
 
+/* Top complaint cell: theme is a short lightweight label ahead of the real
+   sentence, not a badge -- it's reading as one clause, not a separate tag. */
+.top-complaint-theme {
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 /* score bar */
 .score {
   position: relative;

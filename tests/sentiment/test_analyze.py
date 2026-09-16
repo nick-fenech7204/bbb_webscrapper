@@ -7,7 +7,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 
-from bbb_scraper.sentiment.analyze import _parse_date, analyze_business_reviews
+from bbb_scraper.sentiment.analyze import _parse_date, _top_complaint, analyze_business_reviews
 from bbb_scraper.sentiment.models import ReviewSentiment
 
 
@@ -83,6 +83,8 @@ def test_empty_or_missing_review_columns_produce_no_results():
         "most_recent_review_date": None,
         "most_recent_negative_review_date": None,
         "avg_review_gap_days": None,
+        "top_complaint_theme": None,
+        "top_complaint_summary": None,
     }
 
 
@@ -257,3 +259,59 @@ def test_cache_is_keyed_by_source_too_not_just_text_hash():
 
     assert len(client.calls) == 2
     assert {r.source for r in results} == {"mapquest", "angi"}
+
+
+# --- _top_complaint ----------------------------------------------------------
+
+def _rs(source="mapquest", sentiment="negative", severity=3, actionable=True,
+        summary="s", theme="quality of work", date="2024-06-01") -> ReviewSentiment:
+    return ReviewSentiment(source=source, text_hash="h", date=date, rating=1.0,
+                            sentiment=sentiment, severity=severity, theme=theme,
+                            actionable_for_pitch=actionable, summary=summary)
+
+
+def test_top_complaint_none_when_nothing_negative():
+    reviews = [_rs(sentiment="positive"), _rs(sentiment="neutral")]
+    assert _top_complaint(reviews) == {"top_complaint_theme": None, "top_complaint_summary": None}
+
+
+def test_top_complaint_prefers_actionable_over_more_severe_non_actionable():
+    not_actionable_but_severe = _rs(actionable=False, severity=5, theme="pricing", summary="A")
+    actionable_but_milder = _rs(actionable=True, severity=2, theme="communication", summary="B")
+    out = _top_complaint([not_actionable_but_severe, actionable_but_milder])
+    assert out == {"top_complaint_theme": "communication", "top_complaint_summary": "B"}
+
+
+def test_top_complaint_prefers_higher_severity_when_actionable_ties():
+    mild = _rs(severity=2, theme="scheduling", summary="A")
+    severe = _rs(severity=5, theme="quality of work", summary="B")
+    out = _top_complaint([mild, severe])
+    assert out == {"top_complaint_theme": "quality of work", "top_complaint_summary": "B"}
+
+
+def test_top_complaint_prefers_more_recent_when_actionable_and_severity_tie():
+    old = _rs(date="2020-01-01", theme="pricing", summary="old one")
+    recent = _rs(date="2026-08-01", theme="communication", summary="recent one")
+    out = _top_complaint([old, recent])
+    assert out == {"top_complaint_theme": "communication", "top_complaint_summary": "recent one"}
+
+
+def test_top_complaint_prefers_mapquest_as_final_tiebreak():
+    """Nick's explicit call, 2026-09-16: when actionable/severity/date all
+    tie, MapQuest-sourced content wins -- see _top_complaint's own
+    docstring for why (it's already this project's dominant real review-
+    content source, not an arbitrary preference)."""
+    bbb_one = _rs(source="bbb", theme="pricing", summary="from bbb")
+    mapquest_one = _rs(source="mapquest", theme="communication", summary="from mapquest")
+    out = _top_complaint([bbb_one, mapquest_one])
+    assert out == {"top_complaint_theme": "communication", "top_complaint_summary": "from mapquest"}
+
+
+def test_top_complaint_skips_a_negative_review_missing_a_summary():
+    """A review whose LLM analysis didn't produce a usable summary can't
+    lead a pitch -- fall through to the next real candidate instead of
+    surfacing an empty string."""
+    no_summary = _rs(summary=None, severity=5, theme="pricing")
+    has_summary = _rs(summary="usable", severity=1, theme="communication")
+    out = _top_complaint([no_summary, has_summary])
+    assert out == {"top_complaint_theme": "communication", "top_complaint_summary": "usable"}

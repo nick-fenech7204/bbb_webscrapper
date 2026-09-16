@@ -211,6 +211,14 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["specialties"] = (row.get("angi_categories") or "") if on_angi else ""
     result["angi_super_service_award"] = _to_bool(row.get("angi_is_super_service_award_winner")) if on_angi else False
 
+    # The single most representative negative/mixed review (bbb_scraper.
+    # sentiment.analyze._top_complaint) -- a raw fact written directly onto
+    # the row by the batch's sentiment step, not an _INTEL-computed column,
+    # so it needs its own pass-through here rather than going through the
+    # generic loop below.
+    result["top_complaint_theme"] = row.get("top_complaint_theme") or ""
+    result["top_complaint_summary"] = row.get("top_complaint_summary") or ""
+
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0

@@ -156,13 +156,48 @@ def analyze_business_reviews(row: dict, client: OllamaClient) -> tuple[list[Revi
     return results, _aggregate(results)
 
 
-def _aggregate(results: list[ReviewSentiment]) -> dict:
-    negative_sentiments = ("negative", "mixed")
+_NEGATIVE_SENTIMENTS = ("negative", "mixed")
 
+
+def _top_complaint(results: list[ReviewSentiment]) -> dict:
+    """The single most representative negative/mixed review, for a
+    business-level "here's the actual problem" column (2026-09-16, Nick's
+    ask) -- not a second LLM call, just picking the best already-analyzed
+    one: a rep needs ONE concrete thing to open a pitch with, not a raw
+    count.
+
+    Ranked, in order: actionable_for_pitch (the model's own call on
+    whether this complaint makes a usable pitch) first, then most severe,
+    then most recent (a live problem opens a pitch better than an old
+    one), then -- Nick's explicit call -- MapQuest-sourced preferred on
+    any remaining tie. Real reason, not an arbitrary preference: in the
+    first real batch run under this pipeline (Electricians/Dallas,
+    2026-09-16), MapQuest was 528/528 of all analyzed review content --
+    BBB review fetching isn't wired into the batch pipeline at all yet
+    (only available via the separate scripts/fetch_bbb_reviews.py), and
+    Angi was off for that whole run (no confident category match). So
+    MapQuest isn't being artificially up-weighted here against real
+    competing content -- it's already the dominant real source, and this
+    tiebreak just keeps it that way if/when BBB/Angi review capture joins
+    the integrated batch pipeline later.
+    """
+    candidates = [r for r in results if r.sentiment in _NEGATIVE_SENTIMENTS and r.summary]
+    if not candidates:
+        return {"top_complaint_theme": None, "top_complaint_summary": None}
+
+    def sort_key(r: ReviewSentiment):
+        parsed_date = date.fromisoformat(r.date) if r.date else date.min
+        return (r.actionable_for_pitch is True, r.severity or 0, parsed_date, r.source == "mapquest")
+
+    best = max(candidates, key=sort_key)
+    return {"top_complaint_theme": best.theme, "top_complaint_summary": best.summary}
+
+
+def _aggregate(results: list[ReviewSentiment]) -> dict:
     all_dates = sorted(date.fromisoformat(r.date) for r in results if r.date)
     negative_dates = sorted(
         date.fromisoformat(r.date) for r in results
-        if r.date and r.sentiment in negative_sentiments
+        if r.date and r.sentiment in _NEGATIVE_SENTIMENTS
     )
 
     avg_gap_days = None
@@ -172,8 +207,9 @@ def _aggregate(results: list[ReviewSentiment]) -> dict:
 
     return {
         "review_sentiment_analyzed_count": len(results),
-        "review_sentiment_negative_count": sum(1 for r in results if r.sentiment in negative_sentiments),
+        "review_sentiment_negative_count": sum(1 for r in results if r.sentiment in _NEGATIVE_SENTIMENTS),
         "most_recent_review_date": all_dates[-1].isoformat() if all_dates else None,
         "most_recent_negative_review_date": negative_dates[-1].isoformat() if negative_dates else None,
         "avg_review_gap_days": avg_gap_days,
+        **_top_complaint(results),
     }
