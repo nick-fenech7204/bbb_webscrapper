@@ -4,7 +4,7 @@ from bbb_scraper.match.enrich import (
     enrich_bbb_with_yelp,
     open_yelp_enrichment,
 )
-from bbb_scraper.yelp.client import YelpConfigError
+from bbb_scraper.yelp.client import YelpAPIError, YelpConfigError
 
 _BBB = [
     {"name": "Machado Auto Sales", "phone": "(305) 642-4409", "city": "Miami",
@@ -64,10 +64,13 @@ def test_low_quota_disables_without_calling():
     assert all(r["match_status"] == "bbb_only" for r in rows)
 
 
-def test_call_failure_disables_for_rest_of_batch():
+def test_real_429_disables_for_rest_of_batch():
+    """A genuine rate-limit response -- retrying won't help, this really is
+    quota exhaustion, so the old whole-batch-off behavior is still correct
+    here."""
     class _Boom(_FakeClient):
         def search(self, **kw):
-            raise RuntimeError("429 Too Many Requests")
+            raise YelpAPIError(429, "Too Many Requests", "https://api.yelp.com/v3/businesses/search")
 
     state = YelpEnrichmentState(enabled=True, client=_Boom())
     rows = enrich_bbb_with_yelp(_BBB, "car dealers", "Miami, FL", state)
@@ -77,6 +80,57 @@ def test_call_failure_disables_for_rest_of_batch():
     # a subsequent metro also comes back BBB-only, no further calls attempted
     rows2 = enrich_bbb_with_yelp(_BBB, "car dealers", "Tampa, FL", state)
     assert all(r["match_status"] == "bbb_only" for r in rows2)
+
+
+def test_bad_key_disables_for_rest_of_batch():
+    """401/403 -- the key itself is the problem, retrying the same call on
+    the next metro can't fix that either."""
+    class _Boom(_FakeClient):
+        def search(self, **kw):
+            raise YelpAPIError(401, "Unauthorized", "https://api.yelp.com/v3/businesses/search")
+
+    state = YelpEnrichmentState(enabled=True, client=_Boom())
+    enrich_bbb_with_yelp(_BBB, "car dealers", "Miami, FL", state)
+    assert state.enabled is False
+
+
+def test_transient_5xx_does_not_disable_for_rest_of_batch():
+    """2026-09-16 real incident: a transient Yelp 500 on metro 1 of a real
+    5-metro batch disabled Yelp for all five. A one-off server hiccup
+    isn't evidence of quota exhaustion -- this metro comes back BBB-only,
+    but the state must stay enabled so the NEXT metro gets a real,
+    independent attempt."""
+    call_count = {"n": 0}
+
+    class _FlakyOnce(_FakeClient):
+        def search(self, **kw):
+            call_count["n"] += 1
+            if call_count["n"] == 1:
+                raise YelpAPIError(500, "Something went wrong internally, please try again later.",
+                                    "https://api.yelp.com/v3/businesses/search")
+            return super().search(**kw)
+
+    state = YelpEnrichmentState(enabled=True, client=_FlakyOnce())
+    rows = enrich_bbb_with_yelp(_BBB, "car dealers", "Miami, FL", state)
+    assert state.enabled is True  # NOT disabled by a transient failure
+    assert all(r["match_status"] == "bbb_only" for r in rows)  # this metro still lost Yelp though
+
+    rows2 = enrich_bbb_with_yelp(_BBB, "car dealers", "Tampa, FL", state)
+    matched = [r for r in rows2 if r["match_status"] == "matched"]
+    assert len(matched) == 1  # the next metro got a real, independent attempt and it worked
+
+
+def test_non_api_exception_is_also_treated_as_transient():
+    """A network-level failure (timeout, connection reset, ...) never even
+    reaches a YelpAPIError -- must not be treated as permanent just because
+    it's not explicitly recognized as transient."""
+    class _Boom(_FakeClient):
+        def search(self, **kw):
+            raise ConnectionError("connection reset by peer")
+
+    state = YelpEnrichmentState(enabled=True, client=_Boom())
+    enrich_bbb_with_yelp(_BBB, "car dealers", "Miami, FL", state)
+    assert state.enabled is True
 
 
 def test_open_yelp_enrichment_no_key(monkeypatch):
