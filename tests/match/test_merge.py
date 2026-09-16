@@ -39,9 +39,8 @@ def test_bbb_only_row_still_gets_bbb_side_scoring():
     assert r["yelp_name"] == ""
     assert r["present_bbb"] == 1 and r["present_yelp"] == 0
     assert r["review_need_score"] is None  # Yelp-specific -> None without a match
-    # but the BBB-driven scores are still there
+    # but the BBB-driven score is still there
     assert r["bbb_grade_num"] == 2.0
-    assert r["reputation_score"] is not None
     assert r["lead_priority_score"] is not None  # a C-grade, 15yo business is a real lead
 
 
@@ -80,7 +79,7 @@ def test_divergence_flag_fires_on_clean_grade_but_bad_yelp():
     r = build_master_table(out)[0]
     assert r["reputation_divergence_flag"] == 1
     assert r["review_need_score"] > 40
-    assert r["reputation_score"] is not None
+    assert r["lead_priority_score"] is not None
 
 
 def test_divergence_flag_fires_on_bbb_complaints_alone():
@@ -232,6 +231,31 @@ def test_bbb_complaints_signal_peaks_for_a_moderate_real_count():
     assert moderate > heavy
 
 
+def test_complaints_are_not_double_counted_once_another_signal_is_present():
+    """2026-09-16 regression: _bbb_complaints_signal feeds `signals` (the
+    averaged base score) -- there must not ALSO be a separate flat bonus
+    for the same complaint count once a grade (or any other signal) is
+    present too, or this one input counts twice while every other signal
+    here only ever counts once. Real bug, found live: a grade=B row jumped
+    47.5 -> 74.5 (+27) going from 0 to 5 complaints, only 19 of which was
+    the legitimate base-signal band shift (30 -> 68); the other 8 was a
+    leftover bonus from before complaints were a base signal at all."""
+    def score(complaints_total):
+        out = MatchOutcome(bbb_only=[{
+            "name": "X", "rating": "B", "phone": "3055550100",
+            "reviews_complaints": f'{{"complaints_total": {complaints_total}}}',
+        }])
+        return build_master_table(out)[0]["lead_priority_score"]
+
+    zero = score(0)
+    moderate = score(5)
+    # The only two signals present are the BBB grade band (65, fixed) and
+    # _bbb_complaints_signal (30 for zero complaints, 68 for a moderate
+    # count) -- so the jump between them must equal exactly what averaging
+    # those two produces, not that plus a leftover flat bonus on top.
+    assert moderate - zero == round((68 - 30) / 2, 1)
+
+
 def test_website_dead_flag_reads_the_webcheck_column():
     """website_dead_flag surfaces whatever bbb_scraper.webcheck already
     decided (see its own tests for the actual liveness logic) -- this only
@@ -293,39 +317,53 @@ def test_on_angi_reflects_whether_an_angi_phone_is_present():
     assert row["on_angi"] == 1
 
 
-def test_unmatched_row_reputation_score_is_unaffected_by_angi_existing():
-    """The whole point of wsum-normalizing over *present* signals: adding
-    Angi as a signal must not move any row that isn't matched to Angi."""
+def test_unmatched_row_lead_priority_score_is_unaffected_by_angi_existing():
+    """The whole point of averaging over *present* signals only: adding
+    Angi as a signal source must not move any row that isn't matched to
+    Angi. (2026-09-16: rewritten against lead_priority_score now that it's
+    the one score -- reputation_score used to carry this same property.)"""
     out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B"}])
-    before = build_master_table(out)[0]["reputation_score"]
+    before = build_master_table(out)[0]["lead_priority_score"]
     row = recompute_intel(build_master_table(out)[0])  # angi_* still blank
-    assert row["reputation_score"] == before
+    assert row["lead_priority_score"] == before
 
 
-def test_angi_rating_pulls_reputation_score_toward_angis_opinion():
+def test_angi_rating_in_sweet_spot_pulls_lead_priority_score_up():
+    """A+ alone bands low (22 -- "already fine", no pitch needed). A
+    genuinely fixable Angi rating (2.5 stars, inside the salvageable-
+    middle band) should pull the score up toward that band's peak (82),
+    not down -- unlike the old reputation_score, "worse" isn't simply
+    "better lead" here, so this checks the real shape instead of raw
+    monotonic weakness."""
     out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
     row = build_master_table(out)[0]
-    clean_score = row["reputation_score"]  # A+ alone -> a low weakness score
+    clean_score = row["lead_priority_score"]  # A+ alone -> 22, the "too good" band
 
     row["angi_phone"] = "3055550100"
-    row["angi_overall_rating"] = "1.2"
+    row["angi_overall_rating"] = "2.5"
     row["angi_review_count"] = "40"
     row = recompute_intel(row)
-    assert row["reputation_score"] > clean_score  # a bad Angi rating should raise "weakness"
+    assert row["lead_priority_score"] > clean_score
 
 
-def test_angi_rating_needs_enough_reviews_to_count():
-    """Same _MIN_REVIEWS_FOR_RATING gate as Yelp -- one review isn't a
-    rating yet, regardless of how it happened to land."""
+def test_angi_rating_signal_still_needs_enough_reviews_to_count():
+    """Same _MIN_REVIEWS_FOR_RATING gate as Yelp for the RATING signal
+    specifically -- but unlike the old reputation_score, Angi's volume
+    signal only needs a phone match (see _lead_priority_score), so it
+    still contributes even at 1 review; only the rating band must be
+    excluded. Pinned with exact arithmetic so a broken gate (the 45 band
+    sneaking in) would change the result, not just possibly move it."""
     out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
     row = build_master_table(out)[0]
-    clean_score = row["reputation_score"]
+    assert row["lead_priority_score"] == 22.0  # BBB grade signal alone
 
     row["angi_phone"] = "3055550100"
-    row["angi_overall_rating"] = "1.0"
-    row["angi_review_count"] = "1"
+    row["angi_overall_rating"] = "1.0"  # would band to 45 if it counted
+    row["angi_review_count"] = "1"  # too few for the rating gate
     row = recompute_intel(row)
-    assert row["reputation_score"] == clean_score  # too few reviews -> ignored
+    # Only the volume signal (band 72 for 1 review) joins the grade signal
+    # (22) -- the rating band (45) is excluded by the gate.
+    assert row["lead_priority_score"] == round((22 + 72) / 2, 1)
 
 
 def test_reputation_divergence_flag_fires_on_low_angi_rating_alone():

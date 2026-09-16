@@ -168,17 +168,26 @@ def load_example(dataset_id: str, business_name: str) -> dict:
     raise SystemExit(f"{business_name!r} not found in {path.name}")
 
 
+def _rating_band(v: float) -> float:
+    """Mirrors bbb_scraper.match.merge._rating_band exactly -- shared by
+    Yelp, Angi, and (as of 2026-09-16) BBB's own review average."""
+    return 45 if v <= 1.5 else 82 if v < 3.7 else 34 if v < 4.2 else 8
+
+
 def trace_lead_priority(r: dict) -> list[tuple[str, str]]:
     """Recompute lead_priority_score step by step against the SAME logic as
     merge._lead_priority_score, returning (label, detail) rows for the PDF
     table -- so the worked example is a real, checkable trace, not prose
-    that could quietly drift from the actual formula."""
+    that could quietly drift from the actual formula. Reads sentiment
+    straight off the published record (review_sentiment_signal) rather
+    than re-deriving it -- that math lives in bbb_scraper.sentiment, not
+    duplicated a second time here."""
     steps = []
     signals = []
 
     yr = r.get("yelp_rating") if r.get("on_yelp") and (r.get("yelp_review_count") or 0) >= 5 else None
     if yr is not None:
-        v = 45 if yr <= 1.5 else 82 if yr < 3.7 else 34 if yr < 4.2 else 8
+        v = _rating_band(yr)
         signals.append(v)
         steps.append((f"Yelp rating signal ({yr} stars, {r.get('yelp_review_count')} reviews)", f"{v}/100"))
 
@@ -188,6 +197,18 @@ def trace_lead_priority(r: dict) -> list[tuple[str, str]]:
         signals.append(v)
         steps.append((f"Yelp volume signal ({yn} reviews)", f"{v}/100"))
 
+    ar = r.get("angi_rating") if r.get("on_angi") and (r.get("angi_review_count") or 0) >= 5 else None
+    if ar is not None:
+        v = _rating_band(ar)
+        signals.append(v)
+        steps.append((f"Angi rating signal ({ar} stars, {r.get('angi_review_count')} reviews)", f"{v}/100"))
+
+    an = r.get("angi_review_count")
+    if r.get("on_angi") and an is not None:
+        v = 40 if an == 0 else 72 if an <= 60 else 40 if an <= 150 else 12
+        signals.append(v)
+        steps.append((f"Angi volume signal ({an} reviews)", f"{v}/100"))
+
     g = letter_grade_to_num(r.get("rating"))
     if g is not None:
         v = 65 if 1.67 <= g <= 3.33 else 32 if g < 1.67 else 22
@@ -196,9 +217,20 @@ def trace_lead_priority(r: dict) -> list[tuple[str, str]]:
 
     bavg = r.get("bbb_review_avg")
     if bavg is not None:
-        v = 72 if bavg < 3.5 else 15
+        v = _rating_band(bavg)
         signals.append(v)
         steps.append((f"BBB review-average signal ({bavg}/5)", f"{v}/100"))
+
+    bcomp = r.get("bbb_complaints_total")
+    if bcomp is not None:
+        v = 30 if bcomp == 0 else 68 if bcomp <= 10 else 50 if bcomp <= 25 else 25
+        signals.append(v)
+        steps.append((f"BBB complaints signal ({bcomp} complaint(s))", f"{v}/100"))
+
+    sentiment = r.get("review_sentiment_signal")
+    if sentiment is not None:
+        signals.append(sentiment)
+        steps.append(("Review sentiment signal (local Ollama analysis)", f"{sentiment}/100"))
 
     base = sum(signals) / len(signals) if signals else 0
     steps.append((f"Base = average of {len(signals)} signal(s)", f"{base:.1f}"))
@@ -206,14 +238,13 @@ def trace_lead_priority(r: dict) -> list[tuple[str, str]]:
     score = base
     if r.get("reputation_divergence_flag"):
         score += 12
-        steps.append(("+ Reputation divergence (clean BBB grade, weak real feedback)", "+12"))
+        steps.append(("+ Reputation divergence (clean BBB grade, weak real feedback or sentiment)", "+12"))
     if r.get("accredited_but_low_rated"):
         score += 8
         steps.append(("+ Accredited but low-rated", "+8"))
-    bcomp = r.get("bbb_complaints_total")
-    if bcomp is not None and 1 <= bcomp <= 25:
-        score += 8
-        steps.append((f"+ Has {bcomp} BBB complaint(s), in the 1-25 'active, fixable' range", "+8"))
+    if r.get("review_gap_flag"):
+        score += 6
+        steps.append(("+ Gone quiet vs. its own review history", "+6"))
     yrs = r.get("years_in_business")
     try:
         yrs_n = float(yrs)
@@ -269,28 +300,25 @@ def build(pdf: Report, example: dict, dataset_label: str):
 
     # ---- Overview / the "why over 100" question ----
     pdf.add_page()
-    pdf.h1("Overview: two scores, two different scales")
+    pdf.h1("Overview: one score")
     pdf.p(
-        "There are two top-line numbers on the Intelligence view, and they are deliberately "
-        "NOT on the same scale -- neither is a percentage."
+        "Every record gets exactly one top-line number, Lead Priority Score (0-130), not a "
+        "percentage. Earlier versions of this model ran a second number alongside it "
+        "(Reputation Score, a raw 0-100 \"how weak does this look\" blend) -- retired "
+        "2026-09-16: it asked the reader to reconcile two different opinions instead of "
+        "acting on one, and everything useful it measured (BBB's review average included) is "
+        "folded into Lead Priority Score's own base signals now, using the same salvageable-"
+        "middle curve as everything else here instead of a separate raw-weakness scale."
     )
-    pdf.table(
-        ["Score", "Range", "Question it answers"],
-        [
-            ["Reputation Score", "0 - 100", "How weak is this business's public reputation?"],
-            ["Lead Priority Score", "0 - 130", "How good a sales lead is this, right now, for us?"],
-        ],
-        [55, 25, 108],
-    )
-    pdf.spacer(4)
-    pdf.h3("Why can Lead Priority go over 100?")
+    pdf.spacer(2)
+    pdf.h3("Why can it go over 100?")
     pdf.p(
         "Because it was never built as a 0-100 scale to begin with. It starts as an average "
-        "of up to four 0-100 \"is this a good opportunity\" signals (that part alone is 0-100) "
+        "of up to eight 0-100 \"is this a good opportunity\" signals (that part alone is 0-100) "
         "-- and then real, specific, positive signals each add flat bonus points on top: a "
-        "business that looks clean on paper but has weak real reviews (+12), one that already "
-        "pays for BBB accreditation despite being low-rated (+8), a business old enough to "
-        "matter (+6), and so on. A merely-good lead only clears one or two of those; a great "
+        "business that looks clean on paper but has weak real reviews or sentiment (+12), one "
+        "that already pays for BBB accreditation despite being low-rated (+8), a business old "
+        "enough to matter (+6), and so on. A merely-good lead only clears one or two of those; a great "
         "lead clears most of them, and the bonus points are how the model tells those apart. "
         "The ceiling was deliberately set at 130, not 100, precisely so bonus-stacking has room "
         "to mean something -- capping it at 100 would flatten every strong lead down to the "
@@ -302,66 +330,43 @@ def build(pdf: Report, example: dict, dataset_label: str):
         "business is worth calling today."
     )
 
-    # ---- Reputation score ----
-    pdf.add_page()
-    pdf.h1("Reputation Score (0-100)")
-    pdf.p(
-        "A blended read on how weak this business's PUBLIC reputation looks across whatever "
-        "signals are actually available. Higher = weaker = more of a reason to reach out. "
-        "It is a weighted mean, re-weighted over only the signals present for that record -- "
-        "a business with no BBB review data isn't penalized for the gap, its available signals "
-        "just carry the full weight instead."
-    )
-    pdf.table(
-        ["Signal", "Weight", "Only counted when"],
-        [
-            ["BBB letter grade", "30%", "always (every BBB record has one)"],
-            ["Yelp star rating", "25%", "matched to Yelp, >= 5 Yelp reviews"],
-            ["BBB review average", "15%", "BBB detail scrape, >= 3 BBB reviews"],
-            ["BBB complaint count", "15%", "BBB detail scrape"],
-            ["Yelp review volume", "15%", "matched to Yelp"],
-        ],
-        [70, 25, 93],
-    )
-    pdf.spacer(3)
-    pdf.p(
-        "Each signal is first converted to a 0-1 \"weakness\" fraction (e.g. Yelp weakness = "
-        "(5.0 - rating) / 5.0, so a 5-star listing contributes 0 and an unrated-but-matched "
-        "listing isn't counted at all), then combined as a weighted average and scaled to 0-100. "
-        "None only if there's no BBB grade AND no Yelp rating at all -- effectively never, since "
-        "every BBB record has a grade."
-    )
-
     # ---- Lead priority score ----
     pdf.add_page()
     pdf.h1("Lead Priority Score (0-130)")
     pdf.p(
-        "The actual sales-targeting score. NOT raw reputation weakness -- reputation_score "
-        "above answers \"how bad does this look,\" this one answers \"how good a lead is this "
-        "for a firm that sells review/reputation-management services,\" which is a different "
-        "question. It favors the salvageable middle: a visible, fixable problem at a business "
-        "mature enough to pay. An already-perfect business and a beyond-help one both score "
-        "LOWER than a business stuck in the middle with a real, fixable gap."
+        "The one score. Not raw reputation weakness -- it answers \"how good a lead is this "
+        "for a firm that sells review/reputation-management services,\" not \"how good is "
+        "this business.\" It favors the salvageable middle: a visible, fixable problem at a "
+        "business mature enough to pay. An already-perfect business and a beyond-help one "
+        "both score LOWER than a business stuck in the middle with a real, fixable gap."
     )
     pdf.h3("Step 1 -- base opportunity signals (averaged)")
+    pdf.p("Yelp, Angi, and BBB's own review average all share the same rating curve (\"the same "
+          "kind of signal\" -- a 0-5 opinion of the business); Angi's volume mirrors Yelp's.",
+          size=9)
     pdf.table(
         ["Signal", "Condition", "Points"],
         [
-            ["Yelp rating", "<= 1.5 stars", "45"],
-            ["Yelp rating", "1.5 - 3.7 stars", "82  (peak)"],
-            ["Yelp rating", "3.7 - 4.2 stars", "34"],
-            ["Yelp rating", "4.2+ stars", "8"],
-            ["Yelp volume", "0 reviews", "40"],
-            ["Yelp volume", "1 - 60 reviews", "72  (peak)"],
-            ["Yelp volume", "61 - 150 reviews", "40"],
-            ["Yelp volume", "150+ reviews", "12"],
+            ["Yelp / Angi / BBB-avg rating", "<= 1.5 stars", "45"],
+            ["Yelp / Angi / BBB-avg rating", "1.5 - 3.7 stars", "82  (peak)"],
+            ["Yelp / Angi / BBB-avg rating", "3.7 - 4.2 stars", "34"],
+            ["Yelp / Angi / BBB-avg rating", "4.2+ stars", "8"],
+            ["Yelp / Angi volume", "0 reviews", "40"],
+            ["Yelp / Angi volume", "1 - 60 reviews", "72  (peak)"],
+            ["Yelp / Angi volume", "61 - 150 reviews", "40"],
+            ["Yelp / Angi volume", "150+ reviews", "12"],
             ["BBB grade", "B- to C- (1.67-3.33)", "65  (peak)"],
             ["BBB grade", "below C- (< 1.67)", "32"],
             ["BBB grade", "B and above (> 3.33)", "22"],
-            ["BBB review avg", "under 3.5 / 5", "72"],
-            ["BBB review avg", "3.5+ / 5", "15"],
+            ["BBB complaints", "0", "30"],
+            ["BBB complaints", "1 - 10", "68  (peak)"],
+            ["BBB complaints", "11 - 25", "50"],
+            ["BBB complaints", "26+", "25"],
+            ["Review sentiment", "0 negative/mixed found", "18"],
+            ["Review sentiment", "<= 60% negative, recent", "up to 89.7  (peak)"],
+            ["Review sentiment", "100% negative (thin sample)", "up to 51.7"],
         ],
-        [45, 85, 58],
+        [65, 68, 55],
         small=True,
     )
     pdf.spacer(2)
@@ -369,17 +374,22 @@ def build(pdf: Report, example: dict, dataset_label: str):
         "Notice the shape: the best score in every row is in the MIDDLE, not at either end. "
         "That's the \"salvageable middle\" by design -- a 1-star business with 400 reviews is "
         "probably already using an agency or is beyond a quick fix; a 5-star business doesn't "
-        "need the pitch at all."
+        "need the pitch at all. Review sentiment (local Ollama analysis of BBB/Yelp/MapQuest/Angi "
+        "review text -- see bbb_scraper/sentiment) additionally weights recency, smoothly: a "
+        "negative review from this month counts more than the same review from three years ago."
     )
     pdf.h3("Step 2 -- bonus points (added on top)")
-    pdf.bullet("+12  Reputation divergence: BBB grade looks clean (A- or better) but Yelp rating "
-               "is under 3.0, OR BBB's own review average is under 2.5, OR there are 5+ BBB "
-               "complaints. The core \"your BBB page looks great but here's the real story\" pitch.")
+    pdf.bullet("+12  Reputation divergence: BBB grade looks clean (A- or better) but Yelp/Angi "
+               "rating is under 3.0, OR BBB's own review average is under 2.5, OR there are 5+ BBB "
+               "complaints, OR most analyzed reviews read negative/mixed. The core \"your BBB page "
+               "looks great but here's the real story\" pitch.")
     pdf.bullet("+8  Accredited but low-rated: pays for BBB accreditation, yet Yelp rating or "
                "BBB review average is still under 3.0 -- already demonstrated willingness to pay "
                "for credibility, evidently not enough on its own.")
-    pdf.bullet("+8  Has 1-25 BBB complaints: a live, addressable problem -- not zero, not so many "
-               "it reads as a lost cause.")
+    pdf.bullet("+6  Gone quiet: reviews have gone notably quiet relative to this business's OWN "
+               "normal cadence (not a fixed day count -- real gaps range from days to years across "
+               "businesses). Ambiguous alone (fixed problem, or one nobody's engaging with anymore?), "
+               "so a small nudge, not an averaged driver.")
     pdf.bullet("+6  Established 10+ years: enough revenue and history to plausibly afford and "
                "value the service.")
     pdf.bullet("+4  BBB accredited (on its own): already pays for one reputation/credibility "
@@ -424,13 +434,22 @@ def build(pdf: Report, example: dict, dataset_label: str):
     pdf.spacer(1)
     pdf.flag_chip("Reputation gap")
     pdf.ln(9)
-    pdf.p("BBB grade A- or better, but Yelp rating under 3.0, OR BBB review average under 2.5, OR 5+ BBB complaints.")
+    pdf.p("BBB grade A- or better, but Yelp/Angi rating under 3.0, OR BBB review average under 2.5, "
+          "OR 5+ BBB complaints, OR most analyzed reviews read negative/mixed.")
     pdf.flag_chip("Accredited, low-rated")
     pdf.ln(9)
     pdf.p("BBB-accredited, but Yelp rating or BBB review average under 3.0.")
+    pdf.flag_chip("Gone quiet")
+    pdf.ln(9)
+    pdf.p("Reviews have gone notably quiet relative to this business's OWN normal cadence -- a "
+          "relative outlier, not a fixed day count (real gaps span days to years across businesses).")
     pdf.flag_chip("Few reviews")
     pdf.ln(9)
     pdf.p("Matched to Yelp with under 25 reviews -- thin volume, a review-growth pitch on its own even without a rating problem.")
+    pdf.flag_chip("No live website")
+    pdf.ln(9)
+    pdf.p("Their own website is down, 404ing, or a parked domain (bbb_scraper.webcheck) -- a website "
+          "lead on its own, independent of whether their reputation also needs help.")
 
     # ---- Worked example ----
     pdf.add_page()
@@ -457,8 +476,8 @@ def build(pdf: Report, example: dict, dataset_label: str):
     pdf.table(["Step", "Value"], steps, [148, 40], small=True)
     pdf.spacer(3)
     pdf.note(
-        f"Reputation score for this record: {example.get('reputation_score')}/100. Contact "
-        f"readiness: \"{example.get('contact_readiness')}\" ({example.get('contact_readiness_score')}/100). "
+        f"Contact readiness: \"{example.get('contact_readiness')}\" "
+        f"({example.get('contact_readiness_score')}/100). "
         "This is exactly the model's target profile: an established, accredited business that "
         "looks fine on paper but has a real, visible gap in its actual customer reviews, and is "
         "fully reachable today."

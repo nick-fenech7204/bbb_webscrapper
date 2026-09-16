@@ -12,10 +12,10 @@ CSV), matched by exact phone number -- see bbb_scraper/angi/enrich.py.
 Adds angi_<field> columns (name/phone/website/address/overall_rating/
 review_count/categories/about_us/is_super_service_award_winner/bonded/
 insured/profile_url) to every row, blank on a row with no matching Angi
-phone, and refreshes every derived-intelligence column (reputation_score,
-lead_priority_score, on_angi, ...) so they reflect the new signal
-immediately -- see merge.py's _reputation_score docstring for why this
-never changes the score of a row that isn't actually matched to Angi.
+phone, and refreshes every derived-intelligence column (lead_priority_score,
+on_angi, ...) so they reflect the new signal immediately -- see merge.py's
+_lead_priority_score docstring for why this never changes the score of a
+row that isn't actually matched to Angi.
 
 Doesn't republish to site/data/ itself -- run scripts/publish_site_data.py
 --master afterward (same two-step shape as check_dead_websites.py).

@@ -116,6 +116,18 @@ def _bbb_rc(r: dict) -> dict:
 _MIN_REVIEWS_FOR_RATING = 5
 
 
+def _rating_band(rating: float) -> float:
+    """Salvageable-middle banding for any 0-5 opinion of the business --
+    Yelp stars, Angi stars, and (as of 2026-09-16) BBB's own review
+    average all share this shape now: too low reads as probably-beyond-
+    help, too high needs no pitch at all, the peak sits in the fixable
+    middle. BBB's review average used to get a cruder binary split (just
+    "under 3.5 or not") -- unified here as part of folding reputation_score
+    (which DID treat BBB's average as a real, continuous signal) into this
+    one score instead of running two scores side by side."""
+    return 45 if rating <= 1.5 else 82 if rating < 3.7 else 34 if rating < 4.2 else 8
+
+
 # --- derived intelligence: name -> fn(row) -> value ----------------------
 
 def _present_bbb(r):
@@ -198,58 +210,22 @@ def _rating_gap(r):
     return round(g / 4.33 * 5 - y, 2)
 
 
-def _reputation_score(r):
-    """0-100 blended "how weak is this business's public reputation" --
-    higher = weaker = better lead. Weighted mean over whichever signals are
-    present: BBB letter grade (always), BBB's own review average + complaint
-    count (detail runs), Yelp rating + review volume (matched), Angi rating
-    (matched by phone). None only if none of BBB grade / Yelp rating / Angi
-    rating are available at all.
-
-    Angi added 2026-09-14 at a smaller weight than Yelp's combined 0.40 --
-    same *kind* of signal (a homeowner review platform), but Angi coverage
-    is brand new here vs. Yelp's longer track record in this project, so a
-    lower weight until that's earned. Because the mean only divides by the
-    weights of signals actually *present* (see wsum below), adding this
-    changes nothing for the vast majority of rows with no Angi match yet --
-    it only ever adds a third opinion where one now exists.
-
-    v1 weighting -- revisit after the metrics conversation.
-    """
-    parts: list[tuple[float, float]] = []  # (weight, 0..1 weakness)
-
-    g = letter_grade_to_num(r.get("bbb_rating"))
-    if g is not None:
-        parts.append((0.30, (4.33 - g) / 4.33))
-
-    bavg = _bbb_review_avg(r)
-    if bavg is not None:
-        parts.append((0.15, (5.0 - bavg) / 5.0))
-    bcomp = _bbb_complaints_total(r)
-    if bcomp is not None:
-        parts.append((0.15, min(bcomp / 10.0, 1.0)))
-
-    yr = _yelp_rating(r)
-    if yr is not None:
-        parts.append((0.25, (5.0 - yr) / 5.0))
-    yn = _num(r.get("yelp_review_count"))
-    if yn is not None and r.get("match_status") == "matched":
-        parts.append((0.15, 1.0 - min(yn, 150.0) / 150.0))
-
-    ar = _angi_rating(r)
-    if ar is not None:
-        parts.append((0.20, (5.0 - ar) / 5.0))
-
-    if not parts:
-        return None
-    wsum = sum(w for w, _ in parts)
-    return round(sum(w * v for w, v in parts) / wsum * 100, 1)
-
-
 def _reputation_divergence_flag(r):
     """BBB grade looks clean (A- or better) but the actual feedback doesn't:
     a reviewed Yelp or Angi rating under 3, OR BBB's own review average
-    under 2.5, OR 5+ BBB complaints. A prime reputation-work lead."""
+    under 2.5, OR 5+ BBB complaints, OR most of its analyzed reviews read
+    negative/mixed. A prime reputation-work lead -- the clearest version of
+    "your BBB page looks great but here's the real story" this model can
+    make, which is exactly why it's the biggest single bonus in
+    _lead_priority_score.
+
+    Sentiment check added 2026-09-16, alongside folding reputation_score
+    into this one score: without it, a business could look clean on grade
+    AND on Yelp/Angi/BBB-avg (all unrated or all fine) while its actual
+    review TEXT -- the thing a rep would read before calling -- skews
+    negative, and this flag would never catch it. Requires a real analyzed
+    majority (more negative/mixed than not), not a single bad review.
+    """
     g = letter_grade_to_num(r.get("bbb_rating"))
     if g is None or g < 3.67:
         return 0
@@ -264,6 +240,10 @@ def _reputation_divergence_flag(r):
         return 1
     bcomp = _bbb_complaints_total(r)
     if bcomp is not None and bcomp >= 5:
+        return 1
+    analyzed = _int_or_none(r.get("review_sentiment_analyzed_count"))
+    negative = _int_or_none(r.get("review_sentiment_negative_count"))
+    if analyzed and negative is not None and negative / analyzed > 0.5:
         return 1
     return 0
 
@@ -324,7 +304,7 @@ def _has_email(r):
 def _contact_readiness(r):
     """Plain-language read on whether there's enough here to actually call
     or email this business today -- distinct from whether they're a good
-    *fit* (reputation_score / lead_priority_score already cover that). A
+    *fit* (lead_priority_score already covers that). A
     great lead nobody can reach isn't a working lead yet. Phone is what lets
     a rep pick up and dial; a named contact (BBB's principal_contact, e.g.
     "Glenn Wright, Manager") makes that call land on a real person instead
@@ -384,8 +364,9 @@ def _bbb_complaints_signal(r):
     independently-tracked BBB field that doesn't require a letter grade or
     a minimum review count -- present for 96.9% of exactly the rows that
     had no other usable signal (4,027 of 4,158). It was already feeding
-    _reputation_score (which is why that field's own null rate is a much
-    healthier 1.0%, not 31%) and an existing +8 bonus here -- but a bonus
+    the reputation_score metric this project had at the time (folded into
+    this one score on 2026-09-16 -- see _lead_priority_score) and an
+    existing +8 bonus here -- but a bonus
     only ever adjusts an already-nonzero score, so it never rescued a row
     that had nothing else to start from. This makes it a real base signal
     instead, averaged in alongside whichever of grade/Yelp/Angi are
@@ -507,14 +488,25 @@ def _review_gap_flag(r):
 
 def _lead_priority_score(r):
     """How good a sales lead this business is *for a firm that sells review
-    / reputation-management services*. Not raw reputation weakness -- it
-    favors the salvageable middle: a visible, fixable problem at a business
-    mature enough to pay. Both extremes (already fine / beyond help) score
-    lower. Reachability (phone / named contact) then scales the result --
-    the best-fit lead in the world is dead weight this week if there's no
-    number to call. 0-130. Available for any BBB record with *any* usable
-    signal -- including BBB complaint history alone now, see
-    _bbb_complaints_signal's docstring for why that matters.
+    / reputation-management services* -- the one score this project scores
+    a lead by (2026-09-16: folded in what used to be a separate
+    reputation_score number; see this function's own recent history for
+    why). Not raw reputation weakness -- it favors the salvageable middle:
+    a visible, fixable problem at a business mature enough to pay. Both
+    extremes (already fine / beyond help) score lower. Reachability (phone
+    / named contact) then scales the result -- the best-fit lead in the
+    world is dead weight this week if there's no number to call. 0-130.
+    Available for any BBB record with *any* usable signal -- including BBB
+    complaint history alone now, see _bbb_complaints_signal's docstring for
+    why that matters.
+
+    Every base signal below is either a salvageable-middle band (rating/
+    volume/grade/complaints/sentiment: too little or too much both score
+    lower than a real, fixable, visible problem) or a genuinely distinct
+    bonus on top (divergence, tenure, accreditation, reachability) -- never
+    the same underlying fact counted twice. See _rating_band for the
+    shared 0-5-rating curve (Yelp, Angi, and BBB's own review average all
+    use it now, not just Yelp/Angi as before).
 
     v1, hand-tuned -- revisit after the metrics conversation.
     """
@@ -522,7 +514,7 @@ def _lead_priority_score(r):
 
     yr = _yelp_rating(r)
     if yr is not None:
-        signals.append(45 if yr <= 1.5 else 82 if yr < 3.7 else 34 if yr < 4.2 else 8)
+        signals.append(_rating_band(yr))
 
     yn = _num(r.get("yelp_review_count"))
     if yn is not None and r.get("match_status") == "matched":
@@ -536,7 +528,7 @@ def _lead_priority_score(r):
     # newer, thinner-coverage source outweigh Yelp's own two signals.
     ar = _angi_rating(r)
     if ar is not None:
-        signals.append(45 if ar <= 1.5 else 82 if ar < 3.7 else 34 if ar < 4.2 else 8)
+        signals.append(_rating_band(ar))
 
     an = _num(r.get("angi_review_count"))
     if an is not None and _has_value(r.get("angi_phone")):
@@ -546,9 +538,13 @@ def _lead_priority_score(r):
     if g is not None:
         signals.append(65 if 1.67 <= g <= 3.33 else 32 if g < 1.67 else 22)
 
+    # BBB's own review average -- same _rating_band curve as Yelp/Angi above
+    # (2026-09-16: previously a cruder binary 72/15 split; unified as part
+    # of folding reputation_score, which treated this as a real continuous
+    # signal, into this one score).
     bavg = _bbb_review_avg(r)
     if bavg is not None:
-        signals.append(72 if bavg < 3.5 else 15)
+        signals.append(_rating_band(bavg))
 
     bcomp_signal = _bbb_complaints_signal(r)
     if bcomp_signal is not None:
@@ -573,9 +569,13 @@ def _lead_priority_score(r):
         score += 8
     if _review_gap_flag(r):
         score += 6  # gone notably quiet vs. its own history -- ambiguous alone, so a small nudge, not a driver
-    bcomp = _bbb_complaints_total(r)
-    if bcomp is not None and 1 <= bcomp <= 25:
-        score += 8  # active pain, not a lost cause
+    # No separate bcomp bonus here (removed 2026-09-16): _bbb_complaints_signal
+    # above already averages this exact bbb_complaints_total value into
+    # `signals` -- an extra flat +8 for the same 1-25 range was double-
+    # counting the one input, on top of what every other signal here gets
+    # (counted once, via the average). Verified live: a grade=B row jumped
+    # 47.5 -> 74.5 (+27) going from 0 to 5 complaints, only 19 of which came
+    # from the base-signal band shift -- the rest was this redundant bonus.
     yrs = _num(r.get("bbb_years_in_business"))
     if yrs and yrs >= 10:
         score += 6  # revenue + something to protect
@@ -609,7 +609,6 @@ _INTEL: dict[str, Callable[[dict[str, Any]], Any]] = {
     "bbb_reviews_total": _bbb_reviews_total,
     "bbb_complaints_total": _bbb_complaints_total,
     "rating_gap_bbb_minus_yelp": _rating_gap,
-    "reputation_score": _reputation_score,
     "reputation_divergence_flag": _reputation_divergence_flag,
     "review_need_score": _review_need_score,
     "low_review_volume_flag": _low_review_volume_flag,

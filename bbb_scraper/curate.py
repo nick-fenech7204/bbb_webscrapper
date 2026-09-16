@@ -35,18 +35,23 @@ Added 2026-09-15, after a real-data audit across every batch scraped so far
   home-services brand -- independently corroborating the same kind of
   business the chain-name detector above catches, from a completely
   different signal (Angi's own account metadata, not a name count).
-- **Low score cutoff**: conservative on purpose. Every row sampled just
-  below LOW_SCORE_CUTOFF had an objectively excellent public reputation
-  already -- a BBB A+ grade with zero recorded complaints, and whenever
-  matched to a review platform, a 4.2-4.9 star rating. The scoring model is
-  correctly identifying these as the worst possible fit for a "let us fix
-  your reputation" pitch; this isn't noise being trimmed; it's leads that
-  score `lead_priority_score < 30` are genuinely the wrong fit under the
-  model's own stated intent. Rows with no score at all (no BBB grade, no
-  complaint history, no Yelp/Angi match -- 1.0% of the real dataset once
-  bbb_scraper.match.merge's complaints-based signal fix landed) are cut on
-  the same basis: zero evidence either way isn't more useful than a
-  confirmed-bad fit.
+- **Low score cutoff**: raised from 30 to 50 on 2026-09-16, after the
+  reputation_score/lead_priority_score merge changed the real score
+  distribution -- re-audited against 13,646 real scoreable rows across
+  every checkpoint scraped so far rather than re-guessing. A row was
+  counted as showing a "real visible problem" if it had a sub-A- BBB
+  grade, 1+ recorded BBB complaint, a Yelp/Angi/BBB-average rating under
+  4.2, or above-baseline negative review sentiment -- the actual inputs
+  the model's own "salvageable middle" pitch depends on. That fraction
+  jumps off a cliff right at 50, not gradually: 2.2% below score 30,
+  11.1% in [30,40), 11.1% in [40,50) -- then 81.5% in [50,55), climbing to
+  99%+ by 65. Below 50 is overwhelmingly businesses with NO evidence of a
+  problem either way (clean A+/NR grade, zero recorded complaints, no
+  Yelp/Angi match) scoring moderately just from tenure/reachability
+  bonuses -- present in the data, but not a "your reputation needs work"
+  pitch. Checked this doesn't starve any one market either: at 50, the
+  smallest real metro list left is 9 leads, the median is 30, and no
+  metro (of every one scraped so far) drops under 5.
 """
 from __future__ import annotations
 
@@ -54,7 +59,7 @@ from collections import Counter
 from typing import Any
 
 CHAIN_NAME_REPEAT_THRESHOLD = 3
-LOW_SCORE_CUTOFF = 30.0
+LOW_SCORE_CUTOFF = 50.0
 
 
 def _normalized_name(row: dict[str, Any]) -> str:

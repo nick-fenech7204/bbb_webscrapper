@@ -57,8 +57,7 @@ Per metro:
   4. unless --no-angi (and the Angi scrape above produced anything): merge
      Angi into the wide table by exact phone match (bbb_scraper/angi/
      enrich.py) -- also recomputes every derived-intelligence column so
-     reputation_score/lead_priority_score reflect the Angi match
-     immediately.
+     lead_priority_score reflects the Angi match immediately.
   5. unless --no-mapquest: for every row in the wide table (needs
      bbb_name/bbb_phone/bbb_city/bbb_state, which only exist once step 3
      has built it), resolve an approximate coordinate for the business's

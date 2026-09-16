@@ -33,9 +33,10 @@ site/
 Each record in a dataset JSON carries: the BBB public fields, a
 `last_updated` date, the matched Yelp fields (`yelp_name` / `yelp_rating` /
 `yelp_review_count` / `yelp_url` -- null when unmatched), and our derived
-columns (`reputation_score`, `lead_priority_score`, `bbb_complaints_total`,
-the flags, and the reachability read: `has_phone` / `has_named_contact` /
-`has_email` / `contact_readiness` / `contact_readiness_score`). The table
+columns (`lead_priority_score` -- the one score, since 2026-09-16 --
+`bbb_complaints_total`, the flags, and the reachability read: `has_phone` /
+`has_named_contact` / `has_email` / `contact_readiness` /
+`contact_readiness_score`). The table
 shows BBB + Yelp + every derived column together (2026-09-11 -- used to be
 split across separate Lead records / Intelligence tabs); CSV/Excel export
 the full record regardless, PDF/Text export whatever's currently visible.

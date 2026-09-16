@@ -16,11 +16,10 @@ record gets the same shape and the same BBB-side intelligence columns:
 
 Every record carries the BBB public fields, a `last_updated` date, the
 matched Yelp fields (name/rating/review_count/url -- null when unmatched),
-and our derived-intelligence columns (reputation_score,
-lead_priority_score, the flags -- computed for every BBB record; a Yelp
-match just adds signal). See _YELP_SITE_FIELDS / _INTEL_SITE_FIELDS. The
-site footer credits Yelp and links each matched record back to its Yelp
-page.
+and our derived-intelligence columns (lead_priority_score, the flags --
+computed for every BBB record; a Yelp match just adds signal). See
+_YELP_SITE_FIELDS / _INTEL_SITE_FIELDS. The site footer credits Yelp and
+links each matched record back to its Yelp page.
 
 Usage:
     python scripts/publish_site_data.py data/processed/miami_car_dealers_full.csv \\
@@ -110,11 +109,18 @@ _INTEL_SITE_FIELDS = [
     "bbb_reviews_total",
     "bbb_complaints_total",
     "rating_gap_bbb_minus_yelp",
-    "reputation_score",
     "reputation_divergence_flag",
     "review_need_score",
     "low_review_volume_flag",
     "accredited_but_low_rated",
+    # Sentiment feeds lead_priority_score itself (bbb_scraper.match.merge's
+    # _review_sentiment_signal/_review_gap_flag) but wasn't reaching the
+    # published site at all until now (2026-09-16) -- a rep looking at the
+    # table had no way to see WHY a score moved for sentiment reasons, only
+    # THAT it did. Surfaced the same way every other score-driving signal
+    # already is.
+    "review_sentiment_signal",
+    "review_gap_flag",
     "lead_priority_score",
     "has_phone",
     "has_named_contact",
@@ -151,9 +157,9 @@ def _decode_json_field(value, field: str):
 
 def _bbb_only_master(bbb_records: list[dict]) -> list[dict]:
     """Run BBB-only records through build_master_table so they get the same
-    BBB-side intelligence columns (reputation_score, lead_priority_score,
-    the flags) as a Yelp-matched dataset -- the Yelp match just adds signal,
-    it isn't required for scoring."""
+    BBB-side intelligence columns (lead_priority_score, the flags) as a
+    Yelp-matched dataset -- the Yelp match just adds signal, it isn't
+    required for scoring."""
     outcome = MatchOutcome(bbb_only=list(bbb_records))
     return build_master_table(outcome, include_yelp_only=False)
 
@@ -209,7 +215,8 @@ def select_public_fields_from_master(row: dict) -> dict:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0
     for flag in ("reputation_divergence_flag", "low_review_volume_flag", "accredited_but_low_rated",
-                 "has_phone", "has_named_contact", "has_email", "website_dead_flag", "on_angi"):
+                 "has_phone", "has_named_contact", "has_email", "website_dead_flag", "on_angi",
+                 "review_gap_flag"):
         if result.get(flag) is not None:
             result[flag] = int(result[flag])
     return result
@@ -302,9 +309,9 @@ def publish_master_rows(rows: list[dict], industry: str, metro: str) -> dict:
     BBB directory enriched with Yelp, not a Yelp directory.
 
     `rows` may be a previously-written master CSV read back off disk, whose
-    intel columns (reputation_score, lead_priority_score, ...) were computed
-    whenever that file was written -- recompute_intel refreshes them against
-    today's _INTEL formulas rather than trusting a possibly-stale snapshot.
+    intel columns (lead_priority_score, ...) were computed whenever that
+    file was written -- recompute_intel refreshes them against today's
+    _INTEL formulas rather than trusting a possibly-stale snapshot.
     """
     bbb_primary = [r for r in rows if str(r.get("match_status") or "") != "yelp_only"]
     bbb_primary = [recompute_intel(r) for r in bbb_primary]

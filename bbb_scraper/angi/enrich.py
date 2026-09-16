@@ -16,7 +16,7 @@ Angi's own coverage is nothing like BBB's (167 home-services categories vs.
 BBB's much broader taxonomy -- see data/reference/README.md), so this is
 never going to match every row, the same way not every BBB row matches a
 Yelp listing either. Unmatched rows keep every angi_* field blank and score
-exactly as they did before -- see merge.py's _reputation_score docstring
+exactly as they did before -- see merge.py's _lead_priority_score docstring
 for why adding Angi as a signal doesn't move any unmatched row's score.
 """
 from __future__ import annotations
@@ -37,9 +37,9 @@ def enrich_with_angi(master_rows: list[dict], angi_records: list[dict]) -> list[
 
     Returns NEW row dicts (doesn't mutate the input) with `angi_<field>`
     added for every field in merge.ANGI_FIELDS, blank on an unmatched row,
-    and every _INTEL column recomputed so reputation_score/lead_priority_
-    score/etc. reflect the new angi_* fields immediately -- a caller never
-    needs to remember to call recompute_intel separately after this.
+    and every _INTEL column recomputed so lead_priority_score/etc. reflect
+    the new angi_* fields immediately -- a caller never needs to remember
+    to call recompute_intel separately after this.
 
     A phone number shared by more than one Angi record (rare -- a national
     call-center brand operating under several listing names, say) matches

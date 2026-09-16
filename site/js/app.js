@@ -100,7 +100,7 @@
   // "combine related cells" reasoning as bbbCell above -- a whole extra
   // column per 3rd-party source doesn't fit real screen width, and these
   // two are the same *kind* of signal: an outside homeowner-review
-  // platform, exactly like the reputation_score formula treats them).
+  // platform, exactly like lead_priority_score's _rating_band treats them).
   function oneRatingLink(label, url, rating, count) {
     const text = !count ? `on ${label}` : `${rating}★ (${count})`;
     return url
@@ -155,6 +155,12 @@
       out.push('<span class="badge badge-flag">Accredited, low-rated</span>');
     if (isTrue(r.low_review_volume_flag))
       out.push('<span class="badge badge-soft">Few reviews</span>');
+    // 2026-09-16: surfaces bbb_scraper.match.merge's review_gap_flag (a
+    // separate +6 bonus in lead_priority_score, distinct from the
+    // sentiment/divergence signals above) -- gone quiet vs. its OWN normal
+    // review cadence, not a fixed day count.
+    if (isTrue(r.review_gap_flag))
+      out.push('<span class="badge badge-soft" title="Reviews have gone notably quiet compared to this business\'s own history">Gone quiet</span>');
     // A separate sales angle from the reputation flags above: no working
     // site at all is a website lead, independent of whether their
     // reputation also needs help.
@@ -232,7 +238,14 @@
   // Yelp rather than adding a whole new column for it (yelpCell now shows
   // either/both) -- but "Specialties" (Angi's services-offered list) is
   // new information with no existing cell to share, so it's one genuinely
-  // new column, 14 total now.
+  // new column, 14 total then.
+  //
+  // 2026-09-16: the separate "Reputation" column is gone -- reputation_score
+  // was retired in favor of one score (see bbb_scraper/match/merge.py's
+  // _lead_priority_score docstring). Lead priority already answered the
+  // question that mattered ("is this worth calling"); showing a second,
+  // differently-scaled number next to it just asked the reader to reconcile
+  // two opinions instead of acting on one, 13 columns now.
   const COLUMNS = [
     { key: "name", label: "Business", cls: "name-cell", w: 200, render: nameCell },
     { key: "city", label: "City", w: 110, render: cityCell },
@@ -240,7 +253,6 @@
     { key: "bbb_complaints_total", label: "BBB complaints", w: 105, cls: "num-cell", render: intCell("bbb_complaints_total") },
     { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
     { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
-    { key: "reputation_score", label: "Reputation (of 100)", w: 110, render: scoreCell("reputation_score", 100) },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },
@@ -362,7 +374,7 @@
       : null;
     listsView.querySelector(".view-sub").innerHTML =
       `A ranked, ready-to-call prospect list for every market — BBB details, matched ` +
-      `Yelp data, and a reputation score, all in one sortable, filterable <strong>table</strong>.` +
+      `Yelp data, and a lead priority score, all in one sortable, filterable <strong>table</strong>.` +
       (asOf ? ` <span class="muted">Data published ${asOf}.</span>` : "");
   }
 

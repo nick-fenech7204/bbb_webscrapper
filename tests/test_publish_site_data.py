@@ -33,7 +33,6 @@ def test_bbb_only_record_gets_last_updated_and_bbb_scoring_but_no_yelp():
     assert rec["categories"] == ["Used Car Dealers"]  # list fields survive the master round-trip
     # BBB-side intelligence is still computed
     assert rec["bbb_grade_num"] == 2.0
-    assert rec["reputation_score"] is not None
     assert rec["lead_priority_score"] is not None
     assert rec["review_need_score"] is None  # Yelp-specific
 
@@ -48,7 +47,7 @@ def test_matched_master_row_carries_yelp_and_intel():
         "bbb_categories": '["Used Car Dealers"]',
         "yelp_name": "Italy Blue Auto Sales", "yelp_rating": "1.9",
         "yelp_review_count": "9", "yelp_url": "https://www.yelp.com/biz/italy-blue",
-        "reputation_score": "50.1", "lead_priority_score": "81.0",
+        "lead_priority_score": "81.0",
         "reputation_divergence_flag": "0", "low_review_volume_flag": "1",
     }
     rec = select_public_fields_from_master(row)
@@ -58,7 +57,7 @@ def test_matched_master_row_carries_yelp_and_intel():
     assert rec["yelp_name"] == "Italy Blue Auto Sales"
     assert rec["yelp_rating"] == 1.9
     assert rec["yelp_review_count"] == 9  # int, not 9.0
-    assert rec["reputation_score"] == 50.1
+    assert rec["lead_priority_score"] == 81.0
     assert rec["low_review_volume_flag"] == 1  # int flag, not 1.0
     assert rec["categories"] == ["Used Car Dealers"]
     assert "yelp_phone" not in rec and "yelp_id" not in rec
@@ -155,9 +154,16 @@ def test_cli_main_runs_end_to_end_without_crashing(tmp_path, monkeypatch, capsys
 
     csv_path = tmp_path / "bbb.csv"
     with csv_path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["name", "rating", "scraped_at"])
+        w = csv.DictWriter(f, fieldnames=["name", "rating", "phone", "scraped_at"])
         w.writeheader()
-        w.writerow({"name": "A Co", "rating": "B", "scraped_at": "2026-09-11T00:00:00+00:00"})
+        # A phone number + a mid-grade (C, in the "salvageable middle" band)
+        # so this real-shaped row clears curate_for_publish's score cutoff
+        # (2026-09-16: raised to 50 -- a B grade with no phone, the old
+        # fixture, now correctly gets curated out at publish time, same as
+        # it should for a real business with no reachability and no
+        # demonstrated fixable problem).
+        w.writerow({"name": "A Co", "rating": "C", "phone": "3125550100",
+                    "scraped_at": "2026-09-11T00:00:00+00:00"})
 
     monkeypatch.setattr(sys, "argv", ["publish_site_data.py", str(csv_path),
                                       "--industry", "Plumbers", "--metro", "Chicago, IL"])

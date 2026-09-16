@@ -1,6 +1,6 @@
 """bbb_scraper.angi.enrich -- phone-based matching of Angi records onto an
 already-built master table. See tests/match/test_merge.py for the scoring
-side (reputation_score etc. responding to angi_* fields)."""
+side (lead_priority_score etc. responding to angi_* fields)."""
 from bbb_scraper.angi.enrich import enrich_with_angi
 
 
@@ -51,15 +51,15 @@ def test_does_not_mutate_input_rows():
     assert "angi_name" not in rows[0]
 
 
-def test_recomputes_intel_so_reputation_score_reflects_the_new_match():
+def test_recomputes_intel_so_lead_priority_score_reflects_the_new_match():
     rows = [_master_row(bbb_rating="A+")]
-    angi = [{"name": "Co", "phone": "3055550100", "overall_rating": "1.0", "review_count": "30"}]
+    angi = [{"name": "Co", "phone": "3055550100", "overall_rating": "2.5", "review_count": "30"}]
     out = enrich_with_angi(rows, angi)
-    # A+ alone would score low weakness; a terrible matched Angi rating
-    # should be reflected without the caller having to call recompute_intel
-    # separately.
-    only_bbb_score = enrich_with_angi(rows, [])[0]["reputation_score"]
-    assert out[0]["reputation_score"] > only_bbb_score
+    # A+ alone bands low (22, "already fine"); a fixable matched Angi
+    # rating (in the salvageable-middle band) should pull it up, reflected
+    # without the caller having to call recompute_intel separately.
+    only_bbb_score = enrich_with_angi(rows, [])[0]["lead_priority_score"]
+    assert out[0]["lead_priority_score"] > only_bbb_score
 
 
 def test_duplicate_angi_phone_keeps_the_first_seen_and_does_not_crash():
