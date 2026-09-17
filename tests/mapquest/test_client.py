@@ -96,6 +96,31 @@ def test_map_review_captures_text_date_and_reviewer():
     assert "96 year old home" in mark.text
 
 
+def test_map_node_parses_rating_url_when_present():
+    """2026-09-17, live discovery: rating.url is a real field (confirmed via
+    GraphQL schema-validation probing) that returns a genuine yelp.com link
+    when rating.provider == "YELP" -- see module docstring. Older captured
+    fixtures predate this field and have no "url" key in their rating
+    block, so this uses a synthetic node instead."""
+    node = {
+        "id": "1", "name": "Test Co", "phone": "+15551234567",
+        "rating": {
+            "provider": "YELP", "value": 4.5,
+            "url": "https://www.yelp.com/biz/test-co?utm_source=mapquest",
+        },
+    }
+    match = _map_node(node)
+    assert match.rating_url == "https://www.yelp.com/biz/test-co?utm_source=mapquest"
+
+
+def test_map_node_rating_url_is_none_when_absent():
+    data = _load("mapquest_search_walsh.json")
+    nodes = data["data"]["search"]["nodes"]
+    match = next(_map_node(n) for n in nodes if n["id"] == "423145406")
+
+    assert match.rating_url is None
+
+
 def test_map_node_zero_reviews_is_an_empty_list_not_a_crash():
     data = _load("mapquest_search_walsh.json")
     nodes = data["data"]["search"]["nodes"]

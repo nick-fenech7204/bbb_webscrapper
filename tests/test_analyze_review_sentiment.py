@@ -67,7 +67,8 @@ def _fake_analyze_business_reviews(row, client):
     )]
     aggregate = {
         "review_sentiment_analyzed_count": 1, "review_sentiment_negative_count": 1,
-        "most_recent_review_date": "2024-01-01", "most_recent_negative_review_date": "2024-01-01",
+        "most_recent_review_date": "2024-01-01", "most_recent_review_source": "mapquest",
+        "most_recent_negative_review_date": "2024-01-01", "most_recent_negative_review_source": "mapquest",
         "avg_review_gap_days": None,
         "top_complaint_theme": "quality of work",
         "top_complaint_summary": "bad job, missed the fix entirely",
@@ -94,6 +95,11 @@ def test_in_place_run_recomputes_lead_priority_score_from_new_sentiment(tmp_path
     # _NEW_COLUMNS fix) ...
     assert row["review_sentiment_negative_count"] == "1"
     assert row["top_complaint_theme"] == "quality of work"
+    # ... including most_recent_(negative_)review_source, added 2026-09-17
+    # -- the exact same _NEW_COLUMNS gotcha this file's own docstring
+    # describes, guarded against for these two fields too.
+    assert row["most_recent_review_source"] == "mapquest"
+    assert row["most_recent_negative_review_source"] == "mapquest"
 
     # ... and, the actual fix under test: the score-dependent _INTEL columns
     # were refreshed in the SAME write, not left at their stale pre-sentiment

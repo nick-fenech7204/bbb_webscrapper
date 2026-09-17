@@ -191,6 +191,14 @@ def _num_or_none(v):
         return v
 
 
+# bbb_scraper.sentiment.analyze stores the raw ReviewSentiment.source
+# vocabulary ("mapquest"/"angi") -- mapquest_reviews is genuinely Yelp
+# review text (see that module's own _aggregate docstring), so it
+# displays as "Yelp" here, the same treatment the rest of the site already
+# gives a MapQuest-sourced rating.
+_REVIEW_SOURCE_LABEL = {"mapquest": "Yelp", "angi": "Angi"}
+
+
 def select_public_fields_from_master(row: dict) -> dict:
     """From a match.merge.build_master_table row: BBB fields from the `bbb_`
     prefix, matched Yelp fields from the `yelp_` prefix, our derived
@@ -224,9 +232,14 @@ def select_public_fields_from_master(row: dict) -> dict:
     # matches vs. 18 official ones in one Charlotte test), not a rare edge
     # case worth ignoring. Official match wins when both exist; MapQuest's
     # own fields fill in when it's the only place this business's Yelp
-    # data showed up. mapquest_url is a mapquest.com link, not yelp.com --
-    # the site marks that distinction visually (see app.js's yelpCell)
-    # rather than pretending it's a direct Yelp link.
+    # data showed up. yelp_url uses mapquest_rating_url specifically (a
+    # real yelp.com/biz/... link, confirmed live 2026-09-17 -- see
+    # mapquest/client.py's module docstring), NOT mapquest_url (MapQuest's
+    # own page for the business) -- Nick's explicit call: a Yelp rating
+    # should link to the actual Yelp page, not a MapQuest page. A
+    # checkpoint scraped before this field existed just has no yelp_url
+    # here until it's re-scraped (renders as plain, non-linked text --
+    # see app.js's oneRatingLink -- not a crash).
     matched = str(row.get("match_status") or "") == "matched"
     mapquest_yelp = _has_mapquest_yelp_data(row)
     result["on_yelp"] = matched or mapquest_yelp
@@ -243,7 +256,7 @@ def select_public_fields_from_master(row: dict) -> dict:
     )
     result["yelp_url"] = (
         (row.get("yelp_url") or "") if matched
-        else (row.get("mapquest_url") or "") if mapquest_yelp
+        else (row.get("mapquest_rating_url") or "") if mapquest_yelp
         else ""
     )
     result["yelp_via_mapquest"] = mapquest_yelp and not matched
@@ -276,7 +289,10 @@ def select_public_fields_from_master(row: dict) -> dict:
     # Nick asked "are we taking it into account" -- the formula was, the
     # published record wasn't).
     result["most_recent_review_date"] = row.get("most_recent_review_date") or ""
+    result["most_recent_review_source"] = _REVIEW_SOURCE_LABEL.get(row.get("most_recent_review_source"), "")
     result["most_recent_negative_review_date"] = row.get("most_recent_negative_review_date") or ""
+    result["most_recent_negative_review_source"] = _REVIEW_SOURCE_LABEL.get(
+        row.get("most_recent_negative_review_source"), "")
     result["review_sentiment_analyzed_count"] = _num_or_none(row.get("review_sentiment_analyzed_count"))
     result["review_sentiment_negative_count"] = _num_or_none(row.get("review_sentiment_negative_count"))
 

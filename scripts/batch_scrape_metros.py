@@ -677,6 +677,7 @@ def _enrich_metro_with_mapquest(
         row["mapquest_reviews"] = ""
         row["mapquest_rating_provider"] = ""
         row["mapquest_rating_value"] = ""
+        row["mapquest_rating_url"] = ""
         if not name or not city_name or not state:
             continue
 
@@ -702,6 +703,7 @@ def _enrich_metro_with_mapquest(
         row["mapquest_reviews"] = json.dumps([asdict(r) for r in match.reviews], ensure_ascii=False)
         row["mapquest_rating_provider"] = match.rating_provider or ""
         row["mapquest_rating_value"] = match.rating_value if match.rating_value is not None else ""
+        row["mapquest_rating_url"] = match.rating_url or ""
         row.update(recompute_intel(row))
 
     return matched, total_reviews

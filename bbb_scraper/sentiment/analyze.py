@@ -210,22 +210,32 @@ def _aggregate(results: list[ReviewSentiment]) -> dict:
     # it's here so a future bbb_reviews backfill can't silently start
     # influencing a signal/column meant to read as Yelp/Angi activity.
     third_party = [r for r in results if r.source != "bbb"]
-    all_dates = sorted(date.fromisoformat(r.date) for r in third_party if r.date)
-    negative_dates = sorted(
-        date.fromisoformat(r.date) for r in third_party
+    # Paired with source (raw "mapquest"/"angi", same vocabulary as
+    # ReviewSentiment.source -- not display-formatted here; see
+    # publish_site_data.py for the "mapquest" -> "Yelp" label) so the site
+    # can show where its most-recent-(negative)-review date actually came
+    # from. Tuples sort by date first; a same-day tie falls back to
+    # comparing the source string, which is harmless -- just a stable,
+    # arbitrary tiebreak.
+    all_entries = sorted((date.fromisoformat(r.date), r.source) for r in third_party if r.date)
+    negative_entries = sorted(
+        (date.fromisoformat(r.date), r.source) for r in third_party
         if r.date and r.sentiment in _NEGATIVE_SENTIMENTS
     )
 
     avg_gap_days = None
-    if len(all_dates) >= 2:
+    if len(all_entries) >= 2:
+        all_dates = [d for d, _ in all_entries]
         gaps = [(all_dates[i] - all_dates[i - 1]).days for i in range(1, len(all_dates))]
         avg_gap_days = round(sum(gaps) / len(gaps), 1)
 
     return {
         "review_sentiment_analyzed_count": len(results),
         "review_sentiment_negative_count": sum(1 for r in results if r.sentiment in _NEGATIVE_SENTIMENTS),
-        "most_recent_review_date": all_dates[-1].isoformat() if all_dates else None,
-        "most_recent_negative_review_date": negative_dates[-1].isoformat() if negative_dates else None,
+        "most_recent_review_date": all_entries[-1][0].isoformat() if all_entries else None,
+        "most_recent_review_source": all_entries[-1][1] if all_entries else None,
+        "most_recent_negative_review_date": negative_entries[-1][0].isoformat() if negative_entries else None,
+        "most_recent_negative_review_source": negative_entries[-1][1] if negative_entries else None,
         "avg_review_gap_days": avg_gap_days,
         **_top_complaint(results),
     }

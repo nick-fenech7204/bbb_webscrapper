@@ -70,9 +70,11 @@ def test_mapquest_confirmed_yelp_data_fills_in_the_yelp_columns_when_unmatched()
     confirms Yelp should still show up as on_yelp with real rating/review
     data on the published site -- confirmed common in real data (24 such
     businesses vs. 18 official matches in one real test metro), not a rare
-    edge case worth leaving blank. yelp_url comes from mapquest_url (a
-    mapquest.com link, not yelp.com -- the only real page available), and
-    yelp_via_mapquest flags that for the site to render transparently."""
+    edge case worth leaving blank. yelp_url comes from mapquest_rating_url,
+    a real yelp.com link MapQuest's GraphQL API returns alongside the
+    rating (confirmed live via schema-validation probing), not the
+    mapquest.com page -- yelp_via_mapquest still flags that it was found
+    via MapQuest rather than an official Fusion API match."""
     row = {
         "match_status": "bbb_only",
         "bbb_name": "Wyattworks Plumbing, Inc.", "bbb_rating": "A+",
@@ -80,12 +82,13 @@ def test_mapquest_confirmed_yelp_data_fills_in_the_yelp_columns_when_unmatched()
         "mapquest_rating_provider": "YELP", "mapquest_rating_value": "4",
         "mapquest_review_count": "46",
         "mapquest_url": "https://www.mapquest.com/us/north-carolina/wyattworks-plumbing-303858671",
+        "mapquest_rating_url": "https://www.yelp.com/biz/wyattworks-plumbing-charlotte?utm_source=mapquest",
     }
     rec = select_public_fields_from_master(row)
     assert rec["on_yelp"] is True
     assert rec["yelp_rating"] == 4
     assert rec["yelp_review_count"] == 46
-    assert rec["yelp_url"] == "https://www.mapquest.com/us/north-carolina/wyattworks-plumbing-303858671"
+    assert rec["yelp_url"] == "https://www.yelp.com/biz/wyattworks-plumbing-charlotte?utm_source=mapquest"
     assert rec["yelp_via_mapquest"] is True
     assert rec["yelp_name"] == ""  # no such field exists via MapQuest -- left blank, not guessed
 
@@ -117,6 +120,33 @@ def test_non_yelp_mapquest_provider_does_not_leak_into_yelp_columns():
     assert rec["on_yelp"] is False
     assert rec["yelp_rating"] is None
     assert rec["yelp_via_mapquest"] is False
+
+
+def test_most_recent_review_source_is_labeled_yelp_or_angi_for_display():
+    """2026-09-17, Nick's call: the site shows which platform found the
+    latest (negative) review, on hover. bbb_scraper.sentiment.analyze
+    stores the raw ReviewSentiment.source vocabulary ("mapquest"/"angi")
+    -- this is the one place that translates "mapquest" to the "Yelp"
+    label the rest of the site already uses for MapQuest-sourced data."""
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+        "most_recent_review_date": "2026-08-01", "most_recent_review_source": "mapquest",
+        "most_recent_negative_review_date": "2026-07-01", "most_recent_negative_review_source": "angi",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["most_recent_review_source"] == "Yelp"
+    assert rec["most_recent_negative_review_source"] == "Angi"
+
+
+def test_missing_review_source_publishes_as_empty_string_not_none():
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["most_recent_review_source"] == ""
+    assert rec["most_recent_negative_review_source"] == ""
 
 
 def test_angi_only_row_publishes_with_identity_fields_from_angi():

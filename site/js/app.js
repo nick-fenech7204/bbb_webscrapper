@@ -123,18 +123,19 @@
   function yelpCell(r) {
     const parts = [];
     if (r.on_yelp) {
-      // 2026-09-17: yelp_rating/yelp_review_count/yelp_url now also come
+      // 2026-09-17: yelp_rating/yelp_review_count/yelp_url can also come
       // from MapQuest's own Yelp-sourced data (a second real match pass,
       // separate from the official Yelp Fusion API one) when that's the
       // only place this business's Yelp data showed up -- see
       // publish_site_data.py's select_public_fields_from_master. yelp_url
-      // is then a mapquest.com link, not yelp.com, since that's the only
-      // real page we have for it -- flagged via a title, not hidden,
-      // rather than silently presenting it as a direct Yelp link.
+      // is a genuine yelp.com link either way (mapquest_rating_url is a
+      // real yelp.com/biz/... URL, confirmed live -- see
+      // bbb_scraper/mapquest/client.py's module docstring), so no "wrong
+      // site" warning is needed -- the title just notes how the match was
+      // found, for anyone curious why a business shows a Yelp rating with
+      // no official-match badge elsewhere.
       const viaMapquest = isTrue(r.yelp_via_mapquest);
-      const title = viaMapquest
-        ? "Yelp rating, confirmed via MapQuest -- no official Yelp Fusion match for this business, link opens its MapQuest page"
-        : "";
+      const title = viaMapquest ? "Yelp rating found via MapQuest" : "";
       parts.push(oneRatingLink("Yelp", r.yelp_url, num(r.yelp_rating), num(r.yelp_review_count), title));
     }
     if (isTrue(r.on_angi)) parts.push(oneRatingLink("Angi", r.angi_url, num(r.angi_rating), num(r.angi_review_count)));
@@ -228,8 +229,15 @@
   function latestReviewCell(r) {
     const v = r.most_recent_negative_review_date ?? "";
     if (!v) return "";
+    const source = r.most_recent_negative_review_source ?? "";
     const anyDate = r.most_recent_review_date;
-    const title = anyDate && anyDate !== v ? `Latest review (any sentiment): ${anyDate}` : "";
+    const anySource = r.most_recent_review_source ?? "";
+    const parts = [];
+    if (source) parts.push(`Source: ${source}`);
+    if (anyDate && anyDate !== v) {
+      parts.push(`Latest review (any sentiment): ${anyDate}${anySource ? ` (${anySource})` : ""}`);
+    }
+    const title = parts.join(". ");
     return title ? `<span title="${esc(title)}">${esc(v)}</span>` : esc(v);
   }
   // Specialties (Angi's "; "-joined services-offered list, see

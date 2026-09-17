@@ -33,6 +33,13 @@ being relied on:
     50)` is a real GraphQL validation error, "Unknown argument"): whatever
     count the API decides to return for a business is all that's
     available here, no further chasing.
+  - `rating.url` is a real field, confirmed live 2026-09-17 (Nick asked
+    for a genuine Yelp link instead of MapQuest's own page when a rating
+    is Yelp-sourced): probed via the same schema-validation-error method
+    as everything else here (`rating.sourceUrl`/`rating.link` errored,
+    "Cannot query field"; `rating.url` didn't, and returned a real
+    yelp.com/biz/... URL with MapQuest's own attribution params
+    attached). Not requested before this because nobody had gone looking.
 
 **Proved out at real volume, then fully integrated, 2026-09-15.** A 100-
 request real sample metro (scripts/fetch_mapquest_reviews.py) ran clean --
@@ -94,7 +101,7 @@ _SEARCH_QUERY = """query SearchQuery($coordinates: GeoPointInput!, $filter: Sear
         url
         phone
         location { street region postcode locality __typename }
-        rating { provider value __typename }
+        rating { provider value url __typename }
         categories(withUrlOnly: true) { nodes { name __typename } __typename }
         description
         reviews {
@@ -246,6 +253,7 @@ def _map_node(node: dict[str, Any]) -> MapQuestMatch:
         zip_code=location.get("postcode"),
         rating_provider=rating.get("provider"),
         rating_value=rating.get("value"),
+        rating_url=rating.get("url"),
         categories=[
             c["name"] for c in (categories_block.get("nodes") or [])
             if isinstance(c, dict) and c.get("name")

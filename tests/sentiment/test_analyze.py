@@ -81,7 +81,9 @@ def test_empty_or_missing_review_columns_produce_no_results():
         "review_sentiment_analyzed_count": 0,
         "review_sentiment_negative_count": 0,
         "most_recent_review_date": None,
+        "most_recent_review_source": None,
         "most_recent_negative_review_date": None,
+        "most_recent_negative_review_source": None,
         "avg_review_gap_days": None,
         "top_complaint_theme": None,
         "top_complaint_summary": None,
@@ -147,7 +149,9 @@ def test_most_recent_dates_and_avg_gap_computed_correctly():
     _, aggregate = analyze_business_reviews(row, client)
 
     assert aggregate["most_recent_review_date"] == "2024-03-01"
+    assert aggregate["most_recent_review_source"] == "mapquest"
     assert aggregate["most_recent_negative_review_date"] == "2024-03-01"
+    assert aggregate["most_recent_negative_review_source"] == "mapquest"
     assert aggregate["avg_review_gap_days"] == 30.0  # Jan->Feb (31d) and Feb->Mar (29d) averaged
 
 
@@ -183,7 +187,34 @@ def test_bbb_sourced_reviews_are_excluded_from_both_date_fields():
     # The BBB review is the most recent AND most negative by date -- if it
     # leaked into either field, both would read 2024-06-01, not 2024-01-01.
     assert aggregate["most_recent_review_date"] == "2024-01-01"
+    assert aggregate["most_recent_review_source"] == "mapquest"
     assert aggregate["most_recent_negative_review_date"] == "2024-01-01"
+    assert aggregate["most_recent_negative_review_source"] == "mapquest"
+
+
+def test_most_recent_date_sources_are_tracked_independently_per_field():
+    """2026-09-17, Nick's call: the site shows which platform (Yelp, via
+    mapquest_reviews -- see this module's own _aggregate docstring -- or
+    Angi) found the latest (negative) review, on hover. The overall-latest
+    and latest-negative dates can legitimately come from different
+    platforms, so each needs its own source, not one shared value."""
+    row = _row(
+        mapquest_reviews=json.dumps([{"text": "positive, newest overall", "rating": 5.0, "date": "2024-03-01"}]),
+        angi_reviews=json.dumps([{"text": "negative, older", "rating": 1, "date_label": "January 2024"}]),
+    )
+    client = _FakeOllamaClient(responses={
+        "positive, newest overall": {"sentiment": "positive", "severity": 1, "theme": "x",
+                                      "actionable_for_pitch": False, "summary": "s"},
+        "negative, older": {"sentiment": "negative", "severity": 4, "theme": "x",
+                             "actionable_for_pitch": True, "summary": "s"},
+    })
+
+    _, aggregate = analyze_business_reviews(row, client)
+
+    assert aggregate["most_recent_review_date"] == "2024-03-01"
+    assert aggregate["most_recent_review_source"] == "mapquest"
+    assert aggregate["most_recent_negative_review_date"] == "2024-01-01"
+    assert aggregate["most_recent_negative_review_source"] == "angi"
 
 
 def test_only_bbb_sourced_reviews_leaves_both_date_fields_none():
@@ -195,7 +226,9 @@ def test_only_bbb_sourced_reviews_leaves_both_date_fields_none():
 
     assert aggregate["review_sentiment_analyzed_count"] == 1  # still analyzed
     assert aggregate["most_recent_review_date"] is None  # but not a 3rd-party date
+    assert aggregate["most_recent_review_source"] is None
     assert aggregate["most_recent_negative_review_date"] is None
+    assert aggregate["most_recent_negative_review_source"] is None
 
 
 def test_a_single_review_has_no_computable_gap():

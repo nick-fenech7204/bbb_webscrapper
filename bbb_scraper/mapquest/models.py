@@ -41,6 +41,15 @@ class MapQuestMatch:
     zip_code: str | None = None
     rating_provider: str | None = None  # e.g. "YELP" -- confirms the source, not assumed
     rating_value: float | None = None  # the business's aggregate rating, provider's own scale (Yelp: 0-5)
+    rating_url: str | None = None
+    """A real link back to the rating's own source page -- e.g. a genuine
+    yelp.com/biz/... URL (with MapQuest's own attribution params) when
+    rating_provider is "YELP", confirmed live 2026-09-17: `rating { url }`
+    is a real GraphQL field (found via schema-validation probing, same
+    method as everything else on this endpoint -- see client.py's module
+    docstring), just never requested before. Distinct from `url` above,
+    which is always MapQuest's OWN page for the business, not the
+    original source's."""
     categories: list[str] = field(default_factory=list)
     description: str | None = None
     review_count: int = 0  # reviews.totalCount -- may exceed len(reviews) if not every review was returned

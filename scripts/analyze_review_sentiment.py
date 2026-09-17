@@ -53,6 +53,10 @@ _REVIEW_COLUMNS = ("mapquest_reviews", "bbb_reviews", "angi_reviews")
 _NEW_COLUMNS = (
     "review_sentiment", "review_sentiment_analyzed_count", "review_sentiment_negative_count",
     "most_recent_review_date", "most_recent_negative_review_date", "avg_review_gap_days",
+    # 2026-09-17: same extrasaction="ignore" gotcha as the 2026-09-16 note
+    # below -- most_recent_(negative_)review_source must be listed here or
+    # analyze()'s aggregate.items() loop computes them for nothing.
+    "most_recent_review_source", "most_recent_negative_review_source",
     # 2026-09-16: added alongside bbb_scraper.sentiment.analyze._top_complaint
     # -- real incident, caught live: these two were correctly computed and
     # applied to `row` via the generic aggregate.items() loop below, but
