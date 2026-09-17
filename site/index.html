@@ -26,9 +26,10 @@
       <div class="hero">
         <h1 class="hero-title">Find the businesses that already need a reputation fix</h1>
         <p class="hero-sub">
-          LossLess turns public BBB and Yelp data into a ranked, ready-to-call prospect
-          list — every business scored by how visible and fixable its reputation problem
-          is. Built for firms that sell review and reputation-management services.
+          LossLess turns public reputation data from BBB, Yelp, and Angi into a ranked,
+          ready-to-call prospect list — every business scored by how visible and fixable
+          its reputation problem is. Built for firms that sell review and
+          reputation-management services.
         </p>
         <div class="hero-actions">
           <a href="#/lists" class="btn-solid btn-large">Browse lead lists <span aria-hidden="true">&rarr;</span></a>
@@ -43,7 +44,7 @@
           <div class="feature">
             <div class="feature-icon" aria-hidden="true">1</div>
             <h3>Match</h3>
-            <p>We connect every BBB profile to its real Yelp listing — matched by phone, name, and location, not guesswork.</p>
+            <p>We connect every business record to its real Yelp, Angi, and BBB profile — matched by phone, name, and location, never guesswork.</p>
           </div>
           <div class="feature">
             <div class="feature-icon" aria-hidden="true">2</div>
@@ -64,13 +65,13 @@
         <div class="feature-grid">
           <div class="feature">
             <div class="feature-icon" aria-hidden="true">&#9737;</div>
-            <h3>Real records, not a scrape</h3>
-            <p>Every listing is a real BBB business record, cross-checked against Yelp — not stale data and not a guess at who's who.</p>
+            <h3>Verified business records</h3>
+            <p>Every listing is a real, verified business record cross-checked across BBB, Yelp, and Angi — never stale data, never a guess at who's who.</p>
           </div>
           <div class="feature">
             <div class="feature-icon" aria-hidden="true">&#9650;</div>
             <h3>Scored to find the pitch</h3>
-            <p>One lead-priority score, purpose-built for reputation sales — weighted toward the sweet spot: a real, fixable problem at a business that can afford to fix it, backed by AI-read review sentiment, not just star ratings.</p>
+            <p>One lead-priority score, purpose-built for reputation sales — weighted toward the sweet spot: a real, fixable problem at a business that can afford to fix it, backed by AI-read review sentiment across every platform, not just star ratings.</p>
           </div>
           <div class="feature">
             <div class="feature-icon" aria-hidden="true">&#9742;</div>
@@ -115,8 +116,8 @@
     <section id="lists-view" hidden>
       <h1 class="view-title">Lead lists</h1>
       <p class="view-sub">
-        A ranked, ready-to-call prospect list for every market — BBB details, matched
-        Yelp data, and a lead priority score, all in one sortable, filterable <strong>table</strong>.
+        A ranked, ready-to-call prospect list for every market — verified BBB, Yelp, and
+        Angi data, plus a lead-priority score, all in one sortable, filterable table.
       </p>
       <div class="home-filters">
         <select id="filter-industry" aria-label="Filter by industry">
@@ -152,17 +153,17 @@
       <details id="legend" class="legend" hidden>
         <summary>What the columns mean</summary>
         <ul>
-          <li><strong>BBB</strong> — the letter grade BBB gives the business, with a checkmark if they're BBB-accredited.</li>
-          <li><strong>BBB complaints</strong> — the number of complaints filed with BBB (appears only for datasets scraped with full detail).</li>
-          <li><strong>Yelp / Angi / BBB</strong> — every 3rd-party star rating this business has, each linking back to its source (Angi matched by phone number, not name — a listing under a slightly different name with the same number still counts). A Yelp rating can also come from MapQuest's own Yelp-sourced data when there's no official Yelp match — still a genuine Yelp link either way; hover it to see how it was found. BBB's own rating is its real customer-review average, separate from its letter grade — only shown once there are at least 3 reviews behind it.</li>
-          <li><strong>Specialties</strong> — services the business's Angi listing says it offers (only shown when there's an Angi match).</li>
-          <li><strong>Top complaint</strong> — the single most representative negative/mixed review found by local sentiment analysis of already-captured review text (mostly MapQuest-sourced), with a theme label ahead of it. Hover for the negative/total reviews-analyzed ratio. Blank when nothing's been analyzed yet, or nothing negative was found.</li>
-          <li><strong>Latest negative review</strong> — the most recent NEGATIVE review found on Yelp, Angi, or BBB, whichever is most recent. When there's no negative review on file, shows the latest review of any sentiment instead — hover to see that's what it is. Hover a negative date for its source, and the latest review of any sentiment when that's a more recent date. Blank only when there's no review on file at all.</li>
-          <li><strong>Lead priority</strong> (0&ndash;130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower. A missing phone number pulls this down too: the best-fit lead is dead weight this week with no way to call it. Hover the bar for its review-sentiment component, when analyzed.</li>
-          <li><strong>Reach</strong> — is there enough here to actually contact this business today: a phone number, and ideally a named contact (BBB's listed principal/manager) so the call lands on a real person instead of a front desk. Hover a badge for the full detail.</li>
-          <li><strong>Flags</strong> — <em>Reputation gap</em>: BBB grade looks clean (A&minus; or better) but the actual feedback (Yelp or Angi rating, BBB's own review average, BBB complaints, or review sentiment) doesn't. <em>Accredited, low-rated</em>. <em>Gone quiet</em>: reviews have notably slowed compared to this business's own history. <em>Few reviews</em>: under 25 Yelp reviews. <em>No live website</em>: their own site is down, 404ing, or a parked/for-sale domain — a website lead, not just a reputation one. Only Reputation gap, Accredited/low-rated, and Gone quiet actually add points to Lead priority; the other two are informational.</li>
+          <li><strong>BBB</strong> — the Better Business Bureau's letter grade for this business, with a checkmark if they're BBB-accredited.</li>
+          <li><strong>BBB complaints</strong> — the number of complaints filed with BBB. Shown for businesses with a full profile on file.</li>
+          <li><strong>Yelp / Angi / BBB</strong> — every star rating this business has across Yelp, Angi, and BBB, each linking back to its original listing. BBB's own rating is its real customer-review average, separate from its letter grade, and appears once a business has at least 3 reviews behind it.</li>
+          <li><strong>Specialties</strong> — services this business's Angi profile lists (shown when there's an Angi match).</li>
+          <li><strong>Top complaint</strong> — the single most representative negative review we found, with a theme label ahead of it. Hover for how many reviews were analyzed. Blank when nothing's been analyzed yet, or nothing negative was found.</li>
+          <li><strong>Latest negative review</strong> — the most recent negative review across Yelp, Angi, and BBB, whichever is most recent. When there's no negative review on file, this shows the latest review of any sentiment instead — hover to see which. Blank only when there's no review on file at all.</li>
+          <li><strong>Lead priority</strong> (0&ndash;130) — how good a sales lead this is <em>for a firm that sells review / reputation-management services</em>. It favors the <em>salvageable middle</em> — a visible, fixable problem at a business established enough to pay — so both the already-fine and the beyond-help score lower. A missing phone number pulls this down too: the best-fit lead is dead weight this week with no way to call it. Hover the bar for its review-sentiment component, when available.</li>
+          <li><strong>Reach</strong> — is there enough here to actually contact this business today: a phone number, and ideally a named contact, so the call lands on a real person instead of a front desk. Hover a badge for the full detail.</li>
+          <li><strong>Flags</strong> — <em>Reputation gap</em>: the BBB grade looks clean (A&minus; or better) but the actual feedback (Yelp or Angi rating, BBB's own review average, complaints, or review sentiment) doesn't. <em>Accredited, low-rated</em>. <em>Gone quiet</em>: reviews have notably slowed compared to this business's own history. <em>Few reviews</em>: under 25 Yelp reviews. <em>No live website</em>: their own site is down or unclaimed — a website lead, not just a reputation one. Only Reputation gap, Accredited/low-rated, and Gone quiet add points to Lead priority; the other two are informational.</li>
         </ul>
-        <p class="legend-foot">Scoring is refined continuously as more market data comes in.</p>
+        <p class="legend-foot">Scoring improves continuously as more market data comes in.</p>
       </details>
 
       <div class="controls">
@@ -210,11 +211,12 @@
   <footer class="site-footer">
     <div class="wrap">
       <p>
-        BBB data sourced from <a href="https://www.bbb.org" target="_blank" rel="noopener">bbb.org</a>,
-        public business listing information; each record links back to its real BBB profile.
-        Yelp ratings and review counts via the Yelp Fusion API — each matched record links to its
-        <a href="https://www.yelp.com" target="_blank" rel="noopener">Yelp</a> page.
-        Data is a point-in-time snapshot; see each record's “Last updated” date.
+        Reputation data is sourced from public
+        <a href="https://www.bbb.org" target="_blank" rel="noopener">BBB</a> and
+        <a href="https://www.yelp.com" target="_blank" rel="noopener">Yelp</a> listings, plus Angi —
+        every record links back to its original profile. Yelp ratings and review counts are
+        provided via the Yelp Fusion API. Data reflects a point-in-time snapshot; see each
+        record's “Last updated” date for details.
       </p>
     </div>
   </footer>

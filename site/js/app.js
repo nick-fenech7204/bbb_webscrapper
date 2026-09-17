@@ -526,7 +526,7 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         cache.set(ds.id, await res.json());
       } catch (err) {
-        loadingEl.textContent = `Couldn't load ${ds.file}.`;
+        loadingEl.textContent = "Couldn't load this list right now — please try again shortly.";
         console.error(err);
         return;
       }
@@ -545,8 +545,8 @@
     intelNote.hidden = ds.has_yelp !== false;
     if (!intelNote.hidden) {
       intelNote.textContent =
-        "No Yelp match data for this list — the scores here use BBB signal only " +
-        "(grade, reviews, complaints). Re-run the batch for this market with Yelp enabled to add the Yelp columns.";
+        "This market doesn't have Yelp match data yet — scores here are based on BBB " +
+        "signal alone (grade, reviews, complaints). Yelp data will be added in a future update.";
     }
 
     if (changed) {
@@ -807,7 +807,7 @@
 
   function exportXlsx() {
     if (typeof XLSX === "undefined") {
-      alert("Excel export didn't load (probably a blocked script) -- try another format, or reload the page.");
+      alert("Excel export couldn't load — it may be blocked by your browser. Try another format, or reload the page.");
       return;
     }
     const rows = exportableRows();
@@ -839,7 +839,7 @@
 
   function exportPdf() {
     if (typeof window.jspdf === "undefined") {
-      alert("PDF export didn't load (probably a blocked script) -- try another format, or reload the page.");
+      alert("PDF export couldn't load — it may be blocked by your browser. Try another format, or reload the page.");
       return;
     }
     const cols = PDF_COLUMN_KEYS.map((key) => COLUMNS.find((c) => c.key === key));
@@ -932,7 +932,7 @@
       if (!res.ok) throw new Error(`manifest.json: HTTP ${res.status}`);
       manifest = await res.json();
     } catch (err) {
-      loadingEl.textContent = "Couldn't load available data (data/manifest.json missing or invalid).";
+      loadingEl.textContent = "Couldn't load available data right now — please try again shortly.";
       console.error(err);
       return;
     }
