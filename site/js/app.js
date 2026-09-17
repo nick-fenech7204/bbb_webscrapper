@@ -218,27 +218,37 @@
     return v ? `<span title="${esc(v)}">${esc(v)}</span>` : "";
   };
   // "Latest negative review" -- 2026-09-17, Nick's call: the PRIMARY value
-  // is now most_recent_negative_review_date (was most_recent_review_date,
-  // any sentiment) -- a recent negative is a sharper, more actionable lead
-  // signal than "reviewed at all recently." Both date fields are already
-  // Yelp/Angi-only at the source (bbb_scraper.sentiment's _aggregate
-  // excludes BBB -- its complaint/review system is a different thing from
-  // a casual star review). Blank when there's no negative review on file
-  // at all, even if there's a recent positive one -- intended, not a gap.
-  // The any-sentiment date moves to the hover as secondary context.
+  // is most_recent_negative_review_date when there is one (a recent
+  // negative is a sharper, more actionable lead signal than "reviewed at
+  // all recently"), but a business with only positive/mixed-free reviews
+  // shouldn't just show blank -- that read as a bug ("why is this empty")
+  // rather than the good news it actually is. Falls back to
+  // most_recent_review_date (any sentiment) with a hover explicitly
+  // saying so, so it's never mistaken for a negative date. Both date
+  // fields are already Yelp/Angi-only at the source (bbb_scraper.
+  // sentiment's _aggregate excludes BBB -- its complaint/review system is
+  // a different thing from a casual star review). Genuinely blank only
+  // when there's no 3rd-party review date of any sentiment on file at all.
   function latestReviewCell(r) {
-    const v = r.most_recent_negative_review_date ?? "";
-    if (!v) return "";
-    const source = r.most_recent_negative_review_source ?? "";
-    const anyDate = r.most_recent_review_date;
+    const negDate = r.most_recent_negative_review_date ?? "";
+    const anyDate = r.most_recent_review_date ?? "";
     const anySource = r.most_recent_review_source ?? "";
-    const parts = [];
-    if (source) parts.push(`Source: ${source}`);
-    if (anyDate && anyDate !== v) {
-      parts.push(`Latest review (any sentiment): ${anyDate}${anySource ? ` (${anySource})` : ""}`);
+
+    if (negDate) {
+      const negSource = r.most_recent_negative_review_source ?? "";
+      const parts = [];
+      if (negSource) parts.push(`Source: ${negSource}`);
+      if (anyDate && anyDate !== negDate) {
+        parts.push(`Latest review (any sentiment): ${anyDate}${anySource ? ` (${anySource})` : ""}`);
+      }
+      const title = parts.join(". ");
+      return title ? `<span title="${esc(title)}">${esc(negDate)}</span>` : esc(negDate);
     }
-    const title = parts.join(". ");
-    return title ? `<span title="${esc(title)}">${esc(v)}</span>` : esc(v);
+    if (anyDate) {
+      const title = `No negative review on file -- latest review of any sentiment${anySource ? ` (${anySource})` : ""}`;
+      return `<span title="${esc(title)}">${esc(anyDate)}</span>`;
+    }
+    return "";
   }
   // Specialties (Angi's "; "-joined services-offered list, see
   // bbb_scraper/angi/parsing.py + scripts/scrape_angi_category.py) is
@@ -563,6 +573,11 @@
       r.reputation_divergence_flag, r.accredited_but_low_rated, r.low_review_volume_flag,
       r.review_gap_flag, r.website_dead_flag,
     ].reduce((n, f) => n + (isTrue(f) ? 1 : 0), 0),
+    // Same reason as yelp_rating above -- latestReviewCell falls back to
+    // most_recent_review_date (any sentiment) when there's no negative
+    // one, so sorting by the raw negative-only field would bury a
+    // business showing a real, recent date at the bottom of the sort.
+    most_recent_negative_review_date: (r) => r.most_recent_negative_review_date || r.most_recent_review_date,
   };
 
   function filteredRecords() {
