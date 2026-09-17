@@ -167,6 +167,14 @@
 
       <div class="controls">
         <input id="search-box" type="text" placeholder="Filter this table by name, city, category…">
+        <select id="mobile-sort" aria-label="Sort">
+          <option value="lead_priority_score:-1">Lead priority: high to low</option>
+          <option value="lead_priority_score:1">Lead priority: low to high</option>
+          <option value="name:1">Business name: A&ndash;Z</option>
+          <option value="city:1">City: A&ndash;Z</option>
+          <option value="yelp_rating:-1">Yelp / Angi / BBB rating: high to low</option>
+          <option value="most_recent_negative_review_date:-1">Latest negative review: newest</option>
+        </select>
         <span id="result-count" class="result-count" aria-live="polite"></span>
         <div class="export-menu">
           <button id="export-toggle" type="button" class="btn-solid" aria-haspopup="true" aria-expanded="false">
@@ -182,6 +190,7 @@
       </div>
 
       <p id="scroll-hint" class="scroll-hint" hidden>Scroll the table sideways for more columns — the business name stays put.</p>
+      <div id="mobile-cards" class="mobile-cards"></div>
       <div class="table-bleed">
         <div class="table-bleed-inner">
           <div class="table-wrap">

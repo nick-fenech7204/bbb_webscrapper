@@ -32,6 +32,7 @@
   const intelNote = $("intel-note");
   const legend = $("legend");
   const searchBox = $("search-box");
+  const mobileSort = $("mobile-sort");
   const resultCount = $("result-count");
   const exportToggle = $("export-toggle");
   const exportPanel = $("export-panel");
@@ -39,6 +40,7 @@
   const headRow = $("head-row");
   const tableBody = $("results-body");
   const emptyState = $("empty-state");
+  const mobileCards = $("mobile-cards");
 
   let manifest = null;
   const cache = new Map();   // dataset id -> records[]
@@ -550,6 +552,7 @@
     if (changed) {
       sortKey = "lead_priority_score";
       sortDir = -1;
+      mobileSort.value = `${sortKey}:${sortDir}`;
       // .table-wrap scrolls independently now (a bounded, self-scrolling
       // panel, not the whole page -- see its comment in style.css), so
       // switching dataset has to reset ITS scroll explicitly too --
@@ -636,11 +639,15 @@
     return rows;
   }
 
-  function onSort(key) {
-    if (sortKey === key) sortDir *= -1;
-    else { sortKey = key; sortDir = 1; }
+  function setSort(key, dir) {
+    sortKey = key;
+    sortDir = dir;
     markSortedHeader();
+    mobileSort.value = `${key}:${dir}`;
     renderTable();
+  }
+  function onSort(key) {
+    setSort(key, sortKey === key ? sortDir * -1 : 1);
   }
   function markSortedHeader() {
     headRow.querySelectorAll("th[data-key]").forEach((th) => {
@@ -648,13 +655,61 @@
       th.classList.toggle("sorted-desc", th.dataset.key === sortKey && sortDir === -1);
     });
   }
+  // 375px of real phone screen (2026-09-17 audit, Nick's report: "frozen
+  // pane of the company name is bad") had the sticky Business column alone
+  // eating 200 of 375px -- 53% of the viewport -- before a visitor could
+  // see even one more column, across 15 total. A narrower sticky column
+  // isn't a real fix; a table is fundamentally a wide-screen shape. Below
+  // the same 560px breakpoint style.css already treats as "mobile" (see
+  // its own @media block), the table is replaced with one card per
+  // business instead: name+city promoted to a real heading (matches the
+  // Lists page's own lead-card language), lead priority + reach pulled out
+  // as an at-a-glance stat strip (the two numbers a rep scans for first),
+  // every other column as a plain label:value row -- reusing each
+  // column's own render() function directly (built generically off
+  // COLUMNS, not hand-duplicated per field) so a card's content can never
+  // drift from what the desktop table shows for that same business.
+  const CARD_HEAD_KEYS = new Set(["name", "city"]);
+  const CARD_STAT_KEYS = new Set(["lead_priority_score", "contact_readiness_score"]);
+  const MOBILE_BREAKPOINT = window.matchMedia("(max-width: 560px)");
+  function renderMobileCards(rows) {
+    const cols = columns();
+    const statCols = cols.filter((c) => CARD_STAT_KEYS.has(c.key));
+    const fieldCols = cols.filter((c) => !CARD_HEAD_KEYS.has(c.key) && !CARD_STAT_KEYS.has(c.key));
+    return rows.map((r) => {
+      const stats = statCols.map((c) =>
+        `<div class="lrc-stat"><span class="lrc-stat-label">${esc(c.label)}</span>${c.render(r)}</div>`
+      ).join("");
+      const fields = fieldCols.map((c) =>
+        `<div class="lrc-field"><dt>${esc(c.label)}</dt><dd>${c.render(r)}</dd></div>`
+      ).join("");
+      return `<div class="lrc">
+        <div class="lrc-head">
+          <div class="lrc-name">${nameCell(r)}</div>
+          <div class="lrc-sub">${cityCell(r)}</div>
+        </div>
+        <div class="lrc-stats">${stats}</div>
+        <dl class="lrc-fields">${fields}</dl>
+      </div>`;
+    }).join("");
+  }
   function renderTable() {
     const rows = filteredRecords();
     emptyState.hidden = rows.length !== 0;
-    const cols = columns();
-    tableBody.innerHTML = rows.map((r) =>
-      "<tr>" + cols.map((c) => `<td${c.cls ? ` class="${c.cls}"` : ""}>${c.render(r)}</td>`).join("") + "</tr>"
-    ).join("");
+    // Skip building whichever markup isn't currently shown -- a search
+    // keystroke re-renders on every character (see the "input" listener
+    // below), and a dataset can run past 1,000 rows, so unconditionally
+    // building BOTH a <tr> string and a full card string per keystroke
+    // would double real rendering work for every desktop visitor, who
+    // never sees the card markup at all.
+    if (MOBILE_BREAKPOINT.matches) {
+      mobileCards.innerHTML = renderMobileCards(rows);
+    } else {
+      const cols = columns();
+      tableBody.innerHTML = rows.map((r) =>
+        "<tr>" + cols.map((c) => `<td${c.cls ? ` class="${c.cls}"` : ""}>${c.render(r)}</td>`).join("") + "</tr>"
+      ).join("");
+    }
     resultCount.textContent = rows.length === records.length
       ? `${rows.length.toLocaleString()} record${rows.length === 1 ? "" : "s"}`
       : `${rows.length.toLocaleString()} of ${records.length.toLocaleString()} records`;
@@ -829,7 +884,17 @@
   // ---------- init ----------
   async function init() {
     searchBox.addEventListener("input", renderTable);
+    mobileSort.addEventListener("change", () => {
+      const [key, dir] = mobileSort.value.split(":");
+      setSort(key, Number(dir));
+    });
     window.addEventListener("hashchange", route);
+    // Re-render on crossing MOBILE_BREAKPOINT (rotating a tablet, resizing
+    // a desktop window down) so the table/card swap actually happens live,
+    // not just on next navigation -- MediaQueryList's own "change" event
+    // only fires when .matches actually flips, so this never re-renders on
+    // every resize pixel, just the one frame that matters.
+    MOBILE_BREAKPOINT.addEventListener("change", () => { if (!datasetView.hidden) renderTable(); });
     window.addEventListener("resize", () => { if (!datasetView.hidden) syncScrollHint(); });
 
     exportToggle.addEventListener("click", (e) => {

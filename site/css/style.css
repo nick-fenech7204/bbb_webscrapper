@@ -709,6 +709,71 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
 
 .muted { color: var(--text-faint); }
 
+/* ---------- mobile card list (replaces the table below 560px) ----------
+   2026-09-17, Nick's report: the sticky Business column alone measured
+   200 of 375 real phone-viewport px -- 53% of the screen gone before a
+   visitor saw even one more of the table's 15 columns. A narrower sticky
+   column still isn't a real fix; a wide table is fundamentally the wrong
+   shape for a phone. #mobile-cards stays empty and display:none above the
+   breakpoint (app.js only ever builds its innerHTML when
+   MOBILE_BREAKPOINT.matches, so this is also a real perf guard, not just
+   visual hiding) -- style.css's own @media (max-width: 560px) block below
+   flips this on and the table off. */
+#mobile-sort { display: none; }
+.mobile-cards { display: none; }
+
+.lrc {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.lrc-head { margin-bottom: 10px; }
+.lrc-name { font-weight: 700; font-size: 1.02rem; }
+.lrc-name a { color: var(--text); text-decoration: none; }
+.lrc-name a:hover { color: var(--accent); text-decoration: underline; }
+.lrc-sub { color: var(--text-muted); font-size: 0.86rem; margin-top: 2px; }
+
+/* The two numbers a rep scans for first (lead priority, reach) pulled out
+   of the field list into their own strip -- same "at a glance" reasoning
+   as the Lists page's own chips, just for one business instead of one
+   dataset. */
+.lrc-stats {
+  display: flex;
+  gap: 18px;
+  padding: 10px 0;
+  margin-bottom: 4px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.lrc-stat { display: flex; flex-direction: column; gap: 4px; }
+.lrc-stat-label {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Every other column as a plain label:value row -- a real <dl>, not a
+   table, so nothing here is pretending to be a grid it isn't at this
+   width. dt/dd share a line when both are short and wrap independently
+   when they're not, same "never truncate, let it wrap" rule the table's
+   own td already follows. */
+.lrc-fields { margin: 0; }
+.lrc-field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.86rem;
+}
+.lrc-field:last-child { border-bottom: none; }
+.lrc-field dt { flex: 0 0 auto; min-width: 118px; color: var(--text-muted); font-weight: 600; }
+.lrc-field dd { flex: 1 1 140px; margin: 0; color: var(--text); font-variant-numeric: tabular-nums; }
+
 /* BBB grade + accreditation share one cell now (was two columns) --
    this is just the accreditation half of it. */
 .accredited-check {
@@ -805,8 +870,13 @@ td.name-cell a:hover { color: var(--accent); text-decoration: underline; }
   .wrap { padding: 0 18px; }
   .dataset-head { flex-direction: column; }
   #search-box { max-width: none; flex-basis: 100%; }
+  #mobile-sort { display: block; flex-basis: 100%; }
   .result-count { order: 3; }
   .export-menu { flex-basis: 100%; margin-left: 0; }
   .btn-solid { width: 100%; text-align: center; }
   .export-panel { left: 0; right: 0; min-width: 0; }
+  /* Card list replaces the table+sticky-column below this width -- see
+     .lrc's own comment above for why. */
+  .scroll-hint, .table-bleed { display: none; }
+  .mobile-cards { display: block; }
 }
