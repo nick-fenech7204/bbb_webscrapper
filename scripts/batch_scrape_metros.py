@@ -421,14 +421,32 @@ def _write_angi_checkpoint(path: Path, rows: list[dict]) -> None:
     scripts/scrape_angi_category.py always wrote (data/processed/angi/) --
     kept even though the batch also folds these rows into the wide master
     table, so the raw Angi data is independently inspectable/reusable
-    (e.g. re-running just enrich_with_angi later) without re-scraping."""
+    (e.g. re-running just enrich_with_angi later) without re-scraping.
+
+    Best-effort + atomic (temp file + replace), same reasoning and pattern
+    as _write_progress: this call sits inside the same per-metro try block
+    as the real checkpoint/publish/deploy steps below it, so an unguarded,
+    non-atomic write here (a transient Windows file-lock, the exact
+    82834e3 failure mode) would abort THOSE too for an otherwise fully
+    successful metro -- not just skip this one supplementary file. Angi
+    data itself isn't lost either way: it already reached master_rows via
+    enrich_with_angi before this is called, so it still lands in the real
+    checkpoint/publish regardless of whether this copy succeeds
+    (2026-09-17 audit).
+    """
     if not rows:
         return
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=ANGI_CSV_FIELDS)
-        writer.writeheader()
-        writer.writerows(rows)
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp_path = path.with_suffix(path.suffix + ".tmp")
+        with tmp_path.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=ANGI_CSV_FIELDS)
+            writer.writeheader()
+            writer.writerows(rows)
+        tmp_path.replace(path)
+    except OSError:
+        logger.warning("Angi checkpoint write failed for %s (supplementary copy only -- continuing)",
+                        path, exc_info=True)
 
 
 def scrape_one_metro_bbb_and_angi(

@@ -521,6 +521,24 @@
     markSortedHeader();
   }
 
+  // yelpCell/flagsCell each combine several underlying fields into one
+  // cell (Yelp+Angi rating; up to 5 flag badges) -- sorting straight off
+  // a[sortKey] only ever covered ONE of those fields (yelp_rating, or
+  // just reputation_divergence_flag), so an Angi-only match's real rating,
+  // or any of the other 4 flags, silently didn't affect that column's
+  // sort even though it's what's on screen (2026-09-17 audit: verified
+  // against real published records, e.g. an Angi-only pest-control match
+  // with a real 4.9-star rating always sorted to the bottom of "Yelp /
+  // Angi"). These compute the value each column's header actually means
+  // to sort by; every other column keeps using its raw field as before.
+  const SORT_VALUE = {
+    yelp_rating: (r) => num(r.yelp_rating) ?? num(r.angi_rating),
+    reputation_divergence_flag: (r) => [
+      r.reputation_divergence_flag, r.accredited_but_low_rated, r.low_review_volume_flag,
+      r.review_gap_flag, r.website_dead_flag,
+    ].reduce((n, f) => n + (isTrue(f) ? 1 : 0), 0),
+  };
+
   function filteredRecords() {
     const q = searchBox.value.trim().toLowerCase();
     let rows = records;
@@ -532,8 +550,9 @@
       });
     }
     if (sortKey) {
+      const sortValue = SORT_VALUE[sortKey] ?? ((r) => r[sortKey]);
       rows = [...rows].sort((a, b) => {
-        const av = a[sortKey], bv = b[sortKey];
+        const av = sortValue(a), bv = sortValue(b);
         const an = num(av), bn = num(bv);
         if (an !== null || bn !== null) {
           if (an === null) return 1;

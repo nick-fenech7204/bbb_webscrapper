@@ -80,10 +80,24 @@ class WebsiteCheckCache:
         self._data[url] = asdict(check)
 
     def save(self) -> None:
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        tmp_path = self.path.with_suffix(self.path.suffix + ".tmp")
-        tmp_path.write_text(json.dumps(self._data, indent=2), encoding="utf-8")
-        tmp_path.replace(self.path)  # atomic, same pattern as the batch scraper's checkpoints
+        """Best-effort: called every CACHE_SAVE_EVERY checks during a large
+        sweep (thousands of domains), so an uncaught transient failure here
+        (the same Windows file-lock class commit 82834e3 already found and
+        fixed elsewhere) would propagate out of check_websites() entirely --
+        and _check_metro_websites' own except-and-return-unchecked-records
+        contract means that doesn't just skip ONE periodic save, it discards
+        every result this sweep computed so far, in memory or not. Results
+        already in self._data survive a failed save either way (set() has
+        already run); the next periodic save or the final one at the end of
+        the sweep picks them up (2026-09-17 audit)."""
+        try:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            tmp_path = self.path.with_suffix(self.path.suffix + ".tmp")
+            tmp_path.write_text(json.dumps(self._data, indent=2), encoding="utf-8")
+            tmp_path.replace(self.path)  # atomic, same pattern as the batch scraper's checkpoints
+        except OSError:
+            logger.warning("Webcheck cache write failed for %s (will retry on the next periodic save)",
+                            self.path, exc_info=True)
 
 
 def derive_output_fields(website_field: str) -> tuple[str, str, str]:

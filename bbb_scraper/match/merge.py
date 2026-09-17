@@ -666,7 +666,17 @@ def _row(status: str, *, bbb: dict | None, yelp: dict | None,
         "match_signals": json.dumps(signals, sort_keys=True) if signals else "",
     }
     for f in BBB_FIELDS:
-        row[f"bbb_{f}"] = (bbb or {}).get(f, "")
+        v = (bbb or {}).get(f, "")
+        # JSON-encode list/dict values same as YELP_FIELDS below -- BBB has
+        # more of these (categories/contacts/socials/reviews_complaints) than
+        # Yelp does, so this asymmetry was more latent risk than Yelp's own
+        # version of the same line: a caller that writes build_master_table's
+        # output straight to csv.DictWriter without CSVSink's flatten_record
+        # first (match_bbb_yelp.py's BBB input happens to already be
+        # pre-stringified via a CSV round-trip today, so this was dormant,
+        # not live) would otherwise get invalid-JSON Python repr() strings
+        # for these fields instead of real JSON (2026-09-17 audit).
+        row[f"bbb_{f}"] = json.dumps(v) if isinstance(v, (list, dict)) else v
     for f in YELP_FIELDS:
         v = (yelp or {}).get(f, "")
         row[f"yelp_{f}"] = json.dumps(v) if isinstance(v, (list, dict)) else v

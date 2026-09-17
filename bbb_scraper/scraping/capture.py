@@ -61,7 +61,6 @@ class RawCapture:
         content_hash = sha256_hex(content)
         safe_identifier = "".join(c if c.isalnum() or c in "-_." else "_" for c in identifier)[:120]
         file_path = day_dir / f"{safe_identifier}__{content_hash}.{ext}"
-        file_path.write_text(content, encoding="utf-8")
 
         result = CaptureResult(
             path=file_path,
@@ -71,8 +70,22 @@ class RawCapture:
             status_code=status_code,
             captured_at=now,
         )
-        self._append_manifest(result)
-        logger.debug("Captured raw %s -> %s", kind, file_path, extra={"url": url})
+        # Best-effort: this is a debugging/audit side channel (the raw page
+        # is never re-read from disk this same run -- the caller already has
+        # `content` in hand and parses that directly), so a transient write
+        # failure here must never take down the scrape itself. Same failure
+        # mode commit 82834e3 already found and fixed for the batch
+        # progress-file write (a transient Windows PermissionError) -- this
+        # runs on every single page fetch, a much hotter path, so it's worth
+        # guarding the same way rather than leaving it as the one unguarded
+        # disk write in the capture path (2026-09-17 audit).
+        try:
+            file_path.write_text(content, encoding="utf-8")
+            self._append_manifest(result)
+            logger.debug("Captured raw %s -> %s", kind, file_path, extra={"url": url})
+        except OSError:
+            logger.warning("Raw capture write failed for %s (debug/audit copy only, not fatal) -- continuing",
+                            file_path, exc_info=True)
         return result
 
     def _append_manifest(self, result: CaptureResult) -> None:
