@@ -81,11 +81,23 @@ Per metro:
      here: a client-setup failure
      disables MapQuest for the whole batch, a single business's
      search/match failure just leaves that row's columns empty, neither
-     is ever fatal. Checkpoint/dataset only
-     for now -- these columns are deliberately absent from merge.py's
-     scoring and publish_site_data.py's public site fields ("just in the
-     dataset, nothing yet different for the website").
-  6. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
+     is ever fatal. 2026-09-17: a MapQuest match whose rating_provider
+     confirms Yelp DOES now feed scoring and the public site (merge.py's
+     _yelp_rating/_present_yelp fall back to it, publish_site_data.py
+     surfaces it as yelp_via_mapquest) when there's no official Fusion
+     API match -- no longer "just in the dataset".
+  6. unless --no-bbb-reviews: for every row whose own aggregate BBB review
+     count (bbb_reviews_complaints.reviews_total, from step 1's --details
+     fetch) is already known to be > 1, fetch that business's real review
+     text off bbb.org's own /customer-reviews sub-page (a genuinely
+     separate request -- the profile page never embeds review text, see
+     Extractor.extract_business_reviews's own docstring) -- Nick's
+     explicit ask, 2026-09-17, so BBB reviews feed sentiment analysis the
+     same way mapquest_reviews/angi_reviews already do, not just the two
+     of those. Requires --details (no aggregate count to gate on
+     otherwise). One shared Extractor for the whole batch, same
+     never-fatal contract as MapQuest above.
+  7. write data/processed/batch/<industry-slug>--<metro-id>.csv -- the wide
      BBB|Yelp(|Angi)(|MapQuest) master table (bbb_* / yelp_* / angi_* /
      mapquest_* columns + derived-intelligence columns; yelp_*/angi_*
      blank when there was no match). This file's existence is the resume
@@ -93,22 +105,22 @@ Per metro:
      a re-run (--force to redo). The raw Angi scrape also gets its own
      checkpoint, same as the standalone script used to write:
      data/processed/angi/<angi-category-slug>--<metro-id>.csv.
-  7. append the BBB records (not the wide table) into the shared
+  8. append the BBB records (not the wide table) into the shared
      data/processed/businesses.csv sink, same as every other run.
-  8. unless --no-publish: publish that metro to site/data/ locally (BBB
+  9. unless --no-publish: publish that metro to site/data/ locally (BBB
      fields + the matched yelp_name/rating/review_count/url + Angi's
      rating/specialties/etc. + our derived intelligence columns -- raw
      Yelp/Angi/MapQuest beyond those stays out).
-  9. unless --no-deploy: immediately push site/ live for this metro (S3
+  10. unless --no-deploy: immediately push site/ live for this metro (S3
      sync + CloudFront invalidation, see scripts/deploy_site.py) -- right
      away, not batched up for the end, so a metro is live within seconds
      of finishing rather than sitting local-only for however long the
      rest of the batch takes.
-  Steps 6-9 are wrapped: a failure anywhere in there (including step 5,
-  also inside the same try) is logged and this metro is skipped, the rest
-  of the batch keeps going rather than the whole run dying (this used to
-  be able to kill hours of already-finished, already-correct work over a
-  bug in a print statement -- see git history). A deploy failure
+  Steps 7-10 are wrapped: a failure anywhere in there (including steps
+  5-6, also inside the same try) is logged and this metro is skipped, the
+  rest of the batch keeps going rather than the whole run dying (this
+  used to be able to kill hours of already-finished, already-correct work
+  over a bug in a print statement -- see git history). A deploy failure
   specifically is caught on its own and never undoes the fact that the
   scrape + checkpoint + local publish for that metro already succeeded.
 
@@ -165,6 +177,7 @@ from bbb_scraper.mapquest.matcher import find_business
 from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
 from bbb_scraper.match.merge import (
+    _bbb_rc,
     _effective_city,
     _effective_name,
     _effective_phone,
@@ -709,6 +722,75 @@ def _enrich_metro_with_mapquest(
     return matched, total_reviews
 
 
+# 2026-09-17, Nick's call: only worth a real extra request per business when
+# there's more than one BBB review on file -- reviews_total is already known
+# from the main scrape's own aggregate counts (bbb_reviews_complaints), so
+# this never costs a wasted request just to find out a business has 0 or 1.
+_BBB_REVIEWS_MIN_COUNT = 1
+# Same default as the standalone scripts/fetch_bbb_reviews.py's own
+# --max-reviews-per-business -- see Extractor.extract_business_reviews's
+# docstring for why (some businesses report thousands; a low cap still gets
+# the most recent, most relevant ones since BBB returns newest-first).
+_BBB_REVIEWS_MAX_PER_BUSINESS = 50
+
+
+def _open_bbb_reviews(enabled: bool) -> tuple[Extractor | None, str | None]:
+    """One shared Extractor for the whole batch's BBB review fetching --
+    same "resolve once, best-effort" shape as _open_mapquest. Unlike
+    MapQuest/Ollama there's no external key/reachability check to make
+    first -- BBB is already the thing the main scrape talks to -- so this
+    only guards against Extractor's own __init__ failing (e.g. missing
+    proxy config), never kills the batch."""
+    if not enabled:
+        return None, None
+    try:
+        extractor = Extractor()
+    except Exception:
+        logger.exception("BBB review-fetch setup failed -- disabling it for this batch")
+        return None, "setup failed (see log)"
+    return extractor, None
+
+
+def _enrich_metro_with_bbb_reviews(master_rows: list[dict], extractor: Extractor) -> tuple[int, int]:
+    """Best-effort BBB review-text fetch for one metro's already-built
+    master rows -- writes bbb_reviews/bbb_num_reviews_captured onto every
+    row whose own bbb_reviews_complaints.reviews_total is already known to
+    be > _BBB_REVIEWS_MIN_COUNT (a real, separate request per qualifying
+    business against bbb.org's /customer-reviews sub-page -- see
+    Extractor.extract_business_reviews's own docstring for why the profile
+    page alone was never enough). This must run before the sentiment step
+    (bbb_reviews is one of its three source columns) -- see
+    _enrich_metro_with_sentiment's own has_reviews gate above.
+
+    A row with no bbb_profile_url, or whose own reviews_total isn't yet
+    known (e.g. a no-`--details` run never captured the aggregate block at
+    all) is skipped without a request -- silence here reads the same as
+    "0/1 reviews", never a crash. Same never-fatal contract as every other
+    enrichment step in this file: one business's fetch failing is logged
+    and just leaves that row's bbb_reviews columns empty.
+
+    Returns (fetched, total_reviews) for the caller's own progress line.
+    """
+    fetched = 0
+    total_reviews = 0
+    for row in master_rows:
+        reviews_total = _bbb_rc(row).get("reviews_total")
+        profile_url = (row.get("bbb_profile_url") or "").strip()
+        if not profile_url or not isinstance(reviews_total, (int, float)) or reviews_total <= _BBB_REVIEWS_MIN_COUNT:
+            continue
+        try:
+            reviews = extractor.extract_business_reviews(profile_url, max_reviews=_BBB_REVIEWS_MAX_PER_BUSINESS)
+        except Exception:
+            logger.exception("BBB review fetch failed for %s", profile_url)
+            continue
+        row["bbb_reviews"] = json.dumps([r.model_dump() for r in reviews], ensure_ascii=False)
+        row["bbb_num_reviews_captured"] = len(reviews)
+        fetched += 1
+        total_reviews += len(reviews)
+
+    return fetched, total_reviews
+
+
 def _open_sentiment(enabled: bool) -> tuple[OllamaClient | None, str | None]:
     """One shared OllamaClient for the whole batch -- same "resolve once,
     best-effort" shape as _open_mapquest. Checks is_available() first (a
@@ -816,6 +898,7 @@ _STEP_LABELS = {
     "yelp": "Matching Yelp",
     "angi_merge": "Merging Angi",
     "mapquest": "Fetching MapQuest reviews",
+    "bbb_reviews": "Fetching BBB reviews",
     "sentiment": "Analyzing review sentiment",
     "checkpoint": "Writing checkpoint",
     "publish": "Publishing to site",
@@ -824,8 +907,8 @@ _STEP_LABELS = {
 _STEP_ORDER = list(_STEP_LABELS)
 
 
-def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: bool, sentiment: bool,
-                   publish: bool, deploy: bool) -> list[dict]:
+def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: bool, bbb_reviews: bool,
+                   sentiment: bool, publish: bool, deploy: bool) -> list[dict]:
     """Which of _STEP_ORDER this particular batch actually runs, in order --
     depends on which --no-X flags are set, so it's computed once per batch
     (every metro in one batch shares the same flags) rather than assumed
@@ -833,8 +916,8 @@ def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: boo
     can't happen without a publish first (see main()'s own nesting)."""
     enabled = {
         "scraping": True, "check_websites": check_websites, "yelp": yelp,
-        "angi_merge": angi, "mapquest": mapquest, "sentiment": sentiment, "checkpoint": True,
-        "publish": publish, "deploy": publish and deploy,
+        "angi_merge": angi, "mapquest": mapquest, "bbb_reviews": bbb_reviews, "sentiment": sentiment,
+        "checkpoint": True, "publish": publish, "deploy": publish and deploy,
     }
     return [{"key": k, "label": _STEP_LABELS[k]} for k in _STEP_ORDER if enabled[k]]
 
@@ -913,6 +996,17 @@ def main() -> int:
         "bbb_scraper/mapquest/client.py's own module docstring for the same incident/fix "
         "--angi-use-proxy's own docstring describes). --no-mapquest-use-proxy for local "
         "debugging without a proxy configured.",
+    )
+    parser.add_argument(
+        "--bbb-reviews", action=argparse.BooleanOptionalAction, default=True,
+        help="Fetch real BBB review text for any business whose own aggregate count "
+        f"(bbb_reviews_complaints.reviews_total, already known from the main scrape -- "
+        f"requires --details) is > {_BBB_REVIEWS_MIN_COUNT} (default: on) -- a genuinely "
+        "separate request per qualifying business against bbb.org's own /customer-reviews "
+        "sub-page (the profile page never embeds review text). Best-effort: a setup failure "
+        "disables it for the whole batch, a single business's fetch failing just leaves that "
+        "row's bbb_reviews columns empty, neither is ever fatal. Feeds sentiment analysis "
+        "the same way mapquest_reviews/angi_reviews already do.",
     )
     parser.add_argument(
         "--sentiment", action=argparse.BooleanOptionalAction, default=True,
@@ -998,6 +1092,7 @@ def main() -> int:
             "step": None,
             "businesses": None, "yelp_matched": None, "angi_businesses": None, "angi_matched": None,
             "mapquest_matched": None, "mapquest_reviews": None,
+            "bbb_reviews_fetched": None, "bbb_reviews_count": None,
             "sentiment_analyzed": None, "sentiment_negative": None,
             "top_lead_score": None, "websites_dead": None,
             "elapsed_s": None, "error": None,
@@ -1015,13 +1110,18 @@ def main() -> int:
     mapquest_note = (f"on, proxy={'on' if args.mapquest_use_proxy else 'off'}" if mapquest_enabled
                       else f"off ({mapquest_reason_off or 'disabled'})")
 
+    bbb_reviews_extractor, bbb_reviews_reason_off = _open_bbb_reviews(args.bbb_reviews)
+    bbb_reviews_enabled = bbb_reviews_extractor is not None
+    bbb_reviews_note = "on" if bbb_reviews_enabled else f"off ({bbb_reviews_reason_off or 'disabled'})"
+
     sentiment_client, sentiment_reason_off = _open_sentiment(args.sentiment)
     sentiment_enabled = sentiment_client is not None
     sentiment_note = "on" if sentiment_enabled else f"off ({sentiment_reason_off or 'disabled'})"
 
     active_steps = _active_steps(
         check_websites=args.check_websites, yelp=args.yelp, angi=angi_enabled,
-        mapquest=mapquest_enabled, sentiment=sentiment_enabled, publish=args.publish, deploy=args.deploy,
+        mapquest=mapquest_enabled, bbb_reviews=bbb_reviews_enabled, sentiment=sentiment_enabled,
+        publish=args.publish, deploy=args.deploy,
     )
 
     def _snapshot(finished: bool = False) -> dict:
@@ -1031,8 +1131,9 @@ def main() -> int:
     print(f"Batch: {len(metros)} metro(s), industry={args.industry!r}, "
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
-          f"yelp={yelp_note}, angi={angi_note}, mapquest={mapquest_note}, sentiment={sentiment_note}, "
-          f"check_websites={args.check_websites}, publish={args.publish}, deploy={args.deploy}")
+          f"yelp={yelp_note}, angi={angi_note}, mapquest={mapquest_note}, bbb_reviews={bbb_reviews_note}, "
+          f"sentiment={sentiment_note}, check_websites={args.check_websites}, publish={args.publish}, "
+          f"deploy={args.deploy}")
     _write_progress(progress_path, _snapshot())
 
     done = 0
@@ -1127,6 +1228,16 @@ def main() -> int:
                 print(f"    MapQuest: {mapquest_matched}/{len(master_rows)} matched, "
                       f"{mapquest_reviews_count} reviews captured")
 
+            bbb_reviews_fetched = bbb_reviews_count = None
+            if bbb_reviews_enabled:
+                metro_states[i - 1]["step"] = "bbb_reviews"
+                _write_progress(progress_path, _snapshot())
+                bbb_reviews_fetched, bbb_reviews_count = _enrich_metro_with_bbb_reviews(
+                    master_rows, bbb_reviews_extractor,
+                )
+                print(f"    BBB reviews: {bbb_reviews_fetched} business(es) fetched, "
+                      f"{bbb_reviews_count} reviews captured")
+
             sentiment_analyzed = sentiment_negative = None
             if sentiment_enabled:
                 metro_states[i - 1]["step"] = "sentiment"
@@ -1157,6 +1268,7 @@ def main() -> int:
                   f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''}"
                   f"{f', {len(angi_rows)} Angi ({angi_matched} matched, {angi_new_rows} new angi_only)' if angi_enabled else ''}"
                   f"{f', {mapquest_matched} MapQuest ({mapquest_reviews_count} reviews)' if mapquest_enabled else ''}"
+                  f"{f', {bbb_reviews_fetched} BBB reviews ({bbb_reviews_count} reviews)' if bbb_reviews_enabled else ''}"
                   f"{f', {sentiment_analyzed} sentiment ({sentiment_negative} negative)' if sentiment_enabled else ''}"
                   f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
@@ -1167,6 +1279,8 @@ def main() -> int:
                 "angi_matched": angi_matched,
                 "mapquest_matched": mapquest_matched,
                 "mapquest_reviews": mapquest_reviews_count,
+                "bbb_reviews_fetched": bbb_reviews_fetched,
+                "bbb_reviews_count": bbb_reviews_count,
                 "sentiment_analyzed": sentiment_analyzed,
                 "sentiment_negative": sentiment_negative,
                 "websites_dead": websites_dead,

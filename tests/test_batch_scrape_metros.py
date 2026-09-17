@@ -40,6 +40,7 @@ import batch_scrape_metros as bsm
 
 from bbb_scraper.angi.models import BusinessDetail
 from bbb_scraper.mapquest.models import MapQuestMatch, MapQuestReview
+from bbb_scraper.parsing.models import BBBReview
 from bbb_scraper.reference.models import Category, City, Metro
 from bbb_scraper.sentiment.models import ReviewSentiment
 from bbb_scraper.utils.stats import RunStats
@@ -700,6 +701,146 @@ def test_enrich_metro_with_mapquest_processes_every_row_independently(monkeypatc
     assert rows[2]["mapquest_reviews"] == "[]"  # searched, no confident match
 
 
+# --- BBB reviews: setup (best-effort, mirrors _open_mapquest) --------------
+
+def test_open_bbb_reviews_disabled_returns_none_none():
+    assert bsm._open_bbb_reviews(False) == (None, None)
+
+
+def test_open_bbb_reviews_enabled_builds_extractor(monkeypatch):
+    fake_extractor = object()
+    monkeypatch.setattr(bsm, "Extractor", lambda: fake_extractor)
+
+    extractor, reason = bsm._open_bbb_reviews(True)
+
+    assert extractor is fake_extractor
+    assert reason is None
+
+
+def test_open_bbb_reviews_setup_failure_disables_it_rather_than_raising(monkeypatch):
+    def _boom():
+        raise RuntimeError("simulated: e.g. proxy config genuinely broken")
+
+    monkeypatch.setattr(bsm, "Extractor", _boom)
+
+    extractor, reason = bsm._open_bbb_reviews(True)
+
+    assert extractor is None
+    assert reason  # a non-empty reason string, for the batch-summary note
+
+
+# --- BBB reviews: per-metro enrichment (post-hoc, mirrors MapQuest) --------
+
+class _FakeBBBExtractor:
+    """Records every extract_business_reviews() call (a spy) -- lets a test
+    assert a row was never even fetched, without relying on an exception
+    escaping _enrich_metro_with_bbb_reviews's own broad try/except."""
+
+    def __init__(self, reviews_by_url: dict[str, list] | None = None, fail_urls: set[str] | None = None):
+        self.fetched: list[str] = []
+        self.reviews_by_url = reviews_by_url or {}
+        self.fail_urls = fail_urls or set()
+
+    def extract_business_reviews(self, profile_url, *, max_reviews=50):
+        self.fetched.append(profile_url)
+        if profile_url in self.fail_urls:
+            raise RuntimeError("simulated: e.g. bbb.org request failed")
+        return self.reviews_by_url.get(profile_url, [])
+
+
+def _bbb_row(*, reviews_total=None, profile_url="https://www.bbb.org/us/x/acme-1", **overrides) -> dict:
+    row = {"bbb_name": "Acme A", "bbb_profile_url": profile_url}
+    if reviews_total is not None:
+        row["bbb_reviews_complaints"] = json.dumps({"reviews_total": reviews_total})
+    row.update(overrides)
+    return row
+
+
+def test_enrich_metro_with_bbb_reviews_fetches_when_above_threshold():
+    review = BBBReview(review_id="1", reviewer_name="Mark H.", rating=5, text="Great job", date="2022-08-16")
+    extractor = _FakeBBBExtractor(reviews_by_url={"https://www.bbb.org/us/x/acme-1": [review]})
+    rows = [_bbb_row(reviews_total=2)]
+
+    fetched, total_reviews = bsm._enrich_metro_with_bbb_reviews(rows, extractor)
+
+    assert fetched == 1
+    assert total_reviews == 1
+    assert extractor.fetched == ["https://www.bbb.org/us/x/acme-1"]
+    assert json.loads(rows[0]["bbb_reviews"])[0]["reviewer_name"] == "Mark H."
+    assert rows[0]["bbb_num_reviews_captured"] == 1
+
+
+def test_enrich_metro_with_bbb_reviews_skips_at_exactly_the_threshold():
+    """Nick's call: "greater than 1", so reviews_total == 1 must NOT fetch
+    -- only a real request when there's more than a single review on file."""
+    extractor = _FakeBBBExtractor()
+    rows = [_bbb_row(reviews_total=1)]
+
+    fetched, total_reviews = bsm._enrich_metro_with_bbb_reviews(rows, extractor)
+
+    assert fetched == 0
+    assert total_reviews == 0
+    assert extractor.fetched == []
+    assert "bbb_reviews" not in rows[0]
+
+
+def test_enrich_metro_with_bbb_reviews_skips_when_review_count_unknown():
+    """No bbb_reviews_complaints block at all -- e.g. a no-`--details` run
+    never captured the aggregate count -- must never guess and fetch."""
+    extractor = _FakeBBBExtractor()
+    rows = [_bbb_row()]  # reviews_total omitted entirely
+
+    fetched, _total_reviews = bsm._enrich_metro_with_bbb_reviews(rows, extractor)
+
+    assert fetched == 0
+    assert extractor.fetched == []
+
+
+def test_enrich_metro_with_bbb_reviews_skips_when_no_profile_url():
+    extractor = _FakeBBBExtractor()
+    rows = [_bbb_row(reviews_total=10, profile_url="")]
+
+    fetched, _total_reviews = bsm._enrich_metro_with_bbb_reviews(rows, extractor)
+
+    assert fetched == 0
+    assert extractor.fetched == []
+
+
+def test_enrich_metro_with_bbb_reviews_fetch_failure_is_never_fatal():
+    extractor = _FakeBBBExtractor(fail_urls={"https://www.bbb.org/us/x/acme-1"})
+    rows = [_bbb_row(reviews_total=5)]
+
+    fetched, total_reviews = bsm._enrich_metro_with_bbb_reviews(rows, extractor)
+
+    assert fetched == 0
+    assert total_reviews == 0
+    assert extractor.fetched == ["https://www.bbb.org/us/x/acme-1"]  # it was attempted
+    assert "bbb_reviews" not in rows[0]  # left untouched, not half-written
+
+
+def test_enrich_metro_with_bbb_reviews_processes_every_row_independently():
+    """One row qualifies and fetches, one is below threshold, one fails --
+    each row's own outcome must not bleed into any other row's columns."""
+    review = BBBReview(review_id="1", rating=4, text="Good", date="2024-01-01")
+    extractor = _FakeBBBExtractor(
+        reviews_by_url={"https://www.bbb.org/us/x/a": [review]},
+        fail_urls={"https://www.bbb.org/us/x/c"},
+    )
+    rows = [
+        _bbb_row(reviews_total=3, profile_url="https://www.bbb.org/us/x/a"),
+        _bbb_row(reviews_total=1, profile_url="https://www.bbb.org/us/x/b"),
+        _bbb_row(reviews_total=8, profile_url="https://www.bbb.org/us/x/c"),
+    ]
+
+    fetched, total_reviews = bsm._enrich_metro_with_bbb_reviews(rows, extractor)
+
+    assert fetched == 1
+    assert total_reviews == 1
+    assert json.loads(rows[0]["bbb_reviews"])[0]["text"] == "Good"
+    assert "bbb_reviews" not in rows[1]  # below threshold, never attempted
+    assert "bbb_reviews" not in rows[2]  # attempted, failed -- left untouched
+
+
 def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypatch):
     """A real BBB error must still surface to the caller exactly as it did
     before this concurrency change -- main()'s own try/except is what marks
@@ -728,41 +869,42 @@ def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypa
 # --- _active_steps: the per-metro checklist Streamlit renders ---------------
 
 def test_active_steps_everything_on_includes_every_step_in_order():
-    steps = bsm._active_steps(check_websites=True, yelp=True, angi=True, mapquest=True, sentiment=True,
-                               publish=True, deploy=True)
+    steps = bsm._active_steps(check_websites=True, yelp=True, angi=True, mapquest=True, bbb_reviews=True,
+                               sentiment=True, publish=True, deploy=True)
     assert [s["key"] for s in steps] == [
-        "scraping", "check_websites", "yelp", "angi_merge", "mapquest", "sentiment",
+        "scraping", "check_websites", "yelp", "angi_merge", "mapquest", "bbb_reviews", "sentiment",
         "checkpoint", "publish", "deploy",
     ]
     assert all(isinstance(s["label"], str) and s["label"] for s in steps)  # a real label, not blank
 
 
 def test_active_steps_scraping_and_checkpoint_always_present():
-    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, sentiment=False,
-                               publish=False, deploy=False)
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, bbb_reviews=False,
+                               sentiment=False, publish=False, deploy=False)
     assert [s["key"] for s in steps] == ["scraping", "checkpoint"]
 
 
 def test_active_steps_omits_each_disabled_feature():
-    steps = bsm._active_steps(check_websites=False, yelp=True, angi=True, mapquest=True, sentiment=True,
-                               publish=True, deploy=True)
+    steps = bsm._active_steps(check_websites=False, yelp=True, angi=True, mapquest=True, bbb_reviews=True,
+                               sentiment=True, publish=True, deploy=True)
     keys = [s["key"] for s in steps]
     assert "check_websites" not in keys
-    assert "yelp" in keys and "angi_merge" in keys and "mapquest" in keys and "sentiment" in keys
+    assert "yelp" in keys and "angi_merge" in keys and "mapquest" in keys and "bbb_reviews" in keys
+    assert "sentiment" in keys
 
 
 def test_active_steps_deploy_requires_publish_even_if_deploy_flag_is_true():
     """main() only ever calls deploy_site nested inside `if args.publish:` --
     deploy=True with publish=False can't actually happen, so the checklist
     must not claim it will."""
-    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, sentiment=False,
-                               publish=False, deploy=True)
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, bbb_reviews=False,
+                               sentiment=False, publish=False, deploy=True)
     assert "deploy" not in [s["key"] for s in steps]
 
 
 def test_active_steps_publish_without_deploy():
-    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, sentiment=False,
-                               publish=True, deploy=False)
+    steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, bbb_reviews=False,
+                               sentiment=False, publish=True, deploy=False)
     keys = [s["key"] for s in steps]
     assert "publish" in keys
     assert "deploy" not in keys
