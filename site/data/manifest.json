@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T14:47:16.660846+00:00",
+  "generated_at": "2026-09-17T17:24:44.651183+00:00",
   "datasets": [
     {
       "id": "pest-control--austin-tx",
@@ -14,6 +14,21 @@
         "chain_name": 18,
         "corporate_account": 0,
         "low_score": 231
+      }
+    },
+    {
+      "id": "home-inspection--chicago-il",
+      "industry": "Home Inspection",
+      "metro": "Chicago, IL",
+      "record_count": 79,
+      "has_yelp": true,
+      "yelp_matched": 23,
+      "top_lead_score": 84.4,
+      "file": "home-inspection--chicago-il.json",
+      "curated_out": {
+        "chain_name": 3,
+        "corporate_account": 0,
+        "low_score": 349
       }
     },
     {
