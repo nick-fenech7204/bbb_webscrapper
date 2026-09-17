@@ -122,12 +122,14 @@ def test_non_yelp_mapquest_provider_does_not_leak_into_yelp_columns():
     assert rec["yelp_via_mapquest"] is False
 
 
-def test_most_recent_review_source_is_labeled_yelp_or_angi_for_display():
+def test_most_recent_review_source_is_labeled_yelp_angi_or_bbb_for_display():
     """2026-09-17, Nick's call: the site shows which platform found the
     latest (negative) review, on hover. bbb_scraper.sentiment.analyze
-    stores the raw ReviewSentiment.source vocabulary ("mapquest"/"angi")
-    -- this is the one place that translates "mapquest" to the "Yelp"
-    label the rest of the site already uses for MapQuest-sourced data."""
+    stores the raw ReviewSentiment.source vocabulary ("mapquest"/"angi"/
+    "bbb") -- this is the one place that translates "mapquest" to the
+    "Yelp" label the rest of the site already uses for MapQuest-sourced
+    data, and "bbb" to "BBB" now that BBB is a real, equally-eligible
+    source for these fields too (previously excluded entirely)."""
     row = {
         "match_status": "bbb_only",
         "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
@@ -137,6 +139,10 @@ def test_most_recent_review_source_is_labeled_yelp_or_angi_for_display():
     rec = select_public_fields_from_master(row)
     assert rec["most_recent_review_source"] == "Yelp"
     assert rec["most_recent_negative_review_source"] == "Angi"
+
+    row["most_recent_negative_review_source"] = "bbb"
+    rec = select_public_fields_from_master(row)
+    assert rec["most_recent_negative_review_source"] == "BBB"
 
 
 def test_missing_review_source_publishes_as_empty_string_not_none():

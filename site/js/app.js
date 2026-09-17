@@ -139,6 +139,15 @@
       parts.push(oneRatingLink("Yelp", r.yelp_url, num(r.yelp_rating), num(r.yelp_review_count), title));
     }
     if (isTrue(r.on_angi)) parts.push(oneRatingLink("Angi", r.angi_url, num(r.angi_rating), num(r.angi_review_count)));
+    // BBB's own customer-review average (2026-09-17, Nick's call: treat it
+    // the same as Yelp/Angi here, not second-class -- it already fed
+    // lead_priority_score via the same _rating_band curve, but had no
+    // visible column of its own until now). Server-side null (under 3
+    // reviews behind it, or none at all -- see merge.py's
+    // _bbb_review_avg) means simply not shown, same gating as on_yelp/
+    // on_angi above.
+    const bbbAvg = num(r.bbb_review_avg);
+    if (bbbAvg !== null) parts.push(oneRatingLink("BBB", r.profile_url, bbbAvg, num(r.bbb_reviews_total)));
     if (!parts.length) return `<span class="muted">${dash}</span>`;
     return parts.join("<br>");
   }
@@ -225,10 +234,11 @@
   // rather than the good news it actually is. Falls back to
   // most_recent_review_date (any sentiment) with a hover explicitly
   // saying so, so it's never mistaken for a negative date. Both date
-  // fields are already Yelp/Angi-only at the source (bbb_scraper.
-  // sentiment's _aggregate excludes BBB -- its complaint/review system is
-  // a different thing from a casual star review). Genuinely blank only
-  // when there's no 3rd-party review date of any sentiment on file at all.
+  // fields pool Yelp/Angi/BBB equally at the source (bbb_scraper.
+  // sentiment's _aggregate, 2026-09-17: BBB stopped being second-class
+  // here once its own review text became a real, automatically-fetched
+  // source). Genuinely blank only when there's no review date of any
+  // sentiment on file at all.
   function latestReviewCell(r) {
     const negDate = r.most_recent_negative_review_date ?? "";
     const anyDate = r.most_recent_review_date ?? "";
@@ -346,7 +356,7 @@
     { key: "city", label: "City", w: 110, render: cityCell },
     { key: "rating", label: "BBB", w: 75, render: bbbCell },
     { key: "bbb_complaints_total", label: "BBB complaints", w: 105, cls: "num-cell", render: intCell("bbb_complaints_total") },
-    { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
+    { key: "yelp_rating", label: "Yelp / Angi / BBB", w: 140, cls: "num-cell", render: yelpCell },
     { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
     { key: "top_complaint_summary", label: "Top complaint", w: 200, render: topComplaintCell },
     { key: "most_recent_negative_review_date", label: "Latest negative review", w: 130, render: latestReviewCell },
@@ -568,7 +578,7 @@
   // Angi"). These compute the value each column's header actually means
   // to sort by; every other column keeps using its raw field as before.
   const SORT_VALUE = {
-    yelp_rating: (r) => num(r.yelp_rating) ?? num(r.angi_rating),
+    yelp_rating: (r) => num(r.yelp_rating) ?? num(r.angi_rating) ?? num(r.bbb_review_avg),
     reputation_divergence_flag: (r) => [
       r.reputation_divergence_flag, r.accredited_but_low_rated, r.low_review_volume_flag,
       r.review_gap_flag, r.website_dead_flag,

@@ -192,11 +192,13 @@ def _num_or_none(v):
 
 
 # bbb_scraper.sentiment.analyze stores the raw ReviewSentiment.source
-# vocabulary ("mapquest"/"angi") -- mapquest_reviews is genuinely Yelp
-# review text (see that module's own _aggregate docstring), so it
+# vocabulary ("mapquest"/"angi"/"bbb") -- mapquest_reviews is genuinely
+# Yelp review text (see that module's own _aggregate docstring), so it
 # displays as "Yelp" here, the same treatment the rest of the site already
-# gives a MapQuest-sourced rating.
-_REVIEW_SOURCE_LABEL = {"mapquest": "Yelp", "angi": "Angi"}
+# gives a MapQuest-sourced rating. "bbb" is included (2026-09-17, once
+# _aggregate stopped excluding BBB from the date fields) so a BBB-sourced
+# latest-review date still shows a real source on hover, not a blank one.
+_REVIEW_SOURCE_LABEL = {"mapquest": "Yelp", "angi": "Angi", "bbb": "BBB"}
 
 
 def select_public_fields_from_master(row: dict) -> dict:
