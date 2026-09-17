@@ -104,3 +104,51 @@ def test_resolve_one_returns_none_for_an_ambiguous_substring_match(tmp_path):
                      encoding="utf-8")
     directory = CategoryDirectory.load(path)
     assert directory.resolve_one("plumb") is None  # 2 substring matches, neither exact
+
+
+# --- resolve_by_slug_token (2026-09-16: a real incident -- see the
+# function's own docstring. Angi's "HVAC Companies" label sent straight to
+# BBB's search returned fire/water-damage restoration companies instead of
+# HVAC contractors; this exists to swap in this (BBB) directory's own
+# confirmed name first, since resolve_one/search can't -- "hvac companies"
+# is never going to be a substring of "Heating and Air Conditioning".) -----
+
+def test_resolve_by_slug_token_matches_a_whole_word_from_a_different_taxonomy(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "10182-000", "name": "Heating and Air Conditioning", "slug": "hvac"}]',
+                     encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    match = directory.resolve_by_slug_token("HVAC Companies")
+    assert match is not None
+    assert match.name == "Heating and Air Conditioning"
+
+
+def test_resolve_by_slug_token_requires_a_whole_word_not_a_bare_substring(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "1", "name": "Heating and Air Conditioning", "slug": "hvac"}]',
+                     encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    # "hvacr" contains "hvac" as a substring but isn't the same word.
+    assert directory.resolve_by_slug_token("HVACR Companies") is None
+
+
+def test_resolve_by_slug_token_returns_none_with_no_slug_match(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "1", "name": "Heating and Air Conditioning", "slug": "hvac"}]',
+                     encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    assert directory.resolve_by_slug_token("Landscapers") is None
+
+
+def test_resolve_by_slug_token_returns_none_when_ambiguous(tmp_path):
+    path = tmp_path / "categories.json"
+    path.write_text(
+        '[{"id": "1", "name": "A", "slug": "hvac"}, {"id": "2", "name": "B", "slug": "hvac-repair"}]',
+        encoding="utf-8",
+    )
+    directory = CategoryDirectory.load(path)
+    # Only "hvac" is a whole-word match here ("hvac-repair" is a different
+    # slug entirely, not embedded as a single token) -- not ambiguous.
+    match = directory.resolve_by_slug_token("HVAC Companies")
+    assert match is not None
+    assert match.id == "1"

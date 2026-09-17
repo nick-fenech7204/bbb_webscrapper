@@ -202,13 +202,37 @@ def _write_progress(path: Path | None, state: dict) -> None:
     None -- opt-in via --progress-file, so a plain CLI/manual run behaves
     exactly as before. Atomic write (temp file + replace), same pattern as
     _write_partial_checkpoint, so a poller never sees a half-written file.
+
+    **Real incident, 2026-09-16: this used to let a transient Windows file
+    lock kill the entire batch.** `tmp_path.replace(path)` raised
+    PermissionError mid-batch (something else -- almost certainly
+    Streamlit's own file-watcher, polling this exact path for the UI this
+    function exists to feed -- briefly held the file open right as this
+    tried to replace it). That's a real but genuinely transient OS-level
+    race, not a sign anything is actually wrong, and this function is
+    explicitly a UI nicety, never a source of truth (the real state is the
+    checkpoint CSV / site JSON already on disk) -- but main()'s only
+    protection was the per-metro try/except around checkpoint/publish work,
+    which this call also sits inside. The first PermissionError got
+    miscaught as "this metro's checkpoint/publish step failed" even though
+    the metro (Orlando, that day) had already fully succeeded -- then the
+    except block's OWN recovery call to this same function threw the exact
+    same PermissionError a second time, uncaught, which crashed the whole
+    process and silently dropped every metro still queued behind it (2 of
+    5, that day). Swallowing the failure here, where it's actually safe to
+    ignore, is the fix -- not a broader try/except somewhere upstream that
+    would also risk swallowing a real scrape/checkpoint/publish failure by
+    mistake.
     """
     if path is None:
         return
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp_path = path.with_suffix(path.suffix + ".tmp")
-    tmp_path.write_text(json.dumps(state), encoding="utf-8")
-    tmp_path.replace(path)
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp_path = path.with_suffix(path.suffix + ".tmp")
+        tmp_path.write_text(json.dumps(state), encoding="utf-8")
+        tmp_path.replace(path)
+    except OSError:
+        logger.warning("Progress file write failed (UI-only, not fatal) -- continuing", exc_info=True)
 
 
 def _write_partial_checkpoint(path: Path, records: list[dict]) -> None:
@@ -313,6 +337,29 @@ def _resolve_angi_category(name: str) -> tuple[str, str] | None:
     directory = CategoryDirectory.load(settings.angi_categories_file)
     match = directory.resolve_one(name)
     return (match.slug, match.name) if match else None
+
+
+def _resolve_bbb_category_name(industry: str) -> str:
+    """The actual BBB search phrase for --industry -- data/reference/
+    categories.json's confirmed name when its slug appears as a whole word
+    in `industry`, else `industry` verbatim (unchanged from before this
+    existed). See CategoryDirectory.resolve_by_slug_token's own docstring
+    for the real incident this fixes: --industry is one shared string sent
+    to both Angi (resolved against its own directory above) and, until now,
+    BBB as literal free text -- true for most industries, since BBB's
+    search genuinely does take any reasonable phrase, but a real batch
+    proved that assumption unsafe for at least one case ("HVAC Companies",
+    Angi's own label, returned fire/water-damage restoration companies from
+    BBB instead of HVAC contractors). This only ever narrows to a *more*
+    BBB-confirmed phrase than the literal input, never changes behavior for
+    an industry with no entry in this still-small (11-category) file."""
+    directory = CategoryDirectory.load(settings.categories_file)
+    match = directory.resolve_by_slug_token(industry)
+    if match is None:
+        return industry
+    print(f"BBB category: resolved {industry!r} -> confirmed phrase {match.name!r} "
+          f"(data/reference/categories.json id {match.id})")
+    return match.name
 
 
 def _angi_state_city(metro_id: str) -> tuple[str, str]:
@@ -874,7 +921,7 @@ def main() -> int:
         print("No metros selected.")
         return 1
 
-    category = Category(id=slugify(args.industry), name=args.industry)
+    category = Category(id=slugify(args.industry), name=_resolve_bbb_category_name(args.industry))
     industry_slug = slugify(args.industry)
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
 

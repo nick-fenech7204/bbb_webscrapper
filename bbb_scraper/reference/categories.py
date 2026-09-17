@@ -11,6 +11,7 @@ load and query *a* taxonomy; it isn't BBB-specific.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from bbb_scraper.config import settings
@@ -76,4 +77,36 @@ class CategoryDirectory:
         category just means Angi enrichment is skipped for the run, same
         never-fatal contract as a missing Yelp key."""
         matches = self.search(text)
+        return matches[0] if len(matches) == 1 else None
+
+    def resolve_by_slug_token(self, text: str) -> Category | None:
+        """Like resolve_one, but matches on `slug` as a whole word inside
+        `text` rather than `name` as a substring -- for when `text` is a
+        DIFFERENT taxonomy's label that happens to embed this directory's
+        own short slug as one of its words (e.g. Angi's "HVAC Companies" ->
+        this (BBB) directory's slug "hvac"). resolve_one/search wouldn't
+        catch this: "hvac companies" isn't a substring of this entry's own
+        name ("Heating and Air Conditioning"), and never will be no matter
+        how good the name is, since the two taxonomies just use different
+        words for the same real-world category.
+
+        Added 2026-09-16, a real incident: scripts/batch_scrape_metros.py
+        sends its one shared --industry string to BOTH Angi (resolved
+        against Angi's own 167-category directory first) and BBB (used as
+        literal free-text search, per data/reference/README.md's own "BBB's
+        search takes any phrase" assumption). Picking "HVAC Companies" from
+        the Angi-seeded Streamlit dropdown sent that exact phrase to BBB's
+        search too -- confirmed live, 2026-09-16: BBB's own full-text search
+        for "HVAC Companies" returns fire/water-damage restoration companies
+        as its top results (146 total, SERVPRO first), not HVAC contractors,
+        while "Heating and Air Conditioning" (this directory's own confirmed
+        entry, BBB's real category id 10182-000) returns real ones (4882
+        total, genuine HVAC businesses). A whole 5-metro batch's worth of
+        BBB data came back the wrong industry before this was caught -- see
+        git history for the incident writeup. Whole-word only (not a bare
+        substring) to stay conservative: "hvac" must appear as its own token,
+        not buried inside an unrelated longer word.
+        """
+        tokens = set(re.findall(r"[a-z0-9]+", text.lower()))
+        matches = [c for c in self._categories if c.slug and c.slug.lower() in tokens]
         return matches[0] if len(matches) == 1 else None

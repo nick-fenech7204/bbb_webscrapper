@@ -121,6 +121,25 @@ def test_write_progress_never_leaves_a_half_written_file(tmp_path):
     assert not path.with_suffix(path.suffix + ".tmp").exists()  # cleaned up via replace()
 
 
+def test_write_progress_swallows_a_transient_os_error(tmp_path, monkeypatch):
+    """Real incident, 2026-09-16: a transient PermissionError from
+    tmp_path.replace(path) -- something else (almost certainly Streamlit's
+    own file-watcher, polling this exact path) briefly held the file open --
+    used to propagate straight out of this best-effort, UI-only function,
+    got miscaught by main()'s per-metro try/except as a real checkpoint/
+    publish failure, and then crashed the whole process when the except
+    block's own recovery call hit the identical error a second time,
+    uncaught. This function must swallow an OSError here, never raise one."""
+    path = tmp_path / "progress.json"
+    from pathlib import Path as PathType
+
+    def _boom(self, target):
+        raise PermissionError("simulated: e.g. a concurrent file-watcher read")
+    monkeypatch.setattr(PathType, "replace", _boom)
+
+    bsm._write_progress(path, {"a": 1})  # must not raise
+
+
 class _FakeExtractor:
     """Stands in for `with Extractor(stats=stats) as extractor:` -- returns
     canned summaries, and records every extract_business() call so the test
@@ -249,6 +268,27 @@ def test_resolve_angi_category_matches_a_real_category_by_name():
 
 def test_resolve_angi_category_returns_none_for_no_match():
     assert bsm._resolve_angi_category("Something Angi Has Never Heard Of") is None
+
+
+# --- BBB: category-name resolution ----------------------------------------
+# 2026-09-16, a real incident: --industry is one shared string sent to both
+# Angi (resolved above) and BBB. Until this existed, BBB always got it as
+# literal free text -- true for most industries, but "HVAC Companies"
+# (Angi's own label, real reference data, same fixture as the Angi test
+# above) sent straight to BBB's real search returns fire/water-damage
+# restoration companies instead of HVAC contractors (confirmed live, see
+# data/reference/categories.json's own hvac entry and CategoryDirectory.
+# resolve_by_slug_token's docstring).
+
+def test_resolve_bbb_category_name_swaps_in_the_confirmed_bbb_phrase():
+    assert bsm._resolve_bbb_category_name("HVAC Companies") == "Heating and Air Conditioning"
+
+
+def test_resolve_bbb_category_name_falls_back_to_the_literal_industry_text():
+    # True for most industries -- categories.json only has 11 entries, not
+    # BBB's full taxonomy, so no slug-token match here is the common case,
+    # not an edge case. Must not change previously-working behavior.
+    assert bsm._resolve_bbb_category_name("Electricians") == "Electricians"
 
 
 # --- Angi: per-metro scrape (best-effort, mirrors _check_metro_websites) -

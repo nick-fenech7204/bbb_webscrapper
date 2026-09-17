@@ -17,15 +17,45 @@ particular query). Because the seed query was "accredited cpa", all 10 are
 finance/accounting-related -- this is a real but narrow slice, not the full
 taxonomy across every industry BBB covers.
 
-One entry (`hvac`) is different: a best-guess `name` ("Heating and Air
-Conditioning") added to unblock a pilot in a new vertical, not yet confirmed
-against a real response the way the other 10 are -- flagged by using a
-plain word as its `id` instead of a real harvested `NNNNN-NNN`-style BBB id,
-so it's visually obvious which entries are confirmed vs. guessed. The first
-real search against it will confirm quickly whether the phrasing returns
-good matches; if BBB's `filters.filter_category.filterOptions` on that
-response has a better/more precise name, swap it in and give it the real
-harvested id at the same time.
+One entry, HVAC, started as a best-guess `name` ("Heating and Air
+Conditioning") added to unblock a pilot in a new vertical, flagged with a
+plain-word `id` ("hvac") instead of a real harvested `NNNNN-NNN`-style BBB
+id to make clear it hadn't been confirmed yet.
+
+**Confirmed live, 2026-09-16** (id upgraded to the real harvested
+`10182-000`, `filters.byId.filter_category.filterOptions` on that response
+lists it as `{"value": "10182-000", "label": "Heating and Air
+Conditioning"}`) -- the guessed phrasing was right: searching it returns
+real HVAC contractors, 4882 results for Los Angeles, CA. This was checked
+specifically because a real batch run sent a DIFFERENT phrase, "HVAC
+Companies" (Angi's own category label -- see "Getting the industry name
+right" below), straight to BBB instead of this entry's confirmed one, and
+BBB's own full-text search for that exact phrase returns fire/water-damage
+restoration companies as its top results (146 total, SERVPRO first, real
+HVAC contractors nowhere near the top) -- confirmed by re-running the same
+search with each phrase side by side. A whole 5-metro batch came back the
+wrong industry before this was caught.
+
+## Getting the industry name right for BOTH BBB and Angi
+
+The Streamlit batch page's one `--industry` field is seeded from Angi's own
+category dropdown (`angi_categories.json`, 167 labels) and sends that exact
+text to BOTH systems -- Angi resolves it against its own directory first,
+but BBB gets it as literal free text, on the long-standing assumption
+(recorded below, in the angi_categories.json section) that "BBB's search
+takes any phrase." **That assumption is not reliable** -- BBB's own search
+relevance can silently return a wrong industry for a phrase that isn't how
+BBB itself names that category, with no error, just quietly bad data (this
+is exactly what happened with "HVAC Companies" above). `bbb_scraper.reference.
+categories.CategoryDirectory.resolve_by_slug_token` exists to catch the
+narrow case where this file's own slug (a short, single word like "hvac")
+appears as a whole word inside the Angi-style label -- scripts/
+batch_scrape_metros.py uses this to swap in this file's confirmed `name`
+before searching BBB, still falling back to the literal `--industry` text
+whenever nothing here matches (true for most industries -- this file only
+has 11 entries, not BBB's full taxonomy). It is NOT a substitute for
+actually growing this file with more real, confirmed categories as new
+industries get piloted.
 
 The `id` values (e.g. `"60004-000"` for CPA) are BBB's own category ids --
 they show up as `tobId` on every search result and as `categories[].id` too
