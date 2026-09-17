@@ -858,10 +858,11 @@ def main() -> int:
         "which is seeded from Angi's own category list). See data/reference/angi_categories.json.",
     )
     parser.add_argument(
-        "--angi-max-businesses", type=int, default=150,
-        help="Cap Angi businesses fetched per metro (default: 150) -- some categories run into "
-        "the thousands for one city; this bounds the concurrent Angi side to roughly the same "
-        "order of magnitude of time as the BBB side, not an unbounded sweep.",
+        "--angi-max-businesses", type=int, default=None,
+        help="Cap Angi businesses fetched per metro (default: unlimited, 2026-09-17 -- was 150. "
+        "Raised once the real bottleneck on Angi's side turned out to be per-request pacing, "
+        "not volume -- see config.py's angi_min/max_delay_seconds comment). Pass a number to "
+        "bound a specific run anyway.",
     )
     parser.add_argument(
         "--angi-use-proxy", action=argparse.BooleanOptionalAction, default=True,

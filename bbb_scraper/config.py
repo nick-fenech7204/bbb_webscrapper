@@ -119,13 +119,24 @@ class Settings(BaseSettings):
     # but real HTTP 429s did show up in a real run at 0.4-0.8s pacing combined
     # with parsing.py's own up-to-3x-per-business retry (see client.py's
     # module docstring for *why* multiple attempts per business are needed).
-    # Slowed down in response, not pushed through -- see the ethical-scraping-
+    # Slowed down in response at the time -- see the ethical-scraping-
     # boundary practice this project holds to.
+    #
+    # 2026-09-17, Nick's call: dropped to ~0 -- his read is that the original
+    # 429s were more likely from the retry multiplication (up to 3x/business)
+    # than from pacing alone, and a fresh proxied connection per request
+    # already costs ~1-1.5s of real overhead on top of whatever this is set
+    # to (confirmed against real logs/batch/pest-control-5-metros.log: at the
+    # old 1.5-3.0s setting, actual observed gaps between requests ran
+    # 3.5-3.8s), so the real achieved rate here is roughly 1 request/second,
+    # not a burst pattern. Live-tested before shipping (see
+    # logs/batch/angi-pacing-test-*.log) -- re-check that log or re-run this
+    # test before trusting this comment if it's been a while.
     angi_base_url: str = Field(default="https://www.angi.com", alias="ANGI_BASE_URL")
     angi_timeout_seconds: float = Field(default=20.0, alias="ANGI_TIMEOUT_SECONDS")
     angi_max_retries: int = Field(default=3, alias="ANGI_MAX_RETRIES")
-    angi_min_delay_seconds: float = Field(default=1.5, alias="ANGI_MIN_DELAY_SECONDS")
-    angi_max_delay_seconds: float = Field(default=3.0, alias="ANGI_MAX_DELAY_SECONDS")
+    angi_min_delay_seconds: float = Field(default=0.0, alias="ANGI_MIN_DELAY_SECONDS")
+    angi_max_delay_seconds: float = Field(default=0.0, alias="ANGI_MAX_DELAY_SECONDS")
     # No rotate-every-N setting -- 2026-09-15, AngiClient builds a fresh,
     # bare (never sticky) proxy connection for every single request now,
     # not periodically. See bbb_scraper/angi/client.py's own module
