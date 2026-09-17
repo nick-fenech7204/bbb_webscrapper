@@ -52,8 +52,24 @@ class CategoryDirectory:
 
     def search(self, text: str) -> list[Category]:
         """Case-insensitive lookup: exact name/slug match first, else
-        substring match against the name. Returns [] for no matches, and may
-        return multiple candidates the caller should disambiguate.
+        substring match against the name, in EITHER direction. Returns []
+        for no matches, and may return multiple candidates the caller
+        should disambiguate.
+
+        Real bug, caught 2026-09-17 live-testing a sample batch: the
+        substring check used to only test `text in name` (the query being a
+        substring of the category), never the reverse. A plain regular
+        plural like "Electricians" is never a substring of this directory's
+        own singular "Electrician" -- so a batch run for that exact,
+        completely ordinary industry name silently dropped Angi for the
+        whole run (a "no confident category match" best-effort skip, not a
+        crash, which is exactly why nothing caught it before now). Checking
+        both directions fixes any simple query-is-the-plural-of-the-name
+        case for free. It does NOT fix a genuinely different word form
+        (Angi's own "Roofing"/"House Painting"/"Handyman" vs. the common
+        trade names "Roofers"/"Painters"/"Handymen") -- neither is a
+        substring of the other no matter which direction you check, and
+        that needs a real synonym mapping, not a smarter substring check.
         """
         text_lower = text.strip().lower()
         if not text_lower:
@@ -66,7 +82,10 @@ class CategoryDirectory:
         if exact:
             return exact
 
-        return [c for c in self._categories if text_lower in c.name.lower()]
+        return [
+            c for c in self._categories
+            if text_lower in c.name.lower() or c.name.lower() in text_lower
+        ]
 
     def resolve_one(self, text: str) -> Category | None:
         """Like search(), but for a best-effort/non-interactive caller that

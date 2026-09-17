@@ -112,7 +112,8 @@ def build(pdf: Summary):
 
     pdf.h2("Three signal groups, blended")
     pdf.bullet("BBB", "grade, review average, complaint history")
-    pdf.bullet("Yelp & Angi", "star rating and review volume, treated as equivalent signals")
+    pdf.bullet("Yelp & Angi", "star rating and review volume, same rating curve for both -- "
+               "weighted highest of the signal groups, Yelp slightly above Angi")
     pdf.bullet("Review sentiment", "a local AI model reads the actual review TEXT (not just the "
                "star rating), and weighs how RECENT the negativity is -- a live problem counts "
                "more than an old one")

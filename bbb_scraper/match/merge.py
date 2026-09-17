@@ -518,6 +518,27 @@ def _review_gap_flag(r):
     return int(days_since > avg_gap * 3)
 
 
+# Per-source weights for _lead_priority_score's base signal. Each of the 4
+# sources below is blended into exactly ONE 0-100 value first (see the
+# function itself), then combined via these weights -- replacing the old
+# design where BBB, having 3 sub-metrics (grade/review-average/complaints)
+# against Yelp's and Angi's 2 each (rating/volume), silently got 3 votes in
+# a flat average instead of 1 -- up to 37.5% of an 8-signal average just
+# because of how many columns BBB happens to expose, not by any deliberate
+# choice. Nick's call, 2026-09-17, after a real sample batch (Electricians,
+# Nashville, TN) made the old imbalance concrete: BBB stays the required
+# discovery source (a business still has to be a BBB record to exist in
+# this pipeline at all -- that part's intentional and unchanged), but once
+# a business IS in the table, he wants Yelp/Angi/review-sentiment weighted
+# well above BBB, not the other way around. Weights are renormalized over
+# whichever sources are actually present for a given row (see the
+# total_weight division below), so e.g. a BBB-only record still scores
+# sensibly off just its own blended value rather than getting silently
+# capped near 20. v1, hand-tuned -- revisit after the metrics conversation,
+# same as every other weight in this file.
+_SOURCE_WEIGHTS = {"yelp": 0.30, "angi": 0.25, "sentiment": 0.25, "bbb": 0.20}
+
+
 def _lead_priority_score(r):
     """How good a sales lead this business is *for a firm that sells review
     / reputation-management services* -- the one score this project scores
@@ -532,68 +553,78 @@ def _lead_priority_score(r):
     complaint history alone now, see _bbb_complaints_signal's docstring for
     why that matters.
 
-    Every base signal below is either a salvageable-middle band (rating/
-    volume/grade/complaints/sentiment: too little or too much both score
-    lower than a real, fixable, visible problem) or a genuinely distinct
-    bonus on top (divergence, tenure, accreditation, reachability) -- never
-    the same underlying fact counted twice. See _rating_band for the
-    shared 0-5-rating curve (Yelp, Angi, and BBB's own review average all
-    use it now, not just Yelp/Angi as before).
+    Every base signal is either a salvageable-middle band (rating/volume/
+    grade/complaints/sentiment: too little or too much both score lower
+    than a real, fixable, visible problem) or a genuinely distinct bonus on
+    top (divergence, tenure, accreditation, reachability) -- never the same
+    underlying fact counted twice. See _rating_band for the shared 0-5-
+    rating curve (Yelp, Angi, and BBB's own review average all use it).
 
-    v1, hand-tuned -- revisit after the metrics conversation.
+    2026-09-17: each of the 4 sources (Yelp, Angi, BBB, sentiment) blends
+    its own sub-metrics into one 0-100 value, THEN those 4 values combine
+    via _SOURCE_WEIGHTS -- see that constant's own comment for why (source-
+    count fairness, not just sub-metric-count fairness). v1, hand-tuned --
+    revisit after the metrics conversation.
     """
-    signals: list[float] = []  # each 0-100, "how much this points to a good lead"
+    source_scores: dict[str, float] = {}
 
+    yelp_parts: list[float] = []
     yr = _yelp_rating(r)
     if yr is not None:
-        signals.append(_rating_band(yr))
-
+        yelp_parts.append(_rating_band(yr))
     yn = _num(r.get("yelp_review_count"))
     if yn is not None and r.get("match_status") == "matched":
-        signals.append(40 if yn == 0 else 72 if yn <= 60 else 40 if yn <= 150 else 12)
+        yelp_parts.append(40 if yn == 0 else 72 if yn <= 60 else 40 if yn <= 150 else 12)
+    if yelp_parts:
+        source_scores["yelp"] = sum(yelp_parts) / len(yelp_parts)
 
-    # Angi, added 2026-09-14: same banding as Yelp above -- both are 5-star
-    # homeowner-review platforms, and there isn't yet enough Angi-specific
-    # data in this project to justify a different curve. Two signals (rating
-    # + volume), matching Yelp's weight-by-signal-count rather than Yelp's
-    # combined influence outright -- gives Angi real pull without letting a
-    # newer, thinner-coverage source outweigh Yelp's own two signals.
+    # Angi: same banding as Yelp above -- both are 5-star homeowner-review
+    # platforms, and there isn't yet enough Angi-specific data in this
+    # project to justify a different curve.
+    angi_parts: list[float] = []
     ar = _angi_rating(r)
     if ar is not None:
-        signals.append(_rating_band(ar))
-
+        angi_parts.append(_rating_band(ar))
     an = _num(r.get("angi_review_count"))
     if an is not None and _has_value(r.get("angi_phone")):
-        signals.append(40 if an == 0 else 72 if an <= 60 else 40 if an <= 150 else 12)
+        angi_parts.append(40 if an == 0 else 72 if an <= 60 else 40 if an <= 150 else 12)
+    if angi_parts:
+        source_scores["angi"] = sum(angi_parts) / len(angi_parts)
 
+    # BBB: grade + its own review average + complaint history, blended into
+    # one value the same way Yelp/Angi's rating+volume are above -- this is
+    # the actual fix for the old imbalance, see _SOURCE_WEIGHTS' comment.
+    bbb_parts: list[float] = []
     g = letter_grade_to_num(r.get("bbb_rating"))
     if g is not None:
-        signals.append(65 if 1.67 <= g <= 3.33 else 32 if g < 1.67 else 22)
-
+        bbb_parts.append(65 if 1.67 <= g <= 3.33 else 32 if g < 1.67 else 22)
     # BBB's own review average -- same _rating_band curve as Yelp/Angi above
     # (2026-09-16: previously a cruder binary 72/15 split; unified as part
     # of folding reputation_score, which treated this as a real continuous
     # signal, into this one score).
     bavg = _bbb_review_avg(r)
     if bavg is not None:
-        signals.append(_rating_band(bavg))
-
+        bbb_parts.append(_rating_band(bavg))
     bcomp_signal = _bbb_complaints_signal(r)
     if bcomp_signal is not None:
-        signals.append(bcomp_signal)
+        bbb_parts.append(bcomp_signal)
+    if bbb_parts:
+        source_scores["bbb"] = sum(bbb_parts) / len(bbb_parts)
 
     # Local review-sentiment analysis, added 2026-09-15 (bbb_scraper.sentiment)
     # -- None for the vast majority of rows until analyze_review_sentiment.py
     # or the batch's --sentiment step has actually run on them, same
     # "additive, never subtracts a signal that isn't there yet" shape as
-    # every other optional signal here.
+    # every other optional signal here. Already a single blended value (no
+    # per-source sub-metrics of its own to average together first).
     sentiment_signal = _review_sentiment_signal(r)
     if sentiment_signal is not None:
-        signals.append(sentiment_signal)
+        source_scores["sentiment"] = sentiment_signal
 
-    if not signals:
+    if not source_scores:
         return None
-    score = sum(signals) / len(signals)
+    total_weight = sum(_SOURCE_WEIGHTS[s] for s in source_scores)
+    score = sum(source_scores[s] * _SOURCE_WEIGHTS[s] for s in source_scores) / total_weight
 
     if _reputation_divergence_flag(r):
         score += 12  # looks fine on paper, isn't -- a wake-up-call pitch
@@ -603,7 +634,7 @@ def _lead_priority_score(r):
         score += 6  # gone notably quiet vs. its own history -- ambiguous alone, so a small nudge, not a driver
     # No separate bcomp bonus here (removed 2026-09-16): _bbb_complaints_signal
     # above already averages this exact bbb_complaints_total value into
-    # `signals` -- an extra flat +8 for the same 1-25 range was double-
+    # `bbb_parts` -- an extra flat +8 for the same 1-25 range was double-
     # counting the one input, on top of what every other signal here gets
     # (counted once, via the average). Verified live: a grade=B row jumped
     # 47.5 -> 74.5 (+27) going from 0 to 5 complaints, only 19 of which came

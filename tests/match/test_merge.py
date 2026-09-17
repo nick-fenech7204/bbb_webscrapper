@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import pytest
 
 from bbb_scraper.match.matcher import MatchedPair, MatchOutcome
-from bbb_scraper.match.merge import build_master_table, recompute_intel
+from bbb_scraper.match.merge import _SOURCE_WEIGHTS, build_master_table, recompute_intel
 
 
 def _days_ago(n: int) -> str:
@@ -406,6 +406,44 @@ def test_angi_rating_in_sweet_spot_pulls_lead_priority_score_up():
     assert row["lead_priority_score"] > clean_score
 
 
+def test_source_weighting_gives_bbb_one_vote_not_one_per_submetric():
+    """2026-09-17, Nick's call after a real sample batch made the old
+    imbalance concrete (see _SOURCE_WEIGHTS' own comment): BBB used to get
+    3 votes in a flat average (grade/review-average/complaints) against
+    Yelp's or Angi's 2 (rating/volume) or sentiment's 1, just because of
+    how many sub-metrics BBB happens to expose -- not by design. Now every
+    source blends to ONE value first, then _SOURCE_WEIGHTS decides the mix
+    (Yelp/Angi/sentiment weighted above BBB). This business's own 3 BBB
+    sub-metrics (grade=22, review-avg=82, complaints=68) would have
+    averaged to a high-ish 46.0 combined with one low Yelp signal (12)
+    under the old flat-average formula ((22+82+68+12)/4) -- pinning that
+    the real, current result is meaningfully different (BBB's 3 numbers
+    collapse to one 57.3 vote, then Yelp's single 12 actually outweighs it
+    per-source, 0.30 vs 0.20), not a coincidence of similar-looking inputs.
+    """
+    out = MatchOutcome(bbb_only=[{
+        # complaints_total=3, not 5+ -- stays in the same 1-10 signal band
+        # (68) without also tripping reputation_divergence_flag's own
+        # separate >=5 threshold, which would add a +12 bonus this test
+        # isn't trying to exercise.
+        "name": "Co", "rating": "A+", "phone": "3055550100",
+        "reviews_complaints": '{"reviews_total": 5, "average_rating": 3.0, "complaints_total": 3}',
+    }])
+    row = build_master_table(out)[0]
+    bbb_blended = (22 + 82 + 68) / 3  # grade + review-avg + complaints, one BBB vote
+    assert row["lead_priority_score"] == round(bbb_blended, 1)  # BBB-only: its own blended value, unscaled
+
+    row["match_status"] = "matched"
+    row["yelp_review_count"] = "200"  # volume-only signal (151+ reviews -> 12); no yelp_rating set, so no rating signal
+    row = recompute_intel(row)
+    expected = (bbb_blended * _SOURCE_WEIGHTS["bbb"] + 12 * _SOURCE_WEIGHTS["yelp"]) / (
+        _SOURCE_WEIGHTS["bbb"] + _SOURCE_WEIGHTS["yelp"]
+    )
+    assert row["lead_priority_score"] == round(expected, 1)
+    old_flat_average = (22 + 82 + 68 + 12) / 4  # what this would have been pre-2026-09-17
+    assert row["lead_priority_score"] < old_flat_average
+
+
 def test_angi_rating_signal_still_needs_enough_reviews_to_count():
     """Same _MIN_REVIEWS_FOR_RATING gate as Yelp for the RATING signal
     specifically -- but unlike the old reputation_score, Angi's volume
@@ -421,9 +459,14 @@ def test_angi_rating_signal_still_needs_enough_reviews_to_count():
     row["angi_overall_rating"] = "1.0"  # would band to 45 if it counted
     row["angi_review_count"] = "1"  # too few for the rating gate
     row = recompute_intel(row)
-    # Only the volume signal (band 72 for 1 review) joins the grade signal
-    # (22) -- the rating band (45) is excluded by the gate.
-    assert row["lead_priority_score"] == round((22 + 72) / 2, 1)
+    # Only the volume signal (band 72 for 1 review) joins the BBB grade
+    # signal (22) -- the rating band (45) is excluded by the gate. Combined
+    # via _SOURCE_WEIGHTS (2026-09-17, Nick's call: Yelp/Angi/sentiment
+    # weighted above BBB), renormalized over the 2 sources present here.
+    expected = (22 * _SOURCE_WEIGHTS["bbb"] + 72 * _SOURCE_WEIGHTS["angi"]) / (
+        _SOURCE_WEIGHTS["bbb"] + _SOURCE_WEIGHTS["angi"]
+    )
+    assert row["lead_priority_score"] == round(expected, 1)
 
 
 def test_reputation_divergence_flag_fires_on_low_angi_rating_alone():

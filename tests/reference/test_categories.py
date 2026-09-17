@@ -38,6 +38,14 @@ def test_load_from_real_angi_categories_file():
     assert directory.search("Dentist") == []
     assert directory.search("Car Dealer") == []
 
+    # Real regression, 2026-09-17: "Electricians" (the plural, completely
+    # ordinary as an --industry value) against the real file's singular
+    # "Electrician" entry -- see the bidirectional-substring test above for
+    # the synthetic version of this same bug.
+    electrician = directory.resolve_one("Electricians")
+    assert electrician is not None
+    assert electrician.name == "Electrician"
+
 
 def test_load_missing_file_returns_empty_directory(tmp_path):
     directory = CategoryDirectory.load(tmp_path / "does_not_exist.json")
@@ -53,6 +61,21 @@ def test_search_exact_name_match_takes_priority(tmp_path):
     )
     directory = CategoryDirectory.load(path)
     matches = directory.search("Plumbers")
+    assert len(matches) == 1
+    assert matches[0].id == "1"
+
+
+def test_search_matches_a_plain_plural_of_the_category_name(tmp_path):
+    """Real bug, caught 2026-09-17 live-testing a sample batch: "Electricians"
+    (a completely ordinary industry name) silently found nothing against a
+    directory whose entry is named "Electrician" (singular), because the old
+    substring check only tested query-in-name, never name-in-query -- and
+    "electricians" is never a substring of the shorter "electrician". Fixed
+    by checking both directions."""
+    path = tmp_path / "categories.json"
+    path.write_text('[{"id": "1", "name": "Electrician"}]', encoding="utf-8")
+    directory = CategoryDirectory.load(path)
+    matches = directory.search("Electricians")
     assert len(matches) == 1
     assert matches[0].id == "1"
 

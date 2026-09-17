@@ -30,6 +30,7 @@ sys.path.insert(0, str(REPO_ROOT))
 from fpdf import FPDF
 from fpdf.enums import XPos, YPos
 
+from bbb_scraper.match.merge import _SOURCE_WEIGHTS
 from bbb_scraper.match.normalize import letter_grade_to_num
 
 SITE_DATA_DIR = REPO_ROOT / "site" / "data"
@@ -181,59 +182,77 @@ def trace_lead_priority(r: dict) -> list[tuple[str, str]]:
     that could quietly drift from the actual formula. Reads sentiment
     straight off the published record (review_sentiment_signal) rather
     than re-deriving it -- that math lives in bbb_scraper.sentiment, not
-    duplicated a second time here."""
-    steps = []
-    signals = []
+    duplicated a second time here.
 
+    2026-09-17: each source (Yelp/Angi/BBB/sentiment) blends its own
+    sub-metrics into one value, THEN those combine via _SOURCE_WEIGHTS
+    (imported straight from merge.py, not hand-copied, so this can't drift
+    from the real weights the way a copy-pasted number could) -- see that
+    constant's own comment in merge.py for why."""
+    steps = []
+    source_scores = {}
+
+    yelp_parts = []
     yr = r.get("yelp_rating") if r.get("on_yelp") and (r.get("yelp_review_count") or 0) >= 5 else None
     if yr is not None:
         v = _rating_band(yr)
-        signals.append(v)
+        yelp_parts.append(v)
         steps.append((f"Yelp rating signal ({yr} stars, {r.get('yelp_review_count')} reviews)", f"{v}/100"))
-
     yn = r.get("yelp_review_count")
     if r.get("on_yelp") and yn is not None:
         v = 40 if yn == 0 else 72 if yn <= 60 else 40 if yn <= 150 else 12
-        signals.append(v)
+        yelp_parts.append(v)
         steps.append((f"Yelp volume signal ({yn} reviews)", f"{v}/100"))
+    if yelp_parts:
+        source_scores["yelp"] = sum(yelp_parts) / len(yelp_parts)
+        steps.append((f"Yelp blended (1 vote, weight {_SOURCE_WEIGHTS['yelp']})", f"{source_scores['yelp']:.1f}/100"))
 
+    angi_parts = []
     ar = r.get("angi_rating") if r.get("on_angi") and (r.get("angi_review_count") or 0) >= 5 else None
     if ar is not None:
         v = _rating_band(ar)
-        signals.append(v)
+        angi_parts.append(v)
         steps.append((f"Angi rating signal ({ar} stars, {r.get('angi_review_count')} reviews)", f"{v}/100"))
-
     an = r.get("angi_review_count")
     if r.get("on_angi") and an is not None:
         v = 40 if an == 0 else 72 if an <= 60 else 40 if an <= 150 else 12
-        signals.append(v)
+        angi_parts.append(v)
         steps.append((f"Angi volume signal ({an} reviews)", f"{v}/100"))
+    if angi_parts:
+        source_scores["angi"] = sum(angi_parts) / len(angi_parts)
+        steps.append((f"Angi blended (1 vote, weight {_SOURCE_WEIGHTS['angi']})", f"{source_scores['angi']:.1f}/100"))
 
+    bbb_parts = []
     g = letter_grade_to_num(r.get("rating"))
     if g is not None:
         v = 65 if 1.67 <= g <= 3.33 else 32 if g < 1.67 else 22
-        signals.append(v)
+        bbb_parts.append(v)
         steps.append((f"BBB grade signal ({r.get('rating')} = {g}/4.33)", f"{v}/100"))
-
     bavg = r.get("bbb_review_avg")
     if bavg is not None:
         v = _rating_band(bavg)
-        signals.append(v)
+        bbb_parts.append(v)
         steps.append((f"BBB review-average signal ({bavg}/5)", f"{v}/100"))
-
     bcomp = r.get("bbb_complaints_total")
     if bcomp is not None:
         v = 30 if bcomp == 0 else 68 if bcomp <= 10 else 50 if bcomp <= 25 else 25
-        signals.append(v)
+        bbb_parts.append(v)
         steps.append((f"BBB complaints signal ({bcomp} complaint(s))", f"{v}/100"))
+    if bbb_parts:
+        source_scores["bbb"] = sum(bbb_parts) / len(bbb_parts)
+        steps.append((f"BBB blended (1 vote, weight {_SOURCE_WEIGHTS['bbb']})", f"{source_scores['bbb']:.1f}/100"))
 
     sentiment = r.get("review_sentiment_signal")
     if sentiment is not None:
-        signals.append(sentiment)
-        steps.append(("Review sentiment signal (local Ollama analysis)", f"{sentiment}/100"))
+        source_scores["sentiment"] = float(sentiment)
+        steps.append((f"Review sentiment (local Ollama analysis, weight {_SOURCE_WEIGHTS['sentiment']})", f"{sentiment}/100"))
 
-    base = sum(signals) / len(signals) if signals else 0
-    steps.append((f"Base = average of {len(signals)} signal(s)", f"{base:.1f}"))
+    total_weight = sum(_SOURCE_WEIGHTS[s] for s in source_scores)
+    base = (
+        sum(source_scores[s] * _SOURCE_WEIGHTS[s] for s in source_scores) / total_weight
+        if source_scores else 0
+    )
+    steps.append((f"Base = weighted average of {len(source_scores)} source(s)", f"{base:.1f}"))
 
     score = base
     if r.get("reputation_divergence_flag"):
@@ -313,8 +332,9 @@ def build(pdf: Report, example: dict, dataset_label: str):
     pdf.spacer(2)
     pdf.h3("Why can it go over 100?")
     pdf.p(
-        "Because it was never built as a 0-100 scale to begin with. It starts as an average "
-        "of up to eight 0-100 \"is this a good opportunity\" signals (that part alone is 0-100) "
+        "Because it was never built as a 0-100 scale to begin with. It starts as a weighted "
+        "average of up to 4 sources (Yelp, Angi, BBB, review sentiment -- each blended to one "
+        "0-100 \"is this a good opportunity\" value first, that part alone is 0-100) "
         "-- and then real, specific, positive signals each add flat bonus points on top: a "
         "business that looks clean on paper but has weak real reviews or sentiment (+12), one "
         "that already pays for BBB accreditation despite being low-rated (+8), a business old "
@@ -340,9 +360,11 @@ def build(pdf: Report, example: dict, dataset_label: str):
         "business mature enough to pay. An already-perfect business and a beyond-help one "
         "both score LOWER than a business stuck in the middle with a real, fixable gap."
     )
-    pdf.h3("Step 1 -- base opportunity signals (averaged)")
+    pdf.h3("Step 1a -- base opportunity signals, blended within each source")
     pdf.p("Yelp, Angi, and BBB's own review average all share the same rating curve (\"the same "
-          "kind of signal\" -- a 0-5 opinion of the business); Angi's volume mirrors Yelp's.",
+          "kind of signal\" -- a 0-5 opinion of the business); Angi's volume mirrors Yelp's. Whichever "
+          "of a source's own sub-metrics are present average together into ONE value for that source "
+          "(e.g. BBB's grade + review-average + complaints become a single BBB number, not three).",
           size=9)
     pdf.table(
         ["Signal", "Condition", "Points"],
@@ -378,6 +400,35 @@ def build(pdf: Report, example: dict, dataset_label: str):
         "need the pitch at all. Review sentiment (local Ollama analysis of BBB/Yelp/MapQuest/Angi "
         "review text -- see bbb_scraper/sentiment) additionally weights recency, smoothly: a "
         "negative review from this month counts more than the same review from three years ago."
+    )
+    pdf.h3("Step 1b -- the 4 sources combine by weight, not by raw count")
+    pdf.p(
+        "2026-09-17, Nick's call: each source's blended value (above) is then combined into ONE base "
+        "score using a fixed weight per SOURCE, not per raw signal. Before this, BBB's 3 sub-metrics "
+        "(grade/review-average/complaints) each got their own slot in one flat average against Yelp's "
+        "or Angi's 2 (rating/volume) -- so BBB could end up as much as 37.5% of an 8-signal average "
+        "just because it exposes more columns, not by design. Now every source gets exactly one vote, "
+        "weighted deliberately: Yelp and Angi and review sentiment together outweigh BBB roughly 4 to "
+        "1, while BBB still counts on every record.",
+        size=9,
+    )
+    pdf.table(
+        ["Source", "Weight", "Why"],
+        [
+            ["Yelp", "0.30", "Weighted highest -- Nick's explicit priority"],
+            ["Angi", "0.25", "Real written reviews, same rating platform as Yelp"],
+            ["Review sentiment", "0.25", "Actual review TEXT, not just a star count"],
+            ["BBB", "0.20", "Still counts on every record -- the required discovery source"],
+        ],
+        [55, 30, 103],
+        small=True,
+    )
+    pdf.spacer(1)
+    pdf.p(
+        "A source missing from a given record doesn't zero it out -- the remaining weights are "
+        "renormalized, so e.g. a BBB-only record (no Yelp/Angi/sentiment match) still scores off "
+        "just its own blended BBB value at full strength, not silently capped near 20.",
+        size=8.5, color=MUTED,
     )
     pdf.h3("Step 2 -- bonus points (added on top)")
     pdf.bullet("+12  Reputation divergence: BBB grade looks clean (A- or better) but Yelp/Angi "

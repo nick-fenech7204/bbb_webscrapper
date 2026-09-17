@@ -26,6 +26,8 @@ from fpdf.enums import XPos, YPos
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
+from bbb_scraper.match.merge import _SOURCE_WEIGHTS
+
 # Matches site/css/style.css's --accent -- same brand color as the other two
 # scoring PDFs, not a separate report-only palette.
 ACCENT = (23, 97, 74)
@@ -136,11 +138,11 @@ def build(pdf: OnePager):
     pdf.cell(0, 9, "Lead Priority Score -- Metrics & Weights", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(*MUTED)
-    pdf.cell(0, 5, "0-130. Average of base signals (0-100 each) + flat bonuses, then scaled by reachability. v1, hand-tuned -- not a fitted model.",
+    pdf.cell(0, 5, "0-130. Each source blends to one value, sources combine by weight, then bonuses + reachability apply. v1, hand-tuned.",
               new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf.ln(3)
 
-    pdf.h2("Step 1 -- Base signals (averaged, whichever are present)")
+    pdf.h2("Step 1a -- Base signals (blended within each source)")
     pdf.table(
         ["Signal", "Condition", "Points"],
         BASE_SIGNAL_ROWS,
@@ -151,13 +153,30 @@ def build(pdf: OnePager):
     pdf.set_text_color(*MUTED)
     pdf.ln(1.3)
     pdf.multi_cell(0, 3.6,
-        "Shaded rows = the peak of each signal's \"salvageable middle\" curve. Both extremes (already great / beyond help) score "
-        "lower than a real, fixable, visible problem -- on purpose. A business with none of these signals gets no score at all "
-        "(not a 0) and is excluded from ranking.",
+        "Shaded rows = the peak of each signal's \"salvageable middle\" curve. Whichever of a source's own sub-metrics are "
+        "present average into ONE value for that source (e.g. BBB's grade+review-avg+complaints -> one BBB number). A "
+        "business with no signals anywhere gets no score at all (not a 0) and is excluded from ranking.",
         new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-    pdf.ln(2.5)
+    pdf.ln(2.2)
 
-    pdf.h2("Step 2 -- Bonus points (added on top of the averaged base)")
+    pdf.h2("Step 1b -- Sources combine by weight, not by raw signal count")
+    pdf.table(
+        ["Source", "Weight"],
+        [["BBB" if s == "bbb" else s.capitalize(), f"{w:.2f}"] for s, w in _SOURCE_WEIGHTS.items()],
+        [40, 30],
+        font=7.6,
+    )
+    pdf.set_font("Helvetica", "I", 7.3)
+    pdf.set_text_color(*MUTED)
+    pdf.ln(1.3)
+    pdf.multi_cell(0, 3.6,
+        "2026-09-17: BBB used to get 3 votes in a flat average (grade/review-avg/complaints) against Yelp/Angi's 2 each, "
+        "just by exposing more columns. Now every source is exactly one weighted vote (Yelp/Angi/sentiment together "
+        "outweigh BBB ~4:1), renormalized over whichever sources a record actually has.",
+        new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.ln(2.2)
+
+    pdf.h2("Step 2 -- Bonus points (added on top of the weighted base)")
     for weight, text in BONUS_ROWS:
         pdf.bullet_line(weight, text)
     pdf.ln(1.5)
@@ -171,8 +190,8 @@ def build(pdf: OnePager):
     pdf.set_text_color(*TEXT)
     pdf.set_fill_color(*BOX_BG)
     pdf.multi_cell(0, 5,
-        "Final = min(130, (avg of base signals + bonuses) x reachability), rounded to 1 decimal. Can exceed 100 by design -- "
-        "bonuses stack on top of a 0-100 base so a great lead is visibly distinguishable from a merely-good one.",
+        "Final = min(130, (weighted avg of base signals + bonuses) x reachability), rounded to 1 decimal. Can exceed 100 by "
+        "design -- bonuses stack on top of a 0-100 base so a great lead is visibly distinguishable from a merely-good one.",
         fill=True, padding=3, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
 
