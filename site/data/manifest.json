@@ -1,4 +1,80 @@
 {
-  "generated_at": null,
-  "datasets": []
+  "generated_at": "2026-09-17T08:55:38.883419+00:00",
+  "datasets": [
+    {
+      "id": "pest-control--austin-tx",
+      "industry": "Pest Control",
+      "metro": "Austin, TX",
+      "record_count": 83,
+      "has_yelp": true,
+      "yelp_matched": 36,
+      "top_lead_score": 91.3,
+      "file": "pest-control--austin-tx.json",
+      "curated_out": {
+        "chain_name": 18,
+        "corporate_account": 0,
+        "low_score": 242
+      }
+    },
+    {
+      "id": "pest-control--kansas-city-mo",
+      "industry": "Pest Control",
+      "metro": "Kansas City, MO",
+      "record_count": 98,
+      "has_yelp": true,
+      "yelp_matched": 28,
+      "top_lead_score": 87.5,
+      "file": "pest-control--kansas-city-mo.json",
+      "curated_out": {
+        "chain_name": 9,
+        "corporate_account": 0,
+        "low_score": 310
+      }
+    },
+    {
+      "id": "pest-control--minneapolis-mn",
+      "industry": "Pest Control",
+      "metro": "Minneapolis, MN",
+      "record_count": 50,
+      "has_yelp": true,
+      "yelp_matched": 26,
+      "top_lead_score": 92.3,
+      "file": "pest-control--minneapolis-mn.json",
+      "curated_out": {
+        "chain_name": 10,
+        "corporate_account": 0,
+        "low_score": 131
+      }
+    },
+    {
+      "id": "pest-control--pittsburgh-pa",
+      "industry": "Pest Control",
+      "metro": "Pittsburgh, PA",
+      "record_count": 39,
+      "has_yelp": true,
+      "yelp_matched": 25,
+      "top_lead_score": 92.3,
+      "file": "pest-control--pittsburgh-pa.json",
+      "curated_out": {
+        "chain_name": 18,
+        "corporate_account": 0,
+        "low_score": 162
+      }
+    },
+    {
+      "id": "pest-control--seattle-wa",
+      "industry": "Pest Control",
+      "metro": "Seattle, WA",
+      "record_count": 76,
+      "has_yelp": true,
+      "yelp_matched": 36,
+      "top_lead_score": 89.7,
+      "file": "pest-control--seattle-wa.json",
+      "curated_out": {
+        "chain_name": 4,
+        "corporate_account": 0,
+        "low_score": 185
+      }
+    }
+  ]
 }
