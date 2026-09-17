@@ -25,6 +25,7 @@
   const homeResultCount = $("home-result-count");
   const filterIndustry = $("filter-industry");
   const filterMetro = $("filter-metro");
+  const filterSort = $("filter-sort");
   const filterClearBtn = $("filter-clear");
   const dsTitle = $("ds-title");
   const dsSub = $("ds-sub");
@@ -427,6 +428,7 @@
     filterMetro.innerHTML += metros.map((name) => `<option value="${esc(name)}">${esc(name)}</option>`).join("");
     filterIndustry.addEventListener("change", renderHomeCards);
     filterMetro.addEventListener("change", renderHomeCards);
+    filterSort.addEventListener("change", renderHomeCards);
     filterClearBtn.addEventListener("click", () => {
       filterIndustry.value = "";
       filterMetro.value = "";
@@ -434,11 +436,29 @@
     });
   }
 
+  // "Most recent" reads publish_site_data.py's own published_at (2026-09-
+  // 17, added for exactly this -- the manifest's array order was never a
+  // usable proxy: it's re-sorted (metro, industry) on every single
+  // publish, so position reflects alphabetical order, not recency). A
+  // dataset published before that field existed just has no published_at
+  // -- sorts to the back of "Most recent" (oldest-reads-as-unknown, not a
+  // crash) rather than breaking the whole sort.
+  function sortedDatasets(rows) {
+    const sorted = [...rows];
+    if (filterSort.value === "az") {
+      sorted.sort((a, b) => a.industry.localeCompare(b.industry) || a.metro.localeCompare(b.metro));
+    } else {
+      sorted.sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""));
+    }
+    return sorted;
+  }
+
   function filteredDatasets() {
     const industry = filterIndustry.value;
     const metro = filterMetro.value;
-    return manifest.datasets.filter((d) =>
+    const rows = manifest.datasets.filter((d) =>
       (!industry || d.industry === industry) && (!metro || d.metro === metro));
+    return sortedDatasets(rows);
   }
 
   function renderHomeCards() {

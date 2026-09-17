@@ -285,6 +285,32 @@ def test_manifest_entry_has_exactly_the_keys_callers_rely_on(tmp_path, monkeypat
     entry["file"], entry["record_count"], entry["yelp_matched"], entry["top_lead_score"]
 
 
+def test_manifest_entry_published_at_is_a_real_timestamp(tmp_path, monkeypatch):
+    """2026-09-17, Nick's ask: the site's lists-view "Most recent" sort
+    needs a per-dataset timestamp -- the manifest array's own order was
+    never usable for that (re-sorted (metro, industry) on every publish,
+    see _write_dataset). Every publish -- first time or a republish --
+    must set this to a real, parseable ISO timestamp, not leave it stale
+    or blank."""
+    monkeypatch.setattr(psd, "SITE_DATA_DIR", tmp_path)
+    monkeypatch.setattr(psd, "MANIFEST_PATH", tmp_path / "manifest.json")
+
+    entry = psd.publish_records(
+        [{"name": "A Co", "rating": "A+", "scraped_at": "2026-09-11T00:00:00+00:00"}],
+        "Plumbers", "Chicago, IL",
+    )
+    from datetime import datetime
+    datetime.fromisoformat(entry["published_at"])  # raises if not a real timestamp
+
+    # A republish of the SAME dataset must refresh it, not keep the old one.
+    first_published_at = entry["published_at"]
+    entry = psd.publish_records(
+        [{"name": "A Co", "rating": "A+", "scraped_at": "2026-09-11T00:00:00+00:00"}],
+        "Plumbers", "Chicago, IL",
+    )
+    assert entry["published_at"] >= first_published_at
+
+
 def test_cli_main_runs_end_to_end_without_crashing(tmp_path, monkeypatch, capsys):
     """Full main() smoke test -- the KeyError above only ever fired here and
     in the batch script, neither of which any prior test actually invoked."""

@@ -354,6 +354,13 @@ def _write_dataset(
         "id": dataset_id,
         "industry": industry,
         "metro": metro,
+        # 2026-09-17, Nick's ask: lets the site's own lists-view sort by
+        # "most recent" -- the manifest's own array order was never a
+        # usable proxy for that (it's re-sorted (metro, industry) every
+        # single publish, see below, so array position reflects
+        # alphabetical order, not recency). Every publish of THIS dataset
+        # (first time or a republish) sets this to right now.
+        "published_at": datetime.now(timezone.utc).isoformat(),
         "record_count": len(records),
         "has_yelp": any(r.get("on_yelp") for r in records),
         "yelp_matched": sum(1 for r in records if r.get("on_yelp")),
