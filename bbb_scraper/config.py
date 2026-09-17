@@ -48,8 +48,29 @@ class Settings(BaseSettings):
     http_timeout_seconds: float = Field(default=20.0, alias="HTTP_TIMEOUT_SECONDS")
     http_max_retries: int = Field(default=3, alias="HTTP_MAX_RETRIES")
     http_backoff_factor: float = Field(default=1.5, alias="HTTP_BACKOFF_FACTOR")
-    http_min_delay_seconds: float = Field(default=0.1, alias="HTTP_MIN_DELAY_SECONDS")
-    http_max_delay_seconds: float = Field(default=0.2, alias="HTTP_MAX_DELAY_SECONDS")
+    # 2026-09-17, Nick's call, same reasoning as Angi's own delay removal
+    # below: sync, single-threaded, no reason to keep an artificial delay
+    # on top of whatever real request/response time already exists. One
+    # real difference from Angi/MapQuest worth knowing: HttpClient reuses
+    # ONE Session for its whole life (see __init__ below) rather than
+    # opening a fresh proxy connection per request, so it doesn't have that
+    # same automatic floor from connection-teardown-and-rebuild overhead --
+    # confirmed by a real, live, isolated test (logs/batch/bbb-pacing-
+    # test.log, 160 real detail-page requests, Pest Control/Denver, every
+    # other enrichment off): real achieved rate was ~1.45 req/s (160
+    # requests in 110s), faster than Angi/MapQuest's ~0.6-1 req/s ceiling,
+    # as expected given the reused connection. Also saw 2 real 403s
+    # ("likely blocked/challenged") in those 160 requests (1.25%) --
+    # BBB, unlike Angi, has a real, confirmed bot-wall (see
+    # http_impersonate's own comment), so this is a genuine, non-zero cost
+    # of the faster rate, not a hypothetical one. Both were isolated (not
+    # a sustained lockout), non-fatal (that one business's data was
+    # skipped, nothing else affected), and neither retried -- BlockedError
+    # isn't currently in this client's retry path. Worth re-checking this
+    # rate on a real production-scale run (thousands of requests, not 160)
+    # before trusting the 1.25% figure precisely.
+    http_min_delay_seconds: float = Field(default=0.0, alias="HTTP_MIN_DELAY_SECONDS")
+    http_max_delay_seconds: float = Field(default=0.0, alias="HTTP_MAX_DELAY_SECONDS")
     # Browser TLS/HTTP2 fingerprint to impersonate via curl_cffi (see
     # scraping/client.py) -- confirmed 2026-09-02 this is what actually gets
     # past Cloudflare on BBB business-profile pages, where cookie/header
@@ -97,10 +118,14 @@ class Settings(BaseSettings):
     )
     # Yelp's API is authenticated and un-proxied on purpose -- routing it
     # through the residential proxy (which we need for bbb.org) would only
-    # obscure an identified caller. Separate, gentler pacing than the
-    # scraper's since there's no bot-detection to out-wait, just a quota.
-    yelp_min_delay_seconds: float = Field(default=0.5, alias="YELP_MIN_DELAY_SECONDS")
-    yelp_max_delay_seconds: float = Field(default=1.0, alias="YELP_MAX_DELAY_SECONDS")
+    # obscure an identified caller. No bot-detection to out-wait here, just
+    # a quota (300 calls/day) -- and search_area already only makes ~5
+    # calls per metro (one location+category sweep, not per-business), so
+    # pacing was never the real constraint. 2026-09-17, Nick's call:
+    # dropped to 0 along with the others -- the real limiter stays the
+    # daily quota either way, same as before.
+    yelp_min_delay_seconds: float = Field(default=0.0, alias="YELP_MIN_DELAY_SECONDS")
+    yelp_max_delay_seconds: float = Field(default=0.0, alias="YELP_MAX_DELAY_SECONDS")
 
     # --- Dead-website check (bbb_scraper/webcheck, scripts/check_dead_websites.py) --
     # Checks a business's own listed website, not BBB or Yelp -- a different
@@ -167,8 +192,14 @@ class Settings(BaseSettings):
     )
     mapquest_timeout_seconds: float = Field(default=15.0, alias="MAPQUEST_TIMEOUT_SECONDS")
     mapquest_max_retries: int = Field(default=3, alias="MAPQUEST_MAX_RETRIES")
-    mapquest_min_delay_seconds: float = Field(default=1.5, alias="MAPQUEST_MIN_DELAY_SECONDS")
-    mapquest_max_delay_seconds: float = Field(default=3.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
+    # 2026-09-17, Nick's call, same reasoning and same architecture as
+    # Angi's own delay removal: MapQuestClient closes and rebuilds its
+    # Session on every single request (see _new_session, called fresh in
+    # search() below) for a new proxy exit IP, exactly like AngiClient --
+    # so the same real floor from connection-teardown-and-rebuild overhead
+    # applies here too, not just asserted by analogy.
+    mapquest_min_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MIN_DELAY_SECONDS")
+    mapquest_max_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
 
     # --- Local sentiment analysis (bbb_scraper/sentiment, Ollama) ---------------
     # A local model on Nick's own machine, not a hosted API -- no key, no
