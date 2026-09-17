@@ -288,6 +288,34 @@ def test_parse_business_reviews_page_captures_response_and_rebuttal_fields_when_
     assert r.extended_text == ["The rest of a longer review."]
 
 
+def test_parse_business_reviews_page_dict_shaped_extended_text_is_never_fatal():
+    """Real bug, caught live 2026-09-17 (a 453-business Denver batch,
+    scripts/batch_scrape_metros.py's --bbb-reviews step run at real scale
+    for the first time): extendedText's real shape on some actual reviews
+    is a list of dicts (thread metadata -- id/isBureau/... keys, not
+    text), not the list[str] BBBReview.extended_text was typed as from an
+    earlier small sample. Before the fix, this failed BBBReview's own
+    pydantic validation -- and since validation is atomic, that took the
+    ENTIRE review down with it (real, working text/rating/date lost too,
+    not just this one always-unused field). Roughly half of every
+    qualifying business in that real batch hit this. Non-string items
+    must be filtered out, not allowed to fail the whole review."""
+    html = (
+        '<script>window.__PRELOADED_STATE__ = {"businessProfile": {"customerReviews": {"items": ['
+        '{"id": "r1", "displayName": "Jane D", "reviewStarRating": 2, "text": "Real review text.", '
+        '"date": {"day": "5", "month": "6", "year": "2026"}, '
+        '"hasExtendedText": false, '
+        '"extendedText": [{"id": "1296_90263208_865", "isBureau": false}]'
+        '}], "page": 1, "pageSize": 10, "totalPages": 1, "numFound": 1}}};</script>'
+    )
+    page = parse_business_reviews_page(html)
+    r = page.reviews[0]
+    assert r.text == "Real review text."  # the real content survives the bad field
+    assert r.rating == 2
+    assert r.date == "2026-06-05"
+    assert r.extended_text is None  # the malformed dict item is dropped, not guessed at
+
+
 def test_parse_business_reviews_page_missing_state_returns_empty_not_a_crash():
     """Lower stakes than the profile page (best-effort, see
     Extractor.extract_business_reviews) -- an empty result, not an

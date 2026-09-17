@@ -366,6 +366,28 @@ def _maybe_dict_date(v: Any) -> Any:
     return _review_date(v) if isinstance(v, dict) else v
 
 
+def _extended_text(v: Any) -> list[str] | None:
+    """Real bug, caught live (2026-09-17, a 453-business Denver batch,
+    scripts/batch_scrape_metros.py's --bbb-reviews step run at real scale
+    for the first time): extendedText's real shape is a list of dicts
+    (review-thread metadata -- id/isBureau/... keys, not text), not the
+    list[str] BBBReview.extended_text's own docstring assumed from a
+    single earlier 10-review sample where it was always null. Passing
+    that straight through failed BBBReview's own pydantic validation --
+    and since pydantic validates the whole model atomically, that took
+    the entire review down with it (real cost: roughly half of every
+    qualifying business in that batch lost ALL its review text, not just
+    this one unused field -- see _map_review's own extended_text= line).
+    Filters to actual strings, same "defensive, never guess a shape"
+    treatment _review_date already gives its own field -- nothing
+    downstream reads extended_text anyway (grep confirms), so this only
+    protects the review, not a real signal."""
+    if not isinstance(v, list):
+        return None
+    strings = [item for item in v if isinstance(item, str)]
+    return strings or None
+
+
 def _map_review(item: dict[str, Any]) -> BBBReview:
     return BBBReview(
         review_id=item.get("id"),
@@ -380,7 +402,7 @@ def _map_review(item: dict[str, Any]) -> BBBReview:
         business_rebuttal_text=_clean_review_text(item.get("businessRebuttalText")),
         business_rebuttal_date=_maybe_dict_date(item.get("businessRebuttalDate")),
         has_extended_text=item.get("hasExtendedText"),
-        extended_text=item.get("extendedText") or None,
+        extended_text=_extended_text(item.get("extendedText")),
     )
 
 

@@ -125,6 +125,11 @@ class BBBReview(BaseModel):
     characters unassisted), but capture is only 4 keys away for free from
     what's already parsed here, so it's here for if that ever isn't true."""
     extended_text: list[str] | None = None
+    """2026-09-17, real scale (a 453-business Denver batch) found the raw
+    field is actually a list of dicts (review-thread metadata, not text)
+    on some real reviews, not the list[str] this was typed as from an
+    earlier 10-review sample -- see business_parser._extended_text's own
+    docstring for the parsing fix. Still unused downstream either way."""
 
 
 class BBBReviewsPage(BaseModel):
