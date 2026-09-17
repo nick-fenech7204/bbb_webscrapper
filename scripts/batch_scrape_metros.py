@@ -637,6 +637,16 @@ def _enrich_metro_with_mapquest(
     column anywhere (caught 2026-09-15, real gap: the model captured it,
     nothing wrote it out).
 
+    2026-09-17: unlike before, a real match now DOES trigger a rescore
+    (recompute_intel) -- merge.py's _yelp_rating/_effective_yelp_review_count/
+    _present_yelp all fall back to MapQuest's own Yelp-sourced rating when
+    the official Fusion API match missed this business (confirmed real,
+    common: 24 businesses in one Charlotte test had MapQuest-confirmed Yelp
+    data the official matcher never found, more than the 18 it did find).
+    row.update(...) rather than reassigning `row` -- master_rows holds these
+    exact dict objects, and this function's contract (mutate in place,
+    return just the counts) predates this change.
+
     Returns (matched, total_reviews) for the caller's own progress line.
     Never raises: a single business's search/match failure is logged and
     just leaves that one row's columns empty (mapquest_reviews="[]" when a
@@ -682,6 +692,7 @@ def _enrich_metro_with_mapquest(
         row["mapquest_reviews"] = json.dumps([asdict(r) for r in match.reviews], ensure_ascii=False)
         row["mapquest_rating_provider"] = match.rating_provider or ""
         row["mapquest_rating_value"] = match.rating_value if match.rating_value is not None else ""
+        row.update(recompute_intel(row))
 
     return matched, total_reviews
 

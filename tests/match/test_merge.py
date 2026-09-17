@@ -444,6 +444,87 @@ def test_source_weighting_gives_bbb_one_vote_not_one_per_submetric():
     assert row["lead_priority_score"] < old_flat_average
 
 
+def test_yelp_rating_falls_back_to_mapquest_when_no_official_match():
+    """2026-09-17, Nick's call: MapQuest surfaces real Yelp-sourced rating
+    data through its own separate name+phone-in-city match, a second real
+    door into the same Yelp data the official Fusion API match can miss --
+    confirmed real and common (24 MapQuest-only Yelp matches vs. 18
+    official ones in one real Charlotte test), not a rare edge case."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    assert row["lead_priority_score"] == 22.0  # BBB grade alone -- no Yelp signal yet
+    assert row["present_yelp"] == 0
+
+    row["mapquest_rating_provider"] = "YELP"
+    row["mapquest_rating_value"] = "1.0"  # rating band 45 (<=1.5)
+    row["mapquest_review_count"] = "40"  # volume band 72 (1-60)
+    row = recompute_intel(row)
+    assert row["present_yelp"] == 1
+    yelp_blended = (45 + 72) / 2
+    bbb_blended = 22.0
+    expected = (bbb_blended * _SOURCE_WEIGHTS["bbb"] + yelp_blended * _SOURCE_WEIGHTS["yelp"]) / (
+        _SOURCE_WEIGHTS["bbb"] + _SOURCE_WEIGHTS["yelp"]
+    )
+    # + reputation_divergence_flag's own +12: a clean A+ BBB grade but a
+    # real, MapQuest-confirmed 1.0-star Yelp rating is exactly the "looks
+    # fine on paper, isn't" case that flag exists for -- and it correctly
+    # fires here BECAUSE _yelp_rating now sees the MapQuest fallback too.
+    assert row["reputation_divergence_flag"] == 1
+    assert row["lead_priority_score"] == round(expected, 1) + 12
+
+
+def test_official_yelp_match_wins_over_mapquest_when_both_present():
+    """MapQuest is a fallback for when the official match is MISSING, not
+    an override -- a real official Fusion API match's own numbers should
+    never be replaced by MapQuest's independently-matched ones, even if
+    they'd disagree."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    row["match_status"] = "matched"
+    row["yelp_rating"] = "4.5"  # official: high rating, low volume band (8)
+    row["yelp_review_count"] = "200"
+    row["mapquest_rating_provider"] = "YELP"
+    row["mapquest_rating_value"] = "1.0"  # would band to 45 if it won instead
+    row["mapquest_review_count"] = "40"
+    row = recompute_intel(row)
+    yelp_blended = (8 + 12) / 2  # official rating (4.5 -> 8) + official volume (200 -> 12), NOT MapQuest's
+    bbb_blended = 22.0
+    expected = (bbb_blended * _SOURCE_WEIGHTS["bbb"] + yelp_blended * _SOURCE_WEIGHTS["yelp"]) / (
+        _SOURCE_WEIGHTS["bbb"] + _SOURCE_WEIGHTS["yelp"]
+    )
+    assert row["lead_priority_score"] == round(expected, 1)
+
+
+def test_mapquest_rating_only_counts_when_provider_is_confirmed_yelp():
+    """A non-Yelp (or blank) mapquest_rating_provider must never be treated
+    as Yelp data -- _has_mapquest_yelp_data checks the real field, doesn't
+    assume every MapQuest match is Yelp-sourced."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    row["mapquest_rating_provider"] = "TRIPADVISOR"  # a real, just non-Yelp value the field can hold
+    row["mapquest_rating_value"] = "1.0"
+    row["mapquest_review_count"] = "40"
+    row = recompute_intel(row)
+    assert row["present_yelp"] == 0
+    assert row["lead_priority_score"] == 22.0  # unchanged -- BBB grade alone
+
+
+def test_mapquest_yelp_rating_still_needs_enough_reviews_to_count():
+    """Same _MIN_REVIEWS_FOR_RATING gate as the official Yelp/Angi ratings
+    -- a MapQuest-confirmed Yelp rating backed by too few reviews doesn't
+    count as a rating signal (though the volume signal still applies)."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    row["mapquest_rating_provider"] = "YELP"
+    row["mapquest_rating_value"] = "1.0"  # would band to 45 if it counted
+    row["mapquest_review_count"] = "2"  # too few for the rating gate, but volume band still applies (72)
+    row = recompute_intel(row)
+    expected = (22 * _SOURCE_WEIGHTS["bbb"] + 72 * _SOURCE_WEIGHTS["yelp"]) / (
+        _SOURCE_WEIGHTS["bbb"] + _SOURCE_WEIGHTS["yelp"]
+    )
+    assert row["lead_priority_score"] == round(expected, 1)
+
+
 def test_angi_rating_signal_still_needs_enough_reviews_to_count():
     """Same _MIN_REVIEWS_FOR_RATING gate as Yelp for the RATING signal
     specifically -- but unlike the old reputation_score, Angi's volume

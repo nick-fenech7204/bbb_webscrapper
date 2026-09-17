@@ -64,6 +64,61 @@ def test_matched_master_row_carries_yelp_and_intel():
     assert callable(publish_master_rows)
 
 
+def test_mapquest_confirmed_yelp_data_fills_in_the_yelp_columns_when_unmatched():
+    """2026-09-17, Nick's call: a business with no official Fusion API match
+    (bbb_only) but a real MapQuest match whose rating_provider genuinely
+    confirms Yelp should still show up as on_yelp with real rating/review
+    data on the published site -- confirmed common in real data (24 such
+    businesses vs. 18 official matches in one real test metro), not a rare
+    edge case worth leaving blank. yelp_url comes from mapquest_url (a
+    mapquest.com link, not yelp.com -- the only real page available), and
+    yelp_via_mapquest flags that for the site to render transparently."""
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Wyattworks Plumbing, Inc.", "bbb_rating": "A+",
+        "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+        "mapquest_rating_provider": "YELP", "mapquest_rating_value": "4",
+        "mapquest_review_count": "46",
+        "mapquest_url": "https://www.mapquest.com/us/north-carolina/wyattworks-plumbing-303858671",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["on_yelp"] is True
+    assert rec["yelp_rating"] == 4
+    assert rec["yelp_review_count"] == 46
+    assert rec["yelp_url"] == "https://www.mapquest.com/us/north-carolina/wyattworks-plumbing-303858671"
+    assert rec["yelp_via_mapquest"] is True
+    assert rec["yelp_name"] == ""  # no such field exists via MapQuest -- left blank, not guessed
+
+
+def test_official_yelp_match_takes_precedence_over_mapquest_at_publish_time():
+    row = {
+        "match_status": "matched",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+        "yelp_name": "Real Co", "yelp_rating": "4.5", "yelp_review_count": "200",
+        "yelp_url": "https://www.yelp.com/biz/real-co",
+        "mapquest_rating_provider": "YELP", "mapquest_rating_value": "1.0",
+        "mapquest_review_count": "40", "mapquest_url": "https://www.mapquest.com/us/x/co-1",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["yelp_rating"] == 4.5  # the official value, not MapQuest's disagreeing one
+    assert rec["yelp_review_count"] == 200
+    assert rec["yelp_url"] == "https://www.yelp.com/biz/real-co"
+    assert rec["yelp_via_mapquest"] is False
+
+
+def test_non_yelp_mapquest_provider_does_not_leak_into_yelp_columns():
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+        "mapquest_rating_provider": "TRIPADVISOR", "mapquest_rating_value": "1.0",
+        "mapquest_review_count": "40",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["on_yelp"] is False
+    assert rec["yelp_rating"] is None
+    assert rec["yelp_via_mapquest"] is False
+
+
 def test_contact_readiness_fields_surface_on_the_published_record():
     reachable = _publish_one({
         "name": "Goode Plumbing", "rating": "B", "phone": "(773) 930-3451",

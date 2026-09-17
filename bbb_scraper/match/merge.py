@@ -157,8 +157,23 @@ def _present_bbb(r):
     return int(r["match_status"] in ("matched", "bbb_only"))
 
 
+def _has_mapquest_yelp_data(r) -> bool:
+    """True when MapQuest's own aggregate-rating block genuinely confirms
+    Yelp as its source (checked against the real field, not assumed --
+    see mapquest/models.py's own rating_provider comment). MapQuest's
+    GraphQL surfaces real Yelp-sourced rating/review data through a
+    completely separate matching pass (its own name+phone-in-city search,
+    not the BBB<->Yelp Fusion matcher's confidence-scored one) -- so it's
+    a second real door into the same underlying Yelp data, not a
+    different platform. 2026-09-17, Nick's call, after a real batch
+    (Plumbers, Charlotte NC) showed 24 real businesses with MapQuest-
+    confirmed Yelp ratings that the official Fusion match missed entirely
+    -- more than the 18 the official matcher found for that same metro."""
+    return (r.get("mapquest_rating_provider") or "").strip().upper() == "YELP"
+
+
 def _present_yelp(r):
-    return int(r["match_status"] in ("matched", "yelp_only"))
+    return int(r["match_status"] in ("matched", "yelp_only") or _has_mapquest_yelp_data(r))
 
 
 def _bbb_grade_num(r):
@@ -188,12 +203,35 @@ def _bbb_complaints_total(r):
 
 def _yelp_rating(r):
     """Yelp star rating, but only if backed by >= _MIN_REVIEWS_FOR_RATING
-    reviews -- otherwise None (unrated)."""
+    reviews -- otherwise None (unrated). Official Fusion API match first;
+    falls back to MapQuest's own Yelp-sourced rating (_has_mapquest_yelp_data)
+    when that's the only place this business's Yelp data showed up."""
     y = _num(r.get("yelp_rating"))
     n = _num(r.get("yelp_review_count"))
-    if y is None or n is None or n < _MIN_REVIEWS_FOR_RATING:
-        return None
-    return y
+    if y is not None and n is not None and n >= _MIN_REVIEWS_FOR_RATING:
+        return y
+    if _has_mapquest_yelp_data(r):
+        y = _num(r.get("mapquest_rating_value"))
+        n = _num(r.get("mapquest_review_count"))
+        if y is not None and n is not None and n >= _MIN_REVIEWS_FOR_RATING:
+            return y
+    return None
+
+
+def _effective_yelp_review_count(r):
+    """Yelp review count for scoring -- the official Fusion API match's own
+    count when that happened, else MapQuest's Yelp-sourced count as a
+    fallback. Same reasoning as _yelp_rating/_has_mapquest_yelp_data above;
+    kept separate from _yelp_rating since the volume signal in
+    _lead_priority_score needs the count even when there aren't enough
+    reviews yet for a rating band (0 reviews is itself a real signal)."""
+    if r.get("match_status") == "matched":
+        n = _num(r.get("yelp_review_count"))
+        if n is not None:
+            return n
+    if _has_mapquest_yelp_data(r):
+        return _num(r.get("mapquest_review_count"))
+    return None
 
 
 def _angi_rating(r):
@@ -572,8 +610,8 @@ def _lead_priority_score(r):
     yr = _yelp_rating(r)
     if yr is not None:
         yelp_parts.append(_rating_band(yr))
-    yn = _num(r.get("yelp_review_count"))
-    if yn is not None and r.get("match_status") == "matched":
+    yn = _effective_yelp_review_count(r)
+    if yn is not None:
         yelp_parts.append(40 if yn == 0 else 72 if yn <= 60 else 40 if yn <= 150 else 12)
     if yelp_parts:
         source_scores["yelp"] = sum(yelp_parts) / len(yelp_parts)

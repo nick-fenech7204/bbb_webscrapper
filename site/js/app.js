@@ -114,14 +114,29 @@
   // column per 3rd-party source doesn't fit real screen width, and these
   // two are the same *kind* of signal: an outside homeowner-review
   // platform, exactly like lead_priority_score's _rating_band treats them).
-  function oneRatingLink(label, url, rating, count) {
+  function oneRatingLink(label, url, rating, count, title) {
     const text = !count ? `on ${label}` : `${rating}★ (${count})`;
+    const titleAttr = title ? ` title="${esc(title)}"` : "";
     return url
-      ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)} ↗</a>` : esc(text);
+      ? `<a href="${esc(url)}" target="_blank" rel="noopener"${titleAttr}>${esc(text)} ↗</a>` : esc(text);
   }
   function yelpCell(r) {
     const parts = [];
-    if (r.on_yelp) parts.push(oneRatingLink("Yelp", r.yelp_url, num(r.yelp_rating), num(r.yelp_review_count)));
+    if (r.on_yelp) {
+      // 2026-09-17: yelp_rating/yelp_review_count/yelp_url now also come
+      // from MapQuest's own Yelp-sourced data (a second real match pass,
+      // separate from the official Yelp Fusion API one) when that's the
+      // only place this business's Yelp data showed up -- see
+      // publish_site_data.py's select_public_fields_from_master. yelp_url
+      // is then a mapquest.com link, not yelp.com, since that's the only
+      // real page we have for it -- flagged via a title, not hidden,
+      // rather than silently presenting it as a direct Yelp link.
+      const viaMapquest = isTrue(r.yelp_via_mapquest);
+      const title = viaMapquest
+        ? "Yelp rating, confirmed via MapQuest -- no official Yelp Fusion match for this business, link opens its MapQuest page"
+        : "";
+      parts.push(oneRatingLink("Yelp", r.yelp_url, num(r.yelp_rating), num(r.yelp_review_count), title));
+    }
     if (isTrue(r.on_angi)) parts.push(oneRatingLink("Angi", r.angi_url, num(r.angi_rating), num(r.angi_review_count)));
     if (!parts.length) return `<span class="muted">${dash}</span>`;
     return parts.join("<br>");

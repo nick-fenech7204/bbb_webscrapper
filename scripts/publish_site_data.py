@@ -41,7 +41,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from bbb_scraper.curate import curate_for_publish
 from bbb_scraper.match.matcher import MatchOutcome
-from bbb_scraper.match.merge import build_master_table, recompute_intel
+from bbb_scraper.match.merge import _has_mapquest_yelp_data, build_master_table, recompute_intel
 
 SITE_DATA_DIR = Path(__file__).resolve().parent.parent / "site" / "data"
 MANIFEST_PATH = SITE_DATA_DIR / "manifest.json"
@@ -192,12 +192,37 @@ def select_public_fields_from_master(row: dict) -> dict:
             result[field] = value if value not in (None,) else ""
     result["last_updated"] = _date_only(row.get("bbb_scraped_at"))
 
+    # 2026-09-17, Nick's call: MapQuest surfaces real Yelp-sourced rating
+    # data through its own separate name+phone-in-city match, a second real
+    # door into the same Yelp data the official Fusion API match can miss
+    # (its 240-result cap, or a business the confidence-scored matcher
+    # didn't clear) -- confirmed real and common (24 MapQuest-only Yelp
+    # matches vs. 18 official ones in one Charlotte test), not a rare edge
+    # case worth ignoring. Official match wins when both exist; MapQuest's
+    # own fields fill in when it's the only place this business's Yelp
+    # data showed up. mapquest_url is a mapquest.com link, not yelp.com --
+    # the site marks that distinction visually (see app.js's yelpCell)
+    # rather than pretending it's a direct Yelp link.
     matched = str(row.get("match_status") or "") == "matched"
-    result["on_yelp"] = matched
+    mapquest_yelp = _has_mapquest_yelp_data(row)
+    result["on_yelp"] = matched or mapquest_yelp
     result["yelp_name"] = (row.get("yelp_name") or "") if matched else ""
-    result["yelp_rating"] = _num_or_none(row.get("yelp_rating")) if matched else None
-    result["yelp_review_count"] = _num_or_none(row.get("yelp_review_count")) if matched else None
-    result["yelp_url"] = (row.get("yelp_url") or "") if matched else ""
+    result["yelp_rating"] = (
+        _num_or_none(row.get("yelp_rating")) if matched
+        else _num_or_none(row.get("mapquest_rating_value")) if mapquest_yelp
+        else None
+    )
+    result["yelp_review_count"] = (
+        _num_or_none(row.get("yelp_review_count")) if matched
+        else _num_or_none(row.get("mapquest_review_count")) if mapquest_yelp
+        else None
+    )
+    result["yelp_url"] = (
+        (row.get("yelp_url") or "") if matched
+        else (row.get("mapquest_url") or "") if mapquest_yelp
+        else ""
+    )
+    result["yelp_via_mapquest"] = mapquest_yelp and not matched
 
     # on_angi itself is set below via _INTEL_SITE_FIELDS (merge.py's own
     # _on_angi computes it from angi_phone) -- read the same way here just
