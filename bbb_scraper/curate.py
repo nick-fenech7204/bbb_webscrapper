@@ -63,7 +63,13 @@ LOW_SCORE_CUTOFF = 50.0
 
 
 def _normalized_name(row: dict[str, Any]) -> str:
-    return str(row.get("bbb_name") or "").strip().lower()
+    # bbb_name first, angi_name as a fallback (2026-09-17) -- an angi_only
+    # row (Angi is now a real discovery source, see
+    # bbb_scraper/angi/enrich.py) has no bbb_name at all; without this
+    # fallback its name always reads as "", which Counter-based chain
+    # detection below already treats as "not a business" and silently
+    # never flags, even for a real repeated chain.
+    return str(row.get("bbb_name") or row.get("angi_name") or "").strip().lower()
 
 
 def _is_corporate_account(row: dict[str, Any]) -> bool:

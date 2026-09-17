@@ -164,7 +164,13 @@ from bbb_scraper.mapquest.client import MapQuestClient
 from bbb_scraper.mapquest.matcher import find_business
 from bbb_scraper.match.dedupe import dedupe_by_phone
 from bbb_scraper.match.enrich import enrich_bbb_with_yelp, open_yelp_enrichment
-from bbb_scraper.match.merge import recompute_intel
+from bbb_scraper.match.merge import (
+    _effective_city,
+    _effective_name,
+    _effective_phone,
+    _effective_state,
+    recompute_intel,
+)
 from bbb_scraper.pipeline.registry import build_sinks_from_settings
 from bbb_scraper.pipeline.sinks.csv_sink import CSVSink
 from bbb_scraper.reference.categories import CategoryDirectory
@@ -658,10 +664,14 @@ def _enrich_metro_with_mapquest(
     matched = 0
     total_reviews = 0
     for row in master_rows:
-        name = (row.get("bbb_name") or "").strip()
-        phone = row.get("bbb_phone") or None
-        city_name = (row.get("bbb_city") or "").strip()
-        state = (row.get("bbb_state") or "").strip()
+        # _effective_* (2026-09-17): falls back to angi_* when there's no
+        # bbb_* value, so an angi_only row (Angi is now a real discovery
+        # source, see bbb_scraper/angi/enrich.py) gets searched here too,
+        # not silently skipped for having no bbb_name to read.
+        name = _effective_name(row).strip()
+        phone = _effective_phone(row) or None
+        city_name = _effective_city(row).strip()
+        state = _effective_state(row).strip()
         row["mapquest_url"] = ""
         row["mapquest_review_count"] = ""
         row["mapquest_reviews"] = ""
@@ -1087,7 +1097,7 @@ def main() -> int:
             _write_progress(progress_path, _snapshot())
             master_rows = enrich_bbb_with_yelp(records, args.industry, metro.seed_location, yelp_state)
 
-            angi_matched = None
+            angi_matched = angi_new_rows = None
             if angi_enabled:
                 if angi_rows:
                     metro_states[i - 1]["step"] = "angi_merge"
@@ -1095,8 +1105,15 @@ def main() -> int:
                     _write_angi_checkpoint(ANGI_DIR / f"{angi_category_slug}--{metro.id}.csv", angi_rows)
                     master_rows = enrich_with_angi(master_rows, angi_rows)
                     angi_matched = sum(1 for r in master_rows if r.get("on_angi"))
+                    # 2026-09-17: Angi is now a real discovery source (see
+                    # bbb_scraper/angi/enrich.py) -- some of `angi_matched`
+                    # above are businesses that enriched an existing BBB
+                    # row, some are genuinely new angi_only rows with no
+                    # BBB match at all. Surfaced separately so the summary
+                    # line doesn't quietly conflate the two.
+                    angi_new_rows = sum(1 for r in master_rows if r.get("match_status") == "angi_only")
                 else:
-                    angi_matched = 0
+                    angi_matched = angi_new_rows = 0
 
             mapquest_matched = mapquest_reviews_count = None
             if mapquest_enabled:
@@ -1136,7 +1153,7 @@ def main() -> int:
             matched = sum(r.get("match_status") == "matched" for r in master_rows)
             print(f"[{i}/{len(metros)}] {metro.name}: {len(records)} BBB businesses"
                   f"{f', {matched} matched to Yelp' if yelp_state.enabled else ''}"
-                  f"{f', {len(angi_rows)} Angi ({angi_matched} matched by phone)' if angi_enabled else ''}"
+                  f"{f', {len(angi_rows)} Angi ({angi_matched} matched, {angi_new_rows} new angi_only)' if angi_enabled else ''}"
                   f"{f', {mapquest_matched} MapQuest ({mapquest_reviews_count} reviews)' if mapquest_enabled else ''}"
                   f"{f', {sentiment_analyzed} sentiment ({sentiment_negative} negative)' if sentiment_enabled else ''}"
                   f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "

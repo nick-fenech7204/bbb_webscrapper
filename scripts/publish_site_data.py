@@ -100,6 +100,23 @@ _ANGI_SITE_FIELDS = [
     "specialties", "angi_super_service_award",
 ]
 
+# 2026-09-17, Nick's call: Angi is now a real discovery source in its own
+# right (bbb_scraper/angi/enrich.py can emit a genuinely new angi_only row,
+# not just enrich an existing BBB one -- see that module's docstring), so
+# these core identity fields fall back to their Angi equivalent when
+# there's no BBB value -- an angi_only row would otherwise publish with a
+# blank name/phone/city, which isn't "less data", it's a broken-looking
+# row. Deliberately scoped to fields with a genuine Angi equivalent:
+# BBB-specific concepts (grade, accreditation, complaints,
+# principal_contact, years_in_business, lat/lon -- Angi profiles carry no
+# lat/lon at all) are NOT faked from Angi data and stay blank, the same
+# gap a yelp_only-style row already has today for BBB-only fields.
+_ANGI_IDENTITY_FALLBACK = {
+    "name": "angi_name", "phone": "angi_phone", "website": "angi_website",
+    "city": "angi_city", "state": "angi_state", "postal_code": "angi_zip_code",
+    "profile_url": "angi_profile_url",
+}
+
 # Our own derived-intelligence columns (read straight through from a
 # master-table row). These are available for every BBB record -- a Yelp
 # match just adds more signal, it isn't required.
@@ -190,6 +207,13 @@ def select_public_fields_from_master(row: dict) -> dict:
             result[field] = _num_or_none(value)
         else:
             result[field] = value if value not in (None,) else ""
+    for public_field, angi_field in _ANGI_IDENTITY_FALLBACK.items():
+        if not result.get(public_field):
+            result[public_field] = row.get(angi_field) or ""
+    # No Angi-side fallback here -- bbb_scraper.angi doesn't capture a scrape
+    # timestamp at all today, so an angi_only row's last_updated is blank
+    # (known, minor gap; adding a real Angi timestamp is a separate,
+    # small piece of work, not faked here with today's publish time).
     result["last_updated"] = _date_only(row.get("bbb_scraped_at"))
 
     # 2026-09-17, Nick's call: MapQuest surfaces real Yelp-sourced rating
@@ -349,18 +373,21 @@ def publish_records(records: list[dict], industry: str, metro: str) -> dict:
 
 
 def publish_master_rows(rows: list[dict], industry: str, metro: str) -> dict:
-    """Publish match.merge.build_master_table rows. BBB-primary: `yelp_only`
-    rows (a Yelp business with no BBB match) are dropped -- the site is a
-    BBB directory enriched with Yelp, not a Yelp directory.
+    """Publish match.merge.build_master_table rows. `yelp_only` rows (a
+    Yelp business with no BBB or Angi match) are dropped -- the site is a
+    BBB/Angi directory enriched with Yelp, not a Yelp directory. `angi_only`
+    rows (2026-09-17: Angi businesses with no BBB match -- see
+    bbb_scraper/angi/enrich.py) are kept, same as bbb_only ones -- Angi is
+    now a real discovery source in its own right, not just enrichment.
 
     `rows` may be a previously-written master CSV read back off disk, whose
     intel columns (lead_priority_score, ...) were computed whenever that
     file was written -- recompute_intel refreshes them against today's
     _INTEL formulas rather than trusting a possibly-stale snapshot.
     """
-    bbb_primary = [r for r in rows if str(r.get("match_status") or "") != "yelp_only"]
-    bbb_primary = [recompute_intel(r) for r in bbb_primary]
-    public_rows, removed = _curate_and_select(bbb_primary)
+    keep = [r for r in rows if str(r.get("match_status") or "") != "yelp_only"]
+    keep = [recompute_intel(r) for r in keep]
+    public_rows, removed = _curate_and_select(keep)
     return _write_dataset(public_rows, industry, metro, curated_out=removed)
 
 

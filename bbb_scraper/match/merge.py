@@ -359,8 +359,41 @@ def _accredited_but_low_rated(r):
     return 0
 
 
+# Effective-identity accessors: bbb_<field> when present, else angi_<field>.
+# 2026-09-17, Nick's call: Angi is now a real discovery source in its own
+# right (bbb_scraper/angi/enrich.py can create a genuinely new "angi_only"
+# row, not just enrich an existing BBB one), so anything that used to
+# assume "the business's real name/phone/city is always in bbb_*" needs a
+# fallback for a row that was never on BBB at all. Kept as small, explicitly-
+# named functions (not a generic "try every bbb_/angi_ pair" loop) so it's
+# obvious at each call site which identity fact is being read, and so a
+# BBB-specific field with no real Angi equivalent (grade, accreditation,
+# complaints, principal_contact, years_in_business, lat/lon) is never
+# silently given a fallback that doesn't actually make sense for it. Only
+# the 4 fields an internal enrichment step (MapQuest search) actually needs
+# live here -- website/postal_code/profile_url get the same fallback
+# treatment, but as a small field-name mapping in publish_site_data.py's
+# own select_public_fields_from_master, since that's the only place they're
+# needed and a 7-entry dict there is simpler than 3 more single-field
+# functions here for callers that don't exist yet.
+def _effective_name(r):
+    return r.get("bbb_name") or r.get("angi_name") or ""
+
+
+def _effective_phone(r):
+    return r.get("bbb_phone") or r.get("angi_phone") or ""
+
+
+def _effective_city(r):
+    return r.get("bbb_city") or r.get("angi_city") or ""
+
+
+def _effective_state(r):
+    return r.get("bbb_state") or r.get("angi_state") or ""
+
+
 def _has_phone(r):
-    return int(_has_value(r.get("bbb_phone")))
+    return int(_has_value(_effective_phone(r)))
 
 
 def _has_named_contact(r):
@@ -378,8 +411,13 @@ def _contact_readiness(r):
     great lead nobody can reach isn't a working lead yet. Phone is what lets
     a rep pick up and dial; a named contact (BBB's principal_contact, e.g.
     "Glenn Wright, Manager") makes that call land on a real person instead
-    of a front desk; email is a fallback channel when there's no number."""
-    phone = _has_value(r.get("bbb_phone"))
+    of a front desk; email is a fallback channel when there's no number.
+    Phone falls back to Angi's when there's no BBB one (2026-09-17) -- a
+    real Angi-sourced number is just as dialable as a BBB-sourced one, and
+    penalizing an angi_only row for lacking a phone it structurally can't
+    have (no BBB listing to carry one) would be wrong, not conservative.
+    Named contact stays BBB-only -- Angi doesn't capture an equivalent."""
+    phone = _has_value(_effective_phone(r))
     contact = _has_value(r.get("bbb_principal_contact"))
     email = _has_value(r.get("bbb_email"))
     if phone and contact:
@@ -395,7 +433,7 @@ def _contact_readiness_score(r):
     """0-100 version of _contact_readiness, for sorting the table by it.
     Phone is the hard requirement to act on a lead today; a named contact
     is a meaningful bonus on top of a phone (not a substitute for one)."""
-    phone = _has_value(r.get("bbb_phone"))
+    phone = _has_value(_effective_phone(r))
     contact = _has_value(r.get("bbb_principal_contact"))
     email = _has_value(r.get("bbb_email"))
     if phone and contact:
@@ -689,8 +727,11 @@ def _lead_priority_score(r):
     # cut -- not a disqualifier, since the business is still findable, just
     # not a "call it this afternoon" lead. A named contact on top of a
     # phone is a smaller bonus: the call lands on a real person instead of
-    # a front desk, but it was already dialable without one.
-    if _has_value(r.get("bbb_phone")):
+    # a front desk, but it was already dialable without one. Falls back to
+    # Angi's phone when there's no BBB one (2026-09-17, see
+    # _effective_phone's own comment) -- an angi_only business with a real
+    # phone number is exactly as reachable as a BBB one with the same.
+    if _has_value(_effective_phone(r)):
         if _has_value(r.get("bbb_principal_contact")):
             score += 5
     else:

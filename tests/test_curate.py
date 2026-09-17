@@ -44,6 +44,20 @@ def test_detect_chain_names_respects_custom_threshold():
     assert detect_chain_names(rows, threshold=2) == {"acme a"}
 
 
+def test_detect_chain_names_falls_back_to_angi_name_for_angi_only_rows():
+    """2026-09-17, Nick's call: an angi_only row (no BBB match at all, see
+    bbb_scraper/angi/enrich.py) has no bbb_name at all -- without the
+    angi_name fallback, every angi_only row's normalized name reads as ""
+    and a real repeated Angi-discovered chain would never get caught,
+    the same "silently reads as not a business" gap blank bbb_name rows
+    are already guarded against."""
+    def angi_row(name):
+        return {"match_status": "angi_only", "bbb_name": "", "angi_name": name, "lead_priority_score": 50.0}
+
+    rows = [angi_row("West Shore Home"), angi_row("West Shore Home"), angi_row("West Shore Home")]
+    assert detect_chain_names(rows) == {"west shore home"}
+
+
 def test_default_threshold_is_the_real_data_justified_value():
     # Pinned so a future casual tweak notices it's changing something
     # backed by a real audit, not just a magic number -- see the module

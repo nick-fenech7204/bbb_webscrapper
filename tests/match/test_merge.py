@@ -204,6 +204,26 @@ def test_lead_priority_score_penalizes_missing_phone_and_rewards_named_contact()
     assert phone_and_contact > phone_only, "a named contact on top of a phone should still add a little"
 
 
+def test_reachability_falls_back_to_angi_phone_when_there_is_no_bbb_phone():
+    """2026-09-17, Nick's call: an angi_only row (no BBB match at all, see
+    bbb_scraper/angi/enrich.py) still has a real, dialable phone number --
+    penalizing it the same way a business with NO phone anywhere gets
+    penalized would be wrong, not conservative."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "A+"}])  # no bbb_phone at all
+    row = build_master_table(out)[0]
+    no_phone_anywhere = row["lead_priority_score"]
+    assert row["has_phone"] == 0
+    assert row["contact_readiness"] == "No direct contact info"
+
+    row["angi_phone"] = "7044914939"
+    row = recompute_intel(row)
+    assert row["has_phone"] == 1
+    assert row["contact_readiness"] == "Phone only"
+    # Same 2x relationship as the BBB-phone case above -- reachability
+    # doesn't care which source the phone came from.
+    assert row["lead_priority_score"] == pytest.approx(no_phone_anywhere * 2, abs=0.2)
+
+
 def test_recompute_intel_fills_in_columns_a_stale_master_row_never_had():
     """Regression: a master-table CSV written before a scoring change has
     no idea the new _INTEL columns exist -- recompute_intel (used by

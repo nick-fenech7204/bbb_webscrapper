@@ -119,6 +119,54 @@ def test_non_yelp_mapquest_provider_does_not_leak_into_yelp_columns():
     assert rec["yelp_via_mapquest"] is False
 
 
+def test_angi_only_row_publishes_with_identity_fields_from_angi():
+    """2026-09-17, Nick's call: Angi is now a real discovery source (see
+    bbb_scraper/angi/enrich.py's angi_only rows) -- the published record's
+    core identity (name/phone/city/state/website/profile_url) falls back
+    to the angi_ fields since there's no bbb_ equivalent at all, while
+    BBB-specific concepts (grade, accreditation) correctly stay blank
+    rather than being faked from Angi data."""
+    row = {
+        "match_status": "angi_only",
+        "bbb_name": "", "bbb_phone": "", "bbb_city": "", "bbb_state": "",
+        "bbb_website": "", "bbb_profile_url": "", "bbb_rating": "", "bbb_accredited": "",
+        "angi_name": "BendFlow Plumbing", "angi_phone": "7044914939",
+        "angi_city": "Indian Trail", "angi_state": "NC",
+        "angi_website": "www.bendflowplumbing.com",
+        "angi_profile_url": "https://www.angi.com/companylist/us/nc/indian-trail/bendflow-plumbing-reviews-1.htm",
+        "angi_overall_rating": "5", "angi_review_count": "4",
+        "lead_priority_score": "72.0",  # select_public_fields_from_master reads whatever
+        # intel is already on the row -- its caller (publish_master_rows) is what calls
+        # recompute_intel first; this fixture mirrors the other tests in this file that
+        # set lead_priority_score by hand for the same reason.
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["name"] == "BendFlow Plumbing"
+    assert rec["phone"] == "7044914939"
+    assert rec["city"] == "Indian Trail"
+    assert rec["state"] == "NC"
+    assert rec["website"] == "www.bendflowplumbing.com"
+    assert rec["profile_url"] == "https://www.angi.com/companylist/us/nc/indian-trail/bendflow-plumbing-reviews-1.htm"
+    assert rec["rating"] == ""  # no BBB grade -- never faked from Angi's own star rating
+    assert rec["accredited"] is False
+    assert rec["lead_priority_score"] == 72.0
+
+
+def test_bbb_identity_wins_over_angi_when_both_present():
+    """A matched row (both BBB and Angi present) should use BBB's own
+    identity fields, not silently prefer Angi's -- the fallback is for
+    when BBB is genuinely absent, not a general preference."""
+    row = {
+        "match_status": "matched",
+        "bbb_name": "Real BBB Name", "bbb_phone": "3055550100", "bbb_city": "Charlotte",
+        "angi_name": "Different Angi Listing Name", "angi_phone": "7045559999", "angi_city": "Monroe",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["name"] == "Real BBB Name"
+    assert rec["phone"] == "3055550100"
+    assert rec["city"] == "Charlotte"
+
+
 def test_contact_readiness_fields_surface_on_the_published_record():
     reachable = _publish_one({
         "name": "Goode Plumbing", "rating": "B", "phone": "(773) 930-3451",
