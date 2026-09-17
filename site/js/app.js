@@ -201,17 +201,20 @@
     const v = r[key] ?? "";
     return v ? `<span title="${esc(v)}">${esc(v)}</span>` : "";
   };
-  // "Latest review" -- most_recent_review_date is the visible value, but
-  // most_recent_negative_review_date (published, 2026-09-16, but otherwise
-  // shown nowhere -- caught in a full-project audit) is real extra context
-  // worth a hover rather than its own column: "the latest review overall
-  // was positive, but the latest NEGATIVE one was more recently" is exactly
-  // the kind of thing a rep would want before opening a call.
+  // "Latest negative review" -- 2026-09-17, Nick's call: the PRIMARY value
+  // is now most_recent_negative_review_date (was most_recent_review_date,
+  // any sentiment) -- a recent negative is a sharper, more actionable lead
+  // signal than "reviewed at all recently." Both date fields are already
+  // Yelp/Angi-only at the source (bbb_scraper.sentiment's _aggregate
+  // excludes BBB -- its complaint/review system is a different thing from
+  // a casual star review). Blank when there's no negative review on file
+  // at all, even if there's a recent positive one -- intended, not a gap.
+  // The any-sentiment date moves to the hover as secondary context.
   function latestReviewCell(r) {
-    const v = r.most_recent_review_date ?? "";
+    const v = r.most_recent_negative_review_date ?? "";
     if (!v) return "";
-    const negDate = r.most_recent_negative_review_date;
-    const title = negDate && negDate !== v ? `Latest negative review: ${negDate}` : "";
+    const anyDate = r.most_recent_review_date;
+    const title = anyDate && anyDate !== v ? `Latest review (any sentiment): ${anyDate}` : "";
     return title ? `<span title="${esc(title)}">${esc(v)}</span>` : esc(v);
   }
   // Specialties (Angi's "; "-joined services-offered list, see
@@ -313,7 +316,7 @@
     { key: "yelp_rating", label: "Yelp / Angi", w: 130, cls: "num-cell", render: yelpCell },
     { key: "specialties", label: "Specialties", w: 160, render: specialtiesCell },
     { key: "top_complaint_summary", label: "Top complaint", w: 200, render: topComplaintCell },
-    { key: "most_recent_review_date", label: "Latest review", w: 100, render: latestReviewCell },
+    { key: "most_recent_negative_review_date", label: "Latest negative review", w: 130, render: latestReviewCell },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },

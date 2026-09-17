@@ -194,9 +194,25 @@ def _top_complaint(results: list[ReviewSentiment]) -> dict:
 
 
 def _aggregate(results: list[ReviewSentiment]) -> dict:
-    all_dates = sorted(date.fromisoformat(r.date) for r in results if r.date)
+    # most_recent_review_date / most_recent_negative_review_date are meant to
+    # read as genuine 3rd-party review-platform activity -- Yelp (via
+    # MapQuest's own review-text surface, source="mapquest"; see
+    # _SOURCE_COLUMNS' own comment for why) and Angi -- not BBB's own
+    # review/complaint system, which is a structurally different thing (a
+    # formal complaint process, not a casual star review). 2026-09-17,
+    # Nick's call: both date fields exclude source="bbb" from here on.
+    # review_sentiment_analyzed_count/negative_count and top_complaint below
+    # are NOT filtered this way -- a BBB-sourced review still counts as
+    # analyzed and can still be the top complaint, only the two DATE fields
+    # change. bbb_reviews is essentially never populated by the integrated
+    # batch pipeline anyway (only scripts/fetch_bbb_reviews.py backfills it
+    # by hand), so this changes nothing for almost every real record today --
+    # it's here so a future bbb_reviews backfill can't silently start
+    # influencing a signal/column meant to read as Yelp/Angi activity.
+    third_party = [r for r in results if r.source != "bbb"]
+    all_dates = sorted(date.fromisoformat(r.date) for r in third_party if r.date)
     negative_dates = sorted(
-        date.fromisoformat(r.date) for r in results
+        date.fromisoformat(r.date) for r in third_party
         if r.date and r.sentiment in _NEGATIVE_SENTIMENTS
     )
 
