@@ -33,6 +33,15 @@ being relied on:
     50)` is a real GraphQL validation error, "Unknown argument"): whatever
     count the API decides to return for a business is all that's
     available here, no further chasing.
+  - Reviews do NOT come back in any consistent date order -- unlike
+    Angi/BBB (both confirmed newest-first, see their own modules), checked
+    live 2026-09-18 against 159 real businesses with 3+ dated reviews
+    each: 0 were oldest-first, only 17 (11%, within pure-chance odds for
+    small review counts) happened to look newest-first, and 142 (89%)
+    showed no date ordering at all. Nothing in this project assumes
+    otherwise -- bbb_scraper.sentiment.analyze's most_recent_review_date
+    already takes the real max() across every review rather than trusting
+    index 0 -- but don't add code elsewhere that does.
   - `rating.url` is a real field, confirmed live 2026-09-17 (Nick asked
     for a genuine Yelp link instead of MapQuest's own page when a rating
     is Yelp-sourced): probed via the same schema-validation-error method
