@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-09-18T13:50:32.853590+00:00",
+  "generated_at": "2026-09-18T16:14:05.574299+00:00",
   "datasets": [
+    {
+      "id": "dentist--atlanta-ga",
+      "industry": "Dentist",
+      "metro": "Atlanta, GA",
+      "published_at": "2026-09-18T14:38:47.410714+00:00",
+      "record_count": 234,
+      "has_yelp": true,
+      "yelp_matched": 195,
+      "top_lead_score": 100.8,
+      "file": "dentist--atlanta-ga.json",
+      "curated_out": {
+        "chain_name": 20,
+        "corporate_account": 0,
+        "low_score": 372
+      }
+    },
+    {
+      "id": "dentist--baltimore-md",
+      "industry": "Dentist",
+      "metro": "Baltimore, MD",
+      "published_at": "2026-09-18T16:14:05.574313+00:00",
+      "record_count": 206,
+      "has_yelp": true,
+      "yelp_matched": 179,
+      "top_lead_score": 97.8,
+      "file": "dentist--baltimore-md.json",
+      "curated_out": {
+        "chain_name": 14,
+        "corporate_account": 0,
+        "low_score": 266
+      }
+    },
     {
       "id": "managed-service-provider--denver-co",
       "industry": "Managed Service Provider",
@@ -31,6 +63,22 @@
         "chain_name": 6,
         "corporate_account": 2,
         "low_score": 796
+      }
+    },
+    {
+      "id": "dentist--san-diego-ca",
+      "industry": "Dentist",
+      "metro": "San Diego, CA",
+      "published_at": "2026-09-18T15:19:19.642081+00:00",
+      "record_count": 166,
+      "has_yelp": true,
+      "yelp_matched": 152,
+      "top_lead_score": 97.4,
+      "file": "dentist--san-diego-ca.json",
+      "curated_out": {
+        "chain_name": 8,
+        "corporate_account": 0,
+        "low_score": 263
       }
     },
     {
