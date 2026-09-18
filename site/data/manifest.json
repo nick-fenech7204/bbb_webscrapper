@@ -1,54 +1,6 @@
 {
-  "generated_at": "2026-09-18T02:04:50.048364+00:00",
+  "generated_at": "2026-09-18T07:48:07.956149+00:00",
   "datasets": [
-    {
-      "id": "pest-control--austin-tx",
-      "industry": "Pest Control",
-      "metro": "Austin, TX",
-      "published_at": "2026-09-18T02:04:48.713591+00:00",
-      "record_count": 126,
-      "has_yelp": true,
-      "yelp_matched": 98,
-      "top_lead_score": 97.4,
-      "file": "pest-control--austin-tx.json",
-      "curated_out": {
-        "chain_name": 23,
-        "corporate_account": 1,
-        "low_score": 242
-      }
-    },
-    {
-      "id": "home-inspection--chicago-il",
-      "industry": "Home Inspection",
-      "metro": "Chicago, IL",
-      "published_at": "2026-09-18T02:04:48.366807+00:00",
-      "record_count": 284,
-      "has_yelp": true,
-      "yelp_matched": 99,
-      "top_lead_score": 102.6,
-      "file": "home-inspection--chicago-il.json",
-      "curated_out": {
-        "chain_name": 3,
-        "corporate_account": 3,
-        "low_score": 677
-      }
-    },
-    {
-      "id": "pest-control--kansas-city-mo",
-      "industry": "Pest Control",
-      "metro": "Kansas City, MO",
-      "published_at": "2026-09-18T02:04:49.054246+00:00",
-      "record_count": 127,
-      "has_yelp": true,
-      "yelp_matched": 80,
-      "top_lead_score": 101.7,
-      "file": "pest-control--kansas-city-mo.json",
-      "curated_out": {
-        "chain_name": 12,
-        "corporate_account": 1,
-        "low_score": 308
-      }
-    },
     {
       "id": "flooring--los-angeles-ca",
       "industry": "Flooring",
@@ -63,54 +15,6 @@
         "chain_name": 6,
         "corporate_account": 2,
         "low_score": 796
-      }
-    },
-    {
-      "id": "pest-control--minneapolis-mn",
-      "industry": "Pest Control",
-      "metro": "Minneapolis, MN",
-      "published_at": "2026-09-18T02:04:49.380112+00:00",
-      "record_count": 69,
-      "has_yelp": true,
-      "yelp_matched": 53,
-      "top_lead_score": 97.3,
-      "file": "pest-control--minneapolis-mn.json",
-      "curated_out": {
-        "chain_name": 10,
-        "corporate_account": 1,
-        "low_score": 135
-      }
-    },
-    {
-      "id": "pest-control--pittsburgh-pa",
-      "industry": "Pest Control",
-      "metro": "Pittsburgh, PA",
-      "published_at": "2026-09-18T02:04:49.716120+00:00",
-      "record_count": 51,
-      "has_yelp": true,
-      "yelp_matched": 44,
-      "top_lead_score": 92.3,
-      "file": "pest-control--pittsburgh-pa.json",
-      "curated_out": {
-        "chain_name": 21,
-        "corporate_account": 1,
-        "low_score": 163
-      }
-    },
-    {
-      "id": "pest-control--seattle-wa",
-      "industry": "Pest Control",
-      "metro": "Seattle, WA",
-      "published_at": "2026-09-18T02:04:50.048373+00:00",
-      "record_count": 108,
-      "has_yelp": true,
-      "yelp_matched": 87,
-      "top_lead_score": 95.2,
-      "file": "pest-control--seattle-wa.json",
-      "curated_out": {
-        "chain_name": 4,
-        "corporate_account": 1,
-        "low_score": 183
       }
     }
   ]
