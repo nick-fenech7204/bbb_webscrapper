@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T18:15:07.082849+00:00",
+  "generated_at": "2026-09-18T01:49:35.347693+00:00",
   "datasets": [
     {
       "id": "pest-control--austin-tx",
@@ -44,6 +44,22 @@
         "chain_name": 12,
         "corporate_account": 1,
         "low_score": 308
+      }
+    },
+    {
+      "id": "flooring--los-angeles-ca",
+      "industry": "Flooring",
+      "metro": "Los Angeles, CA",
+      "published_at": "2026-09-18T01:49:35.347704+00:00",
+      "record_count": 256,
+      "has_yelp": true,
+      "yelp_matched": 121,
+      "top_lead_score": 94.8,
+      "file": "flooring--los-angeles-ca.json",
+      "curated_out": {
+        "chain_name": 6,
+        "corporate_account": 2,
+        "low_score": 796
       }
     },
     {
