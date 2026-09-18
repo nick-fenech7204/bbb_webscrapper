@@ -90,9 +90,25 @@
     dead_unreachable: "Site doesn't load",
     dead_parked: "Looks like a parked/for-sale domain",
   };
+  // Just the bare domain for display (no www., no path/query/hash) -- the
+  // link itself (href, title, "Website down" detection) always keeps
+  // using the real, full r.website URL unchanged, so it still opens
+  // exactly the right page. Real captured data included plenty of
+  // https://www.example.com/some-page/?utm=... style URLs that read as
+  // clutter in a table cell; a rep just needs "is this a real, working
+  // site" at a glance, not the specific page BBB happened to link to.
+  function cleanDomain(url) {
+    try {
+      return new URL(url).hostname.replace(/^www\./i, "");
+    } catch {
+      // Malformed/relative URL (real BBB data is not always a clean
+      // absolute URL) -- best-effort strip rather than showing nothing.
+      return url.replace(/^https?:\/\//i, "").replace(/^www\./i, "").split(/[/?#]/)[0];
+    }
+  }
   function websiteCell(r) {
     if (!r.website) return "";
-    const label = r.website.replace(/^https?:\/\//, "");
+    const label = cleanDomain(r.website);
     if (isTrue(r.website_dead_flag)) {
       const reason = WEBSITE_DEAD_REASON[r.website_status] || "Website appears down";
       // Still a real link (a rep may want to double-check by hand) -- just
