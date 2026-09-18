@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-09-18T07:48:07.956149+00:00",
+  "generated_at": "2026-09-18T13:50:32.853590+00:00",
   "datasets": [
+    {
+      "id": "managed-service-provider--denver-co",
+      "industry": "Managed Service Provider",
+      "metro": "Denver, CO",
+      "published_at": "2026-09-18T13:50:32.853605+00:00",
+      "record_count": 6,
+      "has_yelp": true,
+      "yelp_matched": 3,
+      "top_lead_score": 65.4,
+      "file": "managed-service-provider--denver-co.json",
+      "curated_out": {
+        "chain_name": 3,
+        "corporate_account": 0,
+        "low_score": 31
+      }
+    },
     {
       "id": "flooring--los-angeles-ca",
       "industry": "Flooring",
@@ -15,6 +31,22 @@
         "chain_name": 6,
         "corporate_account": 2,
         "low_score": 796
+      }
+    },
+    {
+      "id": "managed-service-provider--tampa-fl",
+      "industry": "Managed Service Provider",
+      "metro": "Tampa, FL",
+      "published_at": "2026-09-18T13:42:24.721880+00:00",
+      "record_count": 19,
+      "has_yelp": true,
+      "yelp_matched": 15,
+      "top_lead_score": 86.4,
+      "file": "managed-service-provider--tampa-fl.json",
+      "curated_out": {
+        "chain_name": 0,
+        "corporate_account": 0,
+        "low_score": 91
       }
     }
   ]
