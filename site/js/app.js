@@ -196,6 +196,30 @@
     const short = REACH_SHORT[label] || label;
     return `<span class="badge ${cls}" title="${esc(label)}">${esc(short)}</span>`;
   }
+  // How many independent places corroborate this business exists and has a
+  // real reputation, not raw platform count -- MapQuest doesn't get its own
+  // entry since it's a second door into the SAME Yelp data on_yelp already
+  // covers (see merge.py's own on_yelp/_has_mapquest_yelp_data), and
+  // sentiment isn't a source at all, it's an analysis of review text from
+  // the sources below. BBB always counts -- every row is a BBB record by
+  // construction, so 1/4 is the real floor, not a bug.
+  const ALL_SOURCES = ["BBB", "Yelp", "Angi", "Facebook"];
+  function sourcesFor(r) {
+    const sources = ["BBB"];
+    if (isTrue(r.on_yelp)) sources.push("Yelp");
+    if (isTrue(r.on_angi)) sources.push("Angi");
+    if (r.facebook_status === "ok") sources.push("Facebook");
+    return sources;
+  }
+  function sourcesCell(r) {
+    const sources = sourcesFor(r);
+    const cls = sources.length >= 3 ? "badge-yes" : sources.length === 2 ? "badge-soft" : "badge-flag";
+    const missing = ALL_SOURCES.filter((s) => !sources.includes(s));
+    const title = missing.length
+      ? `Have: ${sources.join(", ")} — missing: ${missing.join(", ")}`
+      : `Have: ${sources.join(", ")} — every source`;
+    return `<span class="badge ${cls}" title="${esc(title)}">${sources.length}/${ALL_SOURCES.length} sources</span>`;
+  }
   function scoreCell(key, max) {
     return (r) => {
       const v = num(r[key]);
@@ -381,6 +405,7 @@
     { key: "most_recent_negative_review_date", label: "Latest negative review", w: 130, render: latestReviewCell },
     { key: "lead_priority_score", label: "Lead priority (of 130)", w: 110, render: scoreCell("lead_priority_score", 130) },
     { key: "contact_readiness_score", label: "Reach", w: 135, render: reachCell },
+    { key: "sources", label: "Sources", w: 105, render: sourcesCell },
     { key: "phone", label: "Phone", w: 105, render: plain("phone") },
     { key: "principal_contact", label: "Contact", w: 130, render: plainTitled("principal_contact") },
     { key: "reputation_divergence_flag", label: "Flags", w: 190, render: flagsCell },
@@ -627,6 +652,7 @@
     // one, so sorting by the raw negative-only field would bury a
     // business showing a real, recent date at the bottom of the sort.
     most_recent_negative_review_date: (r) => r.most_recent_negative_review_date || r.most_recent_review_date,
+    sources: (r) => sourcesFor(r).length,
   };
 
   function filteredRecords() {
@@ -835,6 +861,39 @@
   // entirely (no single review's own text gets anywhere close to 32,767
   // chars) and is a genuinely more useful shape in a spreadsheet besides:
   // a rep can actually read a review, not decode JSON in a cell.
+  // Social links (BBB's own `socials` + Facebook's own `facebook_social_
+  // links`, added 2026-09-18) get the same JSON-blob-in-a-cell treatment
+  // as reviews used to -- Nick's ask: "make it in excel that each social
+  // account has a column no more json". Unlike reviews these are short
+  // (one URL each, not paragraphs of text), so they stay inline in the
+  // Leads sheet as real columns instead of moving to their own sheet.
+  // Both source lists get merged (same platform found in both -- BBB's
+  // own capture wins, since Facebook's own page URL already came FROM
+  // that same bbb_socials entry) into one fixed, predictable column set;
+  // anything on a platform outside this list still ships, just folded
+  // into one "Other social" column instead of silently dropped.
+  const SOCIAL_PLATFORM_COLUMNS = [
+    ["facebook", "Facebook"], ["instagram", "Instagram"], ["twitter", "Twitter/X"],
+    ["youtube", "YouTube"], ["tiktok", "TikTok"], ["linkedin", "LinkedIn"], ["pinterest", "Pinterest"],
+  ];
+  const SOCIAL_JSON_FIELDS = ["socials", "facebook_social_links"];
+  function combinedSocialLinks(record) {
+    const byPlatform = {};
+    const other = [];
+    for (const field of SOCIAL_JSON_FIELDS) {
+      for (const item of Array.isArray(record[field]) ? record[field] : []) {
+        if (!item || !item.platform || !item.url) continue;
+        const key = String(item.platform).toLowerCase();
+        if (SOCIAL_PLATFORM_COLUMNS.some(([k]) => k === key)) {
+          if (!byPlatform[key]) byPlatform[key] = item.url;
+        } else if (!other.includes(item.url)) {
+          other.push(item.url);
+        }
+      }
+    }
+    return { byPlatform, other: other.join(", ") };
+  }
+
   const REVIEW_ARRAY_FIELDS = ["bbb_reviews", "mapquest_reviews", "angi_reviews", "review_sentiment"];
   const REVIEW_SOURCE_LABEL = { bbb_reviews: "BBB", mapquest_reviews: "Yelp", angi_reviews: "Angi" };
   function buildReviewRows(records) {
@@ -872,6 +931,10 @@
       for (const field of REVIEW_ARRAY_FIELDS) {
         out[field] = Array.isArray(records[i][field]) ? records[i][field].length : 0;
       }
+      for (const field of SOCIAL_JSON_FIELDS) delete out[field];
+      const { byPlatform, other } = combinedSocialLinks(records[i]);
+      for (const [key, label] of SOCIAL_PLATFORM_COLUMNS) out[label] = byPlatform[key] || "";
+      out["Other social"] = other;
       return out;
     });
     const wb = XLSX.utils.book_new();

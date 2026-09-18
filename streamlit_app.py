@@ -389,6 +389,8 @@ def _render_progress(progress: dict) -> None:
                 bits.append(f"{m['bbb_reviews_fetched']} BBB reviews ({m.get('bbb_reviews_count') or 0} reviews)")
             if m.get("sentiment_analyzed") is not None:
                 bits.append(f"{m['sentiment_analyzed']} sentiment ({m.get('sentiment_negative') or 0} negative)")
+            if m.get("facebook_fetched") is not None:
+                bits.append(f"{m['facebook_fetched']} Facebook")
             if m.get("websites_dead") is not None:
                 bits.append(f"{m['websites_dead']} dead websites")
             if m.get("top_lead_score"):
@@ -443,7 +445,8 @@ with st.form("batch_form"):
         "Yelp enrichment, Angi enrichment (concurrent with BBB, matched by phone), "
         "MapQuest review capture (real Yelp-sourced review text/rating/date per business), "
         "local sentiment analysis on every captured review (Ollama, feeds lead score), "
-        "dead-website check, and live deploy as each metro "
+        "Facebook page enrichment (email backfill, social links, feeds lead score at a low "
+        "weight), dead-website check, and live deploy as each metro "
         "finishes -- no longer per-run choices, see the Configuration section below."
     )
 
@@ -474,7 +477,7 @@ if submitted and not _is_running():
         "--radius", str(ENFORCED_RADIUS_MILES), "--min-population", str(ENFORCED_MIN_POPULATION),
         "--pages-per-place", str(ENFORCED_PAGES_PER_PLACE),
         "--details", "--yelp", "--angi", "--mapquest", "--bbb-reviews", "--sentiment",
-        "--check-websites", "--deploy",
+        "--facebook", "--check-websites", "--deploy",
         "--progress-file", str(progress_path),
     ]
     cmd += ["--all-metros"] if run_all else ["--metros", ",".join(selected_metro_ids)]

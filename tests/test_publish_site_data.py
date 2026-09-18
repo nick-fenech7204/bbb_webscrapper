@@ -181,6 +181,42 @@ def test_missing_raw_review_data_publishes_as_empty_lists_not_a_crash():
     assert rec["most_recent_negative_review_source"] == "BBB"
 
 
+def test_facebook_enrichment_data_reaches_the_published_record():
+    """2026-09-18, Nick's ask: Facebook social links (for site/js/app.js's
+    Excel per-platform columns), the rating signal that now feeds
+    lead_priority_score, and email provenance all need to actually reach
+    the published record, same as the other post-hoc enrichment columns
+    above."""
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+        "bbb_email": "found@facebook-only.com", "bbb_email_source": "facebook",
+        "facebook_status": "ok",
+        "facebook_social_links": '[{"platform": "instagram", "url": "https://instagram.com/co"}]',
+        "facebook_recommend_percentage": 74, "facebook_review_count": 12,
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["email"] == "found@facebook-only.com"
+    assert rec["email_source"] == "facebook"
+    assert rec["facebook_status"] == "ok"
+    assert rec["facebook_social_links"] == [{"platform": "instagram", "url": "https://instagram.com/co"}]
+    assert rec["facebook_recommend_percentage"] == 74
+    assert rec["facebook_review_count"] == 12
+
+
+def test_missing_facebook_data_publishes_as_empty_not_a_crash():
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["facebook_status"] == ""
+    assert rec["facebook_social_links"] == []
+    assert rec["facebook_recommend_percentage"] is None
+    assert rec["facebook_review_count"] is None
+    assert rec["email_source"] == ""
+
+
 def test_missing_review_source_publishes_as_empty_string_not_none():
     row = {
         "match_status": "bbb_only",

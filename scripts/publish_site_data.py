@@ -313,6 +313,27 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["angi_reviews"] = _decode_json_field(row.get("angi_reviews"), "angi_reviews")
     result["review_sentiment"] = _decode_json_field(row.get("review_sentiment"), "review_sentiment")
 
+    # Facebook enrichment (bbb_scraper.facebook, 2026-09-18, Nick's ask) --
+    # same post-hoc-column pass-through as the review fields just above.
+    # facebook_social_links is what site/js/app.js's Excel export combines
+    # with `socials` (BBB's own) into one column per platform. recommend_
+    # percentage/review_count are surfaced for the same reason sentiment's
+    # own signal fields are (see that block's comment above): they now
+    # feed lead_priority_score at a low weight, so a rep looking at the
+    # table has a way to see why, not just that it moved. email_source
+    # ("facebook" when bbb_email was blank and got backfilled from here,
+    # absent otherwise) -- so a rep can tell a BBB-sourced email from one
+    # BBB's own profile never had.
+    result["facebook_status"] = row.get("facebook_status") or ""
+    result["facebook_social_links"] = _decode_json_field(row.get("facebook_social_links"), "facebook_social_links")
+    result["facebook_recommend_percentage"] = _num_or_none(row.get("facebook_recommend_percentage"))
+    result["facebook_review_count"] = _num_or_none(row.get("facebook_review_count"))
+    result["email_source"] = row.get("bbb_email_source") or ""
+    # Informational, not a scoring input (2026-09-18, Nick's ask) -- captured
+    # by bbb_scraper.facebook.parser but had nowhere to go until now.
+    result["facebook_service_areas"] = _decode_json_field(row.get("facebook_service_areas"), "facebook_service_areas")
+    result["facebook_price_range"] = row.get("facebook_price_range") or ""
+
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0

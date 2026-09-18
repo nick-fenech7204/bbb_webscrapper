@@ -258,6 +258,50 @@ def test_check_metro_websites_failure_returns_original_records_unchecked(monkeyp
     assert "FAILED" in capsys.readouterr().out
 
 
+# --- _enrich_metro_with_facebook (2026-09-18) --------------------------------
+# Same best-effort/reassign-not-mutate contract as _check_metro_websites
+# above, but returns a new row list (matches enrich_bbb_with_yelp/
+# enrich_with_angi's contract, not _check_metro_websites'/_enrich_metro_with_
+# mapquest's in-place one) -- see _enrich_metro_with_facebook's own docstring.
+
+def test_enrich_metro_with_facebook_reports_fetched_and_no_link_counts(monkeypatch):
+    def _fake_enrich_with_facebook(records, *, socials_field, cfg):
+        assert socials_field == "bbb_socials"
+        out = []
+        for i, r in enumerate(records):
+            row = dict(r)
+            row["facebook_status"] = "ok" if i == 0 else "no_facebook_link"
+            out.append(row)
+        return out
+
+    monkeypatch.setattr(bsm, "enrich_with_facebook", _fake_enrich_with_facebook)
+    rows = [{"bbb_name": "A"}, {"bbb_name": "B"}]
+
+    new_rows, fetched, no_link = bsm._enrich_metro_with_facebook(rows)
+
+    assert fetched == 1
+    assert no_link == 1
+    assert new_rows[0]["facebook_status"] == "ok"
+    assert rows[0].get("facebook_status") is None  # original list untouched -- reassigned, not mutated
+
+
+def test_enrich_metro_with_facebook_failure_returns_original_records_unchecked(monkeypatch, capsys):
+    """Same best-effort contract as every other enrichment wrapper here: a
+    failure in the batch call itself must never take the metro down."""
+    def _boom(records, **kwargs):
+        raise RuntimeError("simulated: e.g. the disk cache file couldn't be written")
+
+    monkeypatch.setattr(bsm, "enrich_with_facebook", _boom)
+    rows = [{"bbb_name": "A"}]
+
+    new_rows, fetched, no_link = bsm._enrich_metro_with_facebook(rows)
+
+    assert new_rows == rows  # unchanged, not dropped or crashed
+    assert fetched == 0
+    assert no_link == 0
+    assert "FAILED" in capsys.readouterr().out
+
+
 # --- Angi: category resolution -------------------------------------------
 
 def test_resolve_angi_category_matches_a_real_category_by_name():
@@ -870,27 +914,28 @@ def test_scrape_one_metro_bbb_and_angi_lets_a_genuine_bbb_failure_raise(monkeypa
 
 def test_active_steps_everything_on_includes_every_step_in_order():
     steps = bsm._active_steps(check_websites=True, yelp=True, angi=True, mapquest=True, bbb_reviews=True,
-                               sentiment=True, publish=True, deploy=True)
+                               sentiment=True, facebook=True, publish=True, deploy=True)
     assert [s["key"] for s in steps] == [
         "scraping", "check_websites", "yelp", "angi_merge", "mapquest", "bbb_reviews", "sentiment",
-        "checkpoint", "publish", "deploy",
+        "facebook", "checkpoint", "publish", "deploy",
     ]
     assert all(isinstance(s["label"], str) and s["label"] for s in steps)  # a real label, not blank
 
 
 def test_active_steps_scraping_and_checkpoint_always_present():
     steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, bbb_reviews=False,
-                               sentiment=False, publish=False, deploy=False)
+                               sentiment=False, facebook=False, publish=False, deploy=False)
     assert [s["key"] for s in steps] == ["scraping", "checkpoint"]
 
 
 def test_active_steps_omits_each_disabled_feature():
     steps = bsm._active_steps(check_websites=False, yelp=True, angi=True, mapquest=True, bbb_reviews=True,
-                               sentiment=True, publish=True, deploy=True)
+                               sentiment=True, facebook=True, publish=True, deploy=True)
     keys = [s["key"] for s in steps]
     assert "check_websites" not in keys
     assert "yelp" in keys and "angi_merge" in keys and "mapquest" in keys and "bbb_reviews" in keys
     assert "sentiment" in keys
+    assert "facebook" in keys
 
 
 def test_active_steps_deploy_requires_publish_even_if_deploy_flag_is_true():
@@ -898,13 +943,13 @@ def test_active_steps_deploy_requires_publish_even_if_deploy_flag_is_true():
     deploy=True with publish=False can't actually happen, so the checklist
     must not claim it will."""
     steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, bbb_reviews=False,
-                               sentiment=False, publish=False, deploy=True)
+                               sentiment=False, facebook=False, publish=False, deploy=True)
     assert "deploy" not in [s["key"] for s in steps]
 
 
 def test_active_steps_publish_without_deploy():
     steps = bsm._active_steps(check_websites=False, yelp=False, angi=False, mapquest=False, bbb_reviews=False,
-                               sentiment=False, publish=True, deploy=False)
+                               sentiment=False, facebook=False, publish=True, deploy=False)
     keys = [s["key"] for s in steps]
     assert "publish" in keys
     assert "deploy" not in keys

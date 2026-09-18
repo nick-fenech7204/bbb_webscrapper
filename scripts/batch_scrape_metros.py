@@ -171,6 +171,7 @@ from bbb_scraper.config import settings
 from bbb_scraper.etl.dedupe import dedupe_records
 from bbb_scraper.etl.extract import Extractor
 from bbb_scraper.etl.transform import transform_detail, transform_summary
+from bbb_scraper.facebook.enrich import enrich_with_facebook
 from bbb_scraper.logging_setup import configure_logging, get_logger
 from bbb_scraper.mapquest.client import MapQuestClient
 from bbb_scraper.mapquest.matcher import find_business
@@ -722,6 +723,38 @@ def _enrich_metro_with_mapquest(
     return matched, total_reviews
 
 
+def _enrich_metro_with_facebook(master_rows: list[dict]) -> tuple[list[dict], int, int]:
+    """Best-effort Facebook enrichment for one metro's already-built master
+    rows -- given a `bbb_socials` facebook URL (from BBB's own captured
+    social links), fetches that page (no login, no proxy-bypassing needed,
+    see bbb_scraper/facebook/client.py's own module docstring) and adds
+    facebook_*/backfills bbb_email, same post-hoc column-addition shape as
+    _check_metro_websites/_enrich_metro_with_mapquest above. Returns a NEW
+    row list (enrich_with_facebook doesn't mutate its input, and already
+    calls recompute_intel itself) -- same reassign-don't-mutate contract as
+    enrich_bbb_with_yelp/enrich_with_angi/_enrich_metro_with_sentiment above,
+    not the in-place-mutate one _enrich_metro_with_mapquest uses.
+
+    Returns (new_master_rows, fetched, no_facebook_link) for the caller's
+    own progress line. Never raises: any real per-page fetch failure
+    already comes back as facebook_status="check_failed" on that one row
+    (see enrich_with_facebook's own contract) -- this wrapper's try/except
+    only guards the batch call itself (e.g. a cache-file I/O problem), so
+    one metro's Facebook step failing outright still leaves every other
+    metro's Facebook enrichment unaffected, same as every other enrichment
+    step in this file.
+    """
+    try:
+        master_rows = enrich_with_facebook(master_rows, socials_field="bbb_socials", cfg=settings)
+    except Exception:
+        logger.exception("Facebook enrichment failed -- continuing without it for this metro")
+        print("    Facebook enrichment FAILED (see log) -- continuing without it for this metro")
+        return master_rows, 0, 0
+    fetched = sum(1 for r in master_rows if r.get("facebook_status") == "ok")
+    no_link = sum(1 for r in master_rows if r.get("facebook_status") == "no_facebook_link")
+    return master_rows, fetched, no_link
+
+
 # 2026-09-17, Nick's call: only worth a real extra request per business when
 # there's more than one BBB review on file -- reviews_total is already known
 # from the main scrape's own aggregate counts (bbb_reviews_complaints), so
@@ -900,6 +933,7 @@ _STEP_LABELS = {
     "mapquest": "Fetching MapQuest reviews",
     "bbb_reviews": "Fetching BBB reviews",
     "sentiment": "Analyzing review sentiment",
+    "facebook": "Fetching Facebook pages",
     "checkpoint": "Writing checkpoint",
     "publish": "Publishing to site",
     "deploy": "Deploying live",
@@ -908,7 +942,7 @@ _STEP_ORDER = list(_STEP_LABELS)
 
 
 def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: bool, bbb_reviews: bool,
-                   sentiment: bool, publish: bool, deploy: bool) -> list[dict]:
+                   sentiment: bool, facebook: bool, publish: bool, deploy: bool) -> list[dict]:
     """Which of _STEP_ORDER this particular batch actually runs, in order --
     depends on which --no-X flags are set, so it's computed once per batch
     (every metro in one batch shares the same flags) rather than assumed
@@ -917,6 +951,7 @@ def _active_steps(*, check_websites: bool, yelp: bool, angi: bool, mapquest: boo
     enabled = {
         "scraping": True, "check_websites": check_websites, "yelp": yelp,
         "angi_merge": angi, "mapquest": mapquest, "bbb_reviews": bbb_reviews, "sentiment": sentiment,
+        "facebook": facebook,
         "checkpoint": True, "publish": publish, "deploy": publish and deploy,
     }
     return [{"key": k, "label": _STEP_LABELS[k]} for k in _STEP_ORDER if enabled[k]]
@@ -1020,6 +1055,14 @@ def main() -> int:
         "analyze_review_sentiment.py for backfilling a checkpoint that predates this.",
     )
     parser.add_argument(
+        "--facebook", action=argparse.BooleanOptionalAction, default=True,
+        help="Fetch each business's Facebook page when BBB's own socials list has one (default: "
+        "on) -- anonymous, no login (see bbb_scraper/facebook/client.py's own module docstring), "
+        "adds facebook_* columns, backfills bbb_email when blank, and feeds lead_priority_score "
+        "at a deliberately low weight. Best-effort per business: a fetch failure just leaves "
+        "that row's facebook_status='check_failed', never fatal.",
+    )
+    parser.add_argument(
         "--publish", action=argparse.BooleanOptionalAction, default=True,
         help="Publish each metro's BBB fields to site/ as soon as it's done (default: on)",
     )
@@ -1094,6 +1137,7 @@ def main() -> int:
             "mapquest_matched": None, "mapquest_reviews": None,
             "bbb_reviews_fetched": None, "bbb_reviews_count": None,
             "sentiment_analyzed": None, "sentiment_negative": None,
+            "facebook_fetched": None,
             "top_lead_score": None, "websites_dead": None,
             "elapsed_s": None, "error": None,
         }
@@ -1118,10 +1162,16 @@ def main() -> int:
     sentiment_enabled = sentiment_client is not None
     sentiment_note = "on" if sentiment_enabled else f"off ({sentiment_reason_off or 'disabled'})"
 
+    # No shared client/setup to resolve up front, unlike MapQuest/Angi/
+    # sentiment above -- a plain --facebook/--no-facebook toggle (default
+    # on), same as --check-websites.
+    facebook_enabled = args.facebook
+    facebook_note = "on" if facebook_enabled else "off (disabled)"
+
     active_steps = _active_steps(
         check_websites=args.check_websites, yelp=args.yelp, angi=angi_enabled,
         mapquest=mapquest_enabled, bbb_reviews=bbb_reviews_enabled, sentiment=sentiment_enabled,
-        publish=args.publish, deploy=args.deploy,
+        facebook=facebook_enabled, publish=args.publish, deploy=args.deploy,
     )
 
     def _snapshot(finished: bool = False) -> dict:
@@ -1132,8 +1182,8 @@ def main() -> int:
           f"radius={args.radius}mi, min_population={args.min_population}, "
           f"pages_per_place={args.pages_per_place}, details={args.details}, "
           f"yelp={yelp_note}, angi={angi_note}, mapquest={mapquest_note}, bbb_reviews={bbb_reviews_note}, "
-          f"sentiment={sentiment_note}, check_websites={args.check_websites}, publish={args.publish}, "
-          f"deploy={args.deploy}")
+          f"sentiment={sentiment_note}, facebook={facebook_note}, check_websites={args.check_websites}, "
+          f"publish={args.publish}, deploy={args.deploy}")
     _write_progress(progress_path, _snapshot())
 
     done = 0
@@ -1218,6 +1268,14 @@ def main() -> int:
                 else:
                     angi_matched = angi_new_rows = 0
 
+            facebook_fetched = facebook_no_link = None
+            if facebook_enabled:
+                metro_states[i - 1]["step"] = "facebook"
+                _write_progress(progress_path, _snapshot())
+                master_rows, facebook_fetched, facebook_no_link = _enrich_metro_with_facebook(master_rows)
+                print(f"    Facebook: {facebook_fetched}/{len(master_rows)} pages fetched "
+                      f"({facebook_no_link} with no Facebook link on file)")
+
             mapquest_matched = mapquest_reviews_count = None
             if mapquest_enabled:
                 metro_states[i - 1]["step"] = "mapquest"
@@ -1270,6 +1328,7 @@ def main() -> int:
                   f"{f', {mapquest_matched} MapQuest ({mapquest_reviews_count} reviews)' if mapquest_enabled else ''}"
                   f"{f', {bbb_reviews_fetched} BBB reviews ({bbb_reviews_count} reviews)' if bbb_reviews_enabled else ''}"
                   f"{f', {sentiment_analyzed} sentiment ({sentiment_negative} negative)' if sentiment_enabled else ''}"
+                  f"{f', {facebook_fetched} Facebook' if facebook_enabled else ''}"
                   f"{f', {websites_dead} dead websites' if websites_dead is not None else ''} "
                   f"({elapsed:.0f}s, {stats.as_dict().get('requests_sent')} BBB requests)")
             metro_states[i - 1].update({
@@ -1283,6 +1342,7 @@ def main() -> int:
                 "bbb_reviews_count": bbb_reviews_count,
                 "sentiment_analyzed": sentiment_analyzed,
                 "sentiment_negative": sentiment_negative,
+                "facebook_fetched": facebook_fetched,
                 "websites_dead": websites_dead,
                 "elapsed_s": round(elapsed),
             })

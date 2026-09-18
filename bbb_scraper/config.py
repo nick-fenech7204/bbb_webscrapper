@@ -201,6 +201,34 @@ class Settings(BaseSettings):
     mapquest_min_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MIN_DELAY_SECONDS")
     mapquest_max_delay_seconds: float = Field(default=0.0, alias="MAPQUEST_MAX_DELAY_SECONDS")
 
+    # --- Facebook business-page enrichment (bbb_scraper.facebook) --------------
+    # Not searching -- BBB's own `socials` field (business_parser.py's
+    # _map_socials) already captures a real facebook.com URL per business when
+    # one exists, so this just fetches that URL directly, same "given a known
+    # URL, fetch it" shape as bbb_scraper.webcheck, not the fuzzy name+location
+    # matching MapQuest/Angi need. Proxied like BBB/MapQuest/Angi (not
+    # webcheck) since this is the repeated-single-host pattern (facebook.com,
+    # every request, across a whole batch), not webcheck's many-different-
+    # hosts-once-each pattern -- see webcheck/checker.py's own module
+    # docstring for why THAT one deliberately goes unproxied.
+    #
+    # Confirmed live, 2026-09-18, plain unauthenticated request (no personal
+    # login/session cookies -- see bbb_scraper/facebook/client.py's own module
+    # docstring for the full investigation) against 15 real, different
+    # businesses: 14 rendered normally, 1 came back login-walled (a real page
+    # state, not a bug -- see FacebookProfile.status). No rate-limit/429
+    # ever observed in this small a sample -- delay defaults follow the same
+    # "start conservative, only loosen after a real proved-out batch"
+    # philosophy as MapQuest/Angi's own history, not copied blind.
+    facebook_timeout_seconds: float = Field(default=20.0, alias="FACEBOOK_TIMEOUT_SECONDS")
+    facebook_max_retries: int = Field(default=3, alias="FACEBOOK_MAX_RETRIES")
+    facebook_min_delay_seconds: float = Field(default=1.0, alias="FACEBOOK_MIN_DELAY_SECONDS")
+    facebook_max_delay_seconds: float = Field(default=2.5, alias="FACEBOOK_MAX_DELAY_SECONDS")
+    # Same reasoning as webcheck_cache_ttl_days: a business's Facebook About
+    # info/follower count last month is still probably right today, so a
+    # re-run within the TTL reads from disk instead of hitting Facebook again.
+    facebook_cache_ttl_days: int = Field(default=30, alias="FACEBOOK_CACHE_TTL_DAYS")
+
     # --- Local sentiment analysis (bbb_scraper/sentiment, Ollama) ---------------
     # A local model on Nick's own machine, not a hosted API -- no key, no
     # proxy (nothing to evade, it's a loopback call), no per-request cost.

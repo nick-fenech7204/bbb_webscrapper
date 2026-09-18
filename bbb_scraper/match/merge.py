@@ -623,7 +623,14 @@ def _review_gap_flag(r):
 # sensibly off just its own blended value rather than getting silently
 # capped near 20. v1, hand-tuned -- revisit after the metrics conversation,
 # same as every other weight in this file.
-_SOURCE_WEIGHTS = {"yelp": 0.30, "angi": 0.25, "sentiment": 0.25, "bbb": 0.20}
+#
+# facebook added 2026-09-18, Nick's explicit call: "I think those wont hold
+# a ton of weight but can be very helpful to have in the scoring model" --
+# deliberately half of BBB's own weight (the smallest of the other 4), not
+# rebalanced against the rest (this dict doesn't need to sum to 1 -- see the
+# total_weight renormalization below, which already handles "not every
+# source present" for any subset of these).
+_SOURCE_WEIGHTS = {"yelp": 0.30, "angi": 0.25, "sentiment": 0.25, "bbb": 0.20, "facebook": 0.10}
 
 
 def _lead_priority_score(r):
@@ -707,6 +714,25 @@ def _lead_priority_score(r):
     sentiment_signal = _review_sentiment_signal(r)
     if sentiment_signal is not None:
         source_scores["sentiment"] = sentiment_signal
+
+    # Facebook, added 2026-09-18 -- same rating+volume blend shape as Yelp/
+    # Angi above, deliberately low-weighted (see _SOURCE_WEIGHTS). Only
+    # trusted when facebook_status == "ok" (a real, successfully-parsed
+    # page) -- "unavailable" (login-walled, see bbb_scraper.facebook's own
+    # docstring) and "no_facebook_link"/"check_failed" all correctly leave
+    # recommend_percentage/review_count as None already, but the explicit
+    # status check is the real guard, not an accident of both happening to
+    # be blank.
+    facebook_parts: list[float] = []
+    if r.get("facebook_status") == "ok":
+        fpct = _num(r.get("facebook_recommend_percentage"))
+        if fpct is not None:
+            facebook_parts.append(_rating_band(fpct / 20.0))  # 0-100 -> the shared 0-5 curve
+        fn = _num(r.get("facebook_review_count"))
+        if fn is not None:
+            facebook_parts.append(40 if fn == 0 else 72 if fn <= 60 else 40 if fn <= 150 else 12)
+    if facebook_parts:
+        source_scores["facebook"] = sum(facebook_parts) / len(facebook_parts)
 
     if not source_scores:
         return None

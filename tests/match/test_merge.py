@@ -605,6 +605,63 @@ def test_lead_priority_score_responds_to_angi_signal():
     assert row["lead_priority_score"] != baseline
 
 
+# --- Facebook enrichment (bbb_scraper.facebook, 2026-09-18) -----------------
+# Same post-hoc-then-recompute pattern as Angi above -- facebook_* columns
+# land via bbb_scraper.facebook.enrich.enrich_with_facebook, then
+# recompute_intel picks them up, same as every other bolt-on source.
+
+def test_lead_priority_score_ignores_facebook_data_when_status_is_not_ok():
+    """A "no_facebook_link"/"unavailable"/"check_failed" row must not be
+    scored as if it had a real 0% rating -- the explicit status=="ok" guard
+    in _lead_priority_score is what prevents that, not just recommend_
+    percentage/review_count happening to be None."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    baseline = row["lead_priority_score"]
+
+    row["facebook_status"] = "no_facebook_link"
+    row["facebook_recommend_percentage"] = 0  # must never be read while status isn't "ok"
+    row["facebook_review_count"] = 0
+    row = recompute_intel(row)
+    assert row["lead_priority_score"] == baseline
+
+
+def test_lead_priority_score_responds_to_facebook_signal():
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
+    row = build_master_table(out)[0]
+    baseline = row["lead_priority_score"]
+
+    row["facebook_status"] = "ok"
+    row["facebook_recommend_percentage"] = 65  # 65/20=3.25 -> the "82" salvageable-middle band
+    row["facebook_review_count"] = 20
+    row = recompute_intel(row)
+    assert row["lead_priority_score"] != baseline
+
+
+def test_facebook_signal_is_weighted_lower_than_yelp_for_an_identical_band():
+    """Nick's explicit call: Facebook "wont hold a ton of weight." Confirm
+    the same salvageable-middle band moves the score less coming from
+    Facebook than from Yelp, on an otherwise-identical row."""
+    out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
+    base_row = build_master_table(out)[0]
+    baseline = base_row["lead_priority_score"]
+
+    facebook_row = dict(base_row)
+    facebook_row["facebook_status"] = "ok"
+    facebook_row["facebook_recommend_percentage"] = 65  # /20 = 3.25 -> the "82" band, same as Yelp case below
+    facebook_row["facebook_review_count"] = 20  # same volume band (<=60 -> 72) as the Yelp case below
+    facebook_row = recompute_intel(facebook_row)
+
+    yelp_row = dict(base_row)
+    yelp_row["yelp_rating"] = 3.25  # -> the same "82" band via _rating_band, same numeric input as facebook above
+    yelp_row["yelp_review_count"] = 20  # required for _yelp_rating to trust the rating at all (>= _MIN_REVIEWS_FOR_RATING)
+    yelp_row = recompute_intel(yelp_row)
+
+    facebook_delta = facebook_row["lead_priority_score"] - baseline
+    yelp_delta = yelp_row["lead_priority_score"] - baseline
+    assert 0 < facebook_delta < yelp_delta
+
+
 # --- Local review-sentiment analysis (bbb_scraper.sentiment, 2026-09-15) ----
 # These inject review_sentiment_*/most_recent_*/avg_review_gap_days fields
 # directly and call recompute_intel, same post-hoc-then-recompute pattern
