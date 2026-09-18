@@ -140,6 +140,42 @@ def test_most_recent_review_source_is_labeled_yelp_angi_or_bbb_for_display():
     assert rec["most_recent_review_source"] == "Yelp"
     assert rec["most_recent_negative_review_source"] == "Angi"
 
+
+def test_raw_review_data_reaches_the_published_record_for_full_export():
+    """2026-09-18, Nick's ask: an Excel/CSV export ships the FULL record
+    per app.js's own exportableRows() design -- but the raw per-review
+    data (individual review text/rating/date, not just the aggregate
+    top_complaint/most_recent_* facts) never actually reached the
+    published record, so "full export" wasn't full. These are JSON-string
+    columns written post-hoc by the batch (bbb/mapquest/angi review
+    fetch, sentiment analysis) -- same decode as categories/contacts/
+    socials, parsed into real lists here, not left as JSON text."""
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+        "bbb_reviews": '[{"text": "Great work", "rating": 5, "date": "2026-01-01"}]',
+        "mapquest_reviews": '[{"text": "Terrible", "rating": 1.0, "date": "2026-02-01"}]',
+        "angi_reviews": '[{"text": "Fine", "rating": 3, "date_label": "March 2026"}]',
+        "review_sentiment": '[{"source": "bbb", "sentiment": "positive", "severity": 1}]',
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["bbb_reviews"] == [{"text": "Great work", "rating": 5, "date": "2026-01-01"}]
+    assert rec["mapquest_reviews"] == [{"text": "Terrible", "rating": 1.0, "date": "2026-02-01"}]
+    assert rec["angi_reviews"] == [{"text": "Fine", "rating": 3, "date_label": "March 2026"}]
+    assert rec["review_sentiment"] == [{"source": "bbb", "sentiment": "positive", "severity": 1}]
+
+
+def test_missing_raw_review_data_publishes_as_empty_lists_not_a_crash():
+    row = {
+        "match_status": "bbb_only",
+        "bbb_name": "Co", "bbb_rating": "A+", "bbb_scraped_at": "2026-09-17T12:00:00+00:00",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["bbb_reviews"] == []
+    assert rec["mapquest_reviews"] == []
+    assert rec["angi_reviews"] == []
+    assert rec["review_sentiment"] == []
+
     row["most_recent_negative_review_source"] = "bbb"
     rec = select_public_fields_from_master(row)
     assert rec["most_recent_negative_review_source"] == "BBB"

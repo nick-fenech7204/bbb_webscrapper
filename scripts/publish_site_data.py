@@ -298,6 +298,21 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["review_sentiment_analyzed_count"] = _num_or_none(row.get("review_sentiment_analyzed_count"))
     result["review_sentiment_negative_count"] = _num_or_none(row.get("review_sentiment_negative_count"))
 
+    # 2026-09-18, Nick's ask: the raw, per-review data (not just the
+    # aggregate top_complaint/most_recent_* facts above) never reached the
+    # published record at all -- a CSV/Excel export ships "the FULL
+    # record" per its own established design (see exportableRows() in
+    # app.js), but "full" wasn't actually full while this stayed master-
+    # CSV-only. Same JSON-array handling _decode_json_field already gives
+    # categories/contacts/socials above -- each of these is a JSON-string
+    # column written post-hoc by the batch (mapquest/bbb/angi review
+    # fetch, sentiment analysis), not a bbb_*-prefixed BBB_FIELDS column,
+    # so it needs its own read here rather than the generic loop above.
+    result["bbb_reviews"] = _decode_json_field(row.get("bbb_reviews"), "bbb_reviews")
+    result["mapquest_reviews"] = _decode_json_field(row.get("mapquest_reviews"), "mapquest_reviews")
+    result["angi_reviews"] = _decode_json_field(row.get("angi_reviews"), "angi_reviews")
+    result["review_sentiment"] = _decode_json_field(row.get("review_sentiment"), "review_sentiment")
+
     for field in _INTEL_SITE_FIELDS:
         result[field] = _num_or_none(row.get(field))
     # integer flags stay ints, not 1.0/0.0

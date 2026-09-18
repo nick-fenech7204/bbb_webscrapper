@@ -805,16 +805,65 @@
     downloadBlob(new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" }), `${exportBasename()}.csv`);
   }
 
+  // Excel's own cell format has a hard 32,767-character limit -- a real
+  // crash, caught live 2026-09-18 right after bbb_reviews/mapquest_reviews/
+  // angi_reviews/review_sentiment were added to the published record (see
+  // scripts/publish_site_data.py): a business with many/long reviews
+  // JSON-stringified into one cell routinely blows past that limit, and
+  // XLSX.write throws -- not a graceful truncation, the WHOLE export dies,
+  // for every row, not just the one business over the limit. CSV has no
+  // such per-cell limit (it's just text), so exportCsv/exportableRows keep
+  // shipping the full inline JSON blob there. For Excel specifically,
+  // reviews move to their own sheet instead -- one row per individual
+  // review, not one JSON blob per business -- which sidesteps the limit
+  // entirely (no single review's own text gets anywhere close to 32,767
+  // chars) and is a genuinely more useful shape in a spreadsheet besides:
+  // a rep can actually read a review, not decode JSON in a cell.
+  const REVIEW_ARRAY_FIELDS = ["bbb_reviews", "mapquest_reviews", "angi_reviews", "review_sentiment"];
+  const REVIEW_SOURCE_LABEL = { bbb_reviews: "BBB", mapquest_reviews: "Yelp", angi_reviews: "Angi" };
+  function buildReviewRows(records) {
+    const out = [];
+    for (const r of records) {
+      for (const field of ["bbb_reviews", "mapquest_reviews", "angi_reviews"]) {
+        const reviews = Array.isArray(r[field]) ? r[field] : [];
+        for (const rev of reviews) {
+          out.push({
+            business: r.name ?? "",
+            city: r.city ?? "",
+            source: REVIEW_SOURCE_LABEL[field],
+            reviewer: rev.reviewer_name ?? "",
+            rating: rev.rating ?? "",
+            date: rev.date ?? rev.date_label ?? "",
+            text: rev.text ?? "",
+          });
+        }
+      }
+    }
+    return out;
+  }
   function exportXlsx() {
     if (typeof XLSX === "undefined") {
       alert("Excel export couldn't load — it may be blocked by your browser. Try another format, or reload the page.");
       return;
     }
-    const rows = exportableRows();
-    if (!rows.length) return;
-    const ws = XLSX.utils.json_to_sheet(rows);
+    const records = filteredRecords();
+    if (!records.length) return;
+    // Leads sheet: the normal full-record row, but each review-array field
+    // becomes its own count instead of a JSON blob -- the real content is
+    // on the Reviews sheet below, in a form Excel can actually hold.
+    const leadRows = exportableRows().map((row, i) => {
+      const out = { ...row };
+      for (const field of REVIEW_ARRAY_FIELDS) {
+        out[field] = Array.isArray(records[i][field]) ? records[i][field].length : 0;
+      }
+      return out;
+    });
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Leads");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(leadRows), "Leads");
+    const reviewRows = buildReviewRows(records);
+    if (reviewRows.length) {
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(reviewRows), "Reviews");
+    }
     XLSX.writeFile(wb, `${exportBasename()}.xlsx`);
   }
 
