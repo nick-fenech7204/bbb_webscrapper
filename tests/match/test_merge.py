@@ -387,12 +387,22 @@ def test_angi_corporate_account_reads_the_flag_and_defaults_off():
     assert row["angi_corporate_account"] == 1
 
 
-def test_on_angi_reflects_whether_an_angi_phone_is_present():
+def test_on_angi_reflects_whether_an_angi_name_is_present():
+    """2026-09-17, real bug: this used to check angi_phone specifically,
+    which undercounted real angi_only rows whose source Angi listing had
+    no phone captured (confirmed live: 86/557 in one real batch) --
+    angi_name is set on every genuine match, phone or not, so that's the
+    real signal now."""
     out = MatchOutcome(bbb_only=[{"name": "Co", "rating": "B", "phone": "3055550100"}])
     row = build_master_table(out)[0]
     assert row["on_angi"] == 0  # nothing angi_* set yet
 
-    row["angi_phone"] = "3055550100"
+    row["angi_name"] = "Co on Angi"
+    row = recompute_intel(row)
+    assert row["on_angi"] == 1
+
+    # A real angi_only row with no captured phone must still read as on_angi.
+    row["angi_phone"] = ""
     row = recompute_intel(row)
     assert row["on_angi"] == 1
 

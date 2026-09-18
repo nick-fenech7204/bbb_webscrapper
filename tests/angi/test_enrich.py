@@ -55,6 +55,25 @@ def test_no_matching_phone_or_place_leaves_row_unmatched_and_creates_a_new_one()
     assert new_row["lead_priority_score"] is not None  # scored off its real Angi rating like any other row
 
 
+def test_new_angi_only_row_with_no_captured_phone_still_reads_as_on_angi():
+    """Real bug, caught live 2026-09-17 (a 1,060-row Los Angeles flooring
+    batch): 86 of 557 real angi_only rows in that one batch came from an
+    Angi listing that itself had no phone number captured -- on_angi used
+    to check angi_phone specifically, so these genuinely Angi-sourced
+    businesses (real rating, real reviews) silently published with no
+    Angi rating/specialties/url at all, purely because the source listing
+    had no phone. angi_name is always set for a real match, phone or not."""
+    rows = [_master_row(bbb_phone="3055550100", bbb_city="Miami", bbb_postal_code="33101")]
+    angi = [{"name": "Anahita Construction", "phone": "", "city": "Los Angeles",
+             "overall_rating": "4.59", "review_count": "133"}]
+    out = enrich_with_angi(rows, angi)
+    new_row = out[1]
+    assert new_row["match_status"] == "angi_only"
+    assert new_row["angi_phone"] == ""
+    assert new_row["on_angi"] == 1
+    assert new_row["angi_overall_rating"] == "4.59"
+
+
 def test_no_phone_match_but_strong_name_and_city_match_attaches_not_duplicates():
     """A business that changed phone numbers on one platform but not the
     other -- the exact real-world case the fallback exists for. Same real

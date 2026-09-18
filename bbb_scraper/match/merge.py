@@ -246,7 +246,18 @@ def _angi_rating(r):
 
 
 def _on_angi(r):
-    return int(_has_value(r.get("angi_phone")))
+    """Real bug, caught live 2026-09-17 (a 1,060-row Los Angeles flooring
+    batch): angi_phone alone undercounted real Angi matches by 86 rows --
+    every one of them a genuine angi_only row (bbb_scraper.angi.enrich can
+    create one from an Angi listing that itself just has no phone captured
+    -- angi_name is always set for it either way) that this then hid
+    behind on_angi's own gate, blanking a real rating/review-count/
+    specialties on the published site for a business that exists in the
+    dataset ONLY because of that Angi match. angi_name is a strictly wider
+    signal than angi_phone -- confirmed against that same real dataset,
+    zero rows ever have a phone without also having a name, 94 have a
+    name without a phone -- so this checks name instead, not phone."""
+    return int(_has_value(r.get("angi_name")))
 
 
 def _angi_corporate_account(r):
