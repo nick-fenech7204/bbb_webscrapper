@@ -214,9 +214,19 @@ def _pid_alive(pid: int) -> bool:
 def _kill_pid(pid: int) -> None:
     """Kill a batch we're only reattached to (no Popen handle to .terminate()
     this session). `/T` also takes down anything it spawned (e.g. an AWS CLI
-    deploy call in flight)."""
+    deploy call in flight).
+
+    CREATE_NO_WINDOW: this Streamlit process itself may have no console of
+    its own (run_streamlit_silent.vbs) -- capture_output=True redirects
+    taskkill's own I/O, but doesn't stop Windows from still popping up a
+    brand-new visible window for it when there's no console to inherit
+    (same real gap fixed in scripts/deploy_site.py's own run(), see its
+    comment for the full story)."""
     if sys.platform == "win32":
-        subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True, check=False)
+        subprocess.run(
+            ["taskkill", "/PID", str(pid), "/T", "/F"],
+            capture_output=True, check=False, creationflags=subprocess.CREATE_NO_WINDOW,
+        )
     else:
         import signal
         os.kill(pid, signal.SIGTERM)

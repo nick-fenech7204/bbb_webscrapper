@@ -40,7 +40,24 @@ def run(cmd: list[str]) -> int:
     # check=False, explicitly: callers below inspect the returncode
     # themselves (different message for sync vs. invalidation failure)
     # rather than wanting a CalledProcessError raised here.
-    return subprocess.run(cmd, check=False).returncode
+    #
+    # CREATE_NO_WINDOW (2026-09-18, real report: a visible console popped
+    # up during a Streamlit-launched batch's own deploy step): this
+    # function runs both standalone (deploy_site.bat, a real visible
+    # console the aws CLI's own output should keep appearing in -- this
+    # flag doesn't change that, it only stops a NEW window) and in-process
+    # from inside batch_scrape_metros.py's deploy step, itself a child of
+    # Streamlit's own fully-detached, console-less batch subprocess (see
+    # streamlit_app.py's own module docstring) -- Windows' default
+    # behavior for a console subprocess with no console to inherit is to
+    # create a brand-new VISIBLE one, exactly what showed up here. Safe
+    # either way: aws's stdout/stderr are still inherited normally (never
+    # redirected here), so nothing about where its output goes changes,
+    # only whether a new window appears for it.
+    kwargs: dict = {}
+    if sys.platform == "win32":
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+    return subprocess.run(cmd, check=False, **kwargs).returncode
 
 
 def main() -> int:
