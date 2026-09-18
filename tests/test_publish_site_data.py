@@ -469,6 +469,58 @@ def test_no_angi_match_leaves_angi_fields_blank_not_stale():
     assert rec["angi_super_service_award"] is False
 
 
+# --- Specialties: BBB's own categories combined with Angi's (2026-09-18) ---
+# Nick's ask: BBB already captures a real, separate category list per
+# business (bbb_categories) -- fold it into the same Specialties column
+# Angi's services-offered list already populates, not just Angi's.
+
+def test_bbb_categories_populate_specialties_with_no_angi_match_at_all():
+    """Real coverage gap this closes: most businesses in a real batch never
+    get an Angi match, but BBB's own category data is still real and
+    already on file for them regardless."""
+    row = {
+        "match_status": "bbb_only", "bbb_name": "Solo Dentist", "bbb_rating": "A",
+        "bbb_scraped_at": "2026-09-14T00:00:00+00:00", "on_angi": "0",
+        "bbb_categories": '["Dentist", "Orthodontist", "Cosmetic Dentistry"]',
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["specialties"] == "Dentist; Orthodontist; Cosmetic Dentistry"
+
+
+def test_bbb_and_angi_specialties_combine_bbb_first():
+    row = {
+        "match_status": "bbb_only", "bbb_name": "Ace Plumbing", "bbb_rating": "A",
+        "bbb_scraped_at": "2026-09-14T00:00:00+00:00", "on_angi": "1",
+        "bbb_categories": '["Plumbers", "Water Heaters"]',
+        "angi_categories": "Drain Cleaning; Water Heater Install",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["specialties"] == "Plumbers; Water Heaters; Drain Cleaning; Water Heater Install"
+
+
+def test_specialties_dedup_is_case_insensitive_and_keeps_first_casing():
+    """BBB and Angi are independently-curated taxonomies with no shared id
+    space -- a real near-duplicate differing only in case is realistic,
+    and a plain exact-string dedup wouldn't catch it."""
+    row = {
+        "match_status": "bbb_only", "bbb_name": "Ace Plumbing", "bbb_rating": "A",
+        "bbb_scraped_at": "2026-09-14T00:00:00+00:00", "on_angi": "1",
+        "bbb_categories": '["Plumbers", "Drain Cleaning"]',
+        "angi_categories": "drain cleaning; Water Heater Install",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["specialties"] == "Plumbers; Drain Cleaning; Water Heater Install"
+
+
+def test_missing_bbb_categories_never_crashes_specialties():
+    row = {
+        "match_status": "bbb_only", "bbb_name": "No Data Co", "bbb_rating": "B",
+        "bbb_scraped_at": "2026-09-14T00:00:00+00:00", "on_angi": "0",
+    }
+    rec = select_public_fields_from_master(row)
+    assert rec["specialties"] == ""
+
+
 def test_accredited_and_years_in_business_are_real_types_not_csv_strings():
     """Regression, caught in a real diff review 2026-09-14: publish_dataset/
     publish_master_csv read rows through csv.DictReader, which stringifies

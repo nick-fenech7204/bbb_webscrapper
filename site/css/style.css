@@ -335,7 +335,15 @@ main.wrap {
 }
 
 .home-filters select {
-  padding: 8px 30px 8px 12px;
+  /* Real report, 2026-09-18: "Most recent" (the longest of the 3 option
+     labels here) rendered with its text almost touching the arrow --
+     confirmed live, the SVG background-image had no explicit
+     background-size, so it fell back to "auto" (an unpredictable
+     intrinsic size for a viewBox-only SVG, no width/height attributes of
+     its own) instead of a known, small icon size. Fixed with an explicit
+     background-size below plus a bit more reserved padding, rather than
+     leaving the actual rendered arrow size to browser guesswork. */
+  padding: 8px 34px 8px 12px;
   border: 1px solid var(--border-strong);
   border-radius: 8px;
   background: var(--surface);
@@ -348,7 +356,8 @@ main.wrap {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239a9a92'%3E%3Cpath d='M5.5 7.5l4.5 4.5 4.5-4.5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 8px center;
+  background-position: right 10px center;
+  background-size: 12px;
 }
 .home-filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 

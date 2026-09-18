@@ -92,9 +92,18 @@ _YELP_SITE_FIELDS = ["yelp_name", "yelp_rating", "yelp_review_count", "yelp_url"
 # (mirroring the Yelp fields above) plus specialties (angi_categories,
 # under the label it's actually shown as on the site -- Angi's services-
 # offered list reads as a specialties column, not a generic "categories"
-# one; BBB already has its own bbb_categories/primary_category_name, a
-# different taxonomy) and angi_super_service_award (a trust badge worth
-# surfacing on its own, not just folded into the rating number).
+# one) and angi_super_service_award (a trust badge worth surfacing on its
+# own, not just folded into the rating number).
+#
+# 2026-09-18, Nick's ask: BBB's own categories (bbb_categories -- a real,
+# separate taxonomy from Angi's, confirmed live to often carry more than
+# one value, e.g. a real Cincinnati dentist tagged Dentist/Orthodontist/
+# Cosmetic Dentistry/Dental Surgery/Periodontist/Children Dentist/Dental
+# Hygienist) now feed the SAME Specialties column, not just Angi's --
+# see _combined_specialties below. Real coverage gap this closes: only
+# ~15% of a real batch had an Angi match at all, so Specialties was blank
+# for the other 85% even when BBB itself had real category data on file
+# for them the whole time.
 _ANGI_SITE_FIELDS = [
     "angi_name", "angi_rating", "angi_review_count", "angi_url",
     "specialties", "angi_super_service_award",
@@ -170,6 +179,35 @@ def _decode_json_field(value, field: str):
         return json.loads(value)
     except (json.JSONDecodeError, TypeError):
         return empty
+
+
+def _combined_specialties(row: dict) -> str:
+    """BBB's own categories (a real list, JSON-encoded on a master row same
+    as every other BBB list field) + Angi's services-offered list (already
+    a "; "-joined string -- see angi/parsing.py's own categories field and
+    _ANGI_SITE_FIELDS' comment) -- deduped, same order-of-first-appearance
+    as a plain merge, in the one "; "-joined string shape site/js/app.js's
+    specialtiesCell already expects. BBB's own categories show regardless
+    of an Angi match (Angi just adds more when there's a match) -- BBB is
+    the one source every published record always has.
+
+    Dedup is case-insensitive (Nick's explicit call, 2026-09-18): BBB and
+    Angi are two independently-curated taxonomies with no shared id space,
+    so a real near-duplicate differing only in case ("Dentist" from BBB,
+    "dentist" from Angi) is a realistic way for the same specialty to show
+    up twice -- a plain exact-string dedup wouldn't catch that. The FIRST
+    occurrence's original casing wins and is what's kept for display (BBB's
+    own, since it's checked first)."""
+    bbb_cats = _decode_json_field(row.get("bbb_categories"), "bbb_categories")
+    angi_cats = [c.strip() for c in (row.get("angi_categories") or "").split(";") if c.strip()]
+    seen_lower: set[str] = set()
+    out: list[str] = []
+    for cat in [str(c).strip() for c in bbb_cats] + angi_cats:
+        key = cat.lower()
+        if cat and key not in seen_lower:
+            seen_lower.add(key)
+            out.append(cat)
+    return "; ".join(out)
 
 
 def _bbb_only_master(bbb_records: list[dict]) -> list[dict]:
@@ -272,7 +310,7 @@ def select_public_fields_from_master(row: dict) -> dict:
     result["angi_rating"] = _num_or_none(row.get("angi_overall_rating")) if on_angi else None
     result["angi_review_count"] = _num_or_none(row.get("angi_review_count")) if on_angi else None
     result["angi_url"] = (row.get("angi_profile_url") or "") if on_angi else ""
-    result["specialties"] = (row.get("angi_categories") or "") if on_angi else ""
+    result["specialties"] = _combined_specialties(row)
     result["angi_super_service_award"] = _to_bool(row.get("angi_is_super_service_award_winner")) if on_angi else False
 
     # The single most representative negative/mixed review (bbb_scraper.
