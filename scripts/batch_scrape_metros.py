@@ -928,8 +928,8 @@ def main() -> int:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--metros", help="Comma-separated metro ids, e.g. miami-fl,tampa-fl")
     group.add_argument("--all-metros", action="store_true", help="Every metro in data/reference/metros.json")
-    parser.add_argument("--radius", type=float, default=5.0, help="Metro sweep radius in miles (default: 5)")
-    parser.add_argument("--min-population", type=int, default=50_000, help="Population floor (default: 50000)")
+    parser.add_argument("--radius", type=float, default=15.0, help="Metro sweep radius in miles (default: 15)")
+    parser.add_argument("--min-population", type=int, default=40_000, help="Population floor (default: 40000)")
     parser.add_argument("--pages-per-place", type=int, default=15, help="Max pages per swept place (default: 15)")
     parser.add_argument(
         "--details", action="store_true",

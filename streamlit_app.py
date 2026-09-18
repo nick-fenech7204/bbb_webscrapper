@@ -138,8 +138,8 @@ LOG_TAIL_BYTES = 12_000
 # "Interface simplified" entry. No longer user-facing choices: every batch
 # always runs with these, rather than depending on whatever a particular
 # run's form happened to have set.
-ENFORCED_RADIUS_MILES = 5.0
-ENFORCED_MIN_POPULATION = 50_000
+ENFORCED_RADIUS_MILES = 15.0
+ENFORCED_MIN_POPULATION = 40_000
 # BBB's own hard ceiling, not a courtesy limit -- it caps totalPages at this
 # regardless of what's requested (confirmed in etl/extract.py), so there's
 # no lower value that would ever help; always ask for the max.
